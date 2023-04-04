@@ -8,8 +8,6 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         $this->view->show('index.php');
     }
     
-        public function login(){
-        $this->view->show('login.php');
-    }
+
 }
 

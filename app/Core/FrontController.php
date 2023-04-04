@@ -25,12 +25,21 @@ class FrontController{
                     
             Route::add('/login',
                     function(){
-                    $controler = new \Com\Daw2\Controllers\InicioController();
+                    $controler = new \Com\Daw2\Controllers\UsuarioSistemaController();
                     $controler->login();
                     }
                     ,'get');
   
-                
+            
+             /*DESLOGUEAR USUARIO*/
+                    
+             Route::add('/logout',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\SessionController();
+                     $controller->logout();
+                     }
+                     ,'get');        
+                    
           /*
 
                    Route::add('/', 

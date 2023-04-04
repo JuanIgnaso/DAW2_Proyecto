@@ -49,10 +49,21 @@
                   </li>
                   <li><a href="#" class="nav-link px-2 link-dark rounded">About</a></li>
                 </ul>
-          
+                              
                 <div class="col-md-3 text-end" id="log_user">
+                    <?php
+                    if(isset($_SESSION['usuario'])){
+                    ?>
+                    <p class="text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
+                    <button type="button" class="btn btn-outline-light"><a href="/logout">Log-Out</a></button>
+                    <?php
+                    }else{
+                    ?>
                     <button type="button" class="btn btn-outline-light"><a href="/login">Login</a></button>
                   <button type="button" class="activo btn btn-outline-light">Sign-up</button>
+                  <?php
+                    }
+                  ?>
                 </div>
               </header>
         </div>

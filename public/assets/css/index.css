@@ -69,6 +69,20 @@
 transition-duration: 0.7s;
 }
 
+
+#log_user button a
+{
+ color: #fff;
+ text-decoration: none;
+}
+
+
+#log_user button a:hover
+{
+ color: orangered;
+transition-duration: 0.7s;
+}
+
 /* Dropdown Content (Hidden by Default) */
 
 /* Style The Dropdown Button */

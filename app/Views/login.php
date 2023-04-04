@@ -18,7 +18,7 @@
     <div id="fondo_login"></div>
     <!-- MAIN DEL LOGIN -->
     <main class="form-signin w-100 m-auto rounded" id="idCuerpoLogin">
-        <form>
+        <form action="/login" method="post">
           <img class="mb-4" src="assets/svg/Gallaecia_PC_Logo.svg" alt="" width="70%">
           <h1 class="h3 mb-3 fw-normal text-center">Porfavor introduce correo y contraseña</h1>
       
@@ -26,10 +26,12 @@
             <input type="email" class="form-control rounded" id="floatingInput" placeholder="nombre@ejemplo.com">
             <label for="floatingInput">Dirección email</label>
           </div>
+          <!-- 
           <div class="form-floating">
             <input type="text" class="form-control rounded" id="floatingInput" placeholder="Nombre Usuario">
             <label for="floatingInput">Nombre Usuario</label>
-          </div>
+          </div> 
+         comment -->
           <div class="form-floating">
             <input type="password" class="form-control rounded" id="floatingPassword" placeholder="Contraseña">
             <label for="floatingPassword">Contraseña</label>
@@ -38,6 +40,13 @@
             <label id="label_remember_me">
               <input type="checkbox" value="remember-me" id="remember-me"> Recuerdame
             </label>
+              <?php
+              if(isset($loginError) && !empty($loginError) > 0){
+              ?>
+              <p class="text-danger">Error Al Introducir Los Datos</p>
+              <?php
+              }
+              ?>
           </div>
           <button class="w-100 btn btn-lg rounded" id="id_boton_login" type="submit">Iniciar Sesión</button>
           <p class="mt-5 mb-3 text-muted">Gallaecia PC &copy; 2023</p>
