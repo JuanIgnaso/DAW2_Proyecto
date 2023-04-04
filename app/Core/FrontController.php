@@ -21,6 +21,15 @@ class FrontController{
                     $controler->index();
                     }
                     ,'get');
+                    
+                        Route::add('/perifericos_entrada',
+                    function(){
+                    $controler = new \Com\Daw2\Controllers\InicioController();
+                    $controler->lista_productos();
+                    }
+                    ,'get');
+                
+                    
         
                     
             Route::add('/login',

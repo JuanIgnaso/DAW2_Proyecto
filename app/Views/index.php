@@ -35,7 +35,7 @@
           
                 <ul class="nav col-12 col-sm-6 mb-2 justify-content-center gap-1 mb-md-0">
                   <li><a href="#" class="nav-link px-2 link-secondary rounded">Inicio</a></li>
-                  <!-- DropDown -->
+                  <!-- DropDown **********-->
                   <li>
                     <div class="dropdown">
                       <button class="dropbtn nav-link px-2 link-secondary rounded">Productos</button>
@@ -47,7 +47,15 @@
                       </div>
                     </div>
                   </li>
+                  <!-- ****************** -->
                   <li><a href="#" class="nav-link px-2 link-dark rounded">About</a></li>
+                  <?php
+                  if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
+                  ?>
+                  <li><a href="#" class="nav-link px-2 link-dark rounded">Inventario</a></li>
+                  <?php
+                  }
+                  ?>
                 </ul>
                               
                 <div class="col-md-3 text-end" id="log_user">
@@ -103,7 +111,7 @@
                 <img src="assets/svg/mouse-solid.svg" alt="icono_raton" width="140" height="140">
                 <h2 class="fw-normal text-center">Periféricos Entrada</h2>
                 <p>Teclados, Ratones... tablets hecha un vistazo a nuestros periféricos de entrada.</p>
-                <a href="" role="button" class="rounded enlace_productos">Ver Productos</a>
+                <a href="/perifericos_entrada" role="button" class="rounded enlace_productos">Ver Productos</a>
               </div><!-- /.col-lg-4 -->
 
               <div class="col-8 col-md-6 col-lg-3 mb-3 mb-lg-0 productos-box">

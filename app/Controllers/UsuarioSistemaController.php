@@ -24,7 +24,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             $_vars['loginError'] = 'Datos de Acceso Incorrectos';
         }else{
             $_SESSION['usuario'] = $usuario;
-            $_SESSION['permisos'] = $_SESSION['usuario']->getRol();
+            $_SESSION['permisos'] = $_SESSION['usuario']->getRol()->get_permisos();
             header('Location: /');
             
         }
