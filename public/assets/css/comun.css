@@ -1,0 +1,32 @@
+
+/*CUERPO DE TEXTO*/
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap'); /*DM Sans*/
+@import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap'); /*Mukta*/
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap'); /*Space Grotesk*/
+
+/* CABECERAS */
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap'); /*Staatliches*/
+@import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap'); /*Gugi*/
+@import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap'); /*Potta One*/
+
+
+/*CSS con todas las cosas comunes de la web, footer, navegador y fuentes de letras*/
+/*FUENTES*/
+body,html{
+    background-color:#ffffff;
+    height: 100%;
+    width: 100%;
+    font-family: 'DM Sans','Space Grotesk',sans-serif;
+}
+
+h1,h2,h3,h4,h5,li{
+    font-family: 'Potta One', 'Staatliches', cursive !important;
+    margin: 0;
+
+}
+
+.pie
+{
+    margin: 0;
+    background-color: #272727;
+}

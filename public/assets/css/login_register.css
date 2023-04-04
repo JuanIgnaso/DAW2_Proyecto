@@ -1,0 +1,41 @@
+
+body,html{
+    background-color:darkgrey !important;
+    background-image: url('../img/teclado.jpg');
+}
+
+#idCuerpoLogin
+{
+    background-color: #fff;
+    padding: 2% 3%;
+    text-align: center;
+    z-index: 20;
+}
+
+#fondo_login
+{
+    height: inherit;
+    width: inherit;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 10;
+    position: fixed;
+}
+
+#id_boton_login
+{
+    border: #272727 1px solid;
+    color: #272727;
+    font-family: 'Potta One', 'Staatliches', cursive;
+}
+
+#id_boton_login:hover
+{
+    border: orangered 1px solid;
+    color: orangered;
+    transition-duration: 0.7s;
+}
+
+.recordar{
+    color:orangered;
+    font-weight: bold;
+}
