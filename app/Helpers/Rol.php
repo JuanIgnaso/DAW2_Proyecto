@@ -34,14 +34,14 @@ class Rol{
         $this->idRol = $idRol;
         $this->nombreRol  = $nombreRol;
         $this->desc = $desc;
-        if($idRol == 1){
-            $this->_permisos = self::_PERMISOS_ADMIN;
-        }
-         if($idRol == 2){
-            $this->_permisos = self::_PERMISOS_INVENTARIO;
-        }
-         if($idRol == 3){
+        if($this->idRol == 1){
             $this->_permisos = self::_PERMISOS_REGISTRADO;
+        }else
+         if($this->idRol == 2){
+            $this->_permisos = self::_PERMISOS_INVENTARIO;
+        }else
+         if($this->idRol == 3){
+            $this->_permisos = self::_PERMISOS_ADMIN;
         }
     }
     

@@ -23,17 +23,17 @@
           <h1 class="h3 mb-3 fw-normal text-center">Porfavor introduce correo y contraseña</h1>
       
           <div class="form-floating">
-            <input type="email" class="form-control rounded" id="floatingInput" placeholder="nombre@ejemplo.com">
+            <input type="email" class="form-control rounded" id="floatingInput" name="email" placeholder="nombre@ejemplo.com">
             <label for="floatingInput">Dirección email</label>
           </div>
           <!-- 
           <div class="form-floating">
-            <input type="text" class="form-control rounded" id="floatingInput" placeholder="Nombre Usuario">
+            <input type="text" class="form-control rounded" id="floatingInput" name="nombre_usuario" placeholder="Nombre Usuario">
             <label for="floatingInput">Nombre Usuario</label>
           </div> 
          comment -->
           <div class="form-floating">
-            <input type="password" class="form-control rounded" id="floatingPassword" placeholder="Contraseña">
+            <input type="password" class="form-control rounded" id="floatingPassword" name="password" placeholder="Contraseña">
             <label for="floatingPassword">Contraseña</label>
           </div>
           <div class="checkbox mb-3">

@@ -29,6 +29,13 @@ class FrontController{
                     $controler->login();
                     }
                     ,'get');
+                    
+           Route::add('/login',
+                    function(){
+                    $controler = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controler->loginUser();
+                    }
+                    ,'post');
   
             
              /*DESLOGUEAR USUARIO*/
