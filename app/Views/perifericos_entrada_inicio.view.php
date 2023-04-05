@@ -124,13 +124,199 @@
         
         <div class="row h-auto" id="cuerpo_productos">
             <section class="col-12 col-md-10 bg-light m-auto">
-                <p>text</p>
+                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">
+                    <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+                    
+                                        <article class="caja_producto col">
+                        <header class="d-flex">
+                            <!-- URL de la imagen también -->
+                        <img src="assets/img/raton_ejemplo.png" alt="imagen_ejemplo"/>
+                        </header>
+                        <!-- PHP en función si esta o no en oferta -->
+                        <div class="col-12 p-1">
+                            <div class="col-6 text-success text-center border border-success rounded">
+                                Oferta
+                            </div>
+                        </div>
+                        <!-- Contenido de aquí por PHP -->
+                        <h5 class="text-center border-dark border-bottom p-2">Nombre Del Periférico - Características</h5>
+                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
+                            <h4 class="col-6">23,56€</h4>
+                            <!-- PHP danger si esta agotado o primary si está disponible -->
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                        </div>
+                        <p class="text-secondary m-0 text-center text-md-start">Vendido Por: Proveedor X</p>
+                    </article>
+
+                </div>
             </section>
             
             <!-- PAGINAR -->
-            <footer class="mt-2 col-12 col-md-8 col-lg-6 col-xl-4 m-auto bg-light rounded">
+            <footer class="mt-2 mb-2 col-12 col-md-8 col-lg-6 col-xl-4 m-auto bg-light rounded">
                 <nav id="paginas">
-                    <ul class="d-flex justify-content-around flex-wrap">
+                    <ul class="d-flex justify-content-center flex-wrap">
                         <li><a href="url"><< Primera</a></li>
                         <li><a href="url">< Anterior</a></li>
                         <li><a href="url">Actual</a></li>

@@ -67,6 +67,26 @@
 
 #paginas a{
     text-decoration: none;
+    color: #000;
+}
+
+#paginas a:hover{
+    text-decoration:underline;
+    color: orangered;
+    transition-duration: 0.7s;
+}
+
+#paginas li{
+    padding: 3%;
+}
+
+.caja_producto{
+    padding: 1%;
+}
+
+.caja_producto * img{
+    width: 90%;
+    margin: auto;
 }
 
 /*MEDIAS*/
