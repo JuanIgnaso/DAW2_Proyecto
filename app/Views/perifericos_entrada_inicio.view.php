@@ -11,6 +11,8 @@
     <!-- Quiźas utilice plantillas??? -->
     <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="assets/css/comun.css">
+    <link rel="stylesheet" href="assets/css/lista_productos.css"> 
+    
     <!-- FAVICON -->
     <link rel="icon" type="image/x-icon" href="assets/svg/gallaecia-pc-favicon.svg">
     <title>Página De Inicio</title>
@@ -70,5 +72,73 @@
               </header>
         </div>
         <div class="row">
-            <h2 class="display-3">Texto de Ejemplo</h2>
+            <header class=" header_Seccion col-12 text-center text-md-start">
+                <ol class="navegador_secundario d-flex justify-content-md-start justify-content-center gap-2 m-0">
+                    <li><a href="/">Inicio</a></li>
+                    <li>|</li>
+                    <!-- Editable tabién, cambia en funcion del tipo de producto -->
+                    <li>Perifércos De Entrada</li>
+                </ol>
+                <!-- TEXTO DEL H1 Y PARRAFO DESCRIPTIVO EDITABLES, DEPENDE DEL TIPO DE PRODUCTO -->
+                <section class="col-12 col-md-8">
+                        <h1 class="display-2 titulo_seccion">Periféricos De Entrada</h1>
+                        <p class="text-light">Esta es la sección de periféricos de entrada, los cuales sirven para que el propio usuario se pueda comunicar con el equipo; Disfruta del amplio catálogo de periféricos de entrada con variedad de marcas, entre nuestros productos están ratones, teclados y tablets gráficas.</p>
+                </section>
+
+            </header>
+     
+        </div>
+        <div class="row">
+            <header class="col-12 p-0">
+                <h2 class="display-6 text-center pt-5">Barra De Búsqueda</h2>
+                <p class="p-0 m-0 text-center">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>
+                <div class="col-12" id="barra_nav_busqueda">
+                    <div class="col-12 col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
+                     <ul class="nav col-auto m-auto mb-2 justify-content-center gap-3 mb-md-0">
+                         <li>
+                              <button class="dropbtn nav-link px-2 link-secondary rounded">Precio Mayor</button>
+                         </li>
+                        
+                        <li>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded">Precio Menor</button>
+                        </li>
+                        
+                         <li>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded">Disponibilidad</button>
+                        </li>
+                        
+                        <li>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded">Novedades</button>
+                        </li>
+
+                    </ul>
+                        <form role="search" class="col-auto m-auto col-md-2">
+                          <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar">
+                        </form>
+                  </div>
+                </div>
+            </header>     
+        </div>
+        
+        <!-- SECCIÓN -->
+        
+        <div class="row h-auto" id="cuerpo_productos">
+            <section class="col-12 col-md-10 bg-light m-auto">
+                <p>text</p>
+            </section>
+            
+            <!-- PAGINAR -->
+            <footer class="mt-2 col-12 col-md-8 col-lg-6 col-xl-4 m-auto bg-light rounded">
+                <nav id="paginas">
+                    <ul class="d-flex justify-content-around flex-wrap">
+                        <li><a href="url"><< Primera</a></li>
+                        <li><a href="url">< Anterior</a></li>
+                        <li><a href="url">Actual</a></li>
+                        <li><a href="url">Siguiente ></a></li>
+                        <li><a href="url">Ultima >></a></li>
+                    </ul>
+
+                </nav>
+            </footer>
+               
         </div>

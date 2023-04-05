@@ -1,0 +1,78 @@
+.titulo_seccion
+{
+    color: orangered;
+}
+
+
+
+.header_Seccion
+{
+    background-image: url('../img/perifericos_entrada.jpg');
+    object-fit: cover;
+}
+
+.navegador_secundario{
+    color: #fff;
+    list-style: none;
+    padding: 0;
+}
+
+.navegador_secundario a{
+    text-decoration: none;
+    color: #fff;
+}
+
+#barra_nav_busqueda{
+    border-top: 2px solid orangered;
+    border-bottom: 2px solid orangered;
+}
+
+#barra_nav_busqueda button{
+    color: orangered !important;
+    background-color: #fff;
+    border: 1px orangered solid;
+}
+
+#barra_nav_busqueda button:focus{
+
+    background-color: orangered;
+    color: #fff !important;
+    transition-duration: 0.7s;
+}
+
+#barra_nav_busqueda button:hover{
+
+    background-color: orangered;
+    color: #fff !important;
+    transition-duration: 0.7s;
+}
+
+#buscar{
+    border: 1px solid orangered !important;
+}
+
+::placeholder{
+    color:orangered !important;
+}
+
+#cuerpo_productos{
+    background-color: lightgray !important;
+}
+
+#paginas ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#paginas a{
+    text-decoration: none;
+}
+
+/*MEDIAS*/
+
+@media screen and (max-width: 500px){
+    #paginas a{
+    font-size: 0.65em;
+}
+}
