@@ -120,6 +120,7 @@ transition-duration: 0.7s;
     box-shadow: 5px 5px 32px 3px #000000;
     z-index: 1;
   }
+
   
   /* Links inside the dropdown */
   .dropdown-content  > a {
@@ -202,7 +203,7 @@ padding: 2%;
 {
     font-family: 'Potta One', 'Staatliches', cursive;
     color:#272727;
-    padding: 2%;
+    padding: 1%;
     border: #272727 1px solid;
     text-decoration: none;
 }

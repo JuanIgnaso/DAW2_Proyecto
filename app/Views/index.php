@@ -108,17 +108,26 @@
                 <h2 class="display-2 text-center mb-2">Nuestros Productos</h2>
               </header>
               <div class="col-8 col-md-6 col-lg-3 mb-3 mb-lg-0 productos-box">
-                <img src="assets/svg/mouse-solid.svg" alt="icono_raton" width="140" height="140">
-                <h2 class="fw-normal text-center">Periféricos Entrada</h2>
-                <p>Teclados, Ratones... tablets hecha un vistazo a nuestros periféricos de entrada.</p>
+                <img src="assets/svg/gamepad-solid.svg" alt="icono_raton" width="140" height="140">
+                <h2 class="fw-normal text-center">Consolas</h2>
+                <p>Si Ordenadores no es lo tuyo, hecha un vistazo a nuestros packs consolas.</p>
                 <a href="/perifericos_entrada" role="button" class="rounded enlace_productos">Ver Productos</a>
               </div><!-- /.col-lg-4 -->
 
               <div class="col-8 col-md-6 col-lg-3 mb-3 mb-lg-0 productos-box">
                 <img src="assets/svg/tv-solid.svg" alt="icono_monitor" width="140" height="140">
-                <h2 class="fw-normal">Periféricos Salida</h2>
-                <p>Podrás ver altavoces y monitores con una gran variedad y marcas.</p>
-                <a href="" role="button" class="rounded enlace_productos">Ver Productos</a>
+                <h2 class="fw-normal">Periféricos</h2>
+                <p>Podrás ver númerosos perifericos de entrada y salida con numerosas marcas.</p>
+                <div class="dropdown">
+                      <button class="rounded enlace_productos">Ver Productos</button>
+                      <div class="dropdown-content" style="left: 100% !important; bottom: 0% !important;">
+                        <a href="#">Teclados</a>
+                        <a href="/perifericos_entrada">Ratones</a>
+                        <a href="#">Monitores</a>
+                        <a href="#">Sillas</a>
+                        <a href="#">Mandos</a>
+                      </div>
+                    </div>
               </div><!-- /.col-lg-4 -->
 
               <div class="col-8 col-md-6 col-lg-3 mb-3 mb-lg-0 productos-box">
