@@ -3,13 +3,16 @@
     color: orangered;
 }
 
-
+#cabeza{
+    margin-bottom: 1px;
+}
 
 .header_Seccion
 {
     background-image: url('../img/perifericos_entrada.jpg');
     object-fit: cover;
 }
+
 
 .navegador_secundario{
     color: #fff;
@@ -87,6 +90,20 @@
 .caja_producto * img{
     width: 90%;
     margin: auto;
+}
+
+.caja_producto a{
+    text-decoration: none;
+    font-family: 'Potta One', 'Staatliches', cursive !important;
+}
+
+.caja_producto a:hover{
+color:orangered !important;
+transition-duration: 0.5s;
+}
+
+#error_mostrar{
+    height: 50vh;
 }
 
 /*MEDIAS*/

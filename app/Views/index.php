@@ -121,11 +121,11 @@
                 <div class="dropdown">
                       <button class="rounded enlace_productos">Ver Productos</button>
                       <div class="dropdown-content" style="left: 100% !important; bottom: 0% !important;">
-                        <a href="#">Teclados</a>
-                        <a href="/perifericos_entrada">Ratones</a>
-                        <a href="#">Monitores</a>
-                        <a href="#">Sillas</a>
-                        <a href="#">Mandos</a>
+                        <a href="/productos/Teclados">Teclados</a>
+                        <a href="/productos/Ratones">Ratones</a>
+                        <a href="/productos/Monitores">Monitores</a>
+                        <a href="/">Sillas</a>
+                        <a href="/">Mandos</a>
                       </div>
                     </div>
               </div><!-- /.col-lg-4 -->
