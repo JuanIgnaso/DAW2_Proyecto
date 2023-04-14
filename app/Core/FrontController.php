@@ -23,29 +23,13 @@ class FrontController{
                     ,'get');
                     
                     /*MOSTRAR TECLADOS*/
-                        Route::add('/productos/Teclados',
-                    function(){
+                        Route::add('/productos/categoria/([A-Za-z0-9]+)',
+                    function($id){
                     $controler = new \Com\Daw2\Controllers\InicioController();
-                    $controler->lista_teclados();
+                    $controler->lista_productos($id);
                     }
                     ,'get');
-                    
-                    /*MOSTRAR RATONES*/
-                    Route::add('/productos/Ratones',
-                    function(){
-                    $controler = new \Com\Daw2\Controllers\InicioController();
-                    $controler->lista_ratones();
-                    }
-                    ,'get');
-                
-                    
-                                        /*MOSTRAR MONITORES*/
-                    Route::add('/productos/Monitores',
-                    function(){
-                    $controler = new \Com\Daw2\Controllers\InicioController();
-                    $controler->lista_monitores();
-                    }
-                    ,'get');
+
                     
         
                     
