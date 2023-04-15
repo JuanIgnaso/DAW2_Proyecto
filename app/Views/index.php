@@ -108,7 +108,7 @@
                 <img src="/assets/svg/gamepad-solid.svg" alt="icono_raton" width="140" height="140">
                 <h2 class="fw-normal text-center">Consolas</h2>
                 <p>Si Ordenadores no es lo tuyo, hecha un vistazo a nuestros packs consolas.</p>
-                <a href="/perifericos_entrada" role="button" class="rounded enlace_productos">Ver Productos</a>
+                <a href="/productos/categoria/6" role="button" class="rounded enlace_productos">Ver Productos</a>
               </div><!-- /.col-lg-4 -->
 
               <div class="col-8 col-md-6 col-lg-3 mb-3 mb-lg-0 productos-box">
@@ -131,14 +131,14 @@
                 <img src="/assets/svg/laptop-solid.svg" alt="icono_ordenador" width="140" height="140">    
                 <h2 class="fw-normal">PCs Montados</h2>
                 <p>Si lo que quieres es comprar ordenadores hechos listos para usar, pincha aquí.</p>
-                <a href="" role="button" class="rounded enlace_productos">Ver Productos</a>   
+                <a href="/productos/categoria/10" role="button" class="rounded enlace_productos">Ver Productos</a>   
               </div><!-- /.col-lg-4 -->
 
               <div class="col-8 col-md-6 col-lg-3 mb-3 mb-lg-0 productos-box">
                 <img src="/assets/svg/microsoft.svg" alt="icono_sistema_operativo" width="140" height="140">    
                 <h2 class="fw-normal">Sistemas Operativos</h2>
                 <p>No hay nada más importante para poder usar un PC, desde Windows hasta distribuciones Linux.</p>
-                <a href="" role="button" class="rounded enlace_productos">Ver Productos</a>   
+                <a href="/productos/categoria/11" role="button" class="rounded enlace_productos">Ver Productos</a>   
               </div>
 
             </section>

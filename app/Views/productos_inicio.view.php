@@ -80,7 +80,7 @@
                         <!-- Contenido de aquí por PHP -->
                         <a class="h5 text-center border-dark text-dark" href=""><?php echo $producto['nombre'];?></a>
                         <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
-                            <h4 class="col-6"><?php echo $producto['precio'];?>€</h4>
+                            <h4 class="col-6"><?php echo $producto['precio'] * ($producto['iva'] / 100 + 1);?>€</h4>
                             <!-- PHP danger si esta agotado o primary si está disponible -->
                             <?php
                             if($producto['stock'] != 0){
@@ -100,7 +100,7 @@
                   }
                 ?>    
                        
-
+i
                 </div>
                 <?php
                 }
