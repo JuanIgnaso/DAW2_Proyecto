@@ -25,6 +25,11 @@
     color: #fff;
 }
 
+.producto-estado h5
+{
+    font-size: 1.35em;
+}
+
 #barra_nav_busqueda{
     border-top: 2px solid orangered;
     border-bottom: 2px solid orangered;
@@ -111,5 +116,10 @@ transition-duration: 0.5s;
 @media screen and (max-width: 500px){
     #paginas a{
     font-size: 0.65em;
+}
+
+.producto-estado h5
+{
+    font-size: 1.15em;
 }
 }

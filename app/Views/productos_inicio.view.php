@@ -24,25 +24,25 @@
                     <div class="col-12 col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
                      <ul class="nav col-auto m-auto mb-2 justify-content-center gap-3 mb-md-0">
                          <li>
-                              <button class="dropbtn nav-link px-2 link-secondary rounded">Precio Mayor</button>
+                             <button class="dropbtn nav-link px-2 link-secondary rounded" name="precio_mayor"><a href="<?php echo $direccion;?>?filterby=1">Precio Mayor</a></button>
                          </li>
                         
                         <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded">Precio Menor</button>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded" name="precio_menor"><a href="<?php echo $direccion;?>?filterby=2">Precio Menor</a></button>
                         </li>
                         
                          <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded">Disponibilidad</button>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded" name="disponibilidad"><a href="<?php echo $direccion;?>?filterby=3">Disponibilidad</a></button>
                         </li>
                         
                         <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded">Novedades</button>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded" name="novedades"><a href="<?php echo $direccion;?>?filterby=4">Novedades</a></button>
                         </li>
 
                     </ul>
-                        <form role="search" class="col-auto m-auto col-md-2">
+                        <div role="search" class="col-auto m-auto col-md-2">
                           <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar">
-                        </form>
+                        </div>
                   </div>
                 </div>
             </header>     
@@ -79,8 +79,8 @@
                         </div>
                         <!-- Contenido de aquí por PHP -->
                         <a class="h5 text-center border-dark text-dark" href=""><?php echo $producto['nombre'];?></a>
-                        <div class="col-12w d-flex align-items-center border-dark border-bottom p-2">
-                            <h4 class="col-6"><?php echo $producto['precio'] * ($producto['iva'] / 100 + 1);?>€</h4>
+                        <div class="col-12 d-flex flex-column flex-sm-row align-items-center border-dark border-bottom p-2 producto-estado">
+                            <h5 class="col-6 text-center text-sm-left"><?php echo round($producto['precio'],2);?>€</h5>
                             <!-- PHP danger si esta agotado o primary si está disponible -->
                             <?php
                             if($producto['stock'] != 0){
@@ -89,7 +89,7 @@
                             <?php
                             }else{
                             ?>
-                            <h5 class="col-6 text-danger text-center border border-danger rounded p-2">Agotado</h5>
+                            <h5 class="col-8 col-sm-6 text-danger text-center border border-danger rounded p-2">Agotado</h5>
                             <?php
                             }
                             ?>
@@ -100,7 +100,7 @@
                   }
                 ?>    
                        
-i
+
                 </div>
                 <?php
                 }

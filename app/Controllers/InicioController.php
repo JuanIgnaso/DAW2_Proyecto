@@ -17,6 +17,7 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
         $category_info = $modelCategoria->selectCategory($id);
         $data = [];
+        $data['direccion'] = '/productos/categoria/'.$id;
         $data['titulo'] = 'Productos - '.$category_info['nombre_categoria'];
         $data['descripcion'] = $category_info['descripcion'];
         $data['seccion'] = $category_info['nombre_categoria'];
