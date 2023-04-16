@@ -21,7 +21,7 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         $data['titulo'] = 'Productos - '.$category_info['nombre_categoria'];
         $data['descripcion'] = $category_info['descripcion'];
         $data['seccion'] = $category_info['nombre_categoria'];
-        $data['productos'] = $model->showCategory($id);
+        $data['productos'] = $model->showCategory($id,$_GET);
         
         $data['error'] = 'No se encuentran aún productos registrados.';
           $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','productos_inicio.view.php','templates/footer.view.php'),$data);

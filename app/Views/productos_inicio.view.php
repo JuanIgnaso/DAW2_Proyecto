@@ -17,6 +17,7 @@
      
         </div>
         <div class="row">
+            <form method="get"  action="<?php echo $direccion;?>" class="p-0">
             <header class="col-12 p-0">
                 <h2 class="display-6 text-center pt-5">Barra De Búsqueda</h2>
                 <p class="p-0 m-0 text-center">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>
@@ -24,19 +25,19 @@
                     <div class="col-12 col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
                      <ul class="nav col-auto m-auto mb-2 justify-content-center gap-3 mb-md-0">
                          <li>
-                             <button class="dropbtn nav-link px-2 link-secondary rounded" name="precio_mayor"><a href="<?php echo $direccion;?>?filterby=1">Precio Mayor</a></button>
+                             <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=1">Precio Mayor</a></button>
                          </li>
                         
                         <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded" name="precio_menor"><a href="<?php echo $direccion;?>?filterby=2">Precio Menor</a></button>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=2">Precio Menor</a></button>
                         </li>
                         
                          <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded" name="disponibilidad"><a href="<?php echo $direccion;?>?filterby=3">Disponibilidad</a></button>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=3">Disponibilidad</a></button>
                         </li>
                         
                         <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded" name="novedades"><a href="<?php echo $direccion;?>?filterby=4">Novedades</a></button>
+                            <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=4">Novedades</a></button>
                         </li>
 
                     </ul>
@@ -45,13 +46,14 @@
                         </div>
                   </div>
                 </div>
-            </header>     
+            </header>  
+            </form>    
         </div>
         
         <!-- SECCIÓN -->
         
         <div class="row h-auto" id="cuerpo_productos">
-            <section class="col-12 col-md-10 bg-light m-auto">
+            <section class="col-12 col-md-10 bg-light m-auto   border rounded mt-2">
                 <?php
                 if(is_null($productos)){
                 ?>
