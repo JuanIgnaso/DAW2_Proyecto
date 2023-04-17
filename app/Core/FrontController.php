@@ -22,7 +22,7 @@ class FrontController{
                     }
                     ,'get');
                     
-                    /*MOSTRAR TECLADOS*/
+                    /*MOSTRAR LISTADO DE PRODUCTOS*/
                         Route::add('/productos/categoria/([A-Za-z0-9]+)',
                     function($id){
                     $controler = new \Com\Daw2\Controllers\InicioController();
@@ -57,20 +57,27 @@ class FrontController{
                      }
                      ,'get');        
                     
-          /*
-
-                   Route::add('/', 
-                function(){
-                    $controlador = new \Com\Daw2\Controllers\InicioController();
-                    $controlador->index();
-                }
-                , 'get');     
+                     
+       if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['usuarios'])){
            
-            
-           */
-        
-        
-        
+                       /*MOSTRAR USUARIOS(PROVISIONAL)*/
+          Route::add('/usuarios/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                     $controller->showAdd();
+                     }
+                     ,'get');     
+       
+                  Route::add('/usuarios/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                     $controller->addUser();
+                     }
+                     ,'post');  
+           
+       }              
+                     
+  
         /*
 
   Enlaces a manejo de usuarios*******************************************
@@ -90,41 +97,10 @@ class FrontController{
            , 'post'); */
            
          
-           
-           
-          
-/**********************************************************************/                
-                
-        
-/***********************************************************************/
-
-                
-                /*
-                ENCARGADOS PRODUCTOS
-                */
-                
-                
-                
-                /*
-                ENCARGADOS PROVEEDORES    
-                 */
-
-
-
-                
 
                 /******CATEGORÍAS******/
 
-                                
-                
-
-                
-               
-
-                
-
-
-                
+             
                     
         Route::methodNotAllowed(
             function(){

@@ -30,4 +30,33 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         }
         $this->view->show('login.php',$_vars);
     }
+    
+    //Para cargar la vista provisional del usuario
+    //ES PROVISIONAL Y DE TESTEO POR EL MOMENTO NO TIENE COMPROBACIONES DE VALORES ERRONEOS
+    function showAdd(){
+        $data = [];
+        $rolModel = new \Com\Daw2\Models\RolModel();
+        $rol = $rolModel->getUsersRol();
+        $data['roles'] = $rol;
+        $data['titulo'] = 'Añadir Usuarios(Provisional)';
+        $data['seccion'] = '/usuarios/add';
+        $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','addUsersTest.view.php','templates/footer.view.php'),$data);
+    }
+    
+    //ES PROVISIONAL Y DE TESTEO PARA PODER AÑADIR USUARIOS A LA BBDD
+    //POR EL MOMENTO NO TIENE COMPROBACIONES DE VALORES ERRONEOS
+    function addUser(){
+       $rolModel = new \Com\Daw2\Models\RolModel();
+       $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+       $rol = $rolModel->getUsersRol();
+       $data = [];
+       $data['roles'] = $rol;
+       $data['titulo'] = 'Añadir Usuarios(Provisional)';
+       $data['seccion'] = '/usuarios/add';
+       $result = $model->addUser($_POST);
+       if($result){
+           header('Location: /');
+       }   
+ 
+    }
 }

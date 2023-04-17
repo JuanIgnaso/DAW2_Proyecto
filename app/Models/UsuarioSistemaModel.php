@@ -18,7 +18,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         $query->execute([$email]);
         //Si se encuentran coincidencias
          if($row = $query->fetch()){
-             if($pass == $row['pass']){
+             if(password_verify($pass,$row['pass'])){
                  return $this->rowToUsuarioSistema($row);
              }else{
                  return NULL;
@@ -29,8 +29,20 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         
     }
     
+    /*
+     * Devuelve el usuario convertido en objeto para usar luego
+     */
     private function rowToUsuarioSistema(array $row): ?\Com\Daw2\Helpers\UsuarioSistema{
         $rol = new \Com\Daw2\Helpers\Rol($row['id_rol'],$row['nombre_rol'],$row['descripcion']);
         return new \Com\Daw2\Helpers\UsuarioSistema($row['id_usuario'],$rol,$row['email'],$row['nombre_usuario']);
     }
+    
+    /*
+    Añadir usuario a la bbdd
+     */
+    function addUser(array $post):bool{
+        $stmt = $this->pdo->prepare('INSERT INTO usuarios_test(id_rol,email,nombre_usuario,pass,baja,cartera) values(?,?,?,?,0,0.0)');
+        return $stmt->execute([$post['rol'][0],$post['email'],$post['nombre'],password_hash($post['pass'],PASSWORD_DEFAULT)]);     
+    }
+    
 }
