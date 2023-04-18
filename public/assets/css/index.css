@@ -109,6 +109,7 @@ transition-duration: 0.7s;
   .dropdown {
     position: relative;
     display: inline-block;
+
   }
   
   /* Dropdown Content (Hidden by Default) */
@@ -203,9 +204,12 @@ padding: 2%;
 {
     font-family: 'Potta One', 'Staatliches', cursive;
     color:#272727;
-    padding: 1%;
+    padding: 2%;
     border: #272727 1px solid;
+    background-color: unset;
     text-decoration: none;
+    max-width: 124px;
+  
 }
 
 .enlace_productos:hover

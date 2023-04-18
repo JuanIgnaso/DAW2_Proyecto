@@ -19,7 +19,7 @@
     <!-- Vía JsDelivr -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
     <div class="container-fluid">
-        <div class="row h-100">
+        <div class="row h-100">         
             <div id="cabecera" class="col-12 d-flex flex-column justify-content-center">
               <h1 id="titulo_inicio">Gallaecia PCs</h1>
               <p>Bienvenido a nuestra Web! en la cual disponemos de lo último en PC montados, lo mejor para tí!.</p>
@@ -116,7 +116,7 @@
                 <h2 class="fw-normal">Periféricos</h2>
                 <p>Podrás ver númerosos perifericos de entrada y salida con numerosas marcas.</p>
                 <div class="dropdown">
-                      <button class="rounded enlace_productos">Ver Productos</button>
+                    <div class="rounded enlace_productos" role="button">Ver Productos</div>
                       <div class="dropdown-content" style="left: 100% !important; bottom: 0% !important;">
                         <a href="/productos/categoria/2">Teclados</a>
                         <a href="/productos/categoria/7">Ratones</a>

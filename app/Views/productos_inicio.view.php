@@ -25,24 +25,25 @@
                     <div class="col-12 col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
                      <ul class="nav col-auto m-auto mb-2 justify-content-center gap-3 mb-md-0">
                          <li>
-                             <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=1">Precio Mayor</a></button>
+                             <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=1">Precio Mayor</a>
                          </li>
                         
                         <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=2">Precio Menor</a></button>
+                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=2">Precio Menor</a>
                         </li>
                         
                          <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=3">Disponibilidad</a></button>
+                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=3">Disponibilidad</a>
                         </li>
                         
                         <li>
-                            <button class="dropbtn nav-link px-2 link-secondary rounded"><a href="<?php echo $direccion;?>?filterby=4">Novedades</a></button>
+                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=4">Novedades</a>
                         </li>
 
                     </ul>
-                        <div role="search" class="col-auto m-auto col-md-2">
+                        <div role="search" class="col-auto m-auto col-md-2 d-flex align-items-center gap-2">
                           <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar">
+                          <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffbda4;"></i>
                         </div>
                   </div>
                 </div>

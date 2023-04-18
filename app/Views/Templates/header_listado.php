@@ -11,7 +11,8 @@
     <!-- Quiźas utilice plantillas??? -->
     <link rel="stylesheet" href="/assets/css/index.css">
     <link rel="stylesheet" href="/assets/css/comun.css">
-    <link rel="stylesheet" href="/assets/css/lista_productos.css"> 
+    <link rel="stylesheet" href="/assets/css/lista_productos.css">
+    <link rel="stylesheet" href="/assets/css/fontawesome/css/all.css"/>
     
     <!-- FAVICON -->
     <link rel="icon" type="image/x-icon" href="/assets/svg/gallaecia-pc-favicon.svg">
