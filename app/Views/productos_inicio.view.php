@@ -20,33 +20,46 @@
             <form method="get"  action="<?php echo $direccion;?>" class="p-0">
             <header class="col-12 p-0">
                 <h2 class="display-6 text-center pt-5">Barra De Búsqueda</h2>
-                <p class="p-0 m-0 text-center">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>
+                <p class="p-0 m-0 text-center mb-2">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>
+                <!-- BARRA DE BÚSQUEDA -->
                 <div class="col-12" id="barra_nav_busqueda">
-                    <div class="col-12 col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
-                     <ul class="nav col-auto m-auto mb-2 justify-content-center gap-3 mb-md-0">
+                    <div class="col-12  col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
+                     <ul class="nav col-auto m-auto mb-2  justify-content-center gap-1 gap-md-2 gap-lg-3 mb-md-0">
                          <li>
-                             <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=1">Precio Mayor</a>
+                             <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=1<?php echo $queryString; ?>">Precio Mayor</a>
                          </li>
                         
                         <li>
-                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=2">Precio Menor</a>
+                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=2<?php echo $queryString; ?>">Precio Menor</a>
                         </li>
                         
                          <li>
-                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=3">Disponibilidad</a>
+                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=3<?php echo $queryString; ?>">Disponibilidad</a>
                         </li>
                         
                         <li>
-                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=4">Novedades</a>
+                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=4<?php echo $queryString; ?>">Novedades</a>
+                        </li>
+                        
+                        <li>
+                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>">Relevancia</a>
                         </li>
 
                     </ul>
-                        <div role="search" class="col-auto m-auto col-md-2 d-flex align-items-center gap-2">
-                          <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar">
-                          <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffbda4;"></i>
+                        <div role="search" class="col-10 col-sm-6 col-md-4 col-lg-auto m-auto  d-flex align-items-center gap-2">
+                          <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar" name="nombre">
+                         <button class='btn btn-default' type='submit' value='submit'>
+                                <i class="fa-solid fa-magnifying-glass fa-xl" id="id_buscar_icon"></i>
+                           </button>
+                          <select name="buscar_por" id="id_buscar_por" class="border rounded">
+                            <option value="nombre">Nombre</option>
+                            <option value="marca">Marca</option>
+                            <option value="nombre_proveedor">Proveedor</option>
+                          </select>
                         </div>
                   </div>
                 </div>
+                <!-- -->
             </header>  
             </form>    
         </div>

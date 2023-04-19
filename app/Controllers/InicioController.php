@@ -31,6 +31,14 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         $data['seccion'] = $category_info['nombre_categoria'];
         $data['categoria'] = $modelCategoria->getAll();
         $data['productos'] = $model->showCategory($id,$_GET);
+        
+        $copiaGET = $_GET;
+        unset($copiaGET['filterby']);
+        if(count($copiaGET) > 0){
+            $data['queryString'] = "&".http_build_query($copiaGET);
+        }else{
+            $data['queryString'] = "";
+        }
   
         $data['error'] = 'No se encuentran aún productos registrados.';
           $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','productos_inicio.view.php','templates/footer.view.php'),$data);
@@ -42,7 +50,7 @@ class InicioController extends \Com\Daw2\Core\BaseController{
     /*Se lanza este método cuando el valor devuelto es false*/
     private function errorLoadCategory($id){
         $data = [];
-        $data['titulo'] = 'Error';
+        $data['titulo'] = 'Error'; 
         $data['mensaje'] = "No se puede encontrar registro <span class='text-danger'>".$id."</span> de datos en la tabla categorías";
         $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','errorCargarCategoria.view.php','templates/footer.view.php'),$data);
         

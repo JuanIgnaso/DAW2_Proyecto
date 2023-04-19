@@ -11,6 +11,7 @@
     <!-- Quiźas utilice plantillas??? -->
     <link rel="stylesheet" href="/assets/css/index.css">
     <link rel="stylesheet" href="/assets/css/comun.css">
+    <link rel="stylesheet" href="/assets/css/fontawesome/css/all.css"/>
     <!-- FAVICON -->
     <link rel="icon" type="image/x-icon" href="assets/svg/gallaecia-pc-favicon.svg">
     <title>Página De Inicio</title>
@@ -60,7 +61,7 @@
                     if(isset($_SESSION['usuario'])){
                     ?>
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
-                    <p class="col-auto text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
+                    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></i><p class="col-auto text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
                     <button type="button" class="btn btn-outline-light"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php

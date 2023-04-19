@@ -111,6 +111,29 @@ transition-duration: 0.5s;
     height: 50vh;
 }
 
+#volver
+{
+    font-family: 'Potta One', 'Staatliches', cursive !important;
+}
+
+#id_buscar_icon
+{
+    transition-duration: 0.7s;
+    color: #ffbda4;
+}
+
+#id_buscar_icon:hover
+{
+    color: orangered;
+}
+
+#id_buscar_por
+{
+    border: orangered 1px solid !important;
+    color:orangered;
+    background-color:unset;
+}
+
 /*MEDIAS*/
 
 @media screen and (max-width: 500px){
