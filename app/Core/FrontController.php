@@ -29,6 +29,13 @@ class FrontController{
                     $controler->lista_productos($id);
                     }
                     ,'get');
+                    
+                    Route::add('/productos/product_detail',
+                    function(){
+                    $controler = new \Com\Daw2\Controllers\InicioController();
+                    $controler->load_product();
+                    }
+                    ,'get');
 
                     
         

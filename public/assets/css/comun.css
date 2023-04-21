@@ -20,7 +20,7 @@ body,html{
 }
 
 
-h1,h2,h3,h4,h5,li{
+h1,h2,h3,h4,h5,.navegador li{
     font-family: 'Potta One', 'Staatliches', cursive !important;
     margin: 0;
 
@@ -32,3 +32,6 @@ h1,h2,h3,h4,h5,li{
     background-color: #272727;
 }
 
+nav ol{
+    list-style: none;
+}

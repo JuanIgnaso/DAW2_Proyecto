@@ -18,11 +18,17 @@
     color: #fff;
     list-style: none;
     padding: 0;
+    
 }
 
 .navegador_secundario a{
     text-decoration: none;
     color: #fff;
+     
+}
+
+.navegador_secundario li{
+    font-family: 'Potta One', 'Staatliches', cursive !important;
 }
 
 .producto-estado h5
@@ -33,12 +39,14 @@
 #barra_nav_busqueda{
     border-top: 2px solid orangered;
     border-bottom: 2px solid orangered;
+    
 }
 
 #barra_nav_busqueda a{
     color: orangered !important;
     background-color: #fff !important;
     border: 1px orangered solid;
+    font-family: 'Potta One', 'Staatliches', cursive !important;
 }
 
 #barra_nav_busqueda a:focus{
@@ -132,6 +140,10 @@ transition-duration: 0.5s;
     border: orangered 1px solid !important;
     color:orangered;
     background-color:unset;
+}
+
+.cabecera_lista_productos a:hover{
+   color: orangered;
 }
 
 /*MEDIAS*/

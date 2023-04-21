@@ -1,0 +1,66 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20 abr 2023, 23:17:19
+    Author     : USUARIO
+*/
+
+#navegador_Sec ol li::before {
+  content: " | ";
+}
+
+#navegador_Sec{
+    border-bottom: 1px solid #272727;
+}
+
+#lista_caracteristicas ul li span{
+    font-family: 'DM Sans','Space Grotesk',sans-serif !important;
+}
+
+#lista_caracteristicas li strong{
+      font-family: 'Potta One', 'Staatliches', cursive !important; 
+}
+
+.divisor{
+    height: 1vh;
+    background-color: orangered;
+}
+
+#detalles_box ol{
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#modal_btn{
+    border: none;
+    background: none;
+    bottom: 0;
+    right: 0;
+}
+
+#marca_box{
+    font-size: 0.8rem;
+}
+
+#marca_box li:before{
+    content: ' | ';
+}
+
+#precio-box{
+    color:orangered;
+}
+
+#garantia-box{
+    background-color:lightsalmon;
+}
+
+#envio-box{
+    background-color:lightgray;
+}
+
+#envio_Details:before{
+      content: ' | ';  
+}

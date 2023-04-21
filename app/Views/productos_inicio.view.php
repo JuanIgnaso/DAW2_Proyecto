@@ -19,8 +19,8 @@
         <div class="row">
             <form method="get"  action="<?php echo $direccion;?>" class="p-0">
             <header class="col-12 p-0">
-                <h2 class="display-6 text-center pt-5">Barra De Búsqueda</h2>
-                <p class="p-0 m-0 text-center mb-2">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>
+                <h2 class="display-6 text-left pt-5 ps-2">Barra De Búsqueda</h2>
+                <p class="p-0 m-0 text-md-left mb-3 ps-2">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>
                 <!-- BARRA DE BÚSQUEDA -->
                 <div class="col-12" id="barra_nav_busqueda">
                     <div class="col-12  col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
@@ -40,11 +40,6 @@
                         <li>
                             <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=4<?php echo $queryString; ?>">Novedades</a>
                         </li>
-                        
-                        <li>
-                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>">Relevancia</a>
-                        </li>
-
                     </ul>
                         <div role="search" class="col-10 col-sm-6 col-md-4 col-lg-auto m-auto  d-flex align-items-center gap-2">
                           <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar" name="nombre">
@@ -67,18 +62,20 @@
         <!-- SECCIÓN -->
         
         <div class="row h-auto" id="cuerpo_productos">
-            <section class="col-12 col-md-10 bg-light m-auto   border rounded mt-2">
+            <section class="col-12 col-md-10 bg-light m-auto border rounded mt-2 p-2">
                 <?php
                 if(is_null($productos)){
                 ?>
                 <div class="d-flex justify-content-center align-items-center" id="error_mostrar">
-                    <p class="text-danger text-center">No se encuentran registros en estos momentos</p>
+                    <p class="text-danger text-center ">No se encuentran registros en estos momentos</p>
                 </div>
                 <?php
                 }else{
                 ?>
+                    <header class="col-12 text-center cabecera_lista_productos border-bottom border-secondary">
+                       <a class="btn p-2" href="<?php echo $direccion;?>">Reinciar Filtros</a>
+                    </header>
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">
-                    
                   <?php
                   foreach($productos as $producto){
                   ?>  

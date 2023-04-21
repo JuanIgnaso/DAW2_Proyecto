@@ -17,18 +17,8 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
     private const _DEFAULT_ORDER = ' ORDER BY codigo_producto';
     
     function showCategory($id,$filtros): ?array {
-        
-        if(isset($filtros['filterby']) && filter_var($filtros['filterby'],FILTER_VALIDATE_INT)){
-            if($filtros['filterby'] <= count(self::_FILTER_BY) && $filtros['filterby'] >= 1){
-                $fieldOrder = self::_FILTER_BY[$filtros['filterby']];
-            }else{
-               
-                $fieldOrder = self::_DEFAULT_ORDER;
-            }
-        }else{
-                //$filtros['filterby'] = self::DEFAULT_ORDER;
-                $fieldOrder = self::_DEFAULT_ORDER;
-        }       
+      try{        
+         $fieldOrder = $this->orderBy($filtros);
         if(isset($filtros['buscar_por'])){
 
         $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=? AND '.$filtros['buscar_por'].' LIKE ?'.$fieldOrder);
@@ -38,11 +28,34 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
         $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=?'.$fieldOrder);
         $stmt->execute([$id]);   
         }
-        
         $array = $stmt->fetchAll();
         return count($array) != 0 ? $array : NULL;
         
+      } catch (\PDOException $ex) {
+        $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=? ORDER BY codigo_producto');
+        $stmt->execute([$id]);
+        return $stmt->fetchAll();
+      }     
     }
+    
+    /***
+     * Devuelve el orden por el cual se va a filtrar
+     */
+    private function orderBy($filtros): string{
+       if(isset($filtros['filterby']) && filter_var($filtros['filterby'],FILTER_VALIDATE_INT)){
+            if($filtros['filterby'] <= count(self::_FILTER_BY) && $filtros['filterby'] >= 1){
+                $fieldOrder = self::_FILTER_BY[$filtros['filterby']];
+            }else{
+               
+                $fieldOrder = self::_DEFAULT_ORDER;
+            }
+        }else{
+                //$filtros['filterby'] = self::DEFAULT_ORDER;
+                $fieldOrder = self::_DEFAULT_ORDER;
+        }  
+        return $fieldOrder;
+    }
+    
     
     
 }

@@ -16,5 +16,7 @@
     
     <!-- FAVICON -->
     <link rel="icon" type="image/x-icon" href="/assets/svg/gallaecia-pc-favicon.svg">
+    <!-- SCRIPT ADAPTAR NAVBAR -->
+    
     <title><?php echo $titulo;?></title>
 </head>
