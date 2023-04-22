@@ -13,6 +13,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 #navegador_Sec{
     border-bottom: 1px solid #272727;
+          font-family: 'Potta One', 'Staatliches', cursive !important; 
+
 }
 
 #lista_caracteristicas ul li span{
@@ -63,4 +65,69 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 #envio_Details:before{
       content: ' | ';  
+}
+
+#caja_btn_carrito{
+    border: orange 2px solid !important;
+    transition-duration: 0.7s;
+}
+
+#caja_btn_carrito:hover{
+    color:orangered;
+}
+
+/***** VENTANA MODAL ******/
+.class_modal
+{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 10; /* Sit on top */
+    right: 30%;
+    top: 5%;
+    background-color: #fff;
+}
+
+    .class_modal h2
+{
+    font-size: 2rem;
+}
+
+.contenido_modal h2{
+color:orangered !important;
+}
+
+
+#mi_modal
+{
+-webkit-box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px){
+    .class_modal
+{
+    right: 10%;
+    top: 10%;
+}
+
+    .class_modal h2
+{
+    font-size: 1rem;
+}
 }

@@ -1,9 +1,9 @@
 <div class="row">
-    <nav class="col-12 bg-purple p-3" id="navegador_Sec">
+    <nav class="col-12 bg-purple p-3 mb-1" id="navegador_Sec">
         <ol class="d-flex justify-content-md-start justify-content-center gap-2 m-0" >
             <li><a href="/">Inicio</a></li>
-            <li><a href="/">Categoria</a></li>
-            <li>Nombre Producto</li>
+            <li><a href="/productos/categoria/<?php echo $datos_generales['categoria'] ;?>"><?php echo $datos_generales['nombre_categoria'];?></a></li>
+            <li><?php echo $datos_generales['nombre'];?></li>
         </ol>
 
     </nav>
@@ -13,33 +13,33 @@
 <main class="row">
     <section class="col-12" id="id_product_section">
         <!-- CAJA DEL PRODUCTO -->
-        <div class="col-12 col-sm-8 m-auto">
+        <div class="col-12 col-sm-8 m-auto mb-3">
             <div class="row">
                 <!-- FOTO -->
-                <div class="col-12 col-lg-6 bg-primary p-0 position-relative">
-                    <img src="/assets/img/default_image" alt="imagen_producto" style="width: 100%;"/>
+                <div class="col-12 col-lg-6 p-0 position-relative">
+                    <img src="<?php echo $datos_generales['url_imagen'];?>" alt="imagen_producto" style="width: 100%;"/>
                      <button class='btn btn-default position-absolute' id="modal_btn"><i class="fa-sharp fa-regular fa-image fa-2xl" style="color: #ff8000;"></i></button>
                 </div>
                 <!-- DETALLES -->
                 <div class="col-12 col-lg-6" id="detalles_box">
-                    <h2 class="display-6">Nombre Del Producto</h2>
+                    <h2 class="display-6"><?php echo $datos_generales['nombre'];?></h2>
                     <!-- PRECIO -->
                     <div class="col-12 border-bottom border-secondary" id="precio-box">
-                        <h2 class="display-5">342.44€</h2> 
+                        <h2 class="display-5"><?php echo number_format($datos_generales['precio'],2,',','.');?>€</h2> 
                     </div>
                     <!-- VENDIDO POR -->
                     <div class="col-12 text-secondary p-2 mt-2" id="vendido_por">
                         <ol class="d-flex">
-                            <li>Vendido Por: Patrocinador</li>
+                            <li>Vendido Por:<?php echo $datos_generales['nombre_proveedor'];?></li>
                             <li>Enviado Por: Gallaecia PC</li>
                         </ol>
                     </div>
                     <!-- DETALLES MARCA, COD PRODUCTO, CATEGORIA -->
                     <div class="col-12 text-secondary p-2 mt-2" id="marca_box">
                         <ol class="d-flex gap-1">
-                            <li>Marca: Phantom Gaming</li>
-                            <li>Código Producto: 0000004</li>
-                            <li>Categoría: Nombre Categoría</li>
+                            <li>Marca: <?php echo $datos_generales['marca'];?></li>
+                            <li>Código Producto: <?php echo $datos_generales['codigo_producto'];?></li>
+                            <li>Categoría: <?php echo $datos_generales['nombre_categoria'];?></li>
                         </ol>  
                     </div>
                     <!-- GARANTÍA -->
@@ -62,22 +62,48 @@
                     <div class="col-12 text-secondary ps-2 pt-3 pb-3 mt-2 d-flex gap-3 justify-content-end" id="compartir-box">
                         <span>Compartir:</span>
                         <ol class="d-flex gap-3">
-                            <li><i class="fa-brands fa-twitter fa-2xl" style="color: #272727;"></i></li>
-                            <li><i class="fa-brands fa-facebook-f fa-2xl" style="color: #272727;"></i></li>
-                            <li><i class="fa-brands fa-instagram  fa-2xl" style="color: #272727;"></i></li>
+                            <li><a href="https://twitter.com/"><i class="fa-brands fa-twitter fa-2xl" style="color: #272727;"></i></a></li>
+                            <li><a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f fa-2xl" style="color: #272727;"></i></a></li>
+                            <li><a href="https://www.instagram.com/"><i class="fa-brands fa-instagram  fa-2xl" style="color: #272727;"></i></a></li>
                         </ol>  
                     </div>
-                    
+                    <!-- AÑADIR AL CARRITO -->
+                   <div class="col-12 text-secondary ps-2 pt-3 pb-3 mt-2 d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center" id="compartir-box">
+                       <div class="d-flex align-items-center gap-2">
+                           <span>Cantidad:</span>
+                             <input type="number" id="cantidad" min="1" value="1" max="10" name="cantidad">
+                       </div> 
+                             <div id="caja_btn_carrito" class="border rounded p-1"><button class='btn btn-default' id="anadir_carrito_btn"><i class="fa-sharp fa-solid fa-cart-shopping fa-2xl p-1" id="icono_carrito"></i><strong>Añadir Al Carrito</strong></button></div>               
+                    </div>             
                 </div>
             </div>
         </div>
+        <!-- SCRIPT PARA LA ANIMACIÓN DEL CARRITO -->
+        <script src="/assets/js/animacion_carrito.js"></script>
+        <div class="row">
+          
+            <div class="col-10 col-sm-5 m-auto class_modal p-0" id="mi_modal">
+                  <!-- COntenido del modal -->
+                <div class="col-12  contenido_modal">
+                    <header class="d-flex border-bottom border-secondary p-2 justify-content-between">
+                       <h2 class="text-light text-center">Imágen Del Producto</h2>
+                       <span class="close text-dark">X</span>     
+                    </header> 
+                    <img src="<?php echo $datos_generales['url_imagen'];?>" alt="alt" width="100%"/>
+                </div>
+                 <!--  -->
+            </div>
+           
+        </div>
+        <!-- SCRIPT PARA LA VENTANA MODAL -->
+        <script src="/assets/js/modal_window_script.js"></script>   
     </section>
     <section class="col-12 p-0" id="detalles">
         <div class="col-10 m-auto">
          <article>
              <h2 class="display-4">Descripción Del Producto</h2>
              <div class="col-12 divisor"></div>
-             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse in orci eu erat pulvinar rutrum sed nec purus. Suspendisse laoreet ut quam vitae elementum. Mauris sit amet est congue, finibus metus nec, ullamcorper leo. Nulla bibendum maximus dolor, eget pretium metus dignissim ut. Praesent eu ante et nisl tempus volutpat. Aenean condimentum est justo, at consectetur ipsum venenatis nec. Nam ipsum tellus, elementum laoreet tristique sed, imperdiet vel dolor. Phasellus finibus a quam in consequat. Donec a leo venenatis, vehicula eros vitae, rhoncus neque. Aenean posuere, mi id malesuada ullamcorper, dolor erat porta felis, sed blandit metus purus non lorem. Nunc metus urna, rhoncus in viverra in, rutrum vel augue. </p>
+             <p><?php echo $datos_generales['desc_producto'];?> </p>
         </article>
         <article class="mb-2">
             <h2 class="display-4">Especificaciones</h2>

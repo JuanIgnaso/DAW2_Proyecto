@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <!-- Contenido de aquí por PHP -->
-                        <a class="h5 text-center border-dark text-dark" href=""><?php echo $producto['nombre'];?></a>
+                        <a class="h5 text-center border-dark text-dark" href="<?php echo '/productos/'.$producto['nombre'];?>"><?php echo $producto['nombre'];?></a>
                         <div class="col-12 d-flex flex-column flex-sm-row align-items-center border-dark border-bottom p-2 producto-estado">
                             <h5 class="col-6 text-center text-sm-left"><?php echo round($producto['precio'],2);?>€</h5>
                             <!-- PHP danger si esta agotado o primary si está disponible -->

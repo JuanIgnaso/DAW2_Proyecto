@@ -56,6 +56,12 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
         return $fieldOrder;
     }
     
-    
+    function getProduct($nombre) {
+        $stmt = $this->pdo->prepare(self::_SELECT_ALL.' WHERE productos.nombre LIKE ?');
+        $stmt->execute(['%'.$nombre.'%']);
+        //var_dump($stmt);
+        return $stmt->fetch();
+       
+    }
     
 }

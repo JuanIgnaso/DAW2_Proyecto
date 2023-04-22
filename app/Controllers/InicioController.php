@@ -14,10 +14,12 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         $this->view->showViews(array('index.php','templates/footer.view.php'),$data);
     }
     
-    function load_product(){
+    function load_product($nombre){
         $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+        $model = new \Com\Daw2\Models\ProductosGeneralModel();
         $data = [];
         $data['categoria'] = $modelCategoria->getAll();
+        $data['datos_generales'] = $model->getProduct($nombre);
         $this->view->showViews(array('templates/header.view.php','templates/header_navbar.php','product_details_view.php','templates/footer.view.php'),$data);
     }
     
