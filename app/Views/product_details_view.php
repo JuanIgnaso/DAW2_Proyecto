@@ -69,11 +69,24 @@
                     </div>
                     <!-- AÑADIR AL CARRITO -->
                    <div class="col-12 text-secondary ps-2 pt-3 pb-3 mt-2 d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center" id="compartir-box">
+                       
                        <div class="d-flex align-items-center gap-2">
                            <span>Cantidad:</span>
-                             <input type="number" id="cantidad" min="1" value="1" max="10" name="cantidad">
+                             <input type="number" id="cantidad" min="1" value="1" max="10" name="cantidad"<?php echo $datos_generales['stock'] == 0 ? 'disabled' : '';?>>
                        </div> 
-                             <div id="caja_btn_carrito" class="border rounded p-1"><button class='btn btn-default' id="anadir_carrito_btn"><i class="fa-sharp fa-solid fa-cart-shopping fa-2xl p-1" id="icono_carrito"></i><strong>Añadir Al Carrito</strong></button></div>               
+                       <?php
+                       if($datos_generales['stock'] != 0){
+                       ?>
+                             <div id="caja_btn_carrito" class="border rounded p-1">
+                                 <button class='btn btn-default' id="anadir_carrito_btn"><i class="fa-sharp fa-solid fa-cart-shopping fa-2xl p-1" id="icono_carrito"></i><strong>Añadir Al Carrito</strong></button>
+                             </div>
+                       <?php
+                       }else{
+                       ?>
+                       <span class="text-danger">Producto No Disponible</span>
+                       <?php
+                       }
+                       ?>
                     </div>             
                 </div>
             </div>
@@ -109,12 +122,13 @@
             <h2 class="display-4">Especificaciones</h2>
             <div class="col-12 divisor"></div>
             <ul id="lista_caracteristicas" class="m-0">
-                <li><strong>first</strong>Details </li>
-                <li><strong>first</strong> Details</li>
-                <li><strong>first</strong> Details</li>
-                <li><strong>first</strong> Details</li>
-                <li><strong>first</strong> Details</li>
-                <li><strong>first</strong> Details</li>
+                <?php
+                foreach($detalles_producto as $key => $value){
+                ?>
+                <li><strong><?php echo ucfirst(preg_replace('/_/',' ',$key));?>: </strong><?php echo $value;?> </li>
+                <?php
+                }
+                ?>
             </ul>
 
         </article>

@@ -14,14 +14,6 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         $this->view->showViews(array('index.php','templates/footer.view.php'),$data);
     }
     
-    function load_product($nombre){
-        $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
-        $model = new \Com\Daw2\Models\ProductosGeneralModel();
-        $data = [];
-        $data['categoria'] = $modelCategoria->getAll();
-        $data['datos_generales'] = $model->getProduct($nombre);
-        $this->view->showViews(array('templates/header.view.php','templates/header_navbar.php','product_details_view.php','templates/footer.view.php'),$data);
-    }
     
     function lista_productos($id){  
         $model = new \Com\Daw2\Models\ProductosGeneralModel();
@@ -30,7 +22,8 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         if(!$category_info){
             $this->errorLoadCategory($id);
         }else{
-           $data = [];
+         $data = [];
+        $data['input'] = filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS);
         $data['direccion'] = '/productos/categoria/'.$id;
         $data['titulo'] = 'Productos - '.$category_info['nombre_categoria'];
         $data['descripcion'] = $category_info['descripcion'];
@@ -55,6 +48,7 @@ class InicioController extends \Com\Daw2\Core\BaseController{
     
     /*Se lanza este método cuando el valor devuelto es false*/
     private function errorLoadCategory($id){
+        
         $data = [];
         $data['titulo'] = 'Error'; 
         $data['mensaje'] = "No se puede encontrar registro <span class='text-danger'>".$id."</span> de datos en la tabla categorías";

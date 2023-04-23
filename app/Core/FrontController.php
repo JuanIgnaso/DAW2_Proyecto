@@ -30,15 +30,13 @@ class FrontController{
                     }
                     ,'get');
                     
-                    Route::add('/productos/([A-Za-z0-9\.\-\/ ]+)',
-                    function($nombre){
-                    $controler = new \Com\Daw2\Controllers\InicioController();
-                    $controler->load_product($nombre);
+                    Route::add('/productos/categoria/([A-Za-z0-9]+)/product_detail/([A-Za-z0-9\.\-\/ ]+)',
+                    function($id,$nombre){
+                    $controler = new \Com\Daw2\Controllers\ProductoController();
+                    $controler->load_product($id,$nombre);
                     }
                     ,'get');
 
-                    
-        
                     
             Route::add('/login',
                     function(){
