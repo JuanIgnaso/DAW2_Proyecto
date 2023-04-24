@@ -56,12 +56,12 @@
     border: 1px orangered solid;
 }
 
-#log_user button
+#log_user #login,#log_out,#sign_up
 {
  border: #fff 1px solid;
 }
 
-#log_user button:hover
+#log_user #login,#log_out,#sign_up:hover
 {
  border: orangered 1px solid;
  color: orangered;

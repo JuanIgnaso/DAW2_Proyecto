@@ -35,3 +35,92 @@ h1,h2,h3,h4,h5,.navegador li{
 nav ol{
     list-style: none;
 }
+
+#btn_carrito{
+    border: none;
+    background: none;
+}
+
+
+/******CARRITO MODAL******/
+
+.class_modal_carrito
+{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 10; /* Sit on top */
+    right: 10%;
+    top: 10%;
+    background-color: #fff;
+}
+
+    .class_modal_carrito h2
+{
+    font-size: 2rem;
+}
+
+.contenido_modal_carrito h2{
+color:orangered !important;
+}
+
+
+#mi_modal_carrito
+{
+-webkit-box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
+}
+
+/* The Close Button */
+.close_carrito {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close_carrito:hover,
+.close_carrito:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#btn_borrar_producto{
+    background-color:unset;
+}
+
+
+#carrito_producto_box ol{
+    text-align:left;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'DM Sans','Space Grotesk',sans-serif !important;
+}
+
+#carrito_producto_box ol li{
+    font-family: 'DM Sans','Space Grotesk',sans-serif !important;
+    font-size: 1rem;
+}
+
+@media screen and (max-width: 500px){
+
+
+    .class_modal_carrito h2
+{
+    font-size: 1rem;
+}
+
+#carrito_producto_box ol li{
+    font-size: 0.7rem;
+
+}
+
+.class_modal_carrito
+{
+    top: 18%;
+    right: 5%;
+
+}
+}

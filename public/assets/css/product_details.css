@@ -17,6 +17,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 }
 
+#navegador_Sec ol{
+    padding: 0 !important;
+}
+
 #lista_caracteristicas ul li span{
     font-family: 'DM Sans','Space Grotesk',sans-serif !important;
 }

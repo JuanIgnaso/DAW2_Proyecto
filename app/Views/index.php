@@ -61,7 +61,7 @@
                     if(isset($_SESSION['usuario'])){
                     ?>
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
-                    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></i><p class="col-auto text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
+                    <button class='btn btn-default' id="carrito_btn"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button><p class="col-auto text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
                     <button type="button" class="btn btn-outline-light"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php

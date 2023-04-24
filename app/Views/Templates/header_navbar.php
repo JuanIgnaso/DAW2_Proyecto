@@ -35,14 +35,65 @@
                     if(isset($_SESSION['usuario'])){
                     ?>
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
+                   
+                        <!-- MODAL CARRITO  -->    
+                   <div class="row">
+                        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0" id="mi_modal_carrito">
+                              <!-- COntenido del modal -->
+                            <div class="col-12  contenido_modal_carrito">
+                                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
+                                   <h2 class="text-light text-center">Mi Carrito</h2>
+                                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
+                                </header>
+                                <!-- cuerpo -->
+                                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
+                                    <!-- caja del producto -->
+                                <div class="col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center" id="carrito_producto_box">
+                                    <div>
+                                        <ol>                                           
+                                                <li>Owlotech K500W Teclado Bluetooth</li>
+                                                <li>33.14€</li>
+                                         </ol>
+                                    </div>
+                                    <span>4</span>
+                                    <button class='btn btn-default p-0' id="btn_borrar_producto"><i class="fa-sharp fa-regular fa-rectangle-xmark fa-2x" style="color: #ff0000;"></i></button>
+                                </div>
+                                    <div class="col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center" id="carrito_producto_box">
+                                    <div>
+                                        <ol>                                           
+                                                <li>Owlotech K500W Teclado Bluetooth</li>
+                                                <li>33.14€</li>
+                                         </ol>
+                                    </div>
+                                    <span>4</span>
+                                    <button class='btn btn-default p-0' id="btn_borrar_producto"><i class="fa-sharp fa-regular fa-rectangle-xmark fa-2x" style="color: #ff0000;"></i></button>
+                                </div>
+                                 <div class="col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center" id="carrito_producto_box">
+                                    <div>
+                                        <ol>                                           
+                                                <li>Owlotech K500W Teclado Bluetooth</li>
+                                                <li>33.14€</li>
+                                         </ol>
+                                    </div>
+                                    <span>4</span>
+                                    <button class='btn btn-default p-0' id="btn_borrar_producto"><i class="fa-sharp fa-regular fa-rectangle-xmark fa-2x" style="color: #ff0000;"></i></button>
+                                </div> 
+                               </div>
+                            </div>
+                             <!-- // -->
+                        </div>
+                    </div>
+                        
+                        
+                        <button class='btn btn-default' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button>
                     <p class="col-auto text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
-                    <button type="button" class="btn btn-outline-light"><a href="/logout">Log-Out</a></button>          
+                    <button type="button" class="btn btn-outline-light" id="log_out"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php
                     }else{
                     ?>
-                    <button type="button" class="btn btn-outline-light"><a href="/login">Login</a></button>
-                  <button type="button" class="activo btn btn-outline-light">Sign-up</button>
+                    <button type="button" class="btn btn-outline-light" id="login"><a href="/login">Login</a></button>
+                  <button type="button" class="activo btn btn-outline-light" id="sign_up">Sign-up</button>
                   <?php
                     }
                   ?>
@@ -50,3 +101,57 @@
               </header>
             <script src="/assets/js/adapt_navbar.js"></script>
         </div>
+        
+        
+        <script>
+            
+            
+          var cuerpo = document.getElementById('cuerpo_carrito');
+          var btn_borrar_producto = document.getElementById('btn_borrar_producto');
+          var elementos = cuerpo.getElementsByTagName('button');   
+            
+            /*Coger la ventana modal*/
+        var mod = document.getElementById("mi_modal_carrito");
+
+        // Coger el botón que abre la modal
+        var btn = document.getElementById("btn_carrito");
+
+        // coger el <span> que cierra la modal
+        var span = document.getElementsByClassName("close_carrito")[0];
+
+        // Cuando el usuario le da al botón, abrir la modal
+        btn.onclick = function() {
+          mod.style.display = "block";
+          if(elementos.length == 0){
+                cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
+                }
+        }
+
+        // Cerrar la modal cuando el usuario le da al <span>
+        span.onclick = function() {
+          mod.style.display = "none";
+        }
+
+        // Cerrar la modal también cuando el usuario le dé fuera de la modal
+        window.onclick = function(event) {
+          if (event.target == mod) {
+            mod.style.display = "none";
+          }
+        } 
+        
+        
+        
+         window.onload = addEvents();
+                        function addEvents(){
+                         
+                            for (var i = 0; i < elementos.length; i++) {
+                                   elementos[i].addEventListener('click',function(){
+                            this.parentNode.remove();
+                             if(elementos.length == 0){
+                                 cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
+                             }
+                        });
+                         }
+                        
+                        }
+        </script>

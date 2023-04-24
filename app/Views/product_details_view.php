@@ -22,10 +22,10 @@
                 </div>
                 <!-- DETALLES -->
                 <div class="col-12 col-lg-6" id="detalles_box">
-                    <h2 class="display-6"><?php echo $datos_generales['nombre'];?></h2>
+                    <h2 class="display-6" id="nombre"><?php echo $datos_generales['nombre'];?></h2>
                     <!-- PRECIO -->
                     <div class="col-12 border-bottom border-secondary" id="precio-box">
-                        <h2 class="display-5"><?php echo number_format($datos_generales['precio'],2,',','.');?>€</h2> 
+                        <h2 class="display-5" id="precio"><?php echo number_format($datos_generales['precio'],2,',','.');?>€</h2> 
                     </div>
                     <!-- VENDIDO POR -->
                     <div class="col-12 text-secondary p-2 mt-2" id="vendido_por">
@@ -72,7 +72,7 @@
                        
                        <div class="d-flex align-items-center gap-2">
                            <span>Cantidad:</span>
-                             <input type="number" id="cantidad" min="1" value="1" max="10" name="cantidad"<?php echo $datos_generales['stock'] == 0 ? 'disabled' : '';?>>
+                             <input type="number" id="cantidad" min="1" value="1" max="<?php echo $datos_generales['stock'] <= 10 ? $datos_generales['stock'] : 10;?>" name="cantidad"<?php echo $datos_generales['stock'] == 0 ? 'disabled' : '';?>>
                        </div> 
                        <?php
                        if($datos_generales['stock'] != 0){
@@ -93,6 +93,33 @@
         </div>
         <!-- SCRIPT PARA LA ANIMACIÓN DEL CARRITO -->
         <script src="/assets/js/animacion_carrito.js"></script>
+        <script>
+            /*Coger la ventana modal*/
+        var modal = document.getElementById("mi_modal_carrito");
+
+        // Coger el botón que abre la modal
+        var btn = document.getElementById("carrito_btn");
+
+        // coger el <span> que cierra la modal
+        var span = document.getElementsByClassName("close_carrito")[0];
+
+        // Cuando el usuario le da al botón, abrir la modal
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        // Cerrar la modal cuando el usuario le da al <span>
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // Cerrar la modal también cuando el usuario le dé fuera de la modal
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        } 
+        </script>
         <div class="row">
           
             <div class="col-10 col-sm-5 m-auto class_modal p-0" id="mi_modal">
