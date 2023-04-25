@@ -25,7 +25,7 @@
                     <h2 class="display-6" id="nombre"><?php echo $datos_generales['nombre'];?></h2>
                     <!-- PRECIO -->
                     <div class="col-12 border-bottom border-secondary" id="precio-box">
-                        <h2 class="display-5" id="precio"><?php echo number_format($datos_generales['precio'],2,',','.');?>€</h2> 
+                        <h2 class="display-5" id="precio"><?php echo number_format($datos_generales['precio'],2,'.',' ');?>€</h2> 
                     </div>
                     <!-- VENDIDO POR -->
                     <div class="col-12 text-secondary p-2 mt-2" id="vendido_por">
@@ -38,7 +38,7 @@
                     <div class="col-12 text-secondary p-2 mt-2" id="marca_box">
                         <ol class="d-flex gap-1">
                             <li>Marca: <?php echo $datos_generales['marca'];?></li>
-                            <li>Código Producto: <?php echo $datos_generales['codigo_producto'];?></li>
+                            <li>Código Producto:<span id="id_producto"><?php echo $datos_generales['codigo_producto'];?></span></li>
                             <li>Categoría: <?php echo $datos_generales['nombre_categoria'];?></li>
                         </ol>  
                     </div>
@@ -120,6 +120,126 @@
           }
         } 
         </script>
+        
+        <script>
+              /*
+           * elementos mirar en /assets/html/elementosCesta.html
+           * 
+           * 
+           * 
+           */   
+          var cuerpo = document.getElementById('cuerpo_carrito');
+          var btn_borrar_producto = document.getElementById('btn_borrar_producto');
+          var elementos = cuerpo.getElementsByClassName('borrar'); 
+            
+          /*Botón para añadir producto al carrito*/
+          var btn_anadir_p = document.getElementById('anadir_carrito_btn');
+          
+          /*Input que contiene la cantidad*/
+          var cantidad = document.getElementById('cantidad');   
+            
+          /*DATOS DEL PRODUCTO EN CUESTION*/  
+          //id
+          var id = document.getElementById('id_producto');
+          //nombre
+          var n = document.getElementById('nombre');
+          //precio
+          var p = document.getElementById('precio');
+          //cantidad
+          var c = document.getElementById('cantidad');
+            
+         var producto = {};
+          var carrito = [];
+          
+             /*{
+                id: 2,
+                nombre: 'nombre',
+                precio: 33.55,
+                cantidad: 2
+              }*/
+          
+              /*Añadir Producto a cesta*/
+             btn_anadir_p.addEventListener('click',function(){
+              //Se busca el elemento dentro del carrito 
+              const found = carrito.find(element => element.id == Number(id.innerHTML));
+              if(found == undefined){
+              //Si devuelve undefined quiere decir que el producto no existe dentro del carrito por lo tanto
+              //procedemos a crearlo y añadirlo a la cesta.
+              producto.id = Number(id.innerHTML);
+              producto.nombre = n.innerHTML;
+              producto.precio = parseFloat(p.innerHTML);
+              producto.cantidad = Number(c.value);
+              carrito.push(producto);  
+              }else{
+                  found.cantidad += Number(c.value);
+              }
+              console.log(carrito.length);
+              cargarCarrito();
+              
+          });
+          
+          function cargarCarrito(){
+              if(carrito.length != 0){
+                   for (var i = 0; i < carrito.length; i++) {
+                   printObj(carrito[i]);
+                   
+                   }  
+              }
+             
+          }
+          
+          function printObj(e){ 
+              console.log(e);
+                let caja = document.createElement('div');
+                caja.setAttribute('class','col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center');
+                let div_lista = document.createElement('div');
+                let list =  document.createElement('ol');
+                
+                    let datos = [e.nombre,e.precio];
+                    let nodes = datos.map(dato => {
+                        let li = document.createElement('li');
+                        li.textContent = dato;
+                        list.append(li);
+                    });
+                div_lista.append(list);
+                caja.append(div_lista);
+                
+                let span_cantidad  = document.createElement('span');
+                span_cantidad.setAttribute('id','cantidad_cesta');  
+                span_cantidad.textContent = e.cantidad;
+                
+                caja.append(span_cantidad);
+                
+                let boton_borrar = document.createElement('button');
+                boton_borrar.setAttribute('class','borrar btn btn-default p-0');
+                boton_borrar.setAttribute('id','btn_borrar_producto');
+                boton_borrar.innerHTML = '<i class="fa-sharp fa-regular fa-rectangle-xmark fa-2x" style="color: #ff0000;"></i>';
+                boton_borrar.addEventListener('click',function(){
+                    carrito.splice(carrito.indexOf(e),1);
+                    this.parentNode.remove();
+                    console.log(carrito.length);
+                });
+                caja.append(boton_borrar);
+                
+                cuerpo.append(caja);
+                }
+                
+                
+                
+  
+           function removeChilds(){
+           while (cuerpo.hasChildNodes()) {
+            cuerpo.removeChild(cuerpo.firstChild);
+}
+           }
+                
+
+        </script>
+        
+        
+        
+        
+        
         <div class="row">
           
             <div class="col-10 col-sm-5 m-auto class_modal p-0" id="mi_modal">

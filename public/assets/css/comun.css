@@ -104,6 +104,16 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
     font-size: 1rem;
 }
 
+#btn_completar_compra{
+   background-color: lightsalmon;
+ 
+}
+
+ #btn_completar_compra a{
+      color: #fff !important;
+      text-decoration: none;
+}
+
 @media screen and (max-width: 500px){
 
 

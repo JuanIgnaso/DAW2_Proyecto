@@ -37,52 +37,7 @@
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
                    
                         <!-- MODAL CARRITO  -->    
-                   <div class="row">
-                        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0" id="mi_modal_carrito">
-                              <!-- COntenido del modal -->
-                            <div class="col-12  contenido_modal_carrito">
-                                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-                                   <h2 class="text-light text-center">Mi Carrito</h2>
-                                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-                                </header>
-                                <!-- cuerpo -->
-                                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                                    <!-- caja del producto -->
-                                <div class="col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center" id="carrito_producto_box">
-                                    <div>
-                                        <ol>                                           
-                                                <li>Owlotech K500W Teclado Bluetooth</li>
-                                                <li>33.14€</li>
-                                         </ol>
-                                    </div>
-                                    <span>4</span>
-                                    <button class='btn btn-default p-0' id="btn_borrar_producto"><i class="fa-sharp fa-regular fa-rectangle-xmark fa-2x" style="color: #ff0000;"></i></button>
-                                </div>
-                                    <div class="col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center" id="carrito_producto_box">
-                                    <div>
-                                        <ol>                                           
-                                                <li>Owlotech K500W Teclado Bluetooth</li>
-                                                <li>33.14€</li>
-                                         </ol>
-                                    </div>
-                                    <span>4</span>
-                                    <button class='btn btn-default p-0' id="btn_borrar_producto"><i class="fa-sharp fa-regular fa-rectangle-xmark fa-2x" style="color: #ff0000;"></i></button>
-                                </div>
-                                 <div class="col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center" id="carrito_producto_box">
-                                    <div>
-                                        <ol>                                           
-                                                <li>Owlotech K500W Teclado Bluetooth</li>
-                                                <li>33.14€</li>
-                                         </ol>
-                                    </div>
-                                    <span>4</span>
-                                    <button class='btn btn-default p-0' id="btn_borrar_producto"><i class="fa-sharp fa-regular fa-rectangle-xmark fa-2x" style="color: #ff0000;"></i></button>
-                                </div> 
-                               </div>
-                            </div>
-                             <!-- // -->
-                        </div>
-                    </div>
+   
                         
                         
                         <button class='btn btn-default' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button>
@@ -102,13 +57,44 @@
             <script src="/assets/js/adapt_navbar.js"></script>
         </div>
         
+                        <div class="row">
+                        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0" id="mi_modal_carrito">
+                              <!-- COntenido del modal -->
+                            <div class="col-12  contenido_modal_carrito">
+                                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
+                                   <h2 class="text-light text-center">Mi Carrito</h2>
+                                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
+                                </header>
+                                <!-- cuerpo -->
+                                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
+                                    <!-- caja del producto -->
+ 
+                               </div>
+                            </div>
+                             <!-- // -->
+                        </div>
+                    </div>
         
         <script>
+            
+          /*
+           * elementos mirar en /assets/html/elementosCesta.html
+           * 
+           * 
+           * 
+           */  
+            
             
             
           var cuerpo = document.getElementById('cuerpo_carrito');
           var btn_borrar_producto = document.getElementById('btn_borrar_producto');
-          var elementos = cuerpo.getElementsByTagName('button');   
+          var elementos = cuerpo.getElementsByClassName('borrar');   
+         
+          
+
+          
+        
+          
             
             /*Coger la ventana modal*/
         var mod = document.getElementById("mi_modal_carrito");
@@ -123,6 +109,7 @@
         btn.onclick = function() {
           mod.style.display = "block";
           if(elementos.length == 0){
+               removeChilds();
                 cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
                 }
         }
@@ -148,10 +135,16 @@
                                    elementos[i].addEventListener('click',function(){
                             this.parentNode.remove();
                              if(elementos.length == 0){
+                                 removeChilds();
                                  cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
                              }
                         });
                          }
                         
                         }
+           function removeChilds(){
+           while (cuerpo.hasChildNodes()) {
+            cuerpo.removeChild(cuerpo.firstChild);
+}
+           }
         </script>
