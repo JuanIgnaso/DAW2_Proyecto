@@ -91,6 +91,10 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
 }
 
 
+.class_modal_carrito #cuerpo_carrito > * ol{
+    list-style: none !important;
+}
+
 #carrito_producto_box ol{
     text-align:left;
     margin: 0;

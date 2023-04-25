@@ -78,7 +78,7 @@
                        if($datos_generales['stock'] != 0){
                        ?>
                              <div id="caja_btn_carrito" class="border rounded p-1">
-                                 <button class='btn btn-default' id="anadir_carrito_btn"><i class="fa-sharp fa-solid fa-cart-shopping fa-2xl p-1" id="icono_carrito"></i><strong>Añadir Al Carrito</strong></button>
+                                 <button class='btn btn-default' id="anadir_carrito_btn" <?php echo isset($_SESSION['usuario']) ? '' : 'disabled';?>><i class="fa-sharp fa-solid fa-cart-shopping fa-2xl p-1" id="icono_carrito"></i><strong>Añadir Al Carrito</strong></button>
                              </div>
                        <?php
                        }else{
@@ -125,8 +125,6 @@
               /*
            * elementos mirar en /assets/html/elementosCesta.html
            * 
-           * 
-           * 
            */   
           var cuerpo = document.getElementById('cuerpo_carrito');
           var btn_borrar_producto = document.getElementById('btn_borrar_producto');
@@ -147,16 +145,22 @@
           var p = document.getElementById('precio');
           //cantidad
           var c = document.getElementById('cantidad');
+          
+          //boton carrito
+          var open_carrito = document.getElementById('btn_carrito');
+          open_carrito.addEventListener('click',function(){
+            if(carrito.length == 0){
+               removeChilds();
+              cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
+          }
+          });
             
          var producto = {};
           var carrito = [];
           
-             /*{
-                id: 2,
-                nombre: 'nombre',
-                precio: 33.55,
-                cantidad: 2
-              }*/
+          
+
+         
           
               /*Añadir Producto a cesta*/
              btn_anadir_p.addEventListener('click',function(){
@@ -169,47 +173,58 @@
               producto.nombre = n.innerHTML;
               producto.precio = parseFloat(p.innerHTML);
               producto.cantidad = Number(c.value);
-              carrito.push(producto);  
+              carrito.push(producto);
+              cargarCarrito();
+              if(carrito.length == 1){
+                 printCheckOut();
+              }
               }else{
                   found.cantidad += Number(c.value);
+                  let actualizar_Val = document.getElementById('cantidad_cesta_' + (found.id));
+                  actualizar_Val.textContent = found.cantidad;
               }
               console.log(carrito.length);
-              cargarCarrito();
+              console.log(producto);
               
           });
           
+          /*
+           * 
+           * Carga El objeto en el carrito
+           * 
+           */          
           function cargarCarrito(){
               if(carrito.length != 0){
+                  removeChilds();
                    for (var i = 0; i < carrito.length; i++) {
-                   printObj(carrito[i]);
-                   
+                   printObj(carrito[i]);                  
                    }  
+              }else{
+                  removeChilds();
+              cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
               }
              
           }
-          
+
           function printObj(e){ 
-              console.log(e);
+              
                 let caja = document.createElement('div');
                 caja.setAttribute('class','col-12 border-bottom border-secondary border-opacity-50 d-flex justify-content-between gap-2 align-items-center');
-                let div_lista = document.createElement('div');
-                let list =  document.createElement('ol');
-                
-                    let datos = [e.nombre,e.precio];
-                    let nodes = datos.map(dato => {
-                        let li = document.createElement('li');
-                        li.textContent = dato;
-                        list.append(li);
-                    });
-                div_lista.append(list);
+                let div_lista = document.createElement('div');  
+                div_lista.append(createList(e));
                 caja.append(div_lista);
                 
                 let span_cantidad  = document.createElement('span');
-                span_cantidad.setAttribute('id','cantidad_cesta');  
-                span_cantidad.textContent = e.cantidad;
-                
+                span_cantidad.setAttribute('id','cantidad_cesta_' + (e.id)); 
+               
+                span_cantidad.textContent = e.cantidad;              
                 caja.append(span_cantidad);
-                
+                caja.append(createButton(e));               
+                cuerpo.append(caja);
+                }
+            
+            //Crea el botón con el cual se va a borrar el elemento de la lista.
+            function createButton(e){
                 let boton_borrar = document.createElement('button');
                 boton_borrar.setAttribute('class','borrar btn btn-default p-0');
                 boton_borrar.setAttribute('id','btn_borrar_producto');
@@ -219,20 +234,43 @@
                     this.parentNode.remove();
                     console.log(carrito.length);
                 });
-                caja.append(boton_borrar);
+                return boton_borrar;
+            } 
+             
                 
-                cuerpo.append(caja);
-                }
-                
-                
+            //Crea la lista que contiene el nombre del producto y el precio    
+            function createList(e){
+              let list =  document.createElement('ol');
+                list.setAttribute('class','p-0 m-0');
+                list.setAttribute('style','list-style: none');
+                    let datos = [e.nombre,e.precio];
+                    let nodes = datos.map(dato => {
+                        let li = document.createElement('li');
+                        li.textContent = dato;
+                        list.append(li);
+                    });
+                    return list;
+            }
                 
   
            function removeChilds(){
            while (cuerpo.hasChildNodes()) {
             cuerpo.removeChild(cuerpo.firstChild);
-}
+            }
            }
-                
+             
+             
+             function printCheckOut(){
+                 let btn_checkout = document.createElement('button');
+                 btn_checkout.setAttribute('class','btn btn-default p-0 borrar');
+                 btn_checkout.setAttribute('id','btn_borrar_producto');
+                 
+                 let enlace = document.createElement('a');
+                 enlace.innerText = 'Finalizar Compra';
+                 enlace.setAttribute('href','/');
+                 btn_checkout.append(enlace);
+                 cuerpo.append(btn_checkout);
+             }
 
         </script>
         
