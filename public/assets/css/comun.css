@@ -26,6 +26,10 @@ h1,h2,h3,h4,h5,.navegador li{
 
 }
 
+a{
+    text-decoration: none;
+}
+
 .pie
 {
     margin: 0;
@@ -39,6 +43,12 @@ nav ol{
 #btn_carrito{
     border: none;
     background: none;
+}
+
+#logout:hover{
+    border: 1px solid orangered;
+    
+    background-color: unset;
 }
 
 
@@ -90,6 +100,19 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
     background-color:unset;
 }
 
+#btn_checkout{
+    background-color:lightsalmon;
+    padding: 2%;
+    margin: 2%;
+    text-align:center !important;
+    display: block;
+}
+
+#btn_checkout a{
+    color: #fff;
+    text-decoration: none;
+}
+
 
 .class_modal_carrito #cuerpo_carrito > * ol{
     list-style: none !important;
@@ -118,6 +141,12 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
       text-decoration: none;
 }
 
+
+/*QUITAR EL OUTLINE DEL BOTON*/
+button:focus {
+        outline: none;
+      }
+
 @media screen and (max-width: 500px){
 
 
@@ -133,8 +162,16 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
 
 .class_modal_carrito
 {
-    top: 18%;
-    right: 5%;
+    top: 10%;
+    left: 5%;
 
 }
+}
+
+@media screen and (max-width: 950px){
+    .class_modal_carrito
+{
+    top: 15%;
+}
+
 }

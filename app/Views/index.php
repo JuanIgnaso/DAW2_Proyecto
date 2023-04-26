@@ -61,8 +61,9 @@
                     if(isset($_SESSION['usuario'])){
                     ?>
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
-                    <button class='btn btn-default' id="carrito_btn"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button><p class="col-auto text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
-                    <button type="button" class="btn btn-outline-light"><a href="/logout">Log-Out</a></button>          
+                     <button class='btn btn-default' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button>
+                    <p class="col-auto text-light m-0" id="nombre_usuario"><?php echo $_SESSION['usuario']->getNombre();?></p>
+                    <button type="button" class="btn btn-outline-light" id="logout"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php
                     }else{
@@ -75,6 +76,27 @@
                 </div>
               </header>
         </div>
+        
+        <!-- MODAL CARRITO -->
+        <div class="row">
+                        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
+                              <!-- COntenido del modal -->
+                            <div class="col-12  contenido_modal_carrito">
+                                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
+                                   <h2 class="text-light text-center">Mi Carrito</h2>
+                                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
+                                </header>
+                                <!-- cuerpo -->
+                                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
+                                    <!-- caja del producto -->
+ 
+                               </div>
+                                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/">Terminar Compra</a></button>
+                            </div>
+                             <!-- // -->
+                        </div>
+                    </div>
+        
         <!-- MAIN DE LA PAGINA -->
         <div class="row mb-3">
             <section class="col-12 col-lg-10 d-flex flex-column flex-md-row mb-5">
@@ -169,5 +191,5 @@
                 }
       </script>
             
-        
+
         <!-- FOOTER -->

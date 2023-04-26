@@ -32,7 +32,7 @@
               </ul>
           </footer>
         </div>
-
+        <script src="/assets/js/accionesCesta.js"></script>
     </div>
     
 </body>

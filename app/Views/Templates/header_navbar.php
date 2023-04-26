@@ -37,11 +37,9 @@
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
                    
                         <!-- MODAL CARRITO  -->    
-   
-                        
-                        
+
                         <button class='btn btn-default' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button>
-                    <p class="col-auto text-light m-0"><?php echo $_SESSION['usuario']->getNombre();?></p>
+                    <p class="col-auto text-light m-0" id="nombre_usuario"><?php echo $_SESSION['usuario']->getNombre();?></p>
                     <button type="button" class="btn btn-outline-light" id="log_out"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php
@@ -58,7 +56,7 @@
         </div>
         
                         <div class="row">
-                        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0" id="mi_modal_carrito">
+                        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
                               <!-- COntenido del modal -->
                             <div class="col-12  contenido_modal_carrito">
                                 <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
@@ -70,6 +68,7 @@
                                     <!-- caja del producto -->
  
                                </div>
+                                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/">Terminar Compra</a></button>
                             </div>
                              <!-- // -->
                         </div>
@@ -148,3 +147,5 @@
 }
            }
         </script>
+        
+        
