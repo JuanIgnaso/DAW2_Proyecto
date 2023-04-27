@@ -38,7 +38,7 @@
                    
                         <!-- MODAL CARRITO  -->    
 
-                        <button class='btn btn-default' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button>
+                        <button class='btn btn-default position-relative' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i><span id="carrito_items" class="badge bg-danger position-absolute top-0 start-100 translate-middle"></span></button>
                     <p class="col-auto text-light m-0" id="nombre_usuario"><?php echo $_SESSION['usuario']->getNombre();?></p>
                     <button type="button" class="btn btn-outline-light" id="log_out"><a href="/logout">Log-Out</a></button>          
                     </div>
@@ -68,7 +68,7 @@
                                     <!-- caja del producto -->
  
                                </div>
-                                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/">Terminar Compra</a></button>
+                                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
                             </div>
                              <!-- // -->
                         </div>

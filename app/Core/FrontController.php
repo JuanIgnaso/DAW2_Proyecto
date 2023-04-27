@@ -81,26 +81,18 @@ class FrontController{
                      ,'post');  
            
        }              
-                     
+           
+       
+       /*CHECKOUT*/
+       
+                 Route::add('/checkout',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PedidoController();
+                     $controller->showCheckOut();
+                     }
+                     ,'get'); 
   
-        /*
 
-  Enlaces a manejo de usuarios*******************************************
-         */
-         /* Route::add('/login', 
-                function(){
-                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->login();
-                }
-           , 'get'); 
-           
-            Route::add('/login', 
-                function(){
-                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->loginUser();
-                }
-           , 'post'); */
-           
          
 
                 /******CATEGORÍAS******/

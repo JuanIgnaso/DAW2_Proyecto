@@ -10,6 +10,7 @@ namespace Com\Daw2\Models;
 class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     
     private const SELECT_ALL = 'SELECT usuarios_test.*,rol_usuarios.nombre_rol,rol_usuarios.descripcion FROM usuarios_test LEFT JOIN rol_usuarios ON usuarios_test.id_rol = rol_usuarios.id_rol';
+    private const UPDATE = 'UPDATE usuarios_test SET ';
     
     
     public function login(string $email,string $pass): ?\Com\Daw2\Helpers\UsuarioSistema{
@@ -43,6 +44,14 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     function addUser(array $post):bool{
         $stmt = $this->pdo->prepare('INSERT INTO usuarios_test(id_rol,email,nombre_usuario,pass,baja,cartera) values(?,?,?,?,0,0.0)');
         return $stmt->execute([$post['rol'][0],$post['email'],$post['nombre'],password_hash($post['pass'],PASSWORD_DEFAULT)]);     
+    }
+    
+    /***
+     * Actualiza el registro del úlitmo logeo del usuario
+     */
+    function updateLastLogin(string $email){
+        $stmt = $this->pdo->prepare(self::UPDATE."ultimo_login=? WHERE email=?");
+        $stmt->execute([date("Y-m-d H:i:s", strtotime("now")),$email]);     
     }
     
 }

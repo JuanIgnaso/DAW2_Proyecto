@@ -29,6 +29,9 @@
           
           //LocalStorage
           const miLocalStorage = window.localStorage;
+          
+          //Numero items carrito
+          var carrito_items = document.getElementById('carrito_items');
          
           
           //boton carrito
@@ -73,12 +76,17 @@
               console.log(producto);
               guardarCarrito();
               cargarCarrito();
-//              if(carrito.length == 1){
-//                 printCheckOut();
-//              }
+
           });
           
           /*
+           * 
+           *               if(carrito.length <= 1){
+                 carrito_items.style.display = 'block';
+                 carrito_items.innerHTML = carrito.length;
+              }else{
+                  carrito_items.style.display = 'none';
+              }
            * 
            * Carga El objeto en el carrito
            * 
@@ -89,10 +97,13 @@
                    for (var i = 0; i < carrito.length; i++) {
                    printObj(carrito[i]);                  
                    } 
+                   carrito_items.style.display = 'block';
+                   carrito_items.innerHTML = carrito.length;
                    checkout.style.display = 'block';
                 //   printCheckOut(); 
               }else{
                   checkout.style.display = 'none';
+                  carrito_items.style.display = 'none';
                   removeChilds();
               cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
               }

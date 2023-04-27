@@ -25,6 +25,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         }else{
             $_SESSION['usuario'] = $usuario;
             $_SESSION['permisos'] = $_SESSION['usuario']->getRol()->get_permisos();
+            $model->updateLastLogin($_POST['email']);
             header('Location: /');
             
         }
