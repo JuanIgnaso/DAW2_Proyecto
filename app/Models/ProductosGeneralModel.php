@@ -64,12 +64,53 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
        
     }
     
-    function updateStock($id,$cantidad){
-        $condiciones = [];
-        $condiciones['id'] = $id;
-        $condiciones['cantidad'] = $cantidad;
-        $stmt = $this->pdo->prepare('update productos set("stock" = ((select(stock) FROM productos WHERE codigo_producto = :id)-:cantidad) ) WHERE codigo_producto = :id'); 
-         return $stmt->execute($condiciones);
+    //Usar transacciones ya que se trata de un método que puede hacer
+    //Múltiples actualizaciones
+    function updateStock(array $carrito): bool{
+        try {
+        $this->pdo->beginTransaction();
+
+        for($i = 0; $i < count($carrito); $i++) {
+        $stmt = $this->pdo->prepare('UPDATE productos SET stock = stock - ? WHERE codigo_producto = ?'); 
+
+//            $condiciones = [];
+//            $condiciones['codigo_producto'] = intval($carrito[$i]['codigo_producto']);
+            //$condiciones['cantidad'] = intval($carrito[$i]['cantidad']);
+             $stmt->execute([intval($carrito[$i]['cantidad']),intval($carrito[$i]['codigo_producto'])]);
+
+        }     
+           $this->pdo->commit(); 
+           return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }
+
       }
     
+                /*
+          /* Begin a transaction, turning off autocommit */
+          //$dbh->beginTransaction();
+
+          /* Insert multiple records on an all-or-nothing basis */
+          /*$sql = 'INSERT INTO fruit
+              (name, colour, calories)
+              VALUES (?, ?, ?)';
+
+          $sth = $dbh->prepare($sql);
+
+          foreach ($fruits as $fruit) {
+              $sth->execute(array(
+                  $fruit->name,
+                  $fruit->colour,
+                  $fruit->calories,
+              ));
+          }
+
+          /* Commit the changes */
+          /*-$dbh->commit();*/
+
+          /* Database connection is now back in autocommit mode */
+       
+      
 }

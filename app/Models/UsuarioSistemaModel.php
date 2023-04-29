@@ -35,7 +35,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
      */
     private function rowToUsuarioSistema(array $row): ?\Com\Daw2\Helpers\UsuarioSistema{
         $rol = new \Com\Daw2\Helpers\Rol($row['id_rol'],$row['nombre_rol'],$row['descripcion']);
-        return new \Com\Daw2\Helpers\UsuarioSistema($row['id_usuario'],$rol,$row['email'],$row['nombre_usuario']);
+        return new \Com\Daw2\Helpers\UsuarioSistema($row['id_usuario'],$rol,$row['email'],$row['nombre_usuario'],$row['cartera']);
     }
     
     /*
@@ -52,6 +52,12 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     function updateLastLogin(string $email){
         $stmt = $this->pdo->prepare(self::UPDATE."ultimo_login=? WHERE email=?");
         $stmt->execute([date("Y-m-d H:i:s", strtotime("now")),$email]);     
+    }
+    
+    //Actualizar la cantidad de dinero del usuario
+    function updateUserWallet($amount,$id){
+        $stmt = $this->pdo->prepare('UPDATE usuarios SET cartera = cartera - ? WHERE id_usuario = ?');
+        $stmt->execute([$amount,$id]);
     }
     
 }

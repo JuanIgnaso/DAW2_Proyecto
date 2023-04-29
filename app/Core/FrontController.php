@@ -114,6 +114,20 @@ class FrontController{
                      }
                      ,'get');  
                      
+                                        Route::add('/check_salario',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PedidoController();
+                     $controller->checkUserSalary();
+                     }
+                     ,'post');   
+                     
+                     Route::add('/check_salario',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PedidoController();
+                     $controller->checkUserSalary();
+                     }
+                     ,'get'); 
+                     
   
        }
          

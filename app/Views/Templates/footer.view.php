@@ -47,6 +47,12 @@
                  </tr>
              * 
              * */
+                                 
+             window.onload =  enable_shopping;                   
+                                 
+            //Finalizar compra
+            var finalizar = document.getElementById('finalizar_Compra');
+                                 
             //Cuerpo de la tabla
             var chk = document.getElementById('checkout_table');
             
@@ -127,9 +133,9 @@
            function calcularTotal(cant){
                let sum  = 0;
                for (var i = 0; i < carrito.length; i++) {
-                   sum += carrito[i].cantidad * carrito[i].precio;
+                   sum += (carrito[i].cantidad * carrito[i].precio);
             }
-            total.innerHTML = sum + cant;
+            total.innerHTML = (sum + cant).toFixed(2);
            }
            
            
@@ -146,27 +152,62 @@
                 type: 'POST',
 
                 // contenido que envias por ajax
-                data: {
-                    datos: carrito //array, variable etc.
+            data: {
+                    datos: carrito,
+                    total: parseFloat(total.innerHTML)//array, variable etc.
                 },
 
 
                 //si la respuesta es correcta (200) (lo que recibe del controller)
                 success: function(response) {
-                    console.log(response); //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
-                    
+                    window.alert('success!'); //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
+                    console.log(response);
                 },
 
                 //si la respuesta no es correcta (400) (lo que recibe del controller)
                 error: function(error) {
-                    error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
+                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
                     
-                    console.log(error);
+                    window.alert('failure!');
                 }
 
                 //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
             });
+            
+        }
+        
+        function enable_shopping(){
+                     //funcion de ajax en JQuery
+            $.ajax({
 
+                //url que pones para ir al controlador (usando front controller)
+                url: '/check_salario',
+
+                //metodo con el que enviar los datos (GET / POST) 
+                type: 'POST',
+
+                // contenido que envias por ajax
+            data: {
+                    
+                    total: parseFloat(total.innerHTML)//array, variable etc.
+                },
+
+
+                //si la respuesta es correcta (200) (lo que recibe del controller)
+                success: function(response) {
+                    finalizar.disabled = false; //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
+                    console.log(response);
+                },
+
+                //si la respuesta no es correcta (400) (lo que recibe del controller)
+                error: function(error) {
+                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
+                    finalizar.disabled = true;
+                    window.alert('failure!');
+                }
+
+                //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
+            });
         }
            
 

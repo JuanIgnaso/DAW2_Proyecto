@@ -46,7 +46,7 @@
             <p class="text-danger small p-0 m-0">Gastos de envío por defecto es de: <span><strong>3.95€</strong></span>, Pueden variar según opción de embalaje y tipo de envío.</p>
                 <div class="row p-2">
                   <div class="col-12 border-top border-secondary">
-                      <h2 class="text-start">Tipo de Envío</h2>
+                      <h2 class="text-start"><?php echo $_SESSION['usuario']->getCartera();?>Tipo de Envío</h2>
                       <div class="col-12 d-flex flex-column gap-1 justify-content-around p-2">
                         <div class="col d-flex text-center gap-2">
                           <input type="radio" name="ch1" id="normal">

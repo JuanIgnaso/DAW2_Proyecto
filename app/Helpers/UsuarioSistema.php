@@ -9,12 +9,12 @@ class UsuarioSistema{
     private $nombre;
     private $cartera;
     
-    public function __construct(int $idUsuario,Rol $rol,string $email,string $nombre){
+    public function __construct(int $idUsuario,Rol $rol,string $email,string $nombre,$cartera){
         $this->idUsuario = $idUsuario;
         $this->rol = $rol;
         $this->email = $email;
         $this->nombre = $nombre;
-        $this->cartera = 0.0;
+        $this->cartera = $cartera;
     }
     
     public function getIdUsuario() {
@@ -53,6 +53,17 @@ class UsuarioSistema{
 
     public function setCartera($cartera): void {
         $this->cartera = $cartera;
+    }
+    
+    public function comprar($cantidad){
+        $this->checkQuantity($cantidad);
+        $this->cartera = $this->cartera - $cantidad;
+    }
+    
+    private function checkQuantity($quantity){
+        if($quantity > $this->cartera){
+            throw new ArgumentoNoValidoException("La cantidad a quitar es mayor al salario disponible");
+        }
     }
 
 

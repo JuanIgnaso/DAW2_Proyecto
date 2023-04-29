@@ -56,11 +56,11 @@
               /*Añadir Producto a cesta*/
              btn_anadir_p.addEventListener('click',function(){
               //Se busca el elemento dentro del carrito 
-              const found = carrito.find(element => element.id == Number(id.innerHTML));
+              const found = carrito.find(element => element.codigo_producto == Number(id.innerHTML));
               if(found == undefined){
               //Si devuelve undefined quiere decir que el producto no existe dentro del carrito por lo tanto
               //procedemos a crearlo y añadirlo a la cesta.
-              producto.id = Number(id.innerHTML);
+              producto.codigo_producto = Number(id.innerHTML);
               producto.nombre = n.innerHTML;
               producto.precio = parseFloat(p.innerHTML);
               producto.cantidad = Number(c.value);
@@ -121,7 +121,7 @@
                 caja.append(div_lista);
                 
                 let span_cantidad  = document.createElement('span');
-                span_cantidad.setAttribute('id','cantidad_cesta_' + (e.id)); 
+                span_cantidad.setAttribute('id','cantidad_cesta_' + (e.codigo_producto)); 
                 span_cantidad.setAttribute('class','col-2'); 
                
                 span_cantidad.textContent = e.cantidad;              
