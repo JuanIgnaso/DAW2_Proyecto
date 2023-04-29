@@ -33,6 +33,147 @@
           </footer>
         </div>
         <script src="/assets/js/accionesCesta.js"></script>
+        <?php
+        if($_SERVER['REQUEST_URI'] == '/checkout'){
+        ?>
+            <script>
+                
+            /**
+             * 
+             * <tr>
+                <td>Nombre Producto 2</td>
+                 <td>2</td>
+                 <td>43.33</td>
+                 </tr>
+             * 
+             * */
+            //Cuerpo de la tabla
+            var chk = document.getElementById('checkout_table');
+            
+            var total= document.getElementById('suma_total');
+            
+            //gastos envío
+            var gastos = 3.95;
+            
+            //Envío urgente
+            var urgente = document.getElementById('urgente');
+            var normal = document.getElementById('normal');
+            //Sin logo
+            var sin_logo = document.getElementById('sin_logo');
+            var con_logo = document.getElementById('con_logo');
+            
+            carrito = JSON.parse(miLocalStorage.getItem('carrito_' + nombre_usuario.innerHTML));
+           
+           cargarTabla();
+           calcularTotal(gastos);
+           
+           //Cargar la tabla
+           function cargarTabla(){
+               for (var i = 0; i < carrito.length; i++) {
+                   chk.append(generateRow(carrito[i]));
+            }
+            calcularTotal();
+           }
+           
+           //Genera el row de la tabla
+           function generateRow(e){
+               let tr = document.createElement('tr');
+               let nombre = document.createElement('td');
+               nombre.innerText = e.nombre;
+               
+               let cantidad = document.createElement('td');
+               cantidad.innerText = e.cantidad;
+               
+               let total  = document.createElement('td');
+               total.innerText = e.cantidad * e.precio;
+               
+               tr.append(nombre);
+               tr.append(cantidad);
+               tr.append(total);
+               return tr;
+           }
+           
+           
+           /**ACTUALIZAR GASTOS DE ENVÍO**/
+           urgente.addEventListener('change',function(){
+               if(this.checked){
+                  gastos += 2.5;
+                   calcularTotal((gastos));
+               }
+           });
+           
+            normal.addEventListener('change',function(){
+               if(this.checked){
+                   gastos = 3.95;
+                   calcularTotal(gastos);
+               }
+           });
+           
+            sin_logo.addEventListener('change',function(){
+               if(this.checked){
+                  gastos = gastos - 1;
+                   calcularTotal((gastos));
+               }
+           });
+           
+            con_logo.addEventListener('change',function(){
+               if(this.checked){
+                   gastos = 3.95;
+                   calcularTotal(gastos);
+               }
+           });
+           
+           
+           function calcularTotal(cant){
+               let sum  = 0;
+               for (var i = 0; i < carrito.length; i++) {
+                   sum += carrito[i].cantidad * carrito[i].precio;
+            }
+            total.innerHTML = sum + cant;
+           }
+           
+           
+           function ajax() {
+
+
+            //funcion de ajax en JQuery
+            $.ajax({
+
+                //url que pones para ir al controlador (usando front controller)
+                url: '/test_cesta',
+
+                //metodo con el que enviar los datos (GET / POST) 
+                type: 'POST',
+
+                // contenido que envias por ajax
+                data: {
+                    datos: carrito //array, variable etc.
+                },
+
+
+                //si la respuesta es correcta (200) (lo que recibe del controller)
+                success: function(response) {
+                    console.log(response); //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
+                    
+                },
+
+                //si la respuesta no es correcta (400) (lo que recibe del controller)
+                error: function(error) {
+                    error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
+                    
+                    console.log(error);
+                }
+
+                //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
+            });
+
+        }
+           
+
+           </script>
+        <?php
+        }
+        ?>   
     </div>
     
 </body>

@@ -10,7 +10,7 @@
 
             </nav>
         </div>
-      <main class="row pt-2 pb-2">
+<main class="row pt-2 pb-2"><!-- MIAA -->
 
         <div class="col-12 col-lg-9 m-auto bg-light">
         <div class="row  row-cols-1 row-cols-md-2 ">
@@ -24,87 +24,20 @@
                         <th>Nombre Producto</th><th>Cantidad</th><th>Precio</th>
                       </tr>
                   </thead>
-                  <tbody class="cuerpo_tabla w-100">
-                      <tr>
-                        <td>Nombre Producto 2</td>
-                        <td>2</td>
-                        <td>43.33</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 6</td>
-                        <td>6</td>
-                        <td>114.00</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 77</td>
-                        <td>1</td>
-                        <td>344.55</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 1</td>
-                        <td>3</td>
-                        <td>3.99</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 2</td>
-                        <td>2</td>
-                        <td>43.33</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 6</td>
-                        <td>6</td>
-                        <td>114.00</td>
-                      </tr>
-                      <tr>
-                        <td><p>Nombre Producto 7555555555555ddddddd7</p></td>
-                        <td>1</td>
-                        <td>344.55</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 1</td>
-                        <td>3</td>
-                        <td>3.99</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 2</td>
-                        <td>2</td>
-                        <td>43.33</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 6</td>
-                        <td>6</td>
-                        <td>114.00</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 77</td>
-                        <td>1</td>
-                        <td>344.55</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 1</td>
-                        <td>3</td>
-                        <td>3.99</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 77</td>
-                        <td>1</td>
-                        <td>344.55</td>
-                      </tr>
-                      <tr>
-                        <td>Nombre Producto 1</td>
-                        <td>3</td>
-                        <td>3.99</td>
-                      </tr>
+                  <tbody class="cuerpo_tabla w-100" id="checkout_table">
+                     
                   </tbody>
                 </table>
                 
                 <!-- footer -->
                 <div class="row">
                   <footer class="col-12 d-flex align-items-center flex-row justify-content-end gap-3">
-                    <h4>TOTAL: </h4><span id="precio_total">422.4€</span>
+                    <h4>TOTAL: </h4><span id="suma_total"></span>
                   </footer>
                 </div>
           </section>
+            
+
 
           <!-- DATOS DE ENVÍO -->
           <section class="col p-3">
@@ -116,12 +49,12 @@
                       <h2 class="text-start">Tipo de Envío</h2>
                       <div class="col-12 d-flex flex-column gap-1 justify-content-around p-2">
                         <div class="col d-flex text-center gap-2">
-                          <input type="radio" name="ch1" id="">
+                          <input type="radio" name="ch1" id="normal">
                         <label for="">Envío Normal</label>
                           
                         </div>
                       <div class="col  d-flex  text-center gap-2">
-                        <input type="radio" name="ch1" id="">
+                        <input type="radio" name="ch1" id="urgente">
                         <label for="">Urgente<span><strong> + 2.50€</strong></span></label>  
                          
                         </div>
@@ -132,13 +65,13 @@
                     <h2 class="text-start">Forma del Embalaje</h2>
                     <div class="col-12 d-flex flex-column gap-1 justify-content-around p-2">
                       <div class="col d-flex  text-center gap-2">
-                        <input type="radio" name="ch2" id="">
+                        <input type="radio" name="ch2" id="con_logo">
                         <label for="">Con logo la Empresa</label>
                           
                       </div>
 
                       <div class="col  d-flex  text-center gap-2">
-                        <input type="radio" name="ch2" id="">
+                        <input type="radio" name="ch2" id="sin_logo">
                         <label for="">En Blanco<span><strong> - 1.00€</strong></span></label>  
                           
                         </div>
@@ -181,7 +114,7 @@
                       </div>
                     </div>
                     <footer class="col-12 text-center">
-                      <button type="submit" class="mt-3  p-2 rounded" id="finalizar_Compra">Finalizar Compra</button>
+                      <button type="submit" class="mt-3  p-2 rounded" onclick="ajax()" id="finalizar_Compra">Finalizar Compra</button>
                     </footer>
                    
                

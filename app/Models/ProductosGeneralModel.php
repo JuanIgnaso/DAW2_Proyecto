@@ -64,4 +64,12 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
        
     }
     
+    function updateStock($id,$cantidad){
+        $condiciones = [];
+        $condiciones['id'] = $id;
+        $condiciones['cantidad'] = $cantidad;
+        $stmt = $this->pdo->prepare('update productos set("stock" = ((select(stock) FROM productos WHERE codigo_producto = :id)-:cantidad) ) WHERE codigo_producto = :id'); 
+         return $stmt->execute($condiciones);
+      }
+    
 }

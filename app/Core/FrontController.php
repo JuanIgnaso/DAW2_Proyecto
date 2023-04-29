@@ -36,6 +36,13 @@ class FrontController{
                     $controler->load_product($id,$nombre);
                     }
                     ,'get');
+                    
+                    Route::add('/test',
+                    function(){
+                    $controler = new \Com\Daw2\Controllers\InicioController();
+                    $controler->test();
+                    }
+                    ,'get');
 
                     
             Route::add('/login',
@@ -85,14 +92,30 @@ class FrontController{
        
        /*CHECKOUT*/
        
+       if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['comprar'])){
                  Route::add('/checkout',
                      function(){
                      $controller = new \Com\Daw2\Controllers\PedidoController();
                      $controller->showCheckOut();
                      }
                      ,'get'); 
+                     
+                   Route::add('/test_cesta',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PedidoController();
+                     $controller->terminarCompra();
+                     }
+                     ,'post');   
+                     
+                     Route::add('/test_cesta',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PedidoController();
+                     $controller->terminarCompra();
+                     }
+                     ,'get');  
+                     
   
-
+       }
          
 
                 /******CATEGORÍAS******/

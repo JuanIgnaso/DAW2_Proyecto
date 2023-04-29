@@ -19,5 +19,8 @@
     <link rel="icon" type="image/x-icon" href="/assets/svg/gallaecia-pc-favicon.svg">
     <!-- SCRIPT ADAPTAR NAVBAR -->
     
+    <!-- LIBRERÍA JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
     <title><?php echo $titulo;?></title>
 </head>

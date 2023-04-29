@@ -30,6 +30,8 @@
           //LocalStorage
           const miLocalStorage = window.localStorage;
           
+          //Cookies
+          const miCookie = document.cookie;
           
           //Numero items carrito
           var carrito_items = document.getElementById('carrito_items');

@@ -46,7 +46,7 @@ input[type='radio']{
     color:orangered !important;
 }
 
-#precio_total{
+#suma_total{
     font-size: 2rem;
    font-family: 'Potta One', 'Staatliches', cursive !important;
    color:orangered;

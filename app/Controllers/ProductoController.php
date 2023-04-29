@@ -22,6 +22,8 @@ class ProductoController extends \Com\Daw2\Core\BaseController{
         $this->view->showViews(array('templates/header.view.php','templates/header_navbar.php','product_details_view.php','templates/footer.view.php'),$data);
     }
     
+
+    
     
     private function getDetails($nombre,$id){
         $detalles;
