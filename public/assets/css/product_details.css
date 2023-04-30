@@ -81,6 +81,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     color:orangered;
 }
 
+#limite_alcanzado{
+    display:none;
+}
+
 /***** VENTANA MODAL ******/
 .class_modal
 {

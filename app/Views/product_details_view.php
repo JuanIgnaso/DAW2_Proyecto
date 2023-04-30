@@ -65,7 +65,10 @@
                             <li><a href="https://twitter.com/"><i class="fa-brands fa-twitter fa-2xl" style="color: #272727;"></i></a></li>
                             <li><a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f fa-2xl" style="color: #272727;"></i></a></li>
                             <li><a href="https://www.instagram.com/"><i class="fa-brands fa-instagram  fa-2xl" style="color: #272727;"></i></a></li>
-                        </ol>  
+                        </ol> 
+                    </div>
+                    <div class="col-12 text-center" id="limite_alcanzado">
+                        <p class="text-danger m-0"><span class="badge bg-danger">!</span> Límite Máximo Alcanzado, no puedes comprar más de este producto.</p>
                     </div>
                     <!-- AÑADIR AL CARRITO -->
                    <div class="col-12 text-secondary ps-2 pt-3 pb-3 mt-2 d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center" id="compartir-box">

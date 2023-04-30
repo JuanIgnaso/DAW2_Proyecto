@@ -102,13 +102,19 @@
                             <h5 class="col-6 text-center text-sm-left"><?php echo round($producto['precio'],2);?>€</h5>
                             <!-- PHP danger si esta agotado o primary si está disponible -->
                             <?php
-                            if($producto['stock'] != 0){
+                            if($producto['stock'] <= 0){
                             ?>
-                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                            <h5 class="col-8 col-sm-6 text-danger text-center border border-danger rounded p-2">Agotado</h5>
+                            <?php
+                            }else if($producto['stock'] < 5){
+                            ?>
+                            
+                                <h6 class="text-warning text-center border border-warning rounded p-2">Últimas Unidades</h6> 
+                 
                             <?php
                             }else{
                             ?>
-                            <h5 class="col-8 col-sm-6 text-danger text-center border border-danger rounded p-2">Agotado</h5>
+                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
                             <?php
                             }
                             ?>

@@ -30,6 +30,8 @@
           //LocalStorage
           const miLocalStorage = window.localStorage;
           
+          //Limite máximo
+          var max_limit = document.getElementById('limite_alcanzado');
           
           //Numero items carrito
           var carrito_items = document.getElementById('carrito_items');
@@ -67,17 +69,28 @@
               carrito.push(producto);
               
               }else{
-                  
+                  //Si la suma de la cantidad es igual o menor se suma.
+                  if((found.cantidad + Number(c.value)) <= Number(c.getAttribute('max'))){
                   found.cantidad += Number(c.value);
-                  let actualizar_Val = document.getElementById('cantidad_cesta_' + (found.id));
-                  actualizar_Val.textContent = found.cantidad;
+                  let actualizar_Val = document.getElementById('cantidad_cesta_' + (found.codigo_producto));
+                  actualizar_Val.innerHTML = found.cantidad;  
+                  }else{
+                      //En caso de pasarse se muestra una advertencia.
+                    mostrarLimite();
+                    setTimeout(ocultarLimite, 5000);
+                  }
+
               }
-              console.log(Number(c.getAttribute('max')));
-              console.log(producto);
+              console.log();
+             
               guardarCarrito();
               cargarCarrito();
 
           });
+          
+          /*Mostrar y ocultar advertencia*/
+           mostrarLimite = () => {max_limit.style.display = 'block';};
+           ocultarLimite = () => {max_limit.style.display = 'none';};   
           
           
           function cargarCarrito(){
