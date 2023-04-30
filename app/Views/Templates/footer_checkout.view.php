@@ -32,12 +32,18 @@
               </ul>
           </footer>
         </div>
-        <script src="/assets/js/accionesCesta.js"></script>
+<!--
+        <script src="/assets/js/accionesCesta.js"></script> comment -->
         <?php
         if($_SERVER['REQUEST_URI'] == '/checkout'){
         ?>
             <script>
-
+            //carrito
+            
+            var carrito = [];
+                
+          //LocalStorage
+          const miLocalStorage = window.localStorage;
                                  
              window.onload =  enable_shopping;                   
                                  
@@ -100,9 +106,9 @@
                    carrito.splice(carrito.indexOf(e),1);
                    console.log(carrito.length);
                    guardarCarrito();
+                   calcularTotal();
                });
                borrar.append(boton_borrar);
-               
                tr.append(nombre);
                tr.append(cantidad);
                tr.append(total);
@@ -114,40 +120,55 @@
            urgente.addEventListener('change',function(){
                if(this.checked){
                   gastos += 2.5;
-                   calcularTotal((gastos));
+                   calcularTotal();
                }
            });
            
             normal.addEventListener('change',function(){
                if(this.checked){
                    gastos = 3.95;
-                   calcularTotal(gastos);
+                   calcularTotal();
                }
            });
            
             sin_logo.addEventListener('change',function(){
                if(this.checked){
                   gastos = gastos - 1;
-                   calcularTotal((gastos));
+                   calcularTotal();
                }
            });
            
             con_logo.addEventListener('change',function(){
                if(this.checked){
                    gastos = 3.95;
-                   calcularTotal(gastos);
+                   calcularTotal();
                }
            });
            
            
-           function calcularTotal(cant){
+           function calcularTotal(){
                let sum  = 0;
                for (var i = 0; i < carrito.length; i++) {
                    sum += (carrito[i].cantidad * carrito[i].precio);
             }
-            total.innerHTML = (sum + cant).toFixed(2);
+            total.innerHTML = (sum + gastos).toFixed(2);
            }
            
+           
+                        //Cargar el carrito
+              function cargarCarritoDeLocalStorage(){
+                // ¿Existe un carrito previo guardado en LocalStorage?
+                if (miLocalStorage.getItem('carrito_' + nombre_usuario.innerHTML) !== null) {
+                    // Carga la información
+                    carrito = JSON.parse(miLocalStorage.getItem('carrito_' + nombre_usuario.innerHTML));
+                }
+            }
+           
+                        //Debería guardar el carrito en LocalStorage
+             function guardarCarrito(){
+                 miLocalStorage.setItem('carrito_' + nombre_usuario.innerHTML,JSON.stringify(carrito));
+                 console.log('guardado' + 'carrito_' + nombre_usuario.innerHTML);
+             }
            
            function ajax() {
 
@@ -175,8 +196,10 @@
                    // purchaseSuccess();
                     console.log(response);
                     if(response){
-                        window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
-                    }
+                    localStorage.removeItem('carrito_' + nombre_usuario.innerHTML);
+                    window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
+
+                }
                     
                 },
 

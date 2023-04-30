@@ -96,6 +96,11 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
   cursor: pointer;
 }
 
+#basura{
+    border: none;
+background: none;
+}
+
 #btn_borrar_producto{
     background-color:unset;
 }

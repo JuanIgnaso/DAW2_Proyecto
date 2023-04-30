@@ -25,7 +25,7 @@
                     <h2 class="display-6" id="nombre"><?php echo $datos_generales['nombre'];?></h2>
                     <!-- PRECIO -->
                     <div class="col-12 border-bottom border-secondary" id="precio-box">
-                        <h2 class="display-5" id="precio"><?php echo number_format($datos_generales['precio'],2,'.',' ');?>€</h2> 
+                        <h2 class="display-5" id="precio"><?php echo number_format($datos_generales['precio'],2,'.','');?>€</h2> 
                     </div>
                     <!-- VENDIDO POR -->
                     <div class="col-12 text-secondary p-2 mt-2" id="vendido_por">

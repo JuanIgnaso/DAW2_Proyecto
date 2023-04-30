@@ -65,7 +65,6 @@
               producto.precio = parseFloat(p.innerHTML);
               producto.cantidad = Number(c.value);
               carrito.push(producto);
-              //cargarCarritoDeLocalStorage();
               
               }else{
                   
@@ -80,18 +79,7 @@
 
           });
           
-          /*
-           * 
-           *               if(carrito.length <= 1){
-                 carrito_items.style.display = 'block';
-                 carrito_items.innerHTML = carrito.length;
-              }else{
-                  carrito_items.style.display = 'none';
-              }
-           * 
-           * Carga El objeto en el carrito
-           * 
-           */          
+          
           function cargarCarrito(){
               if(carrito.length != 0){
                   removeChilds();
@@ -170,22 +158,7 @@
             }
            }
              
-             
-//             function printCheckOut(){
-//                 let btn_checkout = document.createElement('button');
-//                 btn_checkout.setAttribute('class','btn btn-default borrar');
-//                 btn_checkout.setAttribute('id','btn_checkout');
-//                 
-//                 let enlace = document.createElement('a');
-//                 enlace.innerText = 'Finalizar Compra';
-//                 enlace.setAttribute('class','text-center')
-//                 enlace.setAttribute('href','/');
-//                 btn_checkout.append(enlace);
-//                 if(carrito.length == 1){
-//                     cuerpo.appendChild(btn_checkout);
-//                 }
-//                 
-//             }
+            
              
              //Debería guardar el carrito en LocalStorage
              function guardarCarrito(){

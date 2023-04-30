@@ -10,8 +10,13 @@
 
             </nav>
         </div>
-<main class="row pt-2 pb-2"><!-- MIAA -->
 
+<main class="row pt-2 pb-2"><!-- MIAA -->
+<section class="col-9 mb-2 m-auto border border-danger text-danger bg-danger bg-opacity-25" id="not_enough_money_modal">
+    <div class="col-12 d-flex align-items-center">
+            <p class="m-0 p-2 col-12 text-center">Parece que no tienes suficente dinero para completar tu compra, prueba a eliminar productos de la cesta o a ingresar más fondos a tu cartera.</p>
+    </div>
+</section>
         <div class="col-12 col-lg-9 m-auto bg-light">
         <div class="row  row-cols-1 row-cols-md-2 ">
           <section class="col p-3">
@@ -21,7 +26,7 @@
                 <table class="w-100 table table-light table-striped  display-block">
                   <thead class="text-left">
                       <tr>
-                        <th>Nombre Producto</th><th>Cantidad</th><th>Precio</th>
+                          <th>Nombre Producto</th><th>Cantidad</th><th>Precio</th><th>Acción</th>
                       </tr>
                   </thead>
                   <tbody class="cuerpo_tabla w-100" id="checkout_table">
@@ -112,7 +117,17 @@
                             <input type="text" name="nombre" id="" class=" rounded">
                         </div>
                       </div>
+                      
                     </div>
+                       <div class="col-12 mt-2 d-flex align-items-center text-center gap-2">
+                           <span>Recordar Mi Dirección:</span>
+                           <label class="cont align-items-center">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            
+                          </label> 
+
+                       </div>
                     <footer class="col-12 text-center">
                       <button type="submit" class="mt-3  p-2 rounded" onclick="ajax()" id="finalizar_Compra">Finalizar Compra</button>
                     </footer>

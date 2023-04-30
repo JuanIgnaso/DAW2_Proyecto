@@ -121,10 +121,26 @@ class FrontController{
                      }
                      ,'post');   
                      
-                     Route::add('/check_salario',
+//                     Route::add('/check_salario',
+//                     function(){
+//                     $controller = new \Com\Daw2\Controllers\PedidoController();
+//                     $controller->checkUserSalary();
+//                     }
+//                     ,'get'); 
+                     
+                     
+                     
+                     Route::add('/checkout/success',
                      function(){
                      $controller = new \Com\Daw2\Controllers\PedidoController();
-                     $controller->checkUserSalary();
+                     $controller->checkOutSuccess();
+                     }
+                     ,'post'); 
+                                          
+                     Route::add('/checkout/success',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PedidoController();
+                     $controller->checkOutSuccess();
                      }
                      ,'get'); 
                      

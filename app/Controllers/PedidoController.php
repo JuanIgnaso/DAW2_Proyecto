@@ -10,7 +10,7 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
         $data['titulo'] = 'Tramitando Pedido';
         $data['categoria'] = $modelCategoria->getAll();
         
-        $this->view->showViews(array('templates/header_checkout.php','templates/header_navbar.php','CheckOutView.php','templates/footer.view.php'),$data);     
+        $this->view->showViews(array('templates/header_checkout.php','templates/header_checkout_navbar.php','CheckOutView.php','templates/footer_checkout.view.php'),$data);     
     }
     
         function terminarCompra(){
@@ -29,10 +29,10 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
             http_response_code(200);
             $_SESSION['usuario']->comprar($_POST['total']);
             $update = $userModel->updateUserWallet($_POST['total'], $_SESSION['usuario']->getIdUsuario());
-            echo $_SESSION['usuario']->getCartera();
-            echo json_encode(["hola"=>$_POST['total']]);
-            //header("location: /laquesea");
-         
+           // echo $_SESSION['usuario']->getCartera();
+            //header('location: /checkout/sucess');
+            //echo json_encode(["hola"=>$_POST['total']]);
+            echo json_encode(true);
             exit;
         } else {
             // si hay error (lo que querias hacer salió mal)
@@ -54,11 +54,9 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
             $var = true;
         }
         if ($var) {
-            http_response_code(200);
-
+            http_response_code(200);    
             echo json_encode(["hola"=>'todo ok']);
-            //header("location: /laquesea");
-         
+             //$this->checkOutSuccess();
             exit;
         } else {
             // si hay error (lo que querias hacer salió mal)
@@ -67,6 +65,15 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
             exit;
         }
          
+    }
+    
+    function checkOutSuccess(){
+       $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+        $data = [];
+        $data['titulo'] = 'Pedido Confirmado';
+        $data['categoria'] = $modelCategoria->getAll();
+        $this->view->showViews(array('templates/header.view.php','templates/header_navbar.php','CheckOutSuccess.view.php','templates/footer.view.php'),$data);     
+
     }
 
 }
