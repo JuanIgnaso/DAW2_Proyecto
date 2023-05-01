@@ -17,7 +17,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     public function loginUser(){
         //Llamada al modelo
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-        $usuario = $model->login($_POST['email'], $_POST['password']);
+        $usuario = $model->login($_POST);
+        $remember = $_POST['remember_me'];
         $_vars  = [];
         //Si es nulo, quiere decir que el usuario no ha introducido bien la contraseña o nombre de usuario
         if(is_null($usuario)){
@@ -26,7 +27,18 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             $_SESSION['usuario'] = $usuario;
             $_SESSION['permisos'] = $_SESSION['usuario']->getRol()->get_permisos();
             $model->updateLastLogin($_POST['email']);
+            if(!empty($remember)){
+                //Creamos la Cookie de nombre usuario y password
+                setcookie('email',$_SESSION['usuario']->getEmail(),time()+3600*24*7);
+                setcookie('password',$_POST['password'],time()+3600*24*7);
+
+            }else{
+                //Hacemos caducar las cookies.
+                setcookie('email',$_SESSION['usuario']->getEmail(),time() - 3600);
+                setcookie('password',$_POST['password'],time() - 3600);
+            }
             header('Location: /');
+          
             
         }
         $this->view->show('login.php',$_vars);

@@ -36,6 +36,12 @@
           //Numero items carrito
           var carrito_items = document.getElementById('carrito_items');
          
+         //Parrafo mensaje Alerta
+         var mensaje_alerta = document.getElementById('mensaje_alerta');
+         
+
+         
+         
           
           //boton carrito
           var open_carrito = document.getElementById('btn_carrito');
@@ -60,14 +66,16 @@
               //Se busca el elemento dentro del carrito 
               const found = carrito.find(element => element.codigo_producto == Number(id.innerHTML));
               if(found == undefined){
-              //Si devuelve undefined quiere decir que el producto no existe dentro del carrito por lo tanto
-              //procedemos a crearlo y añadirlo a la cesta.
-              producto.codigo_producto = Number(id.innerHTML);
-              producto.nombre = n.innerHTML;
-              producto.precio = parseFloat(p.innerHTML);
-              producto.cantidad = Number(c.value);
-              carrito.push(producto);
-              
+                  if(Number(c.value) <= Number(c.getAttribute('max')) && c.value != '' && Number(c.value) >= 1){
+                    /*
+                     * Si devuelve undefined, quiere decir que el objeto existe
+                     * Y si llegamos aquí es que el valor introducido o recibido del input es el correcto
+                     */
+                    createObject();
+                    }else{
+                     let mensaje = '<span class="badge bg-danger">!</span> Solo se aceptan valores entre 1 y ' + c.getAttribute('max');
+                    showAlerMessage(mensaje); 
+                    }
               }else{
                   //Si la suma de la cantidad es igual o menor se suma.
                   if((found.cantidad + Number(c.value)) <= Number(c.getAttribute('max'))){
@@ -76,22 +84,46 @@
                   actualizar_Val.innerHTML = found.cantidad;  
                   }else{
                       //En caso de pasarse se muestra una advertencia.
-                    mostrarLimite();
-                    setTimeout(ocultarLimite, 5000);
+                      let mensaje = '<span class="badge bg-danger">!</span> Límite Máximo Alcanzado, no puedes comprar más de este producto.';
+                    showAlerMessage(mensaje);
                   }
 
-              }
-              console.log();
-             
+              }           
               guardarCarrito();
               cargarCarrito();
 
           });
           
-          /*Mostrar y ocultar advertencia*/
-           mostrarLimite = () => {max_limit.style.display = 'block';};
-           ocultarLimite = () => {max_limit.style.display = 'none';};   
+          /*Función para crear objeto JSON*/
           
+          function createObject(){
+            producto.codigo_producto = Number(id.innerHTML);
+            producto.nombre = n.innerHTML;
+            producto.precio = parseFloat(p.innerHTML);
+            producto.cantidad = Number(c.value);
+            carrito.push(producto); 
+          }
+          
+          
+          
+          /*Mostrar y ocultar advertencia*/
+           mostrarLimite = (msg) => {max_limit.style.display = 'block';
+                                    mensaje_alerta.innerHTML = msg;
+           };
+           ocultarLimite = () => {max_limit.style.display = 'none';}; 
+           
+           
+           function showAlerMessage(msg){
+               mostrarLimite(msg);
+               setTimeout(ocultarLimite, 5000);
+           }
+           
+           /*EVITAR que el usuario escriba otro caracter que no sea un número
+            En el input number de la vista*/
+           c.addEventListener('input',function() {
+            this.value = this.value.replace(/[^1-9][^0-9]/,'');
+        });
+
           
           function cargarCarrito(){
               if(carrito.length != 0){

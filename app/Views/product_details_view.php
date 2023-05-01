@@ -68,14 +68,14 @@
                         </ol> 
                     </div>
                     <div class="col-12 text-center" id="limite_alcanzado">
-                        <p class="text-danger m-0"><span class="badge bg-danger">!</span> Límite Máximo Alcanzado, no puedes comprar más de este producto.</p>
+                        <p class="text-danger m-0" id="mensaje_alerta"></p>
                     </div>
                     <!-- AÑADIR AL CARRITO -->
                    <div class="col-12 text-secondary ps-2 pt-3 pb-3 mt-2 d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center" id="compartir-box">
                        
                        <div class="d-flex align-items-center gap-2">
                            <span>Cantidad:</span>
-                             <input type="number" id="cantidad" min="1" value="1" max="<?php echo $datos_generales['stock'] <= 10 ? $datos_generales['stock'] : 10;?>" name="cantidad"<?php echo $datos_generales['stock'] == 0 ? 'disabled' : '';?>>
+                             <input type="number" id="cantidad" min="1" value="1" required pattern="[0-9]+"  max="<?php echo $datos_generales['stock'] <= 10 ? $datos_generales['stock'] : 10;?>" name="cantidad"<?php echo $datos_generales['stock'] == 0 ? 'disabled' : '';?>>
                        </div> 
                        <?php
                        if($datos_generales['stock'] != 0){

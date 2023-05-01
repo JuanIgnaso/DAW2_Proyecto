@@ -21,9 +21,8 @@
         <form action="/login" method="post">
           <img class="mb-4" src="assets/svg/Gallaecia_PC_Logo.svg" alt="" width="70%">
           <h1 class="h3 mb-3 fw-normal text-center">Porfavor introduce correo y contraseña</h1>
-      
           <div class="form-floating">
-            <input type="email" class="form-control rounded" id="floatingInput" name="email" placeholder="nombre@ejemplo.com">
+            <input type="email" class="form-control rounded" id="floatingInput" name="email" placeholder="nombre@ejemplo.com" value="<?php echo isset($_COOKIE['email']) ? $_COOKIE['email'] : '' ;?>">
             <label for="floatingInput">Dirección email</label>
           </div>
           <!-- 
@@ -33,12 +32,12 @@
           </div> 
          comment -->
           <div class="form-floating">
-            <input type="password" class="form-control rounded" id="floatingPassword" name="password" placeholder="Contraseña">
+            <input type="password" class="form-control rounded" id="floatingPassword" name="password" placeholder="Contraseña" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : '' ;?>">
             <label for="floatingPassword">Contraseña</label>
           </div>
           <div class="checkbox mb-3">
             <label id="label_remember_me">
-              <input type="checkbox" value="remember-me" id="remember-me"> Recuerdame
+              <input type="checkbox" value="remember_me" <?php echo isset($_COOKIE['email']) ? 'checked' : '';?> id="remember-me" name="remember_me"> Recuerdame
             </label>
               <?php
               if(isset($loginError) && !empty($loginError) > 0){

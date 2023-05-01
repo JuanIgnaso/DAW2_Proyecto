@@ -13,13 +13,14 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     private const UPDATE = 'UPDATE usuarios SET ';
     
     
-    public function login(string $email,string $pass): ?\Com\Daw2\Helpers\UsuarioSistema{
+    public function login($post): ?\Com\Daw2\Helpers\UsuarioSistema{
+
         //Buscamos al usuario en la BBDD
         $query = $this->pdo->prepare(self::SELECT_ALL." WHERE email=? AND baja=0");
-        $query->execute([$email]);
+        $query->execute([$post['email']]);
         //Si se encuentran coincidencias
          if($row = $query->fetch()){
-             if(password_verify($pass,$row['pass'])){
+             if(password_verify($post['password'],$row['pass'])){                 
                  return $this->rowToUsuarioSistema($row);
              }else{
                  return NULL;
