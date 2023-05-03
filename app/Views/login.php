@@ -37,7 +37,7 @@
           </div>
           <div class="checkbox mb-3">
             <label id="label_remember_me">
-              <input type="checkbox" value="remember_me" <?php echo isset($_COOKIE['email']) ? 'checked' : '';?> id="remember-me" name="remember_me"> Recuerdame
+              <input type="checkbox" value="remember_me" <?php echo isset($_COOKIE['email']) ? 'checked' : '';?> id="remember_me" name="remember_me"> Recuerdame
             </label>
               <?php
               if(isset($loginError) && !empty($loginError) > 0){
@@ -55,7 +55,7 @@
         /*
         Aplicar un estilo al label de la checkbox en función de su estado.
         */
-        var x = document.getElementById('remember-me');
+        var x = document.getElementById('remember_me');
         var y = document.getElementById('label_remember_me');
 
         x.addEventListener('change',recordar);

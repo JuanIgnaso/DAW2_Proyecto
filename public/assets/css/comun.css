@@ -10,6 +10,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap'); /*Potta One*/
 
 
+/*
+1-ETIQUETAS
+2-CLASES
+3-IDS
+4-MEDIAS
+
+*/
+
+
 /*CSS con todas las cosas comunes de la web, footer, navegador y fuentes de letras*/
 /*FUENTES*/
 body,html{
@@ -30,26 +39,24 @@ a{
     text-decoration: none;
 }
 
+nav ol{
+    list-style: none;
+}
+
+
+/*QUITAR EL OUTLINE DEL BOTON*/
+button:focus {
+        outline: none;
+ }
+
 .pie
 {
     margin: 0;
     background-color: #272727;
 }
 
-nav ol{
-    list-style: none;
-}
 
-#btn_carrito{
-    border: none;
-    background: none;
-}
 
-#logout:hover{
-    border: 1px solid orangered;
-    
-    background-color: unset;
-}
 
 
 /******CARRITO MODAL******/
@@ -96,6 +103,10 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
   cursor: pointer;
 }
 
+.class_modal_carrito #cuerpo_carrito > * ol{
+    list-style: none !important;
+}
+
 #basura{
     border: none;
 background: none;
@@ -119,9 +130,7 @@ background: none;
 }
 
 
-.class_modal_carrito #cuerpo_carrito > * ol{
-    list-style: none !important;
-}
+
 
 #carrito_producto_box ol{
     text-align:left;
@@ -151,10 +160,19 @@ background: none;
     display: block;
 }
 
-/*QUITAR EL OUTLINE DEL BOTON*/
-button:focus {
-        outline: none;
-      }
+
+#btn_carrito{
+    border: none;
+    background: none;
+}
+
+#logout:hover{
+    border: 1px solid orangered;
+    
+    background-color: unset;
+}
+
+
 
 @media screen and (max-width: 500px){
 

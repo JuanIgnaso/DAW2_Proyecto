@@ -9,26 +9,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap'); /*Potta One*/
 
 
+/*
+1-ETIQUETAS
+2-CLASES
+3-IDS
+4-MEDIAS
+
+*/
 
 
+
+h1{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+/***CLASES***/
 .container-fluid
 {
     height: 100%;
     width: 100%;
 }
 
-#cabecera
-{
-    background-image: url('../img/teclado.jpg');
-    height: 100%;
-    background-color: #f08858;
-}
-
-#cabecera p
-{
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: 1.75vw;
-}
 
 
 .activo
@@ -56,32 +61,7 @@
     border: 1px orangered solid;
 }
 
-#log_user #login,#log_out,#sign_up
-{
- border: #fff 1px solid;
-}
 
-#log_user #login,#log_out,#sign_up:hover
-{
- border: orangered 1px solid;
- color: orangered;
- background-color: #272727;
-transition-duration: 0.7s;
-}
-
-
-#log_user button a
-{
- color: #fff;
- text-decoration: none;
-}
-
-
-#log_user button a:hover
-{
- color: orangered;
-transition-duration: 0.7s;
-}
 
 /* Dropdown Content (Hidden by Default) */
 
@@ -144,20 +124,9 @@ transition-duration: 0.7s;
   }
 
 
-/* FUENTES DE LETRAS PARA LA PÁGINA */
-/* Cabeceras */
-
-#titulo_inicio
-{
-    font-size: 10vw;
-}
 
 
 
-h1{
-    margin: 0;
-    padding: 0;
-}
 
 .contenedor
 {
@@ -183,11 +152,7 @@ h1{
     object-fit: contain;
 }
 
-#productos
-{
-background-color: lightgray;
-padding: 2%;
-}
+
 
 .productos-box
 {
@@ -220,6 +185,62 @@ padding: 2%;
 
 }
 
+/***IDS****/
+
+#cabecera
+{
+    background-image: url('../img/teclado.jpg');
+    height: 100%;
+    background-color: #f08858;
+}
+
+#cabecera p
+{
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 1.75vw;
+}
+
+
+#titulo_inicio
+{
+    font-size: 10vw;
+}
+
+#log_user #login,#log_out,#sign_up
+{
+ border: #fff 1px solid;
+}
+
+#log_user #login,#log_out,#sign_up:hover
+{
+ border: orangered 1px solid;
+ color: orangered;
+ background-color: #272727;
+transition-duration: 0.7s;
+}
+
+
+#log_user button a
+{
+ color: #fff;
+ text-decoration: none;
+}
+
+
+#log_user button a:hover
+{
+ color: orangered;
+transition-duration: 0.7s;
+}
+
+#productos
+{
+background-color: lightgray;
+padding: 2%;
+}
+
+
+/*****MEDIA****/
 @media screen and (max-width: 600px)
 {
     #cabecera p

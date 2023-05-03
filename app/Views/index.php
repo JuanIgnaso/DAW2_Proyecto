@@ -62,7 +62,7 @@
                     ?>
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
                      <button class='btn btn-default' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button>
-                    <p class="col-auto text-light m-0" id="nombre_usuario"><?php echo $_SESSION['usuario']->getNombre();?></p>
+                     <p class="col-auto text-light m-0" id="nombre_usuario"><a href="mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a></p>
                     <button type="button" class="btn btn-outline-light" id="logout"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php

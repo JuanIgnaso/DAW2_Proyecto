@@ -38,7 +38,7 @@
                    
                         <!-- MODAL CARRITO  -->    
 
-                    <p class="col-auto text-light m-0" id="nombre_usuario"><?php echo $_SESSION['usuario']->getNombre();?></p>
+                    <a class="col-auto text-light m-0" id="nombre_usuario" href="/mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a>
                     <button type="button" class="btn btn-outline-light" id="log_out"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php

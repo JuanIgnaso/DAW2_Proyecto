@@ -5,12 +5,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /* 
     Created on : 27 abr 2023, 20:22:52
     Author     : USUARIO
+
+1-ETIQUETAS
+2-CLASES
+3-ID
+4-MEDIA
 */
 
 main{
     background-color: lightgray;
     padding: 0;
     margin: 0;
+}
+
+  thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;/* even columns width , fix width of table too*/
+}
+
+input{
+    border: 1px solid orangered;
+     
+}
+
+input[type='radio']{
+    color:orangered !important;
 }
 
   .cuerpo_tabla{
@@ -25,11 +45,7 @@ main{
 }
 
 
-  thead, tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;/* even columns width , fix width of table too*/
-}
+
 
 /** CHECKBOX **/
  /* Customize the label (the container) */
@@ -103,14 +119,7 @@ main{
 
 
 
-input{
-    border: 1px solid orangered;
-     
-}
 
-input[type='radio']{
-    color:orangered !important;
-}
 
 #suma_total{
     font-size: 2rem;

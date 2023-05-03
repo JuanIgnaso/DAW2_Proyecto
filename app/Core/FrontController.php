@@ -87,7 +87,24 @@ class FrontController{
                      }
                      ,'post');  
            
-       }              
+       }     
+       
+       if(isset($_SESSION['usuario'])){
+                     Route::add('/mi_Perfil',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                     $controller->showUserProfile();
+                     }
+                     ,'get'); 
+                     
+                     
+              Route::add('/mi_Perfil/baja/([A-Za-z0-9\_]+)',
+                function ($nombre) {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->darDeBaja($nombre);
+                }
+                , 'get');
+       }
            
        
        /*CHECKOUT*/

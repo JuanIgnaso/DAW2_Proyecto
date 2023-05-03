@@ -9,11 +9,11 @@ namespace Com\Daw2\Models;
 
 class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     
-    private const SELECT_ALL = 'SELECT usuarios.*,rol_usuarios.nombre_rol,rol_usuarios.descripcion FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol';
+    private const SELECT_ALL = 'SELECT usuarios.*,rol_usuarios.nombre_rol,rol_usuarios.descripcion,direccion_envio.* FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol LEFT JOIN direccion_envio ON direccion_envio.id_usuario = usuarios.id_usuario';
     private const UPDATE = 'UPDATE usuarios SET ';
     
     
-    public function login($post): ?\Com\Daw2\Helpers\UsuarioSistema{
+    public function login($post): ?array{
 
         //Buscamos al usuario en la BBDD
         $query = $this->pdo->prepare(self::SELECT_ALL." WHERE email=? AND baja=0");
@@ -21,7 +21,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         //Si se encuentran coincidencias
          if($row = $query->fetch()){
              if(password_verify($post['password'],$row['pass'])){                 
-                 return $this->rowToUsuarioSistema($row);
+                 return $row;
              }else{
                  return NULL;
              }
@@ -59,6 +59,24 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     function updateUserWallet($amount,$id){
         $stmt = $this->pdo->prepare('UPDATE usuarios SET cartera = cartera - ? WHERE id_usuario = ?');
         $stmt->execute([$amount,$id]);
+    }
+    
+    
+    private function comprobarBaja($nombre): bool{
+        $stmt = $this->pdo->prepare(self::SELECT_ALL." WHERE nombre_usuario=? AND baja=1");
+        $stmt->execute([$nombre]);
+        return $stmt->rowCount() !== 0;
+    }
+    
+    function darDeBaja($nombre){
+        if($this->comprobarBaja($nombre)){
+        $stmt = $this->pdo->prepare(self::UPDATE."baja=0 WHERE nombre_usuario=?");
+        $stmt->execute([$nombre]);  
+        }else{
+        $stmt = $this->pdo->prepare(self::UPDATE."baja=1 WHERE nombre_usuario=?");
+        $stmt->execute([$nombre]);    
+        }
+        
     }
     
 }

@@ -9,6 +9,13 @@ namespace Com\Daw2\Controllers;
 
 class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     
+    
+    //IDS DE ROLES
+    private const USUARIO_REGISTRADO = 1;
+    private const MANEJO_INVENTARIO = 2;
+    private const ADMINISTRADOR = 3;
+    
+    
     //Funcion para mostrar la pantalla de login
     public function login(){
         $this->view->show('login.php');
@@ -18,23 +25,26 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         //Llamada al modelo
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $usuario = $model->login($_POST);
-        $remember = $_POST['remember_me'];
         $_vars  = [];
+        if(isset($_POST['remember_me'])){
+            $_vars['remember'] = $_POST['remember_me'];
+        }
+         
         //Si es nulo, quiere decir que el usuario no ha introducido bien la contraseña o nombre de usuario
         if(is_null($usuario)){
-            $_vars['loginError'] = 'Datos de Acceso Incorrectos';
+            $_vars['loginError'] = 'Datos de Acceso Incorrectos'; 
         }else{
             $_SESSION['usuario'] = $usuario;
-            $_SESSION['permisos'] = $_SESSION['usuario']->getRol()->get_permisos();
+            $_SESSION['permisos'] = $this->getPermisos($_SESSION['usuario']['id_rol']);
             $model->updateLastLogin($_POST['email']);
-            if(!empty($remember)){
+            if(!empty($_vars['remember'])){
                 //Creamos la Cookie de nombre usuario y password
-                setcookie('email',$_SESSION['usuario']->getEmail(),time()+3600*24*7);
+                setcookie('email',$_SESSION['usuario']['email'],time()+3600*24*7);
                 setcookie('password',$_POST['password'],time()+3600*24*7);
 
             }else{
                 //Hacemos caducar las cookies.
-                setcookie('email',$_SESSION['usuario']->getEmail(),time() - 3600);
+                setcookie('email',$_SESSION['usuario']['email'],time() - 3600);
                 setcookie('password',$_POST['password'],time() - 3600);
             }
             header('Location: /');
@@ -42,6 +52,30 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             
         }
         $this->view->show('login.php',$_vars);
+    }
+    
+    
+    private function getPermisos(int $id_rol):array{
+        $permisos = array();
+        if($id_rol == 1){
+         $permisos = array('comprar' => ['r','w','d']);
+        }
+        if($id_rol == 2){
+           $permisos = array(
+               'comprar' => ['r','w','d'],
+               'inventario' => ['r','w','d']
+               ); 
+        }
+        if($id_rol == 3){
+            $permisos = array(
+                'usuarios' => ['r','w','d'],
+                'inventario' => ['r','w','d'],
+                'comprar' => ['r','w','d']  
+                
+            );
+        }
+        
+        return $permisos;
     }
     
     //Para cargar la vista provisional del usuario
@@ -71,5 +105,29 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
            header('Location: /');
        }   
  
+    }
+    
+    function showUserProfile(){
+    $data = [];
+            $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+
+    $data['categoria'] = $modelCategoria->getAll();
+    $data['metodo'] = 'get';
+    $data['titulo'] = 'Perfil Del Usuario';
+    $info = $_SESSION['usuario'];
+    $data['info_usuario'] = $info;
+    $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+
+    }
+    
+    
+        function darDeBaja($nombre){
+        $data = [];
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $data['seccion'] = '/mi_Perfil/baja/'.$nombre;
+        $model->darDeBaja($nombre);
+        session_destroy();
+        header('Location: /');
+        
     }
 }

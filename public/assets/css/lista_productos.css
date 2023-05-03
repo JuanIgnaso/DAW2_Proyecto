@@ -1,11 +1,21 @@
+
+/*
+1-ETIQUETAS
+2-CLASES
+3-IDS
+4-MEDIAS
+
+*/
+
+.cabecera_lista_productos a:hover{
+   color: orangered;
+}
+
 .titulo_seccion
 {
     color: orangered;
 }
 
-#cabeza{
-    margin-bottom: 1px;
-}
 
 .header_Seccion
 {
@@ -35,6 +45,86 @@
 {
     font-size: 1.35em;
 }
+
+
+.caja_producto{
+    padding: 1%;
+}
+
+.caja_producto * img{
+    width: 90%;
+    margin: auto;
+}
+
+.caja_producto a{
+    text-decoration: none;
+    font-family: 'Potta One', 'Staatliches', cursive !important;
+}
+
+.caja_producto a:hover{
+color:orangered !important;
+transition-duration: 0.5s;
+}
+
+
+
+#error_mostrar{
+    height: 50vh;
+}
+
+#volver
+{
+    font-family: 'Potta One', 'Staatliches', cursive !important;
+}
+
+#id_buscar_icon
+{
+    transition-duration: 0.7s;
+    color: #ffbda4;
+}
+
+#id_buscar_icon:hover
+{
+    color: orangered;
+}
+
+#id_buscar_por
+{
+    border: orangered 1px solid !important;
+    color:orangered;
+    background-color:unset;
+}
+
+
+#cabeza{
+    margin-bottom: 1px;
+}
+
+#cuerpo_productos{
+    background-color: lightgray !important;
+}
+
+#paginas ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#paginas a{
+    text-decoration: none;
+    color: #000;
+}
+
+#paginas a:hover{
+    text-decoration:underline;
+    color: orangered;
+    transition-duration: 0.7s;
+}
+
+#paginas li{
+    padding: 3%;
+}
+
 
 #barra_nav_busqueda{
     border-top: 2px solid orangered;
@@ -71,80 +161,7 @@
     color:orangered !important;
 }
 
-#cuerpo_productos{
-    background-color: lightgray !important;
-}
 
-#paginas ul{
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#paginas a{
-    text-decoration: none;
-    color: #000;
-}
-
-#paginas a:hover{
-    text-decoration:underline;
-    color: orangered;
-    transition-duration: 0.7s;
-}
-
-#paginas li{
-    padding: 3%;
-}
-
-.caja_producto{
-    padding: 1%;
-}
-
-.caja_producto * img{
-    width: 90%;
-    margin: auto;
-}
-
-.caja_producto a{
-    text-decoration: none;
-    font-family: 'Potta One', 'Staatliches', cursive !important;
-}
-
-.caja_producto a:hover{
-color:orangered !important;
-transition-duration: 0.5s;
-}
-
-#error_mostrar{
-    height: 50vh;
-}
-
-#volver
-{
-    font-family: 'Potta One', 'Staatliches', cursive !important;
-}
-
-#id_buscar_icon
-{
-    transition-duration: 0.7s;
-    color: #ffbda4;
-}
-
-#id_buscar_icon:hover
-{
-    color: orangered;
-}
-
-#id_buscar_por
-{
-    border: orangered 1px solid !important;
-    color:orangered;
-    background-color:unset;
-}
-
-.cabecera_lista_productos a:hover{
-   color: orangered;
-}
 
 /*MEDIAS*/
 
