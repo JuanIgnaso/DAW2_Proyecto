@@ -109,11 +109,13 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     
     function showUserProfile(){
     $data = [];
-            $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
-
+    $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+    $modelU  = new \Com\Daw2\Models\UsuarioSistemaModel();
+    //$data['us'] = $modelU->getUserId();
     $data['categoria'] = $modelCategoria->getAll();
-    $data['metodo'] = 'get';
+   // $data['metodo'] = 'get';
     $data['titulo'] = 'Perfil Del Usuario';
+    $data['seccion'] = '/mi_Perfil';
     $info = $_SESSION['usuario'];
     $data['info_usuario'] = $info;
     $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
@@ -121,13 +123,101 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     }
     
     
-        function darDeBaja($nombre){
-        $data = [];
+    function showEditProfile(){
+    $data = [];
+    $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+    $input = $_SESSION['usuario'];
+    $data['categoria'] = $modelCategoria->getAll();
+    $data['seccion'] = '/mi_Perfil/edit';
+    $data['titulo'] = 'Modificar Mi Perfil';
+    
+    $data['info_usuario'] = $input;
+    unset($data['info_usuario']['cartera']);
+    $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+
+    }
+    
+    
+    private function checkForm(array $datos): array{
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-        $data['seccion'] = '/mi_Perfil/baja/'.$nombre;
-        $model->darDeBaja($nombre);
-        session_destroy();
-        header('Location: /');
+        $errores = [];
+        if(empty($post['nombre_usuario'])){
+            $errores['nombre_usuario'] = 'No se admiten valores vacios';
+        }if(count(trim($post['nombre_usuario'])) == 0){
+            $errores['nombre_usuario'] = 'No se admiten valores vacios';
+        }
+        if($model->occupiedUserName($_SESSION['usuario']['id_usuario'],$datos['nombre_usuario'])){
+            $errores['nombre_usuario'] = 'El nombre que has escrito ya se encuentra en uso.';
+        }
+        if(!filter_var($datos['email'],FILTER_VALIDATE_EMAIL)){
+            $errores['email'] = 'Formato de correo incorrecto';
+        }
+        if($model->occupiedMail($_SESSION['usuario']['id_usuario'],$datos['email'])){
+          $errores['email'] = 'El correo que deseas escoger ya está en uso';  
+        }
+        if(count(trim($post['pass1'])) == 0 || count(trim($post['pass2'])) == 0){
+            $errores['pass'] = 'No se admiten valores vacios';
+        }
+        if($post['pass1'] != $post['pass2']){
+            $errores['pass'] = 'Las contraseñas no coinciden.';
+        }
+        
+        //Dirección envío
         
     }
+    
+   
+    
+    
+    
+        function darDeBaja(){
+    
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $nombre = $_POST['dato'];
+        $d = [
+            "hola" => "adios"
+        ];
+        $var = $model->darDeBaja($nombre);
+        if($var){
+            
+             http_response_code(200);
+            session_destroy();
+             exit;
+        }else{
+          http_response_code(400);  
+          echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+         exit;
+        }
+        
+        //header('Location: /');
+        
+        echo json_encode($nombre);
+        exit;
+        
+    }
+    
+        function borrarUsuario(){
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $nombre = $_POST['datoborrar'];
+        $d = [
+            "hola" => "adios"
+        ];
+        $var = $model->deleteUser($nombre);
+        if($var){
+            
+             http_response_code(200);
+             session_destroy();
+             exit;
+        }else{
+          http_response_code(400);  
+          echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+         exit;
+        }
+        
+        //header('Location: /');
+        
+        echo json_encode($nombre);
+        exit;
+    }
+    
 }

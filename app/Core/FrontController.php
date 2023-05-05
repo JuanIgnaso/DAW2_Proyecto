@@ -98,12 +98,43 @@ class FrontController{
                      ,'get'); 
                      
                      
-              Route::add('/mi_Perfil/baja/([A-Za-z0-9\_]+)',
-                function ($nombre) {
+              Route::add('/mi_Perfil/baja',
+                function () {
                     $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->darDeBaja($nombre);
+                    $controlador->darDeBaja();
                 }
                 , 'get');
+                
+                
+                Route::add('/mi_Perfil/baja',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->darDeBaja();
+                }
+                , 'post');
+                
+                
+            Route::add('/mi_Perfil/delete',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->borrarUsuario();
+                }
+                , 'get');
+                
+             Route::add('/mi_Perfil/delete',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->borrarUsuario();
+                }
+            , 'post');
+            
+                        Route::add('/mi_Perfil/edit',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->showEditProfile();
+                }
+                , 'get');
+            
        }
            
        

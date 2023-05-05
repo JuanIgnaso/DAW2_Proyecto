@@ -128,3 +128,8 @@ content:' | ';
 #cabecera_profile{
     color: orangered;
 }
+
+#alerta{
+    position:relative;
+    display:none;
+}

@@ -20,5 +20,8 @@
     <!-- CSS MY PROFILE -->
     <link rel="stylesheet" href="/assets/css/my_profile.css"/>
     
+        <!-- LIBRERÍA JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
     <title><?php echo $titulo;?></title>
 </head>
