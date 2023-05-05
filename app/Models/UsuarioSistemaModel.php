@@ -128,4 +128,20 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         }
     }
     
+    
+    //EDITAR USUARIO
+    function editUser($post,$id): bool{
+        try{
+           $this->pdo->beginTransaction(); 
+           $post['pass'] = password_hash($post['pass1']);
+           $stmt = $this->pdo->prepare(self::UPDATE.' email=?, nombre_usuario=?, pass=?, cartera= cartera + ? WHERE id_usuario=?');
+            $stmt->execute([$post['email'],$post['nombre_usuario'],$post['pass1'],$post['cartera'],$id]);
+            $this->pdo->commit();
+            return true;
+        } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+         return false;   
+        }
+    }
+    
 }

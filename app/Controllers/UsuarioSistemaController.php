@@ -15,6 +15,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     private const MANEJO_INVENTARIO = 2;
     private const ADMINISTRADOR = 3;
     
+    //PATRONES
+    private const _PATRON_PASSWORD = '/[a-zA-Z0-9 \_\-\*\#]+/';
+
     
     //Funcion para mostrar la pantalla de login
     public function login(){
@@ -130,11 +133,39 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     $data['categoria'] = $modelCategoria->getAll();
     $data['seccion'] = '/mi_Perfil/edit';
     $data['titulo'] = 'Modificar Mi Perfil';
-    
+   
     $data['info_usuario'] = $input;
     unset($data['info_usuario']['cartera']);
+    
+    
+    
     $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
 
+    }
+    
+    
+    //EDITAR PERFIL
+    function editProfile(){
+    $data = [];
+    $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+    $data['categoria'] = $modelCategoria->getAll();
+    $data['seccion'] = '/mi_Perfil/edit';
+    $data['titulo'] = 'Modificar Mi Perfil';
+    $data['errores'] = $this->checkForm($_POST);
+    
+    if(count() == 0){
+    $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+    $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+    $result = $model->editUser($_POST,$_SESSION['id_usuario']);
+    
+        
+    }else{
+    $data['categoria'] = $modelCategoria->getAll();
+    $data['seccion'] = '/mi_Perfil/edit';
+    $data['titulo'] = 'Modificar Mi Perfil';
+    $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+    $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+    }
     }
     
     
@@ -144,7 +175,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         if(empty($post['nombre_usuario'])){
             $errores['nombre_usuario'] = 'No se admiten valores vacios';
         }if(count(trim($post['nombre_usuario'])) == 0){
-            $errores['nombre_usuario'] = 'No se admiten valores vacios';
+            $errores['nombre_usuario'] = 'No se admiten cadenas vacías';
         }
         if($model->occupiedUserName($_SESSION['usuario']['id_usuario'],$datos['nombre_usuario'])){
             $errores['nombre_usuario'] = 'El nombre que has escrito ya se encuentra en uso.';
@@ -161,9 +192,66 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         if($post['pass1'] != $post['pass2']){
             $errores['pass'] = 'Las contraseñas no coinciden.';
         }
+        if(!preg_match(self::_PATRON_PASSWORD,$post['pass1']) || !preg_match(self::_PATRON_PASSWORD,$post['pass2'])){
+             $errores['pass'] = 'formato de contraseña incorrecto.';
+        }
+        //DINERO
+        if(!filter_var($post['cartera'],FILTER_VALIDATE_FLOAT)){
+            $errores['cartera'] = 'El valor introducido debe de ser un número decimal';
+        }else if($post['cartera'] <= 0){
+            $errores['cartera'] = 'No se puede introducir un valor igual o inferior a 0';
+        }
         
-        //Dirección envío
+        //NOMBRE TITULAR
+         if(empty($post['nombre_titular'])){
+            $errores['nombre_titular'] = 'No se admiten valores vacios';
+        }if(count(trim($post['nombre_usuario'])) == 0){
+            $errores['nombre_titular'] = 'No se admiten cadenas vacías';
+        }
+        if(!preg_match('/[a-zA-Z ]+/',$post['nombre_titular'])){
+             $errores['nombre_titular'] = 'sólo se admiten letras en el nombre del titular';
+        }
         
+        //Provincia
+          if(empty($post['provincia'])){
+            $errores['provincia'] = 'No se admiten valores vacios';
+        }if(count(trim($post['provincia'])) == 0){
+            $errores['provincia'] = 'No se admiten cadenas vacías';
+        }
+        if(!preg_match('/[a-zA-Z ]+/',$post['provincia'])){
+             $errores['provincia'] = 'sólo se admiten letras en el nombre de la provincia';
+        }
+        
+        //Ciudad
+          if(empty($post['ciudad'])){
+            $errores['ciudad'] = 'No se admiten valores vacios';
+        }if(count(trim($post['ciudad'])) == 0){
+            $errores['ciudad'] = 'No se admiten cadenas vacías';
+        }
+        if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
+             $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';
+        }
+        
+        //COD POSTAL
+            if(empty($post['cod_postal'])){
+                $errores['cod_postal'] = 'No se admiten valores vacíos';
+            }
+            if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
+                $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
+            }
+        
+        //Calle
+            
+          if(empty($post['calle'])){
+            $errores['calle'] = 'No se admiten valores vacios';
+        }if(count(trim($post['ciudad'])) == 0){
+            $errores['calle'] = 'No se admiten cadenas vacías';
+        }
+        if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
+             $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
+        }
+        
+        return $errores;
     }
     
    
