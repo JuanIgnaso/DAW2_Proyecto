@@ -9,7 +9,7 @@ namespace Com\Daw2\Models;
 
 class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     
-    private const SELECT_ALL = 'SELECT usuarios.id_usuario,usuarios.id_rol,usuarios.email,usuarios.nombre_usuario,usuarios.profile_image,usuarios.pass,usuarios.cartera,rol_usuarios.nombre_rol,rol_usuarios.descripcion,direccion_envio.* FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol LEFT JOIN direccion_envio ON direccion_envio.id_usuario = usuarios.id_usuario';
+    private const SELECT_ALL = 'SELECT usuarios.*,rol_usuarios.descripcion,direccion_envio.* FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol LEFT JOIN direccion_envio ON direccion_envio.id_usuario = usuarios.id_usuario';
     private const UPDATE = 'UPDATE usuarios SET ';
     
     
@@ -20,7 +20,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         $query->execute([$post['email']]);
         //Si se encuentran coincidencias
          if($row = $query->fetch()){
-             if(password_verify($post['password'],$row['pass'])){ 
+             if(password_verify($post['pass1'],$row['pass'])){ 
                  
                  $row['id_usuario'] = $this->getUserId($post['email']);
                  return $row;
@@ -31,6 +31,13 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
              return NULL;
          }
         
+    }
+    
+    function updateUserSession($id):array{
+   $query = $this->pdo->prepare(self::SELECT_ALL." WHERE usuarios.id_usuario=? AND baja=0");
+   $query->execute([$id]);
+   $row = $query->fetch();
+   return $row;
     }
     
     private function getUserId($email): int{
@@ -67,16 +74,16 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     
     
     //  Comprobar si el correo no está en uso
-    function occupiedUserName($id,$email): bool{
-    $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE email=? id_usuario != ?');
-    $stmt->execute([$email,$id]);
+    function occupiedUserName(int $id,$nombre): bool{
+    $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE nombre_usuario=? AND id_usuario != ?');
+    $stmt->execute([$nombre,$id]);
         return $stmt->rowCount() != 0;
     }
     
        //  Comprobar si el correo no está en uso
-    function occupiedMail($id,$nombre): bool{
-    $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE nombre_usuario=? id_usuario != ?');
-    $stmt->execute([$nombre,$id]);
+    function occupiedMail(int $id,$email): bool{
+    $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE email=? AND id_usuario != ?');
+    $stmt->execute([$email,$id]);
         return $stmt->rowCount() != 0;
     }
     
@@ -130,10 +137,20 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     
     
     //EDITAR USUARIO
-    function editUser($post,$id): bool{
+    function editUser($post,$pass,$id): bool{
         try{
            $this->pdo->beginTransaction(); 
-           $post['pass'] = password_hash($post['pass1']);
+           //Si se pasa un valor vacío se le introduce la contraseña actual del usuario
+                if(empty($post['pass1'])){
+                  $post['pass1'] = $pass;  
+                }else{
+                   $post['pass1'] = password_hash($post['pass1'],PASSWORD_DEFAULT); 
+                } 
+            if(empty($post['cartera'])){
+                //Si el usuario no introduce valor ninguno al editar, se le asigna un valor de cero
+                //ya que cantidad + 0 no cambia el valor. 
+                $post['cartera'] = 0;
+            }     
            $stmt = $this->pdo->prepare(self::UPDATE.' email=?, nombre_usuario=?, pass=?, cartera= cartera + ? WHERE id_usuario=?');
             $stmt->execute([$post['email'],$post['nombre_usuario'],$post['pass1'],$post['cartera'],$id]);
             $this->pdo->commit();
@@ -145,3 +162,5 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     }
     
 }
+
+

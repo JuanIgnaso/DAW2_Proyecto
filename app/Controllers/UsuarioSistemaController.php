@@ -152,14 +152,33 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     $data['seccion'] = '/mi_Perfil/edit';
     $data['titulo'] = 'Modificar Mi Perfil';
     $data['errores'] = $this->checkForm($_POST);
+    $input = $_SESSION['usuario'];
     
-    if(count() == 0){
+    
+    if(count($data['errores']) == 0){
     $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
     $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-    $result = $model->editUser($_POST,$_SESSION['id_usuario']);
-    
+    $modelDir = new \Com\Daw2\Models\DireccionEnvioModel();
+    $usuario = $model->editUser($_POST,$_SESSION['usuario']['pass'],$_SESSION['usuario']['id_usuario']);
+    $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);
+    $result = false;
+    if($dir && $usuario){
+        $result = true;
+    }
+    if($result){
+        //Cambiarlo
+        $_SESSION['usuario'] = $model->updateUserSession($_SESSION['usuario']['id_usuario']);
+        header('location: /mi_Perfil');
+        $_SESSION['success'] = 'Los cambios realizados a tu perfil se han realizado con éxito!';
+    }else{
+        $data['categoria'] = $modelCategoria->getAll();
+        $data['seccion'] = '/mi_Perfil/edit';
+        $data['titulo'] = 'Modificar Mi Perfil';
+        $data['errores'] = $this->checkForm($_POST,true); //<- Pasamos true porque estamos editando
+    }
         
     }else{
+   $data['info_usuario'] = $input;
     $data['categoria'] = $modelCategoria->getAll();
     $data['seccion'] = '/mi_Perfil/edit';
     $data['titulo'] = 'Modificar Mi Perfil';
@@ -169,90 +188,110 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     }
     
     
-    private function checkForm(array $datos): array{
+    private function checkForm(array $post, bool $edit = true): array{
+
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $errores = [];
-        if(empty($post['nombre_usuario'])){
-            $errores['nombre_usuario'] = 'No se admiten valores vacios';
-        }if(count(trim($post['nombre_usuario'])) == 0){
-            $errores['nombre_usuario'] = 'No se admiten cadenas vacías';
-        }
-        if($model->occupiedUserName($_SESSION['usuario']['id_usuario'],$datos['nombre_usuario'])){
-            $errores['nombre_usuario'] = 'El nombre que has escrito ya se encuentra en uso.';
-        }
-        if(!filter_var($datos['email'],FILTER_VALIDATE_EMAIL)){
-            $errores['email'] = 'Formato de correo incorrecto';
-        }
-        if($model->occupiedMail($_SESSION['usuario']['id_usuario'],$datos['email'])){
-          $errores['email'] = 'El correo que deseas escoger ya está en uso';  
-        }
-        if(count(trim($post['pass1'])) == 0 || count(trim($post['pass2'])) == 0){
+                
+        if(!$edit){
+            if(strlen(trim($post['pass1'])) == 0 || strlen(trim($post['pass2'])) == 0){
             $errores['pass'] = 'No se admiten valores vacios';
-        }
-        if($post['pass1'] != $post['pass2']){
-            $errores['pass'] = 'Las contraseñas no coinciden.';
-        }
-        if(!preg_match(self::_PATRON_PASSWORD,$post['pass1']) || !preg_match(self::_PATRON_PASSWORD,$post['pass2'])){
-             $errores['pass'] = 'formato de contraseña incorrecto.';
-        }
-        //DINERO
-        if(!filter_var($post['cartera'],FILTER_VALIDATE_FLOAT)){
-            $errores['cartera'] = 'El valor introducido debe de ser un número decimal';
-        }else if($post['cartera'] <= 0){
-            $errores['cartera'] = 'No se puede introducir un valor igual o inferior a 0';
-        }
-        
-        //NOMBRE TITULAR
-         if(empty($post['nombre_titular'])){
-            $errores['nombre_titular'] = 'No se admiten valores vacios';
-        }if(count(trim($post['nombre_usuario'])) == 0){
-            $errores['nombre_titular'] = 'No se admiten cadenas vacías';
-        }
-        if(!preg_match('/[a-zA-Z ]+/',$post['nombre_titular'])){
-             $errores['nombre_titular'] = 'sólo se admiten letras en el nombre del titular';
-        }
-        
-        //Provincia
-          if(empty($post['provincia'])){
-            $errores['provincia'] = 'No se admiten valores vacios';
-        }if(count(trim($post['provincia'])) == 0){
-            $errores['provincia'] = 'No se admiten cadenas vacías';
-        }
-        if(!preg_match('/[a-zA-Z ]+/',$post['provincia'])){
-             $errores['provincia'] = 'sólo se admiten letras en el nombre de la provincia';
-        }
-        
-        //Ciudad
-          if(empty($post['ciudad'])){
-            $errores['ciudad'] = 'No se admiten valores vacios';
-        }if(count(trim($post['ciudad'])) == 0){
-            $errores['ciudad'] = 'No se admiten cadenas vacías';
-        }
-        if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
-             $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';
-        }
-        
-        //COD POSTAL
-            if(empty($post['cod_postal'])){
-                $errores['cod_postal'] = 'No se admiten valores vacíos';
             }
-            if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
-                $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
-            }
-        
-        //Calle
-            
-          if(empty($post['calle'])){
-            $errores['calle'] = 'No se admiten valores vacios';
-        }if(count(trim($post['ciudad'])) == 0){
-            $errores['calle'] = 'No se admiten cadenas vacías';
+        }else{
+             if(empty($post['nombre_usuario'])){
+                    $errores['nombre_usuario'] = 'No se admiten valores vacios';
+                }else if(strlen(trim($post['nombre_usuario'])) == 0){
+                    $errores['nombre_usuario'] = 'No se admiten cadenas vacías';
+                }
+                else if($model->occupiedUserName((int)$_SESSION['usuario']['id_usuario'],$post['nombre_usuario'])){
+                    $errores['nombre_usuario'] = 'El nombre que has escrito ya se encuentra en uso.';
+                }
+
+                //EMAIL
+                if(!filter_var($post['email'],FILTER_VALIDATE_EMAIL)){
+                    $errores['email'] = 'Formato de correo incorrecto';
+                }
+                else if($model->occupiedMail((int)$_SESSION['usuario']['id_usuario'],$post['email'])){
+                  $errores['email'] = 'El correo que deseas escoger ya está en uso';  
+                }
+
+                //CONTRASEÑA
+
+                if($post['pass1'] != $post['pass2']){
+                    $errores['pass'] = 'Las contraseñas no coinciden.';
+                }
+                if(!empty($post['pass1']) || !empty($post['pass2'])){
+                          if(!preg_match(self::_PATRON_PASSWORD,$post['pass1']) || !preg_match(self::_PATRON_PASSWORD,$post['pass2'])){
+                     $errores['pass'] = 'formato de contraseña incorrecto.';
+                 }  
+                }
+
+                //DINERO
+                if(!empty($post['cartera'])){
+                    if(!filter_var($post['cartera'],FILTER_VALIDATE_FLOAT)){
+                    $errores['cartera'] = 'El valor introducido debe de ser un número decimal';
+                }else if($post['cartera'] <= 0){
+                    $errores['cartera'] = 'No se puede introducir un valor igual o inferior a 0';
+                }
+                }
+
+
+                //NOMBRE TITULAR
+                 if(empty($post['nombre_titular'])){
+                    $errores['nombre_titular'] = 'No se admiten valores vacios';
+                }else if(strlen(trim($post['nombre_titular'])) == 0){
+                    $errores['nombre_titular'] = 'No se admiten cadenas vacías';
+                }
+                else if(!preg_match('/[a-zA-Z ]+/',$post['nombre_titular'])){
+                     $errores['nombre_titular'] = 'sólo se admiten letras en el nombre del titular';
+                }
+
+                //Provincia
+                  if(empty($post['provincia'])){
+                    $errores['provincia'] = 'No se admiten valores vacios';
+                }else if(strlen(trim($post['provincia'])) == 0){
+                    $errores['provincia'] = 'No se admiten cadenas vacías';
+                }
+                else if(!preg_match('/[a-zA-Z ]+/',$post['provincia'])){
+                     $errores['provincia'] = 'sólo se admiten letras en el nombre de la provincia';
+                }
+
+                //Ciudad
+                  if(empty($post['ciudad'])){
+                    $errores['ciudad'] = 'No se admiten valores vacios';
+                }else if(strlen(trim($post['ciudad'])) == 0){
+                    $errores['ciudad'] = 'No se admiten cadenas vacías';
+                }
+                else if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
+                     $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';
+                }
+
+                //COD POSTAL
+                    if(empty($post['cod_postal'])){
+                        $errores['cod_postal'] = 'No se admiten valores vacíos';
+                    }
+                    else if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
+                        $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
+                    }
+
+                //Calle
+
+                  if(empty($post['calle'])){
+                    $errores['calle'] = 'No se admiten valores vacios';
+                }else if(strlen(trim($post['ciudad'])) == 0){
+                    $errores['calle'] = 'No se admiten cadenas vacías';
+                }
+                else if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
+                     $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
+                }
+         
         }
-        if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
-             $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
-        }
         
+        
+        //Devolver errores
         return $errores;
-    }
+
+        }
     
    
     

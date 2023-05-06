@@ -128,12 +128,21 @@ class FrontController{
                 }
             , 'post');
             
+            /** HAY QUE METERLE GET Y POST **/
+            
                         Route::add('/mi_Perfil/edit',
                 function () {
                     $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
                     $controlador->showEditProfile();
                 }
                 , 'get');
+                
+                 Route::add('/mi_Perfil/edit',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->editProfile();
+                }
+                , 'post');
             
        }
            

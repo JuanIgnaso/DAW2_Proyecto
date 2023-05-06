@@ -1,5 +1,6 @@
 <div class="row">
             <header class="col-12">
+               
               <h1 class="display-3" id="cabecera_profile">Información Del Perfil</h1>
             </header>
           <nav class="col-12 border-bottom border-secondary border-opacity-50"  id="navegador_Sec">
@@ -8,6 +9,14 @@
               <li>Mi Perfil</li>
             </ol>
           </nav>
+            <?php
+               if(isset($_SESSION['success'])){
+               ?>
+                <h3 class="col-12 text-success bg-success bg-opacity-10 p-2 display-block"><?php echo $_SESSION['success'];?></h3>
+                <?php
+                unset($_SESSION['success']);
+               }
+                ?>
         </div>
         <!-- VENTANA DE AVISO AL REALIZAR LA ACCION DE BORRADO/BAJA DE TU PROPIA CUENTA -->
         <div class="col-6 m-auto bg-opacity-10 bg-success rounded" id="alerta">
@@ -29,7 +38,7 @@
                 <section class="col-12 col-md-5">
                     <div class="col-10 m-auto text-center">
                      <img src="/assets/img/profiles/default_profile_photo.jpg" class="img-fluid rounded" alt="...">
-                     <p>Foto de Perfil<?php var_dump($_SESSION['usuario']);?></p>
+                     <p>Foto de Perfil</p>
                     </div>
                 </section>
                 <!-- Datos generales del usuario Nombre / Correo / Wallet -->
@@ -38,26 +47,27 @@
                     
                   <div class="col-12 d-flex flex-column pb-4">
                     <label for="" class="display-6">Nombre de Usuario</label>
-                    <input type="text" id="country" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $info_usuario['nombre_usuario'] : $info_usuario['nombre_usuario'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?> class="mt-1">
+                    <input type="text" id="country" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : $info_usuario['nombre_usuario'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?> class="mt-1">
                      <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['nombre_usuario']) ? $errores['nombre_usuario'] : '';?></p>          
                   </div>
                   <div class="col-12 d-flex flex-column  pb-4">
                     <label for="" class="display-6">Dirección de Correo</label>
-                    <input type="text" id="country" name="email" value="<?php echo isset($input['email']) ? $info_usuario['email'] : $info_usuario['email'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?> class="mt-1">
-                      <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['mail']) ? $errores['mail'] : '';?></p>          
+                    <input type="text" id="country" name="email" value="<?php echo isset($input['email']) ? $input['email'] : $info_usuario['email'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?> class="mt-1">
+                      <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['email']) ? $errores['email'] : '';?></p>          
                   </div>
                     <?php
                     if($seccion == '/mi_Perfil'){
                     ?>
                   <div class="col-12 d-flex flex-column  pb-4">
                     <label for="" class="display-6">Saldo Actual</label>
-                    <input type="text" id="country" name="cartera" value="<?php echo isset($input['cartera']) ? $info_usuario['cartera'] : $info_usuario['cartera'] ;?>" readonly style='border:none'  class="mt-1">
+                    <input type="text" id="country" name="cartera" value="<?php echo isset($input['cartera']) ? $input['cartera'] : $info_usuario['cartera'] ;?>" readonly style='border:none'  class="mt-1">
                   </div>
                     <?php
                     }else{
                     ?>
                   <div class="col-12 d-flex flex-column  pb-4">
                     <label for="" class="display-6">Actualizar Saldo?</label>
+                    <p class="text-secondary m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><i class="fa-sharp fa-solid fa-circle-info m-1"></i>En Caso de no desear hacer ningún cambio, puedes dejar este campo en blanco.</p>
                     <input type="text" id="country" name="cartera" value="<?php echo isset($input['cartera']) ? $input['cartera'] : '' ;?>"  class="mt-1">
                     <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['cartera']) ? $errores['cartera'] : '';?></p>          
                   </div>
@@ -67,19 +77,20 @@
 
                   <div class="col-12 pb-4" <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>">
                     <label for="" class="display-6">Nueva Contraseña</label>
+                    <p class="text-secondary m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><i class="fa-sharp fa-solid fa-circle-info m-1"></i>En Caso de no desear hacer ningún cambio, puedes dejar este campo en blanco.</p>
+
                       <!-- contraseña -->
                       <div class="col-12 d-flex flex-column flex-md-row mt-1">
                         <div class="col-12 col-md-6 p-1">
                           <label for="">Escriba la contraseña</label>
-                          <input type="password" name="pass1" id="" class="col-12">
+                          <input type="password" name="pass1" id="" class="col-12" value="<?php echo isset($input['pass1']) ? $input['pass1'] : '';?>">
                         </div>
                         <div class="col-12 col-md-6 p-1">
                           <label for="">Repita la contraseña</label>
-                          <input type="password" name="pass2" id="" class="col-12">
+                          <input type="password" name="pass2" id="" class="col-12"  value="<?php echo isset($input['pass2']) ? $input['pass2'] : '';?>">
                         </div>
-                       <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['pass']) ? $errores['pass'] : '';?></p>          
-
                       </div>
+                        <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['pass']) ? $errores['pass'] : '';?></p>          
 
                   </div>
                 </section>
@@ -101,22 +112,22 @@
                         </div>
                         <div class="col d-flex flex-column">
                           <label for="">Provincia<?php echo $info_usuario['provincia'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="provincia" value="<?php echo isset($input['provincia']) ? $info_usuario['provincia'] : $info_usuario['provincia'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <input type="text" id="country" name="provincia" value="<?php echo isset($input['provincia']) ? $input['provincia'] : $info_usuario['provincia'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['provincia']) ? $errores['provincia'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
                           <label for="">Ciudad<?php echo $info_usuario['ciudad'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="ciudad" value="<?php echo isset($input['ciudad']) ? $info_usuario['ciudad'] : $info_usuario['ciudad'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <input type="text" id="country" name="ciudad" value="<?php echo isset($input['ciudad']) ? $input['ciudad'] : $info_usuario['ciudad'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                            <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['ciudad']) ? $errores['ciudad'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
                           <label for="">Código Postal<?php echo $info_usuario['cod_postal'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="cod_postal" value="<?php echo isset($input['cod_postal']) ? $info_usuario['cod_postal'] : $info_usuario['cod_postal'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <input type="text" id="country" name="cod_postal" value="<?php echo isset($input['cod_postal']) ? $input['cod_postal'] : $info_usuario['cod_postal'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['cod_postal']) ? $errores['cod_postal'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
                           <label for="">Calle<?php echo $info_usuario['calle'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="calle" value="<?php echo isset($input['calle']) ? $info_usuario['calle'] : $info_usuario['calle'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <input type="text" id="country" name="calle" value="<?php echo isset($input['calle']) ? $input['calle'] : $info_usuario['calle'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['calle']) ? $errores['calle'] : '';?></p>          
                         </div>
                       </div>

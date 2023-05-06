@@ -32,7 +32,7 @@
           </div> 
          comment -->
           <div class="form-floating">
-            <input type="password" class="form-control rounded" id="floatingPassword" name="password" placeholder="Contraseña" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : '' ;?>">
+            <input type="password" class="form-control rounded" id="floatingPassword" name="pass1" placeholder="Contraseña" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : '' ;?>">
             <label for="floatingPassword">Contraseña</label>
           </div>
           <div class="checkbox mb-3">
