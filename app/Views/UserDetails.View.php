@@ -12,12 +12,19 @@
             <?php
                if(isset($_SESSION['success'])){
                ?>
-                <h3 class="col-12 text-success bg-success bg-opacity-10 p-2 display-block"><?php echo $_SESSION['success'];?></h3>
+                <h3 id="mensaje_edit" class="col-12 text-light bg-success position-absolute bg-opacity-100 p-2 display-block"><?php echo $_SESSION['success'];?></h3>
                 <?php
                 unset($_SESSION['success']);
                }
                 ?>
+                
         </div>
+<!-- SCRIPT PARA OCULTAR EL MENSAJE -->
+    <script src="/assets/js/ocultarNotificacion.js">
+
+    </script>
+
+
         <!-- VENTANA DE AVISO AL REALIZAR LA ACCION DE BORRADO/BAJA DE TU PROPIA CUENTA -->
         <div class="col-6 m-auto bg-opacity-10 bg-success rounded" id="alerta">
             <h4>Acción Realizada Con Exito.</h4>

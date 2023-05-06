@@ -58,6 +58,14 @@ class FrontController{
                     $controler->loginUser();
                     }
                     ,'post');
+                    
+         //REGISTRARSE
+                       Route::add('/register',
+                    function(){
+                    $controler = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controler->register();
+                    }
+                    ,'get');         
   
             
              /*DESLOGUEAR USUARIO*/

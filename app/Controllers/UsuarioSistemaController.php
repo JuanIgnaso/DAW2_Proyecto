@@ -21,7 +21,10 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     
     //Funcion para mostrar la pantalla de login
     public function login(){
-        $this->view->show('login.php');
+        $_vars  = [];
+        $_vars['seccion'] = '/login';
+        $_vars['accion'] = 'Iniciar Sesión';
+         $this->view->show('login.php',$_vars);
     }
     
     public function loginUser(){
@@ -29,6 +32,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $usuario = $model->login($_POST);
         $_vars  = [];
+        $_vars['seccion'] = '/login';
+         $_vars['accion'] = 'Iniciar Sesión';
         if(isset($_POST['remember_me'])){
             $_vars['remember'] = $_POST['remember_me'];
         }
@@ -80,6 +85,20 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         
         return $permisos;
     }
+    
+    
+    /*
+    Mostrar Formulario Para Registrarse
+    */
+    
+     public function register(){
+        $_vars  = [];
+        $_vars['seccion'] = '/register';
+         $_vars['accion'] = 'Crear Mi Cuenta';
+        $this->view->show('login.php',$_vars);
+    }
+    
+    
     
     //Para cargar la vista provisional del usuario
     //ES PROVISIONAL Y DE TESTEO POR EL MOMENTO NO TIENE COMPROBACIONES DE VALORES ERRONEOS

@@ -28,7 +28,7 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
         if ($var) {
             http_response_code(200);
             $_SESSION['usuario']['cartera'] = $_SESSION['usuario']['cartera'] - $_POST['total'];
-            $update = $userModel->updateUserWallet($_POST['total'], $_SESSION['usuario']->getIdUsuario());
+            $update = $userModel->updateUserWallet($_POST['total'], $_SESSION['usuario']['id_usuario']);
            // echo $_SESSION['usuario']->getCartera();
             //header('location: /checkout/sucess');
             //echo json_encode(["hola"=>$_POST['total']]);

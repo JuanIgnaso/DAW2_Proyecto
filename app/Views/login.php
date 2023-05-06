@@ -18,27 +18,38 @@
     <div id="fondo_login"></div>
     <!-- MAIN DEL LOGIN -->
     <main class="form-signin w-100 m-auto rounded" id="idCuerpoLogin">
-        <form action="/login" method="post">
+        <form action="<?php echo $seccion;?>" method="post">
           <img class="mb-4" src="assets/svg/Gallaecia_PC_Logo.svg" alt="" width="70%">
           <h1 class="h3 mb-3 fw-normal text-center">Porfavor introduce correo y contraseña</h1>
           <div class="form-floating">
             <input type="email" class="form-control rounded" id="floatingInput" name="email" placeholder="nombre@ejemplo.com" value="<?php echo isset($_COOKIE['email']) ? $_COOKIE['email'] : '' ;?>">
             <label for="floatingInput">Dirección email</label>
           </div>
-          <!-- 
+          <?php
+          if($seccion == '/register'){
+          ?>
           <div class="form-floating">
             <input type="text" class="form-control rounded" id="floatingInput" name="nombre_usuario" placeholder="Nombre Usuario">
             <label for="floatingInput">Nombre Usuario</label>
           </div> 
-         comment -->
+         <?php
+          }
+         ?>
           <div class="form-floating">
             <input type="password" class="form-control rounded" id="floatingPassword" name="pass1" placeholder="Contraseña" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : '' ;?>">
             <label for="floatingPassword">Contraseña</label>
           </div>
           <div class="checkbox mb-3">
+           <?php
+           if($seccion == '/login'){
+           ?>   
             <label id="label_remember_me">
               <input type="checkbox" value="remember_me" <?php echo isset($_COOKIE['email']) ? 'checked' : '';?> id="remember_me" name="remember_me"> Recuerdame
             </label>
+              <?php
+               }
+               
+              ?>
               <?php
               if(isset($loginError) && !empty($loginError) > 0){
               ?>
@@ -47,7 +58,7 @@
               }
               ?>
           </div>
-          <button class="w-100 btn btn-lg rounded" id="id_boton_login" type="submit">Iniciar Sesión</button>
+          <button class="w-100 btn btn-lg rounded" id="id_boton_login" type="submit"><?php echo $accion;?></button>
           <p class="mt-5 mb-3 text-muted">Gallaecia PC &copy; 2023</p>
         </form>
       </main>

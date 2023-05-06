@@ -45,7 +45,7 @@
                     }else{
                     ?>
                     <button type="button" class="btn btn-outline-light" id="login"><a href="/login">Login</a></button>
-                  <button type="button" class="activo btn btn-outline-light" id="sign_up">Sign-up</button>
+                  <button type="button" class="activo btn btn-outline-light" id="sign_up"><a href="/register">Sign Up</a></button>
                   <?php
                     }
                   ?>
