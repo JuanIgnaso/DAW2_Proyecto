@@ -67,6 +67,14 @@ class FrontController{
                     }
                     ,'get');         
   
+        //Acción de registrar
+                   Route::add('/register',
+                    function(){
+                    $controler = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controler->registerUser();
+                    }
+                    ,'post'); 
+                    
             
              /*DESLOGUEAR USUARIO*/
                     

@@ -20,7 +20,7 @@
                 
         </div>
 <!-- SCRIPT PARA OCULTAR EL MENSAJE -->
-    <script src="/assets/js/ocultarNotificacion.js">
+    <script src="/assets/js/ocularNotificacion.js">
 
     </script>
 
@@ -90,14 +90,14 @@
                       <div class="col-12 d-flex flex-column flex-md-row mt-1">
                         <div class="col-12 col-md-6 p-1">
                           <label for="">Escriba la contraseña</label>
-                          <input type="password" name="pass1" id="" class="col-12" value="<?php echo isset($input['pass1']) ? $input['pass1'] : '';?>">
+                          <input type="password" name="password" id="" class="col-12" value="<?php echo isset($input['password']) ? $input['password'] : '';?>">
                         </div>
                         <div class="col-12 col-md-6 p-1">
                           <label for="">Repita la contraseña</label>
-                          <input type="password" name="pass2" id="" class="col-12"  value="<?php echo isset($input['pass2']) ? $input['pass2'] : '';?>">
+                          <input type="password" name="password2" id="" class="col-12"  value="<?php echo isset($input['password2']) ? $input['password2'] : '';?>">
                         </div>
                       </div>
-                        <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['pass']) ? $errores['pass'] : '';?></p>          
+                        <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['password']) ? $errores['password'] : '';?></p>          
 
                   </div>
                 </section>

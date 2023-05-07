@@ -88,7 +88,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     
     
     /*
-    Mostrar Formulario Para Registrarse
+    Mostrar Formulario Para Registrarse /register
     */
     
      public function register(){
@@ -97,6 +97,69 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
          $_vars['accion'] = 'Crear Mi Cuenta';
         $this->view->show('login.php',$_vars);
     }
+    
+    
+    /* Función Para Registrar el usuario*/
+    public function registerUser(){
+        $_vars  = [];
+        $_vars['seccion'] = '/register';
+        $_vars['accion'] = 'Crear Mi Cuenta';
+        $_vars['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);  
+
+        $_vars['loginError'] = $this->checkRegister($_POST);
+        if(count($_vars['loginError']) == 0){
+           $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+           if($model->addUser($_POST)){
+              $usuario = $model->login($_POST);
+              $_SESSION['usuario'] = $usuario;
+              $_SESSION['permisos'] = $this->getPermisos($_SESSION['usuario']['id_rol']);           
+
+              //redirige al inicio con la sessión iniciada.
+              header('Location: /');
+           }else{
+             $_vars['loginError']['error'] = 'Ha habido un error al intentar crear la cuenta.';  
+           }
+ 
+        }else{
+            $_vars['accion'] = 'Crear Mi Cuenta';
+           $_vars['seccion'] = '/register';
+        }
+        
+     $this->view->show('login.php',$_vars);
+    
+    }
+    
+    private function checkRegister(array $post): array{
+       $loginError = [];  
+       $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+
+        if(empty($post['nombre_usuario'])){
+                    $loginError['nombre_usuario'] = 'Debes de escribir un nombre';
+                }else if(strlen(trim($post['nombre_usuario'])) == 0){
+                    $loginError['nombre_usuario'] = 'No se admiten cadenas vacías';
+                }else if($model->isUserNameUsed($_POST['nombre_usuario'])){
+                    $loginError['nombre_usuario'] = 'Nombre de usuario ya en uso'; 
+                }
+        if(empty($post['email'])){
+                    $loginError['email'] = 'Debes usar un correo';
+                }else if(strlen(trim($post['email'])) == 0){
+                    $loginError['email'] = 'No se admiten cadenas vacías';
+                }else if($model->isEmailUsed($_POST['email'])){
+                    $loginError['email'] = 'Dirección de correo ya en uso'; 
+                }else if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+                    $loginError['email'] = 'Formato de correo incorrecto'; 
+                }        
+        if(empty($post['password'])){
+            $loginError['password'] = 'Debes darle una contraseña';
+        }else if(strlen(trim($post['password'])) == 0){
+          $loginError['password'] = 'No de admiten cadenas vacías';
+         } else  if(!preg_match(self::_PATRON_PASSWORD,$post['password'])){
+           $loginError['password'] = 'formato de contraseña incorrecto.';    
+         }
+         return $loginError;
+    }
+    
+    
     
     
     
@@ -213,8 +276,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $errores = [];
                 
         if(!$edit){
-            if(strlen(trim($post['pass1'])) == 0 || strlen(trim($post['pass2'])) == 0){
-            $errores['pass'] = 'No se admiten valores vacios';
+            if(strlen(trim($post['password'])) == 0 || strlen(trim($post['password2'])) == 0){
+            $errores['password'] = 'No se admiten valores vacios';
             }
         }else{
              if(empty($post['nombre_usuario'])){
@@ -236,12 +299,12 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
 
                 //CONTRASEÑA
 
-                if($post['pass1'] != $post['pass2']){
-                    $errores['pass'] = 'Las contraseñas no coinciden.';
+                if($post['password'] != $post['password2']){
+                    $errores['password'] = 'Las contraseñas no coinciden.';
                 }
-                if(!empty($post['pass1']) || !empty($post['pass2'])){
-                          if(!preg_match(self::_PATRON_PASSWORD,$post['pass1']) || !preg_match(self::_PATRON_PASSWORD,$post['pass2'])){
-                     $errores['pass'] = 'formato de contraseña incorrecto.';
+                if(!empty($post['password']) || !empty($post['password'])){
+                          if(!preg_match(self::_PATRON_PASSWORD,$post['password']) || !preg_match(self::_PATRON_PASSWORD,$post['password2'])){
+                     $errores['password'] = 'formato de contraseña incorrecto.';
                  }  
                 }
 

@@ -20,7 +20,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         $query->execute([$post['email']]);
         //Si se encuentran coincidencias
          if($row = $query->fetch()){
-             if(password_verify($post['pass1'],$row['pass'])){ 
+             if(password_verify($post['password'],$row['pass'])){ 
                  
                  $row['id_usuario'] = $this->getUserId($post['email']);
                  return $row;
@@ -60,8 +60,19 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     Añadir usuario a la bbdd
      */
     function addUser(array $post):bool{
-        $stmt = $this->pdo->prepare('INSERT INTO usuarios(id_rol,email,nombre_usuario,pass,baja,cartera) values(?,?,?,?,0,0.0)');
-        return $stmt->execute([$post['rol'][0],$post['email'],$post['nombre'],password_hash($post['pass'],PASSWORD_DEFAULT)]);     
+        //hasheamos la password
+        try {
+           $this->pdo->beginTransaction();
+           $post['password'] = password_hash($post['password'],PASSWORD_DEFAULT);
+           $stmt = $this->pdo->prepare('INSERT INTO usuarios(id_rol,email,nombre_usuario,pass,baja,cartera) values(1,?,?,?,0,0.0)');
+           $stmt->execute([$post['email'],$post['nombre_usuario'],$post['password']]); 
+           $this->pdo->commit();
+           return true; //<-Si todo va OK
+        } catch (\PDOException $ex) {
+          $this->pdo->rollback();  
+          return false;
+        }
+            
     }
     
     /***
@@ -79,6 +90,21 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     $stmt->execute([$nombre,$id]);
         return $stmt->rowCount() != 0;
     }
+    
+    //Comprobar solo si el nombre está ya en uso por un usuario registrado
+    function isUserNameUsed($username): bool{
+     $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE nombre_usuario=?');
+    $stmt->execute([$username]);
+    return $stmt->rowCount() != 0;  
+    }
+    
+    //Comprobar solo si el email está ya en uso por un usuario registrado
+    function isEmailUsed($email): bool{
+    $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE email=?');
+    $stmt->execute([$email]);
+    return $stmt->rowCount() != 0;  
+    }
+    
     
        //  Comprobar si el correo no está en uso
     function occupiedMail(int $id,$email): bool{
@@ -141,10 +167,10 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         try{
            $this->pdo->beginTransaction(); 
            //Si se pasa un valor vacío se le introduce la contraseña actual del usuario
-                if(empty($post['pass1'])){
-                  $post['pass1'] = $pass;  
+                if(empty($post['password'])){
+                  $post['password'] = $pass;  
                 }else{
-                   $post['pass1'] = password_hash($post['pass1'],PASSWORD_DEFAULT); 
+                   $post['password'] = password_hash($post['password'],PASSWORD_DEFAULT); 
                 } 
             if(empty($post['cartera'])){
                 //Si el usuario no introduce valor ninguno al editar, se le asigna un valor de cero
@@ -152,7 +178,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
                 $post['cartera'] = 0;
             }     
            $stmt = $this->pdo->prepare(self::UPDATE.' email=?, nombre_usuario=?, pass=?, cartera= cartera + ? WHERE id_usuario=?');
-            $stmt->execute([$post['email'],$post['nombre_usuario'],$post['pass1'],$post['cartera'],$id]);
+            $stmt->execute([$post['email'],$post['nombre_usuario'],$post['password'],$post['cartera'],$id]);
             $this->pdo->commit();
             return true;
         } catch (\PDOException $ex) {
