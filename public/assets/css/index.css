@@ -239,6 +239,21 @@ background-color: lightgray;
 padding: 2%;
 }
 
+#closeX{
+    background-color:unset;
+    border: none;
+    outline: none;
+}
+
+
+#modal-register{
+       z-index: 100;
+        left:25%;
+        top:25%;
+        position:fixed;
+        
+      }  
+
 
 /*****MEDIA****/
 @media screen and (max-width: 600px)
@@ -262,6 +277,10 @@ padding: 2%;
         margin-left: 1rem !important;
         margin-right: 1rem !important;
       }
+      
+      #modal-register{
+          
+      }  
 }
 
 

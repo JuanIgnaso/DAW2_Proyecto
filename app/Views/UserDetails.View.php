@@ -46,6 +46,17 @@
                     <div class="col-10 m-auto text-center">
                      <img src="/assets/img/profiles/default_profile_photo.jpg" class="img-fluid rounded" alt="...">
                      <p>Foto de Perfil</p>
+                     <?php
+                     if($seccion != '/mi_Perfil'){                    
+                     ?>
+                  <div class="col-12 d-flex flex-column pb-4">
+                    <label for="">Escoge una imagen</label>
+                         <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
+                  </div>
+     
+                     <?php
+                     }
+                     ?>
                     </div>
                 </section>
                 <!-- Datos generales del usuario Nombre / Correo / Wallet -->

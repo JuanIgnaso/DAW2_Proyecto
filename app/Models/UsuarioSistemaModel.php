@@ -37,6 +37,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
    $query = $this->pdo->prepare(self::SELECT_ALL." WHERE usuarios.id_usuario=? AND baja=0");
    $query->execute([$id]);
    $row = $query->fetch();
+   $row['id_usuario'] = $this->getUserId($row['email']);
    return $row;
     }
     

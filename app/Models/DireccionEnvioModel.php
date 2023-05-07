@@ -25,7 +25,6 @@ class DireccionEnvioModel  extends \Com\Daw2\Core\BaseModel{
          }
         $this->pdo->commit();
         return true;
-        return true;
         } catch (\PDOException $ex) {
          $this->pdo->rollback();
          return false;  

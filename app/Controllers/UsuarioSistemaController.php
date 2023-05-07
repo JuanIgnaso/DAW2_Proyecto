@@ -9,6 +9,10 @@ namespace Com\Daw2\Controllers;
 
 class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     
+    //ARRAY PRIVADO <-Controlar que en función de si esta vacío o no se ejecuta la consulta
+    //de añadir la direccion de envio al usuario
+    private $arrayDireccion = [];
+    
     
     //IDS DE ROLES
     private const USUARIO_REGISTRADO = 1;
@@ -116,6 +120,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
 
               //redirige al inicio con la sessión iniciada.
               header('Location: /');
+              $_SESSION['register_success'] = 'Nos encanta y llena de alegría saber que desea formar parte de nuestra Web, ya puede visitar y disfrutar de la compra de nuestros productos, gracias por confiar en nosotros.';
            }else{
              $_vars['loginError']['error'] = 'Ha habido un error al intentar crear la cuenta.';  
            }
@@ -242,7 +247,11 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     $model = new \Com\Daw2\Models\UsuarioSistemaModel();
     $modelDir = new \Com\Daw2\Models\DireccionEnvioModel();
     $usuario = $model->editUser($_POST,$_SESSION['usuario']['pass'],$_SESSION['usuario']['id_usuario']);
-    $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);
+    if($this->checkEmptyDir($_POST['nombre_titular'],$_POST['provincia'],$_POST['ciudad'],$_POST['cod_postal'],$_POST['calle'])){
+        $dir = true;
+    }else{
+      $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);  
+    }
     $result = false;
     if($dir && $usuario){
         $result = true;
@@ -268,6 +277,26 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
     }
     }
+    
+    private function checkEmptyDir($nombre,$provincia,$ciudad,$cod_postal,$calle):bool{
+        $dir = array(
+            'nombre' => $nombre,
+            'provincia' => $provincia,
+            'ciudad' => $ciudad,
+            'cod_postal' => $cod_postal,
+            'calle' => $calle
+        );
+        
+        $cont  = 0;
+        foreach($dir as $x => $val) {
+          if(strlen(trim($val)) != 0){
+              $cont++;
+          }
+        }
+        return $cont == count($dir);
+    }
+    
+    
     
     
     private function checkForm(array $post, bool $edit = true): array{
@@ -319,54 +348,40 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
 
 
                 //NOMBRE TITULAR
-                 if(empty($post['nombre_titular'])){
-                    $errores['nombre_titular'] = 'No se admiten valores vacios';
-                }else if(strlen(trim($post['nombre_titular'])) == 0){
-                    $errores['nombre_titular'] = 'No se admiten cadenas vacías';
-                }
-                else if(!preg_match('/[a-zA-Z ]+/',$post['nombre_titular'])){
+                if(strlen(trim($post['nombre_titular'])) != 0){
+                      if(!preg_match('/[a-zA-Z ]+/',$post['nombre_titular'])){
                      $errores['nombre_titular'] = 'sólo se admiten letras en el nombre del titular';
+                }   
                 }
 
                 //Provincia
-                  if(empty($post['provincia'])){
-                    $errores['provincia'] = 'No se admiten valores vacios';
-                }else if(strlen(trim($post['provincia'])) == 0){
-                    $errores['provincia'] = 'No se admiten cadenas vacías';
-                }
-                else if(!preg_match('/[a-zA-Z ]+/',$post['provincia'])){
+                if(strlen(trim($post['provincia'])) != 0){
+                     if(!preg_match('/[a-zA-Z ]+/',$post['provincia'])){
                      $errores['provincia'] = 'sólo se admiten letras en el nombre de la provincia';
+                    }   
                 }
 
+
                 //Ciudad
-                  if(empty($post['ciudad'])){
-                    $errores['ciudad'] = 'No se admiten valores vacios';
-                }else if(strlen(trim($post['ciudad'])) == 0){
-                    $errores['ciudad'] = 'No se admiten cadenas vacías';
+                if(strlen(trim($post['ciudad'])) != 0){
+                if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
+                 $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';  
                 }
-                else if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
-                     $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';
+               
                 }
 
                 //COD POSTAL
-                    if(empty($post['cod_postal'])){
-                        $errores['cod_postal'] = 'No se admiten valores vacíos';
-                    }
-                    else if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
+                if(strlen(trim($post['cod_postal'])) != 0){
+                if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
                         $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
                     }
-
-                //Calle
-
-                  if(empty($post['calle'])){
-                    $errores['calle'] = 'No se admiten valores vacios';
-                }else if(strlen(trim($post['ciudad'])) == 0){
-                    $errores['calle'] = 'No se admiten cadenas vacías';
                 }
-                else if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
+                //Calle
+                if(strlen(trim($post['calle'])) != 0){
+                 if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
                      $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
                 }
-         
+                }
         }
         
         
