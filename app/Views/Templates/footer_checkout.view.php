@@ -170,6 +170,9 @@
                  console.log('guardado' + 'carrito_' + nombre_usuario.innerHTML);
              }
            
+           
+
+           
            function ajax() {
 
 
@@ -184,6 +187,7 @@
 
                 // contenido que envias por ajax
             data: {
+                    envio: post_dir_envio,
                     datos: carrito,
                     total: parseFloat(total.innerHTML)//array, variable etc.
                 },
@@ -197,7 +201,7 @@
                     console.log(response);
                     if(response){
                     localStorage.removeItem('carrito_' + nombre_usuario.innerHTML);
-                    window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
+                   // window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
 
                 }
                     
@@ -206,7 +210,8 @@
                 //si la respuesta no es correcta (400) (lo que recibe del controller)
                 error: function(error) {
                    // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
-                    
+                      let resp = JSON.parse(error.responseText);
+                    console.log(resp);
                     window.alert('failure!');
                 }
 
@@ -243,7 +248,10 @@
                 error: function(error) {
                    // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
                     finalizar.disabled = true;
-                    window.alert('failure!');
+                   
+                    //error = JSON.parse(error.responseText);
+                     let resp = JSON.parse(error);
+                    console.log(resp);
                      no_money.style.display = 'block';
                 }
 

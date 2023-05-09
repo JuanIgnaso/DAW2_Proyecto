@@ -9,7 +9,7 @@ namespace Com\Daw2\Models;
 
 class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     
-    private const SELECT_ALL = 'SELECT usuarios.*,rol_usuarios.descripcion,direccion_envio.* FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol LEFT JOIN direccion_envio ON direccion_envio.id_usuario = usuarios.id_usuario';
+    private const SELECT_ALL = 'SELECT usuarios.*,rol_usuarios.descripcion FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol';
     private const UPDATE = 'UPDATE usuarios SET ';
     
     

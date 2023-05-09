@@ -34,6 +34,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     public function loginUser(){
         //Llamada al modelo
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $dirModel =  new \Com\Daw2\Models\DireccionEnvioModel();
         $usuario = $model->login($_POST);
         $_vars  = [];
         $_vars['seccion'] = '/login';
@@ -48,6 +49,11 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         }else{
             $_SESSION['usuario'] = $usuario;
             $_SESSION['permisos'] = $this->getPermisos($_SESSION['usuario']['id_rol']);
+            //Comprobar que el usuario tiene una direccion de envío asignada
+            if(!is_null($dir = $dirModel->getUserShippingAddress($_SESSION['usuario']['id_usuario']))){
+              $_SESSION['usuario']['direccion'] = $dir;  
+            }
+            
             $model->updateLastLogin($_POST['email']);
             if(!empty($_vars['remember'])){
                 //Creamos la Cookie de nombre usuario y password
@@ -109,6 +115,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $_vars['seccion'] = '/register';
         $_vars['accion'] = 'Crear Mi Cuenta';
         $_vars['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);  
+        $dirModel =  new \Com\Daw2\Models\DireccionEnvioModel();
 
         $_vars['loginError'] = $this->checkRegister($_POST);
         if(count($_vars['loginError']) == 0){
@@ -116,7 +123,10 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
            if($model->addUser($_POST)){
               $usuario = $model->login($_POST);
               $_SESSION['usuario'] = $usuario;
-              $_SESSION['permisos'] = $this->getPermisos($_SESSION['usuario']['id_rol']);           
+              $_SESSION['permisos'] = $this->getPermisos($_SESSION['usuario']['id_rol']); 
+              if(!is_null($dir = $dirModel->getUserShippingAddress($_SESSION['usuario']['id_usuario']))){
+              $_SESSION['usuario']['direccion'] = $dir;  
+            }
 
               //redirige al inicio con la sessión iniciada.
               header('Location: /');
@@ -220,7 +230,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     $data['categoria'] = $modelCategoria->getAll();
     $data['seccion'] = '/mi_Perfil/edit';
     $data['titulo'] = 'Modificar Mi Perfil';
-   
+    $data['input'] = $_SESSION['usuario'];
+    unset($data['input']['cartera']);
     $data['info_usuario'] = $input;
     unset($data['info_usuario']['cartera']);
     
@@ -234,39 +245,51 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     //EDITAR PERFIL
     function editProfile(){
     $data = [];
+      $modelDir = new \Com\Daw2\Models\DireccionEnvioModel();
     $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
     $data['categoria'] = $modelCategoria->getAll();
     $data['seccion'] = '/mi_Perfil/edit';
     $data['titulo'] = 'Modificar Mi Perfil';
     $data['errores'] = $this->checkForm($_POST);
+    
     $input = $_SESSION['usuario'];
-    
-    
+     
     if(count($data['errores']) == 0){
+        if($this->checkEmpty($_POST)){
+       $data['errores2'] = $this->checkForm2($_POST); 
+       if(count($data['errores2']) == 0){
+       $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);  
+
+      }
+      }else{
+          $dir = true;
+      }
+        
     $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
     $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-    $modelDir = new \Com\Daw2\Models\DireccionEnvioModel();
-    $usuario = $model->editUser($_POST,$_SESSION['usuario']['pass'],$_SESSION['usuario']['id_usuario']);
-    if($this->checkEmptyDir($_POST['nombre_titular'],$_POST['provincia'],$_POST['ciudad'],$_POST['cod_postal'],$_POST['calle'])){
-        $dir = true;
-    }else{
-      $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);  
-    }
-    $result = false;
-    if($dir && $usuario){
-        $result = true;
-    }
-    if($result){
-        //Cambiarlo
-        $_SESSION['usuario'] = $model->updateUserSession($_SESSION['usuario']['id_usuario']);
-        header('location: /mi_Perfil');
-        $_SESSION['success'] = 'Los cambios realizados a tu perfil se han realizado con éxito!';
-    }else{
-        $data['categoria'] = $modelCategoria->getAll();
-        $data['seccion'] = '/mi_Perfil/edit';
-        $data['titulo'] = 'Modificar Mi Perfil';
-        $data['errores'] = $this->checkForm($_POST,true); //<- Pasamos true porque estamos editando
-    }
+    $usuario = $model->editUser($_POST,$_SESSION['usuario']['pass'],$_SESSION['usuario']['id_usuario']);           
+    
+    if($usuario && $dir){
+             $_SESSION['usuario'] = $model->updateUserSession($_SESSION['usuario']['id_usuario']);
+             $_SESSION['usuario']['direccion'] = $modelDir->getUserShippingAddress($_SESSION['usuario']['id_usuario']);
+             header('location: /mi_Perfil');
+             $_SESSION['success'] = 'Los cambios realizados a tu perfil se han realizado con éxito!';
+         }else{
+             $data['categoria'] = $modelCategoria->getAll();
+             $data['seccion'] = '/mi_Perfil/edit';
+             $data['titulo'] = 'Modificar Mi Perfil';
+             $data['errores'] = $this->checkForm($_POST,true); //<- Pasamos true porque estamos editando
+         }    
+  
+//    }else{
+//      $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);  
+//    }
+//    $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);    
+
+//    $result = false;
+//    if($dir && $usuario){
+//        $result = true;
+//    }
         
     }else{
    $data['info_usuario'] = $input;
@@ -278,29 +301,51 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     }
     }
     
-    private function checkEmptyDir($nombre,$provincia,$ciudad,$cod_postal,$calle):bool{
+    private function checkEmptyDir($var):bool{
+//        $dir = array(
+//            'nombre' => $post['nombre_titular'],
+//            'provincia' => $post['provincia'],
+//            'ciudad' => $post['ciudad'],
+//            'cod_postal' => $post['cod_postal'],
+//            'calle' => $post['calle']
+//        );
+        
+        $cont  = 0;
+////        foreach($dir as $x => $val) {
+//          if(strlen(trim($var)) == 0){
+//              return true;
+//          }
+////        }
+
+        return strlen(trim($var)) == 0;
+    }
+    
+    
+    private function checkEmpty(array $post):bool{
+      
         $dir = array(
-            'nombre' => $nombre,
-            'provincia' => $provincia,
-            'ciudad' => $ciudad,
-            'cod_postal' => $cod_postal,
-            'calle' => $calle
+           'nombre' => $post['nombre_titular'],
+            'provincia' => $post['provincia'],
+            'ciudad' => $post['ciudad'],
+           'cod_postal' => $post['cod_postal'],
+            'calle' => $post['calle']
         );
         
         $cont  = 0;
         foreach($dir as $x => $val) {
-          if(strlen(trim($val)) != 0){
-              $cont++;
-          }
-        }
-        return $cont == count($dir);
+         if(empty($val)){
+             $cont++;
+         }
+       }
+
+        return $cont == 0;
     }
     
     
     
     
     private function checkForm(array $post, bool $edit = true): array{
-
+        
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $errores = [];
                 
@@ -344,44 +389,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
                 }else if($post['cartera'] <= 0){
                     $errores['cartera'] = 'No se puede introducir un valor igual o inferior a 0';
                 }
+                
                 }
 
-
-                //NOMBRE TITULAR
-                if(strlen(trim($post['nombre_titular'])) != 0){
-                      if(!preg_match('/[a-zA-Z ]+/',$post['nombre_titular'])){
-                     $errores['nombre_titular'] = 'sólo se admiten letras en el nombre del titular';
-                }   
-                }
-
-                //Provincia
-                if(strlen(trim($post['provincia'])) != 0){
-                     if(!preg_match('/[a-zA-Z ]+/',$post['provincia'])){
-                     $errores['provincia'] = 'sólo se admiten letras en el nombre de la provincia';
-                    }   
-                }
-
-
-                //Ciudad
-                if(strlen(trim($post['ciudad'])) != 0){
-                if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
-                 $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';  
-                }
-               
-                }
-
-                //COD POSTAL
-                if(strlen(trim($post['cod_postal'])) != 0){
-                if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
-                        $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
-                    }
-                }
-                //Calle
-                if(strlen(trim($post['calle'])) != 0){
-                 if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
-                     $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
-                }
-                }
         }
         
         
@@ -390,7 +400,66 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
 
         }
     
-   
+   private function checkForm2(array $post): array{
+       $errores = [];
+       
+       
+               //NOMBRE TITULAR
+        if(strlen(trim($post['nombre_titular'])) != 0){
+              if(!preg_match('/[a-zA-Z ]+/',$post['nombre_titular'])){
+             $errores['nombre_titular'] = 'sólo se admiten letras en el nombre del titular';
+        }   
+           if($this->checkEmptyDir($post['nombre_titular'])){
+           $errores['nombre_titular'] = 'Tienes que cubrir todos los campos';
+       }
+        }
+        //Provincia
+        if(strlen(trim($post['provincia'])) != 0){
+             if(!preg_match('/[a-zA-Z ]+/',$post['provincia'])){
+             $errores['provincia'] = 'sólo se admiten letras en el nombre de la provincia';
+            }  
+
+            if($this->checkEmptyDir($post['provincia'])){
+           $errores['provincia'] = 'Tienes que cubrir todos los campos';
+       }
+        }
+
+
+        //Ciudad
+        if(strlen(trim($post['ciudad'])) != 0){
+        if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
+         $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';  
+        }
+         if($this->checkEmptyDir($post['ciudad'])){
+           $errores['ciudad'] = 'Tienes que cubrir todos los campos';
+       }
+
+
+        }
+
+        //COD POSTAL
+        if(strlen(trim($post['cod_postal'])) != 0){
+        if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
+                $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
+            }
+                            if($this->checkEmptyDir($post['cod_postal'])){
+           $errores['cod_postal'] = 'Tienes que cubrir todos los campos';
+       }
+        }
+
+
+        //Calle
+        if(strlen(trim($post['calle'])) != 0){
+         if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
+             $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
+        }
+        if($this->checkEmptyDir($post['calle'])){
+           $errores['calle'] = 'Tienes que cubrir todos los campos';
+       }
+        }
+       
+        return $errores;
+   }
     
     
     

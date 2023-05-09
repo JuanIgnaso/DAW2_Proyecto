@@ -37,5 +37,22 @@ class DireccionEnvioModel  extends \Com\Daw2\Core\BaseModel{
         return $stmt->rowCount() != 0;
     }
     
+    function getUserShippingAddress($id): ?array{
+        $stmt = $this->pdo->prepare('SELECT * FROM  direccion_envio WHERE id_usuario=?');
+         $stmt->execute([$id]);
+         if($res = $stmt->fetch()){
+              return $res;
+         }else{
+             return NULL;
+         }
+        
+    }
+    
+    function userNameExists($id,$nombre): bool{
+     $stmt = $this->pdo->prepare('SELECT * FROM  direccion_envio WHERE nombre_titular=? AND id_usuario!=?');
+     $stmt->execute([$nombre,$id]);
+     return $stmt->rowCount() != 0;
+    }
+    
 }
 

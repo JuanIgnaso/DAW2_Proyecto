@@ -113,7 +113,7 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
 
 
 #navegador_Sec,label{
-        font-family: 'Potta One', 'Staatliches', cursive !important;
+        font-family: 'Potta One', 'Staatliches', cursive;
 
 }
 
@@ -132,4 +132,9 @@ content:' | ';
 #alerta{
     position:relative;
     display:none;
+}
+
+label span{
+        font-family: 'DM Sans','Space Grotesk',sans-serif !important;
+
 }

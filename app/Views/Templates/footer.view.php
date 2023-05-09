@@ -150,7 +150,7 @@
            
            
            function ajax() {
-
+               
 
             //funcion de ajax en JQuery
             $.ajax({
@@ -163,6 +163,7 @@
 
                 // contenido que envias por ajax
             data: {
+                    envio:post_dir_envio,
                     datos: carrito,
                     total: parseFloat(total.innerHTML)//array, variable etc.
                 },

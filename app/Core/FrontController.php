@@ -194,6 +194,15 @@ class FrontController{
                      }
                      ,'post');   
                      
+                     
+                     
+                      Route::add('/check_dir',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PedidoController();
+                     $controller->checkShippingAddress();
+                     }
+                     ,'post'); 
+                     
 //                     Route::add('/check_salario',
 //                     function(){
 //                     $controller = new \Com\Daw2\Controllers\PedidoController();

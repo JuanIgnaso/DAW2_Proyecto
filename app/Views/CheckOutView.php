@@ -82,47 +82,67 @@
                         </div>
                     </div>
                   </div>
+                    <input type="hidden" id="postId" name="postId" value="<?php echo $_SESSION['usuario']['id_usuario'];?>" />
                 </div>
 
                 <!-- Datos del cliente -->
                 <div class="row  border-bottom border-secondary">
                   <h3 class="display-6 text-center">Datos Del Usuario</h3>
-                    <div class="row row-cols-1 row-cols-sm-2 mb-2 p-2 m-auto">
+                  
+                  <!-- Si el checkbox esta marcado -->
+                  <div id="formulario_cargar_envio" style="display: none;" class="row row-cols-1 row-cols-sm-2 mb-2 p-2 m-auto">
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Nombre Titular</label>  
-                            <input type="text" name="nombre" id="" class=" rounded">
-                        </div>
-                        <div class="col  d-flex flex-column text-left">
-                          <label for="">Apellidos</label>  
-                            <input type="text" name="nombre" id="" class=" rounded">
-                        </div>
-                        <div class="col  d-flex flex-column text-left">
-                          <label for="">Número de Contacto</label>  
-                            <input type="text" name="nombre" id="" class=" rounded">
+                          <p id="nombre_titular" class="col-12"></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Provincia</label>  
-                            <input type="text" name="nombre" id="" class=" rounded">
+                          <p id="provincia" class="col-12"></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
-                          <label for="">Población</label>  
-                            <input type="text" name="nombre" id="" class=" rounded">
+                          <label for="">Ciudad</label>  
+                          <p id="ciudad" class="col-12"></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Código Postal</label>  
-                            <input type="text" name="nombre" id="" class=" rounded">
+                          <p id="cod_postal" class="col-12"></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Calle</label>  
-                            <input type="text" name="nombre" id="" class=" rounded">
+                          <p id="calle" class="col-12"></p>
                         </div>
                       </div>
-                      
+                  
+                  <!-- Si el checkbox no esta marcado -->
+                    <div id="formulario_dir_envio" style="display: flex;" class="row row-cols-1 row-cols-sm-2 mb-2 p-2 m-auto">
+                        <div class="col  d-flex flex-column text-left">
+                          <label for="">Nombre Titular</label>  
+                            <input type="text" name="nombre_titular" id="inp_nombre" class=" rounded">
+                        </div>
+                        <div class="col  d-flex flex-column text-left">
+                          <label for="">Provincia</label>  
+                            <input type="text" name="provincia" id="inp_provincia" class=" rounded">
+                        </div>
+                        <div class="col  d-flex flex-column text-left">
+                          <label for="">Ciudad</label>  
+                            <input type="text" name="ciudad" id="inp_ciudad" class=" rounded">
+                        </div>
+                        <div class="col  d-flex flex-column text-left">
+                          <label for="">Código Postal</label>  
+                            <input type="text" name="cod_postal" id="inp_postal" class=" rounded">
+                        </div>
+                        <div class="col  d-flex flex-column text-left">
+                          <label for="">Calle</label>  
+                            <input type="text" name="calle" id="inp_calle" class=" rounded">
+                        </div>
+                      </div>
+                       <p id="no_dir" class="col-12 text-danger p-2 ps-3 m-0" style='display:none;'>No cuentas con ninguna dirección de envío asociada.</p>
                     </div>
+               
                        <div class="col-12 mt-2 d-flex align-items-center text-center gap-2">
-                           <span>Recordar Mi Dirección:</span>
+                           <span>Usar Mi Dirección:</span>
                            <label class="cont align-items-center">
-                            <input type="checkbox">
+                            <input type="checkbox" id="usar_mi_direccion">
                             <span class="checkmark"></span>
                             
                           </label> 
@@ -132,7 +152,90 @@
                       <button type="submit" class="mt-3  p-2 rounded" onclick="ajax()" id="finalizar_Compra">Finalizar Compra</button>
                     </footer>
                    
+               <script>
+               var ch = document.getElementById('usar_mi_direccion');
+               var id = document.getElementById('postId');
+               var no_dir = document.getElementById('no_dir');
                
+               //Datos del usuario
+               var nombre_titular = document.getElementById('nombre_titular');
+               var provincia = document.getElementById('provincia');
+               var ciudad = document.getElementById('ciudad');
+               var cod_postal = document.getElementById('cod_postal');
+               var calle = document.getElementById('calle');
+               
+               
+                          //Info de envio INPUTS
+           var post_nombre = document.getElementById('inp_nombre');
+           var post_provincia =  document.getElementById('inp_provincia');
+           var post_ciudad =  document.getElementById('inp_ciudad');
+           var post_postal = document.getElementById('inp_postal');
+           var post_calle = document.getElementById('inp_calle');
+           
+           
+                var post_dir_envio = {nombre:post_nombre.value,
+                               provincia:post_provincia.value,
+                               ciudad:post_ciudad.value,
+                               postal:post_postal.value,
+                               calle:post_calle.value,
+                                id:id.value};
+           
+           
+               
+               
+               //ventanas
+               var f = document.getElementById('formulario_dir_envio');
+               var g = document.getElementById('formulario_cargar_envio');
+               
+               ch.addEventListener('change',function(){
+                   if(this.checked){
+                       
+                      $.ajax({
+                        url: '/check_dir',  
+                        type: 'POST',
+                          data: {
+                    
+                          id: id.value//array, variable etc.
+                          },
+                           success: function(response) {
+                                console.log(response);
+                                let resp = JSON.parse(response);
+                                nombre_titular.innerHTML = resp.nombre_titular;
+                                provincia.innerHTML =  resp.provincia;
+                                ciudad.innerHTML =  resp.ciudad;
+                                cod_postal.innerHTML =  resp.cod_postal;
+                                calle.innerHTML = resp.calle;
+                                f.style.display = 'none';
+                                g.style.display = 'flex';
+                                
+                                
+                          post_dir_envio = {
+                               nombre:resp.nombre_titular,
+                               provincia:resp.provincia,
+                               ciudad: resp.ciudad,
+                               postal: resp.cod_postal,
+                               calle: resp.calle,
+                               id:id.value
+                           };
+                                
+                           },
+                          error: function(error){
+                              error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
+                              no_dir.style.display = 'block';
+                              ch.checked = false;
+                             console.log(error);
+                          }
+                      });
+                   }else{
+
+                      
+                      
+                       f.style.display = 'flex';
+                       g.style.display = 'none';
+                   }
+               });
+               
+               </script>
           </section>
         </div>
       </div>

@@ -123,32 +123,33 @@
                       <div class="row row-cols-1 row-cols-sm-2">
                         <div class="col d-flex flex-column">
                             
-                          <label for="">Nombre Titular<?php echo $info_usuario['nombre_titular'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="nombre_titular" value="<?php echo isset($input['nombre_titular']) ? $info_usuario['nombre_titular'] : $info_usuario['nombre_titular'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                            <label for="">Nombre Titular<span><?php echo isset($info_usuario['direccion']['nombre_titular']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['nombre_titular'] : '(No Especificado)' ;?></span></label>
+                          <input type="text" id="country" name="nombre_titular" value="<?php echo isset($input['direccion']['nombre_titular']) ? $input['direccion']['nombre_titular'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                          <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['nombre_titular']) ? $errores['nombre_titular'] : '';?></p>          
 
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Provincia<?php echo $info_usuario['provincia'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="provincia" value="<?php echo isset($input['provincia']) ? $input['provincia'] : $info_usuario['provincia'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <label for="">Provincia<?php echo isset($info_usuario['direccion']['provincia']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['provincia'] : '(No Especificado)' ;?></label>
+                          <input type="text" id="country" name="provincia" value="<?php echo isset($input['direccion']['provincia']) ? $input['direccion']['provincia'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['provincia']) ? $errores['provincia'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Ciudad<?php echo $info_usuario['ciudad'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="ciudad" value="<?php echo isset($input['ciudad']) ? $input['ciudad'] : $info_usuario['ciudad'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <label for="">Ciudad<?php echo isset($info_usuario['direccion']['ciudad']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['ciudad'] : '(No Especificado)' ;?></label>
+                          <input type="text" id="country" name="ciudad" value="<?php echo isset($input['direccion']['ciudad']) ? $input['direccion']['ciudad'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                            <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['ciudad']) ? $errores['ciudad'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Código Postal<?php echo $info_usuario['cod_postal'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="cod_postal" value="<?php echo isset($input['cod_postal']) ? $input['cod_postal'] : $info_usuario['cod_postal'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <label for="">Código Postal<?php echo isset($info_usuario['direccion']['cod_postal']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['cod_postal'] : '(No Especificado)' ;?></label>
+                          <input type="text" id="country" name="cod_postal" value="<?php echo isset($input['direccion']['cod_postal']) ? $input['direccion']['cod_postal'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['cod_postal']) ? $errores['cod_postal'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Calle<?php echo $info_usuario['calle'] == NULL && $seccion == '/mi_Perfil' ? '(No especificado)' : '' ;?></label>
-                          <input type="text" id="country" name="calle" value="<?php echo isset($input['calle']) ? $input['calle'] : $info_usuario['calle'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
+                          <label for="">Calle<?php echo isset($info_usuario['direccion']['calle']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['calle'] : '(No Especificado)' ;?></label>
+                          <input type="text" id="country" name="calle" value="<?php echo isset($input['direccion']['calle']) ? $input['direccion']['calle'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['calle']) ? $errores['calle'] : '';?></p>          
                         </div>
-                      </div>
+                   <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['direccion']) ? $errores['direccion'] : '';?></p>          
+
                 </section>
               </div>
           </main>
