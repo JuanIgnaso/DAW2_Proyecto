@@ -49,13 +49,8 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         return $var['id_usuario'];
     }
     
-    /*
-     * Devuelve el usuario convertido en objeto para usar luego
-     */
-    private function rowToUsuarioSistema(array $row): ?\Com\Daw2\Helpers\UsuarioSistema{
-        $rol = new \Com\Daw2\Helpers\Rol($row['id_rol'],$row['nombre_rol'],$row['descripcion']);
-        return new \Com\Daw2\Helpers\UsuarioSistema($row['id_usuario'],$rol,$row['email'],$row['nombre_usuario'],$row['cartera']);
-    }
+
+    
     
     /*
     Añadir usuario a la bbdd
@@ -185,6 +180,19 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         } catch (\PDOException $ex) {
         $this->pdo->rollback();
          return false;   
+        }
+    }
+    
+    function updateUserAvatar($id,$url):bool{
+    try{
+    $this->pdo->beginTransaction();     
+    $stmt = $this->pdo->prepare(self::UPDATE.' profile_image=? WHERE id_usuario=?');
+    $stmt->execute([$url,$id]);
+    $this->pdo->commit();
+    return true;
+        } catch (\PDOException $ex) {
+           $this->pdo->rollback();
+           return false;   
         }
     }
     

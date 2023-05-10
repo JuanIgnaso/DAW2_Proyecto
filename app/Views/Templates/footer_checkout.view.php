@@ -68,6 +68,15 @@
             //Modal no suficientes fondos
             var no_money = document.getElementById('not_enough_money_modal');
             
+            
+            //mensajes de errores
+             var er_n = document.getElementById('error_nombre');
+             var er_p = document.getElementById('error_provincia');
+             var er_c = document.getElementById('error_ciudad');
+             var er_po = document.getElementById('error_postal');
+             var er_ca = document.getElementById('error_calle');
+
+            
             carrito = JSON.parse(miLocalStorage.getItem('carrito_' + nombre_usuario.innerHTML));
            
            cargarTabla();
@@ -172,7 +181,7 @@
            
            
 
-           
+           //PROCESA LA COMPRA
            function ajax() {
 
 
@@ -201,7 +210,10 @@
                     console.log(response);
                     if(response){
                     localStorage.removeItem('carrito_' + nombre_usuario.innerHTML);
-                   // window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
+                    errores.style.display='none';
+                     errores.innerHTML = '';
+                   window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
+                    
 
                 }
                     
@@ -212,10 +224,23 @@
                    // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
                       let resp = JSON.parse(error.responseText);
                     console.log(resp);
-                    window.alert('failure!');
+                   // window.alert('failure!');
+                     errores.style.display='block';
+                     //errores.innerHTML = JSON.stringify(resp);
+                     er_n.style.display = 'block';
+                     er_p.style.display = 'block';
+                     er_c.style.display = 'block';
+                     er_po.style.display = 'block';
+                     er_ca.style.display = 'block';
+                     
+                     er_n.innerHTML = resp.nombre;
+                     er_p.innerHTML = resp.provincia;
+                     er_c.innerHTML = resp.ciudad;
+                     er_po.innerHTML = resp.postal;
+                     er_ca.innerHTML = resp.calle;
+                             //window.alert(JSON.stringify(error, null, 2));
                 }
 
-                //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
             });
             
         }
@@ -227,10 +252,10 @@
                 //url que pones para ir al controlador (usando front controller)
                 url: '/check_salario',
 
-                //metodo con el que enviar los datos (GET / POST) 
+                
                 type: 'POST',
 
-                // contenido que envias por ajax
+                
             data: {
                     
                     total: parseFloat(total.innerHTML)//array, variable etc.

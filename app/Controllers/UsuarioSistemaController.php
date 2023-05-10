@@ -301,21 +301,65 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     }
     }
     
+    
+    //EDITAR FOTO DE PERFIL
+    function editProfilePhoto(){
+        
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $src = $_FILES['image']['tmp_name']; //nombre de archivo temporal
+
+        //Nombre imagen
+        $filename = $_FILES['image']['name']; //nombre del archivo definitivo
+
+
+        //directorio de destino
+        //$dir = "imagenes/".$filename;
+        $dir = "assets/img/profiles/id".$_SESSION['usuario']['id_usuario'].'/';
+        $output_dir = $dir.basename($_FILES['image']['name']);
+
+        //Tipo de archivo
+        $imageFileType = strtolower(pathinfo($output_dir,PATHINFO_EXTENSION));
+
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" ) {
+          http_response_code(400);  
+          echo json_encode(["hola"=>"Sorry, only JPG, JPEG, PNG & GIF files are allowed."]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+         exit;   
+       
+        }
+
+        //Si el directorio no existe
+        if(!is_dir($dir)){
+            mkdir($dir, 0775, true);
+        }
+        
+        //Borrar la imagen anterior
+            
+            
+            
+
+        if (move_uploaded_file($src, $output_dir )) {
+            if($model->updateUserAvatar($_SESSION['usuario']['id_usuario'],'/'.$output_dir)){
+                if ($output_dir != '/assets/img/profiles/default_profile_photo.jpg') {
+                unlink(substr($_SESSION['usuario']['profile_image'],1,strlen($_SESSION['usuario']['profile_image'])));
+            }
+                
+                
+                http_response_code(200);
+                 echo json_encode(["hola"=>"El archivo ".$filename."Se acaba de subir correctamente"]);
+            }
+        } else{
+        http_response_code(400);     
+        echo  json_encode(["Error! Image upload failed! File: ".$filename]);
+        exit;
+        };
+    }
+    
+    
+    
     private function checkEmptyDir($var):bool{
-//        $dir = array(
-//            'nombre' => $post['nombre_titular'],
-//            'provincia' => $post['provincia'],
-//            'ciudad' => $post['ciudad'],
-//            'cod_postal' => $post['cod_postal'],
-//            'calle' => $post['calle']
-//        );
         
         $cont  = 0;
-////        foreach($dir as $x => $val) {
-//          if(strlen(trim($var)) == 0){
-//              return true;
-//          }
-////        }
 
         return strlen(trim($var)) == 0;
     }

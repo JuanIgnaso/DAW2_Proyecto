@@ -33,7 +33,6 @@
             <p class="mb-0">Para cualquier duda sobre su cuenta contacte a support_GallaeciaPC@gmail.com</p>
           </div>
         <!--  -->
-            <form method="post"  action="<?php echo $seccion ;?>" class="">
         <div class="row d-flex align-items-start justify-content-between">
           <!-- CUERPO DEL FORMULARIO -->
           <main class="col-12 col-md-8 ms-0 ms-md-2 mt-2 mb-5">
@@ -43,26 +42,40 @@
               <div class="row">
                 <!-- Foto de perfil del usuario -->
                 <section class="col-12 col-md-5">
+ 
                     <div class="col-10 m-auto text-center">
-                     <img src="/assets/img/profiles/default_profile_photo.jpg" class="img-fluid rounded" alt="...">
+                        
+                          <img src="<?php echo $info_usuario['profile_image'];?>"  class="img-responsive rounded" alt="imagen de perfil"
+ 
+                  style="width: 300px;
+                height: 300px;
+                overflow: hidden;">
+                        
                      <p>Foto de Perfil</p>
                      <?php
                      if($seccion != '/mi_Perfil'){                    
                      ?>
                   <div class="col-12 d-flex flex-column pb-4">
-                    <label for="">Escoge una imagen</label>
-                         <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
+                <form method="post" action="/post_foto" enctype="multipart/form-data" id="imageForm" class="d-flex">
+      
+                            <input type="file" name="image" accept="image/*" id="imageButton"/>
+                    <br>
+                    <input type="submit" name="submit" value="Upload">
+                </form>
+                         
                   </div>
      
                      <?php
                      }
                      ?>
+                     
                     </div>
                 </section>
                 <!-- Datos generales del usuario Nombre / Correo / Wallet -->
-        
+
                 <section class="col-12 col-md-7 border border-secondary border-opacity-50 ">
-                    
+               <form method="post"  action="<?php echo $seccion ;?>" class="">
+   
                   <div class="col-12 d-flex flex-column pb-4">
                     <label for="" class="display-6">Nombre de Usuario</label>
                     <input type="text" id="country" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : $info_usuario['nombre_usuario'] ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?> class="mt-1">
@@ -129,22 +142,22 @@
 
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Provincia<?php echo isset($info_usuario['direccion']['provincia']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['provincia'] : '(No Especificado)' ;?></label>
+                            <label for="">Provincia<span><?php echo isset($info_usuario['direccion']['provincia']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['provincia'] : '(No Especificado)' ;?></span></label>
                           <input type="text" id="country" name="provincia" value="<?php echo isset($input['direccion']['provincia']) ? $input['direccion']['provincia'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['provincia']) ? $errores['provincia'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Ciudad<?php echo isset($info_usuario['direccion']['ciudad']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['ciudad'] : '(No Especificado)' ;?></label>
+                            <label for="">Ciudad<span><?php echo isset($info_usuario['direccion']['ciudad']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['ciudad'] : '(No Especificado)' ;?></span></label>
                           <input type="text" id="country" name="ciudad" value="<?php echo isset($input['direccion']['ciudad']) ? $input['direccion']['ciudad'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                            <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['ciudad']) ? $errores['ciudad'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Código Postal<?php echo isset($info_usuario['direccion']['cod_postal']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['cod_postal'] : '(No Especificado)' ;?></label>
+                            <label for="">Código Postal<span><?php echo isset($info_usuario['direccion']['cod_postal']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['cod_postal'] : '(No Especificado)' ;?></span></label>
                           <input type="text" id="country" name="cod_postal" value="<?php echo isset($input['direccion']['cod_postal']) ? $input['direccion']['cod_postal'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['cod_postal']) ? $errores['cod_postal'] : '';?></p>          
                         </div>
                         <div class="col d-flex flex-column">
-                          <label for="">Calle<?php echo isset($info_usuario['direccion']['calle']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['calle'] : '(No Especificado)' ;?></label>
+                            <label for="">Calle<span><?php echo isset($info_usuario['direccion']['calle']) && $seccion == '/mi_Perfil' ? $info_usuario['direccion']['calle'] : '(No Especificado)' ;?></span></label>
                           <input type="text" id="country" name="calle" value="<?php echo isset($input['direccion']['calle']) ? $input['direccion']['calle'] : '' ;?>" <?php echo $seccion == '/mi_Perfil/edit' ? '' : "readonly style='border:none'";?>  class="mt-1">
                           <p class="text-danger m-0"  <?php echo $seccion == '/mi_Perfil' ? "style='display:none;'" : "style='display:block;'" ;?>><?php echo isset($errores['calle']) ? $errores['calle'] : '';?></p>          
                         </div>
@@ -198,7 +211,7 @@
                   ?>
                   
                   <div class="col col-sm-12 text-center accion ">
-                        <button  id="borrar_perfil" type="submit"><i class="fa-sharp fa-solid fa-thumbs-up p-2" style="color: #fff;"></i></button>
+                        <button  id="editar_perfil" type="submit"><i class="fa-sharp fa-solid fa-thumbs-up p-2" style="color: #fff;"></i></button>
                         <p>Aplicar Cambios</p>
                         <span class="ayuda">Confirmar cambios realizados</span>
                     </div>
@@ -211,11 +224,11 @@
                   }
                   ?>
               </div>
-         
+         </form>
           </aside>
            
         </div>
-        </form> 
+         
         <script>
             
             /*Variables con contenido
@@ -366,5 +379,39 @@ function g(){
         } 
         </script>
         <script>
-        var acc = document.getElementById('');
+
+
+        $('#editar_perfil').click(function(){
+          // Making the image file object
+           var file = $('#imageButton').prop("files")[0];
+
+            // Making the form object
+           var form = new FormData();
+
+            // Adding the image to the form
+            form.append("image", file);
+
+           // The AJAX call
+            $.ajax({
+                url: "/post_foto",
+               type: "POST",
+               data:  form,
+                contentType: false,
+               processData:false,
+             success: function(result){
+                                  window.location.href = 'http://gallaeciapc.localhost:8080/mi_Perfil';
+
+                  console.log(result);
+
+                },
+                error: function(error){
+                  error = JSON.parse(error.responseText);
+                  console.log(error);
+                   window.alert(error);
+               } 
+            });
+        });
+
+    
+        
         </script>

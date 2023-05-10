@@ -105,6 +105,18 @@ class FrontController{
            
        }     
        
+       
+       if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
+           
+           Route::add('/inventario',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\AdministracionController();
+                     $controller->showAdministracion();
+                     }
+                     ,'get'); 
+       }
+       
+       
        if(isset($_SESSION['usuario'])){
                      Route::add('/mi_Perfil',
                      function(){
@@ -112,6 +124,10 @@ class FrontController{
                      $controller->showUserProfile();
                      }
                      ,'get'); 
+                     
+                     
+                    
+                     
                      
                      
               Route::add('/mi_Perfil/baja',
@@ -159,6 +175,23 @@ class FrontController{
                     $controlador->editProfile();
                 }
                 , 'post');
+                
+                
+                
+                //editar foto perfil***************************************
+                     Route::add('/post_foto',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                     $controller->editProfilePhoto();
+                     }
+                     ,'post');   
+                     
+                     Route::add('/post_foto',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                     $controller->editProfilePhoto();
+                     }
+                     ,'get'); 
             
        }
            
@@ -187,7 +220,11 @@ class FrontController{
                      }
                      ,'get');  
                      
-                                        Route::add('/check_salario',
+                     
+                     
+                     
+                     
+                    Route::add('/check_salario',
                      function(){
                      $controller = new \Com\Daw2\Controllers\PedidoController();
                      $controller->checkUserSalary();

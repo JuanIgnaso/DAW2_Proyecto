@@ -118,24 +118,31 @@
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Nombre Titular</label>  
                             <input type="text" name="nombre_titular" id="inp_nombre" class=" rounded">
+                            <p id="error_nombre" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Provincia</label>  
-                            <input type="text" name="provincia" id="inp_provincia" class=" rounded">
+                            <input type="text" name="provincia" id="inp_provincia" class=" rounded" >
+                            <p id="error_provincia" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Ciudad</label>  
                             <input type="text" name="ciudad" id="inp_ciudad" class=" rounded">
+                            <p id="error_ciudad" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Código Postal</label>  
                             <input type="text" name="cod_postal" id="inp_postal" class=" rounded">
+                            <p id="error_postal" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Calle</label>  
                             <input type="text" name="calle" id="inp_calle" class=" rounded">
+                            <p id="error_calle" style="display:none";></p>
                         </div>
                       </div>
+                       <p id="errores_dir" class="col-12 text-danger p-2 ps-3 m-0" style='display:none;'></p>
+
                        <p id="no_dir" class="col-12 text-danger p-2 ps-3 m-0" style='display:none;'>No cuentas con ninguna dirección de envío asociada.</p>
                     </div>
                
@@ -173,6 +180,10 @@
            var post_calle = document.getElementById('inp_calle');
            
            
+           //Salida de errores del json de la direccion
+           var errores = document.getElementById('errores_dir');
+           
+           
                 var post_dir_envio = {nombre:post_nombre.value,
                                provincia:post_provincia.value,
                                ciudad:post_ciudad.value,
@@ -186,6 +197,8 @@
                //ventanas
                var f = document.getElementById('formulario_dir_envio');
                var g = document.getElementById('formulario_cargar_envio');
+               
+               var x = post_nombre.value;
                
                ch.addEventListener('change',function(){
                    if(this.checked){
@@ -207,7 +220,7 @@
                                 calle.innerHTML = resp.calle;
                                 f.style.display = 'none';
                                 g.style.display = 'flex';
-                                
+                               
                                 
                           post_dir_envio = {
                                nombre:resp.nombre_titular,
@@ -223,11 +236,16 @@
                               error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
                               no_dir.style.display = 'block';
                               ch.checked = false;
-                             console.log(error);
+                             
                           }
                       });
                    }else{
-
+                        post_dir_envio = {nombre:x,
+                               provincia:post_provincia.value,
+                               ciudad:post_ciudad.value,
+                               postal:post_postal.value,
+                               calle:post_calle.value,
+                                id:id.value};
                       
                       
                        f.style.display = 'flex';

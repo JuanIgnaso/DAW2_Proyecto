@@ -45,7 +45,7 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
             } 
         }else{
            http_response_code(400);
-           echo json_encode($errores); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+           echo json_encode($_POST['envio']); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
            exit; 
         }
         
