@@ -45,6 +45,8 @@ aside button{
 
 
 
+
+
 /*****MODAL BAJA USUARIO*****/
 
 .class_modal_baja
@@ -136,5 +138,62 @@ content:' | ';
 
 label span{
         font-family: 'DM Sans','Space Grotesk',sans-serif !important;
+
+}
+
+
+/***********FOTO DE PERFIL***********/
+
+#caja_foto{
+    overflow: hidden;
+    background-color: lightgrey;
+    width: 500px;
+    height: 500px;
+    margin:auto;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#foto_img{
+    width: 400px;
+    text-align:center;
+    height: 400px;
+    object-fit: cover;
+}
+
+/**********************************/
+
+@media screen and (max-width: 1400px){
+
+    #caja_foto{
+        width: 350px;
+        height: 350px;
+    }
+    
+    #foto_img{
+        width: 250px;
+        height: 250px;
+    }
+    
+
+}
+
+
+
+
+
+@media screen and (max-width: 550px){
+
+    #caja_foto{
+        width: 300px;
+        height: 300px;
+    }
+    
+    #foto_img{
+        width: 250px;
+        height: 250px;
+    }
+    
 
 }

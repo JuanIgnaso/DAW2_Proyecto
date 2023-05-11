@@ -118,32 +118,32 @@
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Nombre Titular</label>  
                             <input type="text" name="nombre_titular" id="inp_nombre" class=" rounded">
-                            <p id="error_nombre" style="display:none";></p>
+                            <p id="error_nombre" class="text-danger" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Provincia</label>  
                             <input type="text" name="provincia" id="inp_provincia" class=" rounded" >
-                            <p id="error_provincia" style="display:none";></p>
+                            <p id="error_provincia" class="text-danger" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Ciudad</label>  
                             <input type="text" name="ciudad" id="inp_ciudad" class=" rounded">
-                            <p id="error_ciudad" style="display:none";></p>
+                            <p id="error_ciudad" class="text-danger" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Código Postal</label>  
                             <input type="text" name="cod_postal" id="inp_postal" class=" rounded">
-                            <p id="error_postal" style="display:none";></p>
+                            <p id="error_postal" class="text-danger" style="display:none";></p>
                         </div>
                         <div class="col  d-flex flex-column text-left">
                           <label for="">Calle</label>  
                             <input type="text" name="calle" id="inp_calle" class=" rounded">
-                            <p id="error_calle" style="display:none";></p>
+                            <p id="error_calle" class="text-danger" style="display:none";></p>
                         </div>
                       </div>
                        <p id="errores_dir" class="col-12 text-danger p-2 ps-3 m-0" style='display:none;'></p>
 
-                       <p id="no_dir" class="col-12 text-danger p-2 ps-3 m-0" style='display:none;'>No cuentas con ninguna dirección de envío asociada.</p>
+                       <p id="no_dir" class="col-12 text-danger p-2 ps-3 m-0" style='display:none;'></p>
                     </div>
                
                        <div class="col-12 mt-2 d-flex align-items-center text-center gap-2">
@@ -184,10 +184,10 @@
            var errores = document.getElementById('errores_dir');
            
            
-                var post_dir_envio = {nombre:post_nombre.value,
+                var post_dir_envio = {nombre_titular:post_nombre.value,
                                provincia:post_provincia.value,
                                ciudad:post_ciudad.value,
-                               postal:post_postal.value,
+                               cod_postal:post_postal.value,
                                calle:post_calle.value,
                                 id:id.value};
            
@@ -202,7 +202,7 @@
                
                ch.addEventListener('change',function(){
                    if(this.checked){
-                       
+                       //Si esta marcado se hacen comprobaciones
                       $.ajax({
                         url: '/check_dir',  
                         type: 'POST',
@@ -210,7 +210,7 @@
                     
                           id: id.value//array, variable etc.
                           },
-                           success: function(response) {
+                           success: function(response) { // <-Si el usuario tiene asociada una direccion de envío
                                 console.log(response);
                                 let resp = JSON.parse(response);
                                 nombre_titular.innerHTML = resp.nombre_titular;
@@ -222,11 +222,11 @@
                                 g.style.display = 'flex';
                                
                                 
-                          post_dir_envio = {
-                               nombre:resp.nombre_titular,
+                          post_dir_envio = { //<-Al post envío se le asocian los valores de los parrafos
+                               nombre_titular:resp.nombre_titular,
                                provincia:resp.provincia,
                                ciudad: resp.ciudad,
-                               postal: resp.cod_postal,
+                               cod_postal: resp.cod_postal,
                                calle: resp.calle,
                                id:id.value
                            };
@@ -235,15 +235,16 @@
                           error: function(error){
                               error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
                               no_dir.style.display = 'block';
+                               no_dir.innerHTML  = 'No cuentas con ninguna dirección de envío asociada.';
                               ch.checked = false;
                              
                           }
                       });
                    }else{
-                        post_dir_envio = {nombre:x,
+                        post_dir_envio = {nombre_titular:post_nombre.value,
                                provincia:post_provincia.value,
                                ciudad:post_ciudad.value,
-                               postal:post_postal.value,
+                               cod_postal:post_postal.value,
                                calle:post_calle.value,
                                 id:id.value};
                       

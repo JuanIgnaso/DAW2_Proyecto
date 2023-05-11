@@ -41,16 +41,14 @@
               </header>
               <div class="row">
                 <!-- Foto de perfil del usuario -->
-                <section class="col-12 col-md-5">
+                <section class="col-12 col-lg-6">
  
                     <div class="col-10 m-auto text-center">
                         
-                          <img src="<?php echo $info_usuario['profile_image'];?>"  class="img-responsive rounded" alt="imagen de perfil"
- 
-                  style="width: 300px;
-                height: 300px;
-                overflow: hidden;">
-                        
+                        <!-- CAJA DE LA FOTO -->
+                         <div id="caja_foto">
+                          <img src="<?php echo $info_usuario['profile_image'];?>"   id="foto_img" alt="imagen de perfil">
+                         </div>
                      <p>Foto de Perfil</p>
                      <?php
                      if($seccion != '/mi_Perfil'){                    
@@ -73,7 +71,7 @@
                 </section>
                 <!-- Datos generales del usuario Nombre / Correo / Wallet -->
 
-                <section class="col-12 col-md-7 border border-secondary border-opacity-50 ">
+                <section class="col-12 col-lg-6 border border-secondary border-opacity-50 ">
                <form method="post"  action="<?php echo $seccion ;?>" class="">
    
                   <div class="col-12 d-flex flex-column pb-4">

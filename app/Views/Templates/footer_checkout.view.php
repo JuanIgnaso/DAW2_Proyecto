@@ -157,10 +157,15 @@
            
            function calcularTotal(){
                let sum  = 0;
-               for (var i = 0; i < carrito.length; i++) {
+               if(carrito.length == 0){
+                   total.innerHTML = 0.0;
+               }else{
+                   for (var i = 0; i < carrito.length; i++) {
                    sum += (carrito[i].cantidad * carrito[i].precio);
-            }
-            total.innerHTML = (sum + gastos).toFixed(2);
+                }
+                total.innerHTML = (sum + gastos).toFixed(2);
+               }
+               
            }
            
            
@@ -183,7 +188,14 @@
 
            //PROCESA LA COMPRA
            function ajax() {
-
+               if(!ch.checked){
+         post_dir_envio = {nombre_titular:post_nombre.value,
+                               provincia:post_provincia.value,
+                               ciudad:post_ciudad.value,
+                               cod_postal:post_postal.value,
+                               calle:post_calle.value,
+                                id:id.value};          
+        }
 
             //funcion de ajax en JQuery
             $.ajax({
@@ -233,11 +245,47 @@
                      er_po.style.display = 'block';
                      er_ca.style.display = 'block';
                      
-                     er_n.innerHTML = resp.nombre;
-                     er_p.innerHTML = resp.provincia;
-                     er_c.innerHTML = resp.ciudad;
-                     er_po.innerHTML = resp.postal;
-                     er_ca.innerHTML = resp.calle;
+                     if(resp.nombre != undefined){
+                       er_n.innerHTML = resp.nombre;  
+                     }else{
+                      er_n.innerHTML = ''; 
+                     }
+                     
+                     if(resp.provincia != undefined){
+                       er_p.innerHTML = resp.provincia;  
+                     }else{
+                      er_p.innerHTML = ''; 
+                     }
+                     
+                     if(resp.ciudad != undefined){
+                       er_c.innerHTML = resp.ciudad;  
+                     }else{
+                      er_c.innerHTML = ''; 
+                     }
+                     
+                     if(resp.postal != undefined){
+                       er_po.innerHTML = resp.postal;  
+                     }else{
+                      er_po.innerHTML = ''; 
+                     }
+                     
+                     if(resp.calle != undefined){
+                       er_ca.innerHTML = resp.nombre;  
+                     }else{
+                      er_ca.innerHTML = ''; 
+                     }
+                     
+                     if(resp.carrito != undefined){
+                         no_dir.style.display = 'block';
+                         no_dir.innerHTML  = resp.carrito;
+                      
+                     }
+                     
+                     
+//                     er_p.innerHTML = resp.provincia;
+//                     er_c.innerHTML = resp.ciudad;
+//                     er_po.innerHTML = resp.postal;
+//                     er_ca.innerHTML = resp.calle;
                              //window.alert(JSON.stringify(error, null, 2));
                 }
 
