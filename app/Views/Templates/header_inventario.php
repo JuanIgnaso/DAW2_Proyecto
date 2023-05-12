@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="/assets/css/lista_productos.css">
     <link rel="stylesheet" href="/assets/css/fontawesome/css/all.css"/>
     
-  
+    <!-- CSS INVENTARIO -->
+    <link rel="stylesheet" href="/assets/css/formulario_Style.css"/>
     
     <!-- FAVICON -->
     <link rel="icon" type="image/x-icon" href="/assets/svg/gallaecia-pc-favicon.svg">

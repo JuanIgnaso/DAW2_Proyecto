@@ -107,13 +107,51 @@ class FrontController{
        
        
        if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
+        
            
+           /*****************VENTANAS INVENTARIO*****************/
            Route::add('/inventario',
                      function(){
                      $controller = new \Com\Daw2\Controllers\AdministracionController();
                      $controller->showAdministracion();
                      }
                      ,'get'); 
+                     
+                     
+               Route::add('/inventario/Ratones',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\RatonController();
+                     $controller->showListaRatones();
+                     }
+                     ,'get'); 
+                     
+                     
+                 Route::add('/inventario/Teclados',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\TecladoController();
+                     $controller->showListaTeclados();
+                     }
+                     ,'get');  
+                     
+                     
+                Route::add('/inventario/Monitores',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\MonitorController();
+                     $controller->showListaMonitores();
+                     }
+                     ,'get');      
+                     
+                  Route::add('/inventario/Sillas',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\SillaController();
+                     $controller->showListaSillas();
+                     }
+                     ,'get');    
+                     
+                     
+                     
+                     
+                  ///inventario/Teclados   
        }
        
        

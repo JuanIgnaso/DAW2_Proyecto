@@ -1,0 +1,166 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 11 may 2023, 22:09:03
+    Author     : USUARIO
+*/
+
+.container-fluid{
+    padding: 0px !important;
+}
+
+body,html,main{
+    height: 100% !important;
+    width: 100%;
+}
+
+body{
+    background-image: url('/assets/img/inventory_box.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    background-blend-mode: multiply;
+  
+}
+
+
+#cabeza{
+   
+    margin-left: 0 !important;
+}
+
+aside{
+    background-color: #dfdfdf;
+    z-index: 10;
+    box-shadow: 0px 0px 5px 1px black;
+}
+
+body,html,main{
+    min-height: 100%;
+}
+
+
+
+ul,ol{
+    list-style: none;
+}
+
+summary{
+    margin: 0 !important;
+    transition-duration: 0.5s;
+}
+
+summary:hover{
+    background-color: orangered;
+    color:#fff;
+}
+
+#header{
+    z-index:40;
+}
+
+
+#fondo{
+    background-color:rgba(255, 255, 255,0.8);
+    height: 100%;
+    width: 100%;
+    position:fixed;
+    z-index: 2;
+}
+
+#pie{
+    position: relative;
+    z-index:20;
+}
+
+#lista_inicio_inventario{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+#inicio_articulo{
+    position:relative;
+     bottom:200px; 
+     z-index:20;
+}
+
+.container-fluid{
+    min-height: 100%;
+}
+
+.list-group-item:hover{
+    transition-duration: 0.5s;
+    }
+
+
+.list-group-item:hover{
+background-color: #ffceb9;
+box-shadow: 0px 0px 5px 1px black;
+font-size:1.1em;
+}
+
+
+
+.list-group-item a{
+    color:#000;
+    text-decoration: none;
+    }
+    
+
+/***********FOTO DE PERFIL***********/
+
+#caja_foto{
+    overflow: hidden;
+    background-color: lightcoral;
+    width: 500px;
+    height: 500px;
+    margin:auto;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#foto_img{
+    width: 400px;
+    text-align:center;
+    height: 400px;
+    object-fit: cover;
+}
+
+/**********************************/
+
+#seccion-aside{
+    min-height: 100%; 
+    max-height: auto;
+}
+
+@media screen and (max-width: 550px){
+
+    #caja_foto{
+        width: 300px;
+        height: 300px;
+    }
+    
+    #foto_img{
+        width: 250px;
+        height: 250px;
+    }
+    
+
+    #seccion-aside{
+        min-height: auto; 
+    }
+
+
+
+#inicio_articulo{
+    position:relative;
+     bottom:0px; 
+     z-index:20;
+}
+
+}

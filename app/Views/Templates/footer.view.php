@@ -1,5 +1,5 @@
         <div class="row">
-          <footer class="d-flex pie flex-wrap flex-column flex-lg-row justify-content-center align-items-center py-3 my-4" style="margin: 0 !important;">
+          <footer class="d-flex pos pie flex-wrap flex-column flex-lg-row justify-content-center align-items-center py-3 my-4" style="margin: 0 !important; z-index:30;">
               <div class="col-md-4 d-flex align-items-center">
                 <span class="mb-3 mb-md-0 text-muted">&copy; Gallaecia PC 2023, Inc</span>
               </div>
