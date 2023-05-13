@@ -177,43 +177,72 @@
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>
-                <input type="text" id="country" name="nombre" value="" class="mt-1">
+                <input type="text" id="nombre" name="nombre" value="" class="mt-1">
             </div>
               
               
-                  <div class="col d-flex flex-column">
-                 <label for="">Min Anchura</label>
-                <input type="text" id="country" name="min_anchura" value="" class="mt-1">
-           </div>
-              
-              
-              <div class="col d-flex flex-column">
-                 <label for="">Max Anchura</label>
-                <input type="text" id="country" name="max_anchura" value="" class="mt-1">
-            </div>     
-              
                       
            <div class="col d-flex flex-column">
-                 <label for="">Min Altura</label>
-                <input type="text" id="country" name="min_altura" value="" class="mt-1">
+                 <label for="">Caja</label>
+                <input type="text" id="caja" name="caja" value="" class="mt-1">
            </div>
               
               
               <div class="col d-flex flex-column">
-                 <label for="">Max Altura</label>
-                <input type="text" id="country" name="max_altura" value="" class="mt-1">
+                 <label for="">CPU</label>
+                <input type="text" id="cpu" name="cpu" value="" class="mt-1">
             </div>  
               
+          <div class="col d-flex flex-column">
+                 <label for="">min Precio</label>
+                <input type="text" id="min_precio" name="min_precio" value="<?php echo isset($input['min_precio']) ? $input['min_precio'] : '' ;?>" class="mt-1">
+            </div>
+              
             <div class="col d-flex flex-column">
-                 <label for="">Tipo</label>
-                <input type="text" id="country" name="entrada_video" value="" class="mt-1">
-            </div>    
-                          
+                 <label for="">max Precio</label>
+                <input type="text" id="max_precio" name="max_precio" value="<?php echo isset($input['max_precio']) ? $input['max_precio'] : '' ;?>" class="mt-1">
+            </div>  
+              
+                                                      
+              <div class="col d-flex flex-column">
+                 <label for="">Memoria</label>
+                    <select name="memorias[]" id="memorias" multiple>
+                           <option value="">-</option>
+                           
+                           <?php
+                           foreach ($memorias as $memoria) {
+                           ?>
+                           <option value="<?php echo $memoria['memoria'];?>"><?php echo $memoria['memoria'];?></option>
+                           
+                           <?php
+                           }
+                           ?>
+                              
+                     </select>
+            </div>
+              
+              <div class="col d-flex flex-column">
+                 <label for="">Almacenamiento</label>
+                    <select name="almacenamientos[]" id="almacenamientos" multiple>
+                           <option value="">-</option>
+                           
+                           <?php
+                           foreach ($almacenamientos as $almacenamiento) {
+                           ?>
+                           <option value="<?php echo $almacenamiento['almacenamiento'];?>"><?php echo $almacenamiento['almacenamiento'];?></option>
+                           
+                           <?php
+                           }
+                           ?>
+                              
+                     </select>
+            </div>
+              
               
           </div>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
-              <a href="/inventario/Sillas" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
+              <a href="/inventario/Ordenadores" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
               <input type="submit" value="Aplicar filtros" name="enviar" class="btn boton-aplicar ml-2"/>
           </div>
        </form>
@@ -244,14 +273,14 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">Cod.</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Proveedor</th>
-              <th scope="col">Precio</th>           
-              <th scope="col">Altura</th>
-              <th scope="col">Anchura</th>
-              <th scope="col">Tipo</th>   
-              <th scope="col">Ajustable</th>
+                <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">Cod.</a></th>
+                <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Nombre</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Proveedor</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Precio</a></th>          
+              <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">Procesador</a></th>    
+              <th scope="col"><a href="<?php echo $seccion;?>?order=6<?php echo $queryString; ?>">Gráfica</a></th>    
+              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Memoria</a></th>       
+              <th scope="col"><a href="<?php echo $seccion;?>?order=8<?php echo $queryString; ?>">Almacenamiento</a></th>    
             </tr>
           </thead>
           <tbody>
@@ -264,10 +293,10 @@
               <td><?php echo $producto['nombre'];?></td>
               <td><?php echo $producto['nombre_proveedor'];?></td>
               <td><?php echo $producto['precio'];?></td>
-              <td><?php echo $producto['altura'];?></td>
-              <td><?php echo $producto['anchura'];?></td>
-              <td><?php echo $producto['tipo_silla'];?></td>
-              <td><?php echo $producto['ajustable'];?></td>
+              <td><?php echo $producto['cpu'];?></td>
+              <td><?php echo $producto['targeta_video'];?></td>
+              <td><?php echo $producto['memoria'];?></td>
+              <td><?php echo $producto['almacenamiento'];?></td>
             </tr>
             <?php
             }

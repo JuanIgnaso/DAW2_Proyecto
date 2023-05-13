@@ -17,9 +17,10 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
         $data = [];
         $data['seccion'] = '/inventario/Monitores';
         $data['tipo'] = 'Monitores';
+        $data['titulo'] = 'Inventario Monitores';
         $data['productos'] = $modelMonitor->filterAll();
         $data['tecnologias'] = $modelTec->getAll();      
-        $this->view->showViews(array('MonitoresView.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','MonitoresView.php'),$data); 
     }
     
 }

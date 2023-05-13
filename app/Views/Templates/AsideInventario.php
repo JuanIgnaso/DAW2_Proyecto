@@ -43,7 +43,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/inventario/Ordenadores">
               <span data-feather="file-text" class="align-text-bottom"></span>
               PC-Montados
             </a>
@@ -67,7 +67,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/inventario/Consolas">
               <span data-feather="file-text" class="align-text-bottom"></span>
               Consolas
             </a>

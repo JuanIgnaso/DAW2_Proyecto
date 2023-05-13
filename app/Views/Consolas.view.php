@@ -181,39 +181,41 @@
             </div>
               
               
-                  <div class="col d-flex flex-column">
-                 <label for="">Min Anchura</label>
-                <input type="text" id="country" name="min_anchura" value="" class="mt-1">
-           </div>
-              
-              
-              <div class="col d-flex flex-column">
-                 <label for="">Max Anchura</label>
-                <input type="text" id="country" name="max_anchura" value="" class="mt-1">
-            </div>     
-              
                       
            <div class="col d-flex flex-column">
-                 <label for="">Min Altura</label>
-                <input type="text" id="country" name="min_altura" value="" class="mt-1">
+                 <label for="">Juego Incluido</label>
+                <input type="text" id="country" name="juego_incluido" value="" class="mt-1">
            </div>
               
               
-              <div class="col d-flex flex-column">
-                 <label for="">Max Altura</label>
-                <input type="text" id="country" name="max_altura" value="" class="mt-1">
-            </div>  
+                      <div class="col d-flex flex-column">
+                 <label for="">Mando Incluido</label>
+                <input type="text" id="country" name="mando_incluido" value="" class="mt-1">
+           </div>
+                 
+                                              
+
               
-            <div class="col d-flex flex-column">
-                 <label for="">Tipo</label>
-                <input type="text" id="country" name="entrada_video" value="" class="mt-1">
-            </div>    
-                          
+               <div class="col d-flex flex-column">
+                 <label for="">Conexion</label>
+                    <select name="conexion" id="cars">
+                           <option value="">-</option>
+                           <?php
+                           foreach ($conexiones as $conect) {
+                           ?>
+                           <option value="<?php echo $conect['id_conexion'];?>"><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
+                           
+                           <?php
+                           }
+                           ?>
+                     </select>
+            </div>
+              
               
           </div>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
-              <a href="/inventario/Sillas" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
+              <a href="/inventario/Monitores" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
               <input type="submit" value="Aplicar filtros" name="enviar" class="btn boton-aplicar ml-2"/>
           </div>
        </form>
@@ -248,10 +250,10 @@
               <th scope="col">Nombre</th>
               <th scope="col">Proveedor</th>
               <th scope="col">Precio</th>           
-              <th scope="col">Altura</th>
-              <th scope="col">Anchura</th>
-              <th scope="col">Tipo</th>   
-              <th scope="col">Ajustable</th>
+              <th scope="col">Juego Incluido</th>
+              <th scope="col">Mando Incluido</th>
+              <th scope="col">Conectividad</th>   
+              
             </tr>
           </thead>
           <tbody>
@@ -264,10 +266,10 @@
               <td><?php echo $producto['nombre'];?></td>
               <td><?php echo $producto['nombre_proveedor'];?></td>
               <td><?php echo $producto['precio'];?></td>
-              <td><?php echo $producto['altura'];?></td>
-              <td><?php echo $producto['anchura'];?></td>
-              <td><?php echo $producto['tipo_silla'];?></td>
-              <td><?php echo $producto['ajustable'];?></td>
+              <td><?php echo $producto['juego_incluido'];?></td>
+              <td><?php echo $producto['mando_incluido'];?></td>
+              <td><?php echo $producto['nombre_conectividad_raton'];?></td>
+              
             </tr>
             <?php
             }
@@ -532,3 +534,4 @@
       
   </body>
 </html>
+

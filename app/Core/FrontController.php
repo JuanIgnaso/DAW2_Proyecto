@@ -30,7 +30,7 @@ class FrontController{
                     }
                     ,'get');
                     
-                    Route::add('/productos/categoria/([A-Za-z0-9]+)/product_detail/([A-Za-z0-9\.\-\/ ]+)',
+                    Route::add('/productos/categoria/([A-Za-z0-9]+)/product_detail/([A-Za-z0-9\.\-\/\+\s ]+)',
                     function($id,$nombre){
                     $controler = new \Com\Daw2\Controllers\ProductoController();
                     $controler->load_product($id,$nombre);
@@ -148,7 +148,23 @@ class FrontController{
                      }
                      ,'get');    
                      
+                    
+                                        
+                  Route::add('/inventario/Ordenadores',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PCMontadosController();
+                     $controller->showListaPC();
+                     }
+                     ,'get');    
                      
+                    
+                                                        
+                  Route::add('/inventario/Consolas',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ConsolasController();
+                     $controller->showListaConsolas();
+                     }
+                     ,'get');       
                      
                      
                   ///inventario/Teclados   

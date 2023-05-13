@@ -13,11 +13,23 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         $data = [];
         $data['seccion'] = '/inventario/Ratones';
         $data['tipo'] = 'Ratones';
-        $data['titulo'] = 'Tramitando Pedido';
-        $data['productos'] = $modelRaton->filterAll();
+        $data['titulo'] = 'Inventario Ratones';
+        $data['input'] = filter_var_array($_GET,FILTER_SANITIZE_SPECIAL_CHARS);
+        $data['productos'] = $modelRaton->filterAll($_GET);
         $data['conexiones'] = $modelConexiones->getAll();
         $data['categoria'] = $modelCategoria->getAll();
-        $this->view->showViews(array('Ratones.view.php'),$data); 
+        
+        $copiaGET = $_GET;
+        unset($copiaGET['order']);
+        if(count($copiaGET) > 0){
+            $data['queryString'] = "&".http_build_query($copiaGET);
+        }else{
+            $data['queryString'] = "";
+        }
+        
+        
+        
+        $this->view->showViews(array('templates/inventarioHead.php','Ratones.view.php'),$data); 
     }
     
 }

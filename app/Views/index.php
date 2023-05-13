@@ -70,7 +70,7 @@
                   <?php
                   if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
                   ?>
-                  <li><a href="#" class="nav-link px-2 link-dark rounded">Inventario</a></li>
+                  <li><a href="/inventario" class="nav-link px-2 link-dark rounded">Inventario</a></li>
                   <?php
                   }
                   ?>

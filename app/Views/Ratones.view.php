@@ -1,89 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.104.2">
-    <title>PanelAdministracion</title>
-    <link rel="stylesheet" href="/assets/bootstrap-html-examples/dashboard/dashboard.css"/>
-    <link rel="stylesheet" href="/assets/bootstrap-html-examples/dashboard/dashboard.rtl.css"/>
-    <script src="/assets/bootstrap-html-examples/dashboard/dashboard.js"></script>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
 
-    
-        <link rel="stylesheet" href="/assets/css/comun.css">
-    <!-- 
-    <link rel="stylesheet" href="/assets/css/lista_productos.css">comment -->
-    <link rel="stylesheet" href="/assets/css/fontawesome/css/all.css"/>
-    
-    <!-- FAVICON -->
-    <link rel="icon" type="image/x-icon" href="/assets/svg/gallaecia-pc-favicon.svg">
- 
-    
-
-    
-
-<link href="/assets/css/bootstrap-css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="/assets/bootstrap-html-examples/dashboard/dashboard.css" rel="stylesheet">
-  </head>
   <body>
     
 <header class="navbar navbar-dark sticky-top flex-md-nowrap justify-content-end p-0 shadow" style="background-color:#272727";>
@@ -264,45 +179,45 @@
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>
-                <input type="text" id="country" name="nombre" value="" class="mt-1">
+                <input type="text" id="nombre" name="nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : '' ;?>" class="mt-1">
             </div>
               
                         
               <div class="col d-flex flex-column">
                  <label for="">Clase</label>
-                <input type="text" id="country" name="clase" value="" class="mt-1">
+                <input type="text" id="clase" name="clase" value="<?php echo isset($input['clase']) ? $input['clase'] : '' ;?>" class="mt-1">
             </div>
               
               
             <div class="col d-flex flex-column">
                  <label for="">min DPI</label>
-                <input type="text" id="country" name="clase" value="" class="mt-1">
+                <input type="text" id="min_dpi" name="min_dpi" value="<?php echo isset($input['min_dpi']) ? $input['min_dpi'] : '' ;?>" class="mt-1">
             </div>
               
             <div class="col d-flex flex-column">
                  <label for="">max DPI</label>
-                <input type="text" id="country" name="clase" value="" class="mt-1">
+                <input type="text" id="max_dpi" name="max_dpi" value="<?php echo isset($input['max_dpi']) ? $input['max_dpi'] : '' ;?>" class="mt-1">
             </div>
               
                         <div class="col d-flex flex-column">
                  <label for="">min Precio</label>
-                <input type="text" id="country" name="clase" value="" class="mt-1">
+                <input type="text" id="min_precio" name="min_precio" value="<?php echo isset($input['min_precio']) ? $input['min_precio'] : '' ;?>" class="mt-1">
             </div>
               
             <div class="col d-flex flex-column">
                  <label for="">max Precio</label>
-                <input type="text" id="country" name="clase" value="" class="mt-1">
+                <input type="text" id="max_precio" name="max_precio" value="<?php echo isset($input['max_precio']) ? $input['max_precio'] : '' ;?>" class="mt-1">
             </div>  
               
                                       
               <div class="col d-flex flex-column">
                  <label for="">Conexion</label>
-                    <select name="conexion" id="cars">
+                    <select name="conexion[]" id="conextion" multiple>
                            <option value="">-</option>
                            <?php
                            foreach ($conexiones as $conect) {
                            ?>
-                           <option value="<?php echo $conect['id_conexion'];?>"><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
+                           <option value="<?php echo $conect['id_conexion'];?>" <?php echo (isset($_GET['conexion']) && in_array($conect['id_conexion'], $_GET['conexion'])) ? 'selected' : ''; ?>><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
                            
                            <?php
                            }
@@ -336,7 +251,6 @@
 
 
 
-
       <?php
       if(count($productos) != 0){
       ?>
@@ -345,13 +259,13 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">Cod.</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Proveedor</th>
-              <th scope="col">Precio</th>           
-              <th scope="col">DPI</th>
-              <th scope="col">Clase</th>
-              <th scope="col">Conexión</th>   
+                <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">Cod.</a></th>
+                <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Nombre</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Proveedor</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Precio</a></th>           
+              <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">DPI</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=6<?php echo $queryString; ?>">Clase</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Conexion</a></th>   
             </tr>
           </thead>
           <tbody>

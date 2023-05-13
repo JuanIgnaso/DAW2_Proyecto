@@ -14,7 +14,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
         $data['seccion'] = '/inventario/Sillas';
         $data['tipo'] = 'Monitores';
         $data['productos'] = $model->filterAll();     
-        $this->view->showViews(array('Sillas.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','Sillas.view.php'),$data); 
     }
     
 }

@@ -4,9 +4,6 @@ namespace Com\Daw2\Controllers;
 
 class ProductoController extends \Com\Daw2\Core\BaseController{
     
-    private const _ID_CATEGORIA = array(
-       
-    );
     
         /*Carga el producto cogiendo ID y nombre de producto*/
         function load_product($id,$nombre){
