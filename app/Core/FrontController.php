@@ -166,8 +166,21 @@ class FrontController{
                      }
                      ,'get');       
                      
+               /*BORRAR PRODUCTO*/
+                       Route::add('/borrar_producto',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ProductoController();
+                     $controller->deleteProduct();
+                     }
+                     ,'post');
                      
-                  ///inventario/Teclados   
+                     Route::add('/borrar_producto',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ProductoController();
+                     $controller->deleteProduct();
+                     }
+                     ,'get');   
+                    
        }
        
        
@@ -293,13 +306,6 @@ class FrontController{
                      $controller->checkShippingAddress();
                      }
                      ,'post'); 
-                     
-//                     Route::add('/check_salario',
-//                     function(){
-//                     $controller = new \Com\Daw2\Controllers\PedidoController();
-//                     $controller->checkUserSalary();
-//                     }
-//                     ,'get'); 
                      
                      
                      

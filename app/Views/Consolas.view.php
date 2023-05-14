@@ -69,82 +69,9 @@
              <!-- // -->
         </div>
     </div>
-  
       
-             <script>
-            
-          /*
-           * elementos mirar en /assets/html/elementosCesta.html
-           * 
-           * 
-           * 
-           */  
-            
-            
-            
-          var cuerpo = document.getElementById('cuerpo_carrito');
-          var btn_borrar_producto = document.getElementById('btn_borrar_producto');
-          var elementos = cuerpo.getElementsByClassName('borrar');   
-         
-          
-
-          
-        
-          
-            
-            /*Coger la ventana modal*/
-        var mod = document.getElementById("mi_modal_carrito");
-
-        // Coger el botón que abre la modal
-        var btn = document.getElementById("btn_carrito");
-
-        // coger el <span> que cierra la modal
-        var span = document.getElementsByClassName("close_carrito")[0];
-
-        // Cuando el usuario le da al botón, abrir la modal
-        btn.onclick = function() {
-          mod.style.display = "block";
-          if(elementos.length == 0){
-               removeChilds();
-                cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
-                }
-        }
-
-        // Cerrar la modal cuando el usuario le da al <span>
-        span.onclick = function() {
-          mod.style.display = "none";
-        }
-
-        // Cerrar la modal también cuando el usuario le dé fuera de la modal
-        window.onclick = function(event) {
-          if (event.target == mod) {
-            mod.style.display = "none";
-          }
-        } 
-        
-        
-        
-         window.onload = addEvents();
-                        function addEvents(){
-                         
-                            for (var i = 0; i < elementos.length; i++) {
-                                   elementos[i].addEventListener('click',function(){
-                            this.parentNode.remove();
-                             if(elementos.length == 0){
-                                 removeChilds();
-                                 cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
-                             }
-                        });
-                         }
-                        
-                        }
-           function removeChilds(){
-           while (cuerpo.hasChildNodes()) {
-            cuerpo.removeChild(cuerpo.firstChild);
-}
-           }
-        </script> 
-      
+       <!-- Abrir Cerrar Carrito -->
+       <script src="/assets/js/abrirCerrarCarrito.js"></script> 
 
 <div class="container-fluid">
   <div class="row">
@@ -177,33 +104,44 @@
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>
-                <input type="text" id="country" name="nombre" value="" class="mt-1">
+                <input type="text" id="nombre" name="nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : '' ;?>" class="mt-1">
             </div>
               
               
                       
            <div class="col d-flex flex-column">
                  <label for="">Juego Incluido</label>
-                <input type="text" id="country" name="juego_incluido" value="" class="mt-1">
+                <input type="text" id="juego_incluido" name="juego_incluido" value="<?php echo isset($input['juego_incluido']) ? $input['juego_incluido'] : '' ;?>" class="mt-1">
            </div>
               
               
-                      <div class="col d-flex flex-column">
+           <div class="col d-flex flex-column">
                  <label for="">Mando Incluido</label>
-                <input type="text" id="country" name="mando_incluido" value="" class="mt-1">
+                <input type="text" id="mando_incluido" name="mando_incluido" value="<?php echo isset($input['mando_incluido']) ? $input['mando_incluido'] : '' ;?>" class="mt-1">
            </div>
                  
+              
+                          
+          <div class="col d-flex flex-column">
+                 <label for="">min Precio</label>
+                <input type="text" id="min_precio" name="min_precio" value="<?php echo isset($input['min_precio']) ? $input['min_precio'] : '' ;?>" class="mt-1">
+            </div>
+              
+            <div class="col d-flex flex-column">
+                 <label for="">max Precio</label>
+                <input type="text" id="max_precio" name="max_precio" value="<?php echo isset($input['max_precio']) ? $input['max_precio'] : '' ;?>" class="mt-1">
+            </div>   
                                               
 
               
                <div class="col d-flex flex-column">
                  <label for="">Conexion</label>
-                    <select name="conexion" id="cars">
+                    <select name="conexiones[]" id="conexiones" multiple>
                            <option value="">-</option>
                            <?php
                            foreach ($conexiones as $conect) {
                            ?>
-                           <option value="<?php echo $conect['id_conexion'];?>"><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
+                           <option value="<?php echo $conect['id_conexion'];?>"<?php echo (isset($_GET['conexiones']) && in_array($conect['id_conexion'], $_GET['conexiones'])) ? 'selected' : ''; ?>><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
                            
                            <?php
                            }
@@ -215,7 +153,7 @@
           </div>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
-              <a href="/inventario/Monitores" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
+              <a href="/inventario/Consolas" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
               <input type="submit" value="Aplicar filtros" name="enviar" class="btn boton-aplicar ml-2"/>
           </div>
        </form>
@@ -246,14 +184,13 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">Cod.</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Proveedor</th>
-              <th scope="col">Precio</th>           
-              <th scope="col">Juego Incluido</th>
-              <th scope="col">Mando Incluido</th>
-              <th scope="col">Conectividad</th>   
-              
+              <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">Cod.</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Nombre</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Proveedor</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Precio</a></th>           
+              <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">Juegos</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=6<?php echo $queryString; ?>">Mando</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Conectividad</a></th>              
             </tr>
           </thead>
           <tbody>

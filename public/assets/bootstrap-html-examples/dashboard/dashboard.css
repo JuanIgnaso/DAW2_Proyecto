@@ -120,3 +120,18 @@ body,html{
     background-color:orangered;
     color: #fff;
 }
+
+.acciones > .btn{
+    font-size: 2em !important;
+}
+
+#modal_inventario_borrar{
+    left:25%;
+    position: absolute;
+    display: none;
+}
+
+#conf_acc{
+    background-color:orangered;
+    color:#fff;
+}

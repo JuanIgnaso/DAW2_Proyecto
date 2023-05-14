@@ -21,6 +21,23 @@ class ProductoController extends \Com\Daw2\Core\BaseController{
     
 
     
+    function deleteProduct(){
+        $codigo_producto = $_POST['producto'];
+        $model =  new \Com\Daw2\Models\ProductosGeneralModel();
+        $accion = $model->deleteProduct($codigo_producto);
+        
+        if($accion){
+         http_response_code(200); 
+         echo json_encode(["hola"=>"todo correcto."]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+
+        }else{
+        http_response_code(400);  
+          echo json_encode(["hola"=>"algo salió mal."]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+
+        }
+        
+    }
+    
     
     private function getDetails($nombre,$id){
         $detalles;

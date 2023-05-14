@@ -52,7 +52,7 @@ class PCMontadosModel extends \Com\Daw2\Core\BaseModel{
             }
         } 
         
-              if(isset($filtros['nombre']) && !empty($filtros['nombre'])){
+         if(isset($filtros['nombre']) && !empty($filtros['nombre'])){
             $conditions[] = ' productos.nombre LIKE :nombre';
             $parameters['nombre'] = "%".$filtros['nombre']."%";
         }

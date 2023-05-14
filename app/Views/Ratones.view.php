@@ -72,80 +72,8 @@
                         </div>
                     </div>
   
-      
-             <script>
-            
-          /*
-           * elementos mirar en /assets/html/elementosCesta.html
-           * 
-           * 
-           * 
-           */  
-            
-            
-            
-          var cuerpo = document.getElementById('cuerpo_carrito');
-          var btn_borrar_producto = document.getElementById('btn_borrar_producto');
-          var elementos = cuerpo.getElementsByClassName('borrar');   
-         
-          
-
-          
-        
-          
-            
-            /*Coger la ventana modal*/
-        var mod = document.getElementById("mi_modal_carrito");
-
-        // Coger el botón que abre la modal
-        var btn = document.getElementById("btn_carrito");
-
-        // coger el <span> que cierra la modal
-        var span = document.getElementsByClassName("close_carrito")[0];
-
-        // Cuando el usuario le da al botón, abrir la modal
-        btn.onclick = function() {
-          mod.style.display = "block";
-          if(elementos.length == 0){
-               removeChilds();
-                cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
-                }
-        }
-
-        // Cerrar la modal cuando el usuario le da al <span>
-        span.onclick = function() {
-          mod.style.display = "none";
-        }
-
-        // Cerrar la modal también cuando el usuario le dé fuera de la modal
-        window.onclick = function(event) {
-          if (event.target == mod) {
-            mod.style.display = "none";
-          }
-        } 
-        
-        
-        
-         window.onload = addEvents();
-                        function addEvents(){
-                         
-                            for (var i = 0; i < elementos.length; i++) {
-                                   elementos[i].addEventListener('click',function(){
-                            this.parentNode.remove();
-                             if(elementos.length == 0){
-                                 removeChilds();
-                                 cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
-                             }
-                        });
-                         }
-                        
-                        }
-           function removeChilds(){
-           while (cuerpo.hasChildNodes()) {
-            cuerpo.removeChild(cuerpo.firstChild);
-}
-           }
-        </script> 
+      <!-- Abrir Cerrar Carrito -->
+             <script src="/assets/js/abrirCerrarCarrito.js"></script> 
       
 
 <div class="container-fluid">
@@ -254,18 +182,28 @@
       <?php
       if(count($productos) != 0){
       ?>
+      <div class="col-6 col-sm-4 border border-2 border-dark rounded bg-light" id="modal_inventario_borrar">
+          <header class=" border-bottom border-secondary col-12 d-flex justify-content-between align-items-center p-2">
+              <h4 class="p-0 m-0" style="color:#272727">Confimar</h4>
+              <span id="cerrar" class="font-weight-bold" onclick="closeModal()">X</span>
+          </header>
+          <div class="col-12 p-2">
+              <p class="p-0 mb-2">Desea confirmar la acción?</p>
+              <button type="button" class="btn" id="conf_acc" onclick="borrar()">Continuar</button>
+          </div>
+      </div>
 
-
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm" id="tabla_contenido">
           <thead>
             <tr>
                 <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">Cod.</a></th>
                 <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Nombre</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Proveedor</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Prov</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Precio</a></th>           
               <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">DPI</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=6<?php echo $queryString; ?>">Clase</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Conexion</a></th>   
+              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Conexion</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Acción</a></th>
             </tr>
           </thead>
           <tbody>
@@ -273,7 +211,7 @@
             foreach ($productos as $producto) {
                      
            ?>   
-            <tr>
+            <tr id="<?php echo $producto['codigo_producto'];?>">
               <td><?php echo $producto['codigo_producto'];?></td>
               <td><?php echo $producto['nombre'];?></td>
               <td><?php echo $producto['nombre_proveedor'];?></td>
@@ -281,12 +219,80 @@
               <td><?php echo $producto['dpi'];?></td>
               <td><?php echo $producto['clase'];?></td>
               <td><?php echo $producto['nombre_conectividad_raton'];?></td>
+              <td>
+                  <div class="acciones col-12 f-flex justify-content-center gap-1 flex-column flex-sm-row">
+                      <button type="button" onclick="abrirModal(this)" class="btn p-0"><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
+                      <a href="<?php echo $seccion;?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
+                  </div>
+              </td>
             </tr>
             <?php
             }
             ?>
           </tbody>
         </table>
+        
+      <!-- SCRIPT BORRAR -->
+      <script>
+          
+       var codigo = 0;   
+      
+      //Abrir La Modal
+      function abrirModal(e){
+         document.getElementById('modal_inventario_borrar').style.display = 'block'; 
+         console.log(e.parentNode.parentNode.parentNode.getAttribute('id'));
+         codigo = e.parentNode.parentNode.parentNode.getAttribute('id');
+      }
+      
+      //Cerrar La Modal
+      function closeModal(){
+        document.getElementById('modal_inventario_borrar').style.display = 'none';
+        console.log(codigo);
+      }
+      
+      //Borrar la columna y el producto de la BBDD
+      function borrar(){
+          
+          let columna = document.getElementById(codigo);
+                   
+               $.ajax({
+
+                //url a donde se colocan los datos
+                url: '/borrar_producto',
+
+                
+                type: 'POST',
+
+                
+            data: {
+                    
+                    producto: parseInt(codigo)//codigo del producto
+                },
+
+
+                //Borrar la columna y cerrar la modal en caso de success
+                success: function(response) {
+                    let resp = JSON.parse(response);
+                    console.log(resp); 
+                    columna.remove();
+                   document.getElementById('modal_inventario_borrar').style.display = 'none';
+                },
+
+                //Cerrar modal y mostrar mensaje de error
+                error: function(error) {
+                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
+
+                    //error = JSON.parse(error.responseText);
+                     let resp = JSON.parse(error);
+                    console.log(resp);
+                    
+                }
+            });
+         
+      }
+      
+      </script>
+      
       <?php
       }else{
       ?>
@@ -344,204 +350,9 @@
         <?php
         if($_SERVER['REQUEST_URI'] == '/checkout'){
         ?>
-            <script>
-
-                                 
-             window.onload =  enable_shopping;                   
-                                 
-            //Finalizar compra
-            var finalizar = document.getElementById('finalizar_Compra');
-                                 
-            //Cuerpo de la tabla
-            var chk = document.getElementById('checkout_table');
-            
-            var total= document.getElementById('suma_total');
-            
-            //gastos envío
-            var gastos = 3.95;
-            
-            //Envío urgente
-            var urgente = document.getElementById('urgente');
-            var normal = document.getElementById('normal');
-            //Sin logo
-            var sin_logo = document.getElementById('sin_logo');
-            var con_logo = document.getElementById('con_logo');
-            
-            //Modal no suficientes fondos
-            var no_money = document.getElementById('not_enough_money_modal');
-            
-            carrito = JSON.parse(miLocalStorage.getItem('carrito_' + nombre_usuario.innerHTML));
-           
-           cargarTabla();
-           calcularTotal(gastos);
-           
-           //Cargar la tabla
-           function cargarTabla(){
-               for (var i = 0; i < carrito.length; i++) {
-                   chk.append(generateRow(carrito[i]));
-            }
-            calcularTotal();
-           }
-           
-           //Genera el row de la tabla
-           function generateRow(e){
-               let tr = document.createElement('tr');
-               
-               let nombre = document.createElement('td');
-               nombre.innerText = e.nombre;
-               
-               let cantidad = document.createElement('td');
-               cantidad.innerText = e.cantidad;
-               
-               let total  = document.createElement('td');
-               total.innerText = e.cantidad * e.precio;
-               
-               let borrar = document.createElement('td');
-               borrar.setAttribute('class','align-items-center');
-               let boton_borrar = document.createElement('button');
-               boton_borrar.setAttribute('id','basura');
-           
-               boton_borrar.setAttribute('style','background-color:unset');
-               boton_borrar.innerHTML = '<i class="fa-regular fa-trash-can fa-2x" style="color: #ff8000;"></i>';
-               boton_borrar.addEventListener('click', function(){
-                   this.parentNode.parentNode.remove();
-                   carrito.splice(carrito.indexOf(e),1);
-                   console.log(carrito.length);
-                   guardarCarrito();
-               });
-               borrar.append(boton_borrar);
-               
-               tr.append(nombre);
-               tr.append(cantidad);
-               tr.append(total);
-               tr.append(borrar);
-               return tr;
-           }
-           
-           /**ACTUALIZAR GASTOS DE ENVÍO**/
-           urgente.addEventListener('change',function(){
-               if(this.checked){
-                  gastos += 2.5;
-                   calcularTotal((gastos));
-               }
-           });
-           
-            normal.addEventListener('change',function(){
-               if(this.checked){
-                   gastos = 3.95;
-                   calcularTotal(gastos);
-               }
-           });
-           
-            sin_logo.addEventListener('change',function(){
-               if(this.checked){
-                  gastos = gastos - 1;
-                   calcularTotal((gastos));
-               }
-           });
-           
-            con_logo.addEventListener('change',function(){
-               if(this.checked){
-                   gastos = 3.95;
-                   calcularTotal(gastos);
-               }
-           });
-           
-           
-           function calcularTotal(cant){
-               let sum  = 0;
-               for (var i = 0; i < carrito.length; i++) {
-                   sum += (carrito[i].cantidad * carrito[i].precio);
-            }
-            total.innerHTML = (sum + cant).toFixed(2);
-           }
-           
-           
-           function ajax() {
-               
-
-            //funcion de ajax en JQuery
-            $.ajax({
-
-                //url que pones para ir al controlador (usando front controller)
-                url: '/test_cesta',
-
-                //metodo con el que enviar los datos (GET / POST) 
-                type: 'POST',
-
-                // contenido que envias por ajax
-            data: {
-                    envio:post_dir_envio,
-                    datos: carrito,
-                    total: parseFloat(total.innerHTML)//array, variable etc.
-                },
-
-
-                //si la respuesta es correcta (200) (lo que recibe del controller)
-                success: function(response) {
-                    window.alert('success!'); //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
-                   //window.location.replace("http://gallaeciapc.localhost:8080/checkout/success");
-                   // purchaseSuccess();
-                    console.log(response);
-                    if(response){
-                        window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
-                    }
-                    
-                },
-
-                //si la respuesta no es correcta (400) (lo que recibe del controller)
-                error: function(error) {
-                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
-                    
-                    window.alert('failure!');
-                }
-
-                //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
-            });
-            
-        }
-        
-        function enable_shopping(){
-                     //funcion de ajax en JQuery
-            $.ajax({
-
-                //url que pones para ir al controlador (usando front controller)
-                url: '/check_salario',
-
-                //metodo con el que enviar los datos (GET / POST) 
-                type: 'POST',
-
-                // contenido que envias por ajax
-            data: {
-                    
-                    total: parseFloat(total.innerHTML)//array, variable etc.
-                },
-
-
-                //si la respuesta es correcta (200) (lo que recibe del controller)
-                success: function(response) {
-                    finalizar.disabled = false; //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
-                    console.log(response);
-                    no_money.style.display = 'none';
-                },
-
-                //si la respuesta no es correcta (400) (lo que recibe del controller)
-                error: function(error) {
-                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
-                    finalizar.disabled = true;
-                    window.alert('failure!');
-                     no_money.style.display = 'block';
-                }
-
-                //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
-            });
-        }
-
-           </script>
+        <script src="/assets/js/finalizarCompra.js"></script>
         <?php
         }
-        ?>   
-    
-      
+        ?>         
   </body>
 </html>

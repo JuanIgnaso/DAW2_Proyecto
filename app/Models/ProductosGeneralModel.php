@@ -87,6 +87,11 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
         }
 
       }
+      
+      function deleteProduct($codigo): bool{
+         $stmt = $this->pdo->prepare('DELETE FROM productos WHERE codigo_producto = ?'); 
+        return $stmt->execute([$codigo]);
+      }
         
       
 }

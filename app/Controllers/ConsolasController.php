@@ -13,8 +13,19 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
         $data['seccion'] = '/inventario/Consolas';
         $data['tipo'] = 'Consolas';
         $data['titulo'] = 'Inventario Consolas';
-        $data['productos'] = $model->filterAll();
+        $data['productos'] = $model->filterAll($_GET);
         $data['conexiones'] = $modelConexiones->getAll();
+        
+                
+        $copiaGET = $_GET;
+        unset($copiaGET['order']);
+        if(count($copiaGET) > 0){
+            $data['queryString'] = "&".http_build_query($copiaGET);
+        }else{
+            $data['queryString'] = "";
+        }
+        
+        
         $this->view->showViews(array('templates/inventarioHead.php','Consolas.view.php'),$data); 
     }
     
