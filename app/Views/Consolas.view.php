@@ -1,7 +1,17 @@
 
   <body>
     
-<header class="navbar navbar-dark sticky-top flex-md-nowrap justify-content-end p-0 shadow" style="background-color:#272727";>
+<header class="navbar navbar-dark sticky-top flex-md-nowrap justify-content-end justify-content-md-between p-1 shadow" style="background-color:#272727";>
+    
+        <div class="col-auto d-md-flex d-none">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+
+            <img role="img" width="200px" aria-label="Bootstrap" src="/assets/svg/Gallaecia_PC_Logo.svg" alt="logo_empresa">
+                  <!--  class="bi me-2" -->
+                  <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
+               </a> 
+        </div>
+       
   <!--<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Company name</a>-->
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -180,17 +190,30 @@
       if(count($productos) != 0){
       ?>
 
-
-        <table class="table table-striped table-sm">
+ <!-- MODAL BORRAR -->
+      <div class="col-6 col-sm-4 border border-2 border-dark rounded bg-light" id="modal_inventario_borrar">
+          <header class=" border-bottom border-secondary col-12 d-flex justify-content-between align-items-center p-2">
+              <h4 class="p-0 m-0" style="color:#272727">Confimar</h4>
+              <span id="cerrar" class="font-weight-bold" onclick="closeModal()">X</span>
+          </header>
+          <div class="col-12 p-2">
+              <p class="p-0 mb-2">Desea confirmar la acción?</p>
+              <button type="button" class="btn" id="conf_acc" onclick="borrar()">Continuar</button>
+          </div>
+      </div>
+ 
+ 
+        <table class="table table-striped table-sm"  id="tabla_contenido">
           <thead>
             <tr>
               <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">Cod.</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Nombre</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Proveedor</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Prov</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Precio</a></th>           
               <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">Juegos</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=6<?php echo $queryString; ?>">Mando</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Conectividad</a></th>              
+              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Conectividad</a></th>     
+               <th scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>
@@ -198,7 +221,7 @@
             foreach ($productos as $producto) {
                      
            ?>   
-            <tr>
+            <tr  id="<?php echo $producto['codigo_producto'];?>">
               <td><?php echo $producto['codigo_producto'];?></td>
               <td><?php echo $producto['nombre'];?></td>
               <td><?php echo $producto['nombre_proveedor'];?></td>
@@ -206,13 +229,21 @@
               <td><?php echo $producto['juego_incluido'];?></td>
               <td><?php echo $producto['mando_incluido'];?></td>
               <td><?php echo $producto['nombre_conectividad_raton'];?></td>
-              
+              <td>
+                  <div class="acciones col-12 f-flex justify-content-center gap-1 flex-column flex-sm-row">
+                      <button type="button" onclick="abrirModal(this)" class="btn p-0"><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
+                      <a href="<?php echo $seccion;?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
+                  </div>
+              </td>
             </tr>
             <?php
             }
             ?>
           </tbody>
         </table>
+ 
+       <!-- SCRIPT BORRAR -->
+      <script src="/assets/js/borrarElementoTabla.js"></script>
       <?php
       }else{
       ?>

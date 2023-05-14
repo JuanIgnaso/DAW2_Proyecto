@@ -70,80 +70,9 @@
         </div>
     </div>
   
-      
-             <script>
-            
-          /*
-           * elementos mirar en /assets/html/elementosCesta.html
-           * 
-           * 
-           * 
-           */  
-            
-            
-            
-          var cuerpo = document.getElementById('cuerpo_carrito');
-          var btn_borrar_producto = document.getElementById('btn_borrar_producto');
-          var elementos = cuerpo.getElementsByClassName('borrar');   
-         
-          
-
-          
         
-          
-            
-            /*Coger la ventana modal*/
-        var mod = document.getElementById("mi_modal_carrito");
-
-        // Coger el botón que abre la modal
-        var btn = document.getElementById("btn_carrito");
-
-        // coger el <span> que cierra la modal
-        var span = document.getElementsByClassName("close_carrito")[0];
-
-        // Cuando el usuario le da al botón, abrir la modal
-        btn.onclick = function() {
-          mod.style.display = "block";
-          if(elementos.length == 0){
-               removeChilds();
-                cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
-                }
-        }
-
-        // Cerrar la modal cuando el usuario le da al <span>
-        span.onclick = function() {
-          mod.style.display = "none";
-        }
-
-        // Cerrar la modal también cuando el usuario le dé fuera de la modal
-        window.onclick = function(event) {
-          if (event.target == mod) {
-            mod.style.display = "none";
-          }
-        } 
-        
-        
-        
-         window.onload = addEvents();
-                        function addEvents(){
-                         
-                            for (var i = 0; i < elementos.length; i++) {
-                                   elementos[i].addEventListener('click',function(){
-                            this.parentNode.remove();
-                             if(elementos.length == 0){
-                                 removeChilds();
-                                 cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
-                             }
-                        });
-                         }
-                        
-                        }
-           function removeChilds(){
-           while (cuerpo.hasChildNodes()) {
-            cuerpo.removeChild(cuerpo.firstChild);
-}
-           }
-        </script> 
+      <!-- Abrir Cerrar Carrito -->
+             <script src="/assets/js/abrirCerrarCarrito.js"></script> 
       
 
 <div class="container-fluid">
@@ -280,17 +209,30 @@
       if(count($productos) != 0){
       ?>
 
+      
+      <!-- MODAL BORRAR -->
+      <div class="col-6 col-sm-4 border border-2 border-dark rounded bg-light" id="modal_inventario_borrar">
+          <header class=" border-bottom border-secondary col-12 d-flex justify-content-between align-items-center p-2">
+              <h4 class="p-0 m-0" style="color:#272727">Confimar</h4>
+              <span id="cerrar" class="font-weight-bold" onclick="closeModal()">X</span>
+          </header>
+          <div class="col-12 p-2">
+              <p class="p-0 mb-2">Desea confirmar la acción?</p>
+              <button type="button" class="btn" id="conf_acc" onclick="borrar()">Continuar</button>
+          </div>
+      </div>
 
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm"  id="tabla_contenido">
           <thead>
             <tr>
               <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">Cod.</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Nombre</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Proveedor</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Prov</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Precio</a></th>           
               <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">Conectividad</a></th>
               <th scope="col"><a href="<?php echo $seccion;?>?order=6<?php echo $queryString; ?>">Clase</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Idioma</a></th>   
+              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Idioma</a></th>  
+              <th scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>
@@ -298,7 +240,7 @@
             foreach ($productos as $producto) {
                      
            ?>   
-            <tr>
+            <tr id="<?php echo $producto['codigo_producto'];?>">
               <td><?php echo $producto['codigo_producto'];?></td>
               <td><?php echo $producto['nombre'];?></td>
               <td><?php echo $producto['nombre_proveedor'];?></td>
@@ -306,12 +248,22 @@
               <td><?php echo $producto['nombre_conectividad'];?></td>
               <td><?php echo $producto['nombre_clase'];?></td>
               <td><?php echo $producto['nombre_idioma'];?></td>
+              <td>
+                  <div class="acciones col-12 f-flex justify-content-center gap-1 flex-column flex-sm-row">
+                      <button type="button" onclick="abrirModal(this)" class="btn p-0"><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
+                      <a href="<?php echo $seccion;?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
+                  </div>
+              </td>
             </tr>
             <?php
             }
             ?>
           </tbody>
         </table>
+              <!-- SCRIPT BORRAR -->
+      <script src="/assets/js/borrarElementoTabla.js"></script>
+      
+      
       <?php
       }else{
       ?>
