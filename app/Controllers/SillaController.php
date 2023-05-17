@@ -26,7 +26,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
         }
         
         
-        $this->view->showViews(array('templates/inventarioHead.php','Sillas.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Sillas.view.php'),$data); 
     }
     
 }

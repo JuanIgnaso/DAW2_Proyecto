@@ -47,18 +47,20 @@
                         
                         <!-- CAJA DE LA FOTO -->
                          <div id="caja_foto">
-                          <img src="<?php echo $info_usuario['profile_image'];?>"   id="foto_img" alt="imagen de perfil">
+                          <img src="<?= is_null($info_usuario['profile_image']) ? '/assets/img/profiles/default_profile_photo.png' : $info_usuario['profile_image'];?>"   id="foto_img" alt="imagen de perfil">
                          </div>
                      <p>Foto de Perfil</p>
+                     <p id="resp_sub_foto" style="display:none;"></p>
                      <?php
                      if($seccion != '/mi_Perfil'){                    
                      ?>
+                     
                   <div class="col-12 d-flex flex-column pb-4">
-                <form method="post" action="/post_foto" enctype="multipart/form-data" id="imageForm" class="d-flex">
+                <form id="imageForm" class="d-flex">
       
                             <input type="file" name="image" accept="image/*" id="imageButton"/>
                     <br>
-                    <input type="submit" name="submit" value="Upload">
+                    <input type="button" name="submit" value="Upload" id="uploadImage">
                 </form>
                          
                   </div>
@@ -343,11 +345,7 @@
        }
        
        
-                         
-function g(){
-    alert('hola');
-}
-       
+     
                  /*Mostrar y ocultar advertencia*/
            mostrarLimite = (msg) => {conf.style.display = 'block';
                                      conf.style.position = 'absolute';
@@ -379,7 +377,10 @@ function g(){
         <script>
 
 
-        $('#editar_perfil').click(function(){
+        $('#uploadImage').click(function(){
+            //Mensaje a mostrar
+            let k = document.getElementById('resp_sub_foto');
+            
           // Making the image file object
            var file = $('#imageButton').prop("files")[0];
 
@@ -389,6 +390,7 @@ function g(){
             // Adding the image to the form
             form.append("image", file);
 
+            console.log(form.get('image'));
            // The AJAX call
             $.ajax({
                 url: "/post_foto",
@@ -397,15 +399,22 @@ function g(){
                 contentType: false,
                processData:false,
              success: function(result){
-                                  window.location.href = 'http://gallaeciapc.localhost:8080/mi_Perfil';
-
+                                 // window.location.href = 'http://gallaeciapc.localhost:8080/mi_Perfil';
+                  
+                  k.style.display = 'block';
+                  k.setAttribute('class','text-success');
+                  k.innerHTML = result;
                   console.log(result);
 
                 },
                 error: function(error){
-                  error = JSON.parse(error.responseText);
+                  let k = document.getElementById('resp_sub_foto');
+                  let resp = JSON.parse(error.responseText);
+                  k.removeAttribute('class');
+                  k.setAttribute('class','text-danger');
+                  k.innerHTML  = resp.error.error;
                   console.log(error);
-                   window.alert(error);
+                   
                } 
             });
         });

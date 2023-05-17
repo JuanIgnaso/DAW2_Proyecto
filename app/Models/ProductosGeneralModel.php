@@ -6,7 +6,8 @@ namespace Com\Daw2\Models;
 class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
     
     const _SELECT_ALL = 'SELECT productos.*,categorias.*,proveedores.nombre_proveedor FROM productos LEFT JOIN categorias ON productos.categoria = categorias.id_categoria  LEFT JOIN proveedores ON productos.proveedor = proveedores.id_proveedor ';
-       
+     private const _UPDATE = 'UPDATE productos SET ';  
+    
     //En funcion del valor recibido en el filterby de la URL
     private const _FILTER_BY = array(     
           1 => ' ORDER BY precio DESC',
@@ -92,6 +93,43 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
          $stmt = $this->pdo->prepare('DELETE FROM productos WHERE codigo_producto = ?'); 
         return $stmt->execute([$codigo]);
       }
+      
+      function productNameExists($nombre): bool{
+          $stmt = $this->pdo->prepare('SELECT nombre FROM productos WHERE nombre LIKE ?');
+          $stmt->execute(['%'.$nombre.'%']);
+          return $stmt->rowCount() != 0;
+      }
+      
+      
+      function occupiedProductName($nombre,$codigo):bool{
+          $stmt = $this->pdo->prepare('SELECT * FROM productos WHERE nombre=? AND codigo_producto != ?');
+          $stmt->execute([$nombre,$codigo]);
+          return $stmt->rowCount() != 0; 
+      }
+      
+      function insertProduct($categoria,array $post): bool{
+        try{
+            $this->pdo->beginTransaction();
+            $stmt= $this->pdo->prepare('INSERT INTO productos(nombre,proveedor,categoria,marca,desc_producto,precio_bruto,iva,stock) values(?,?,?,?,?,?,?,?)');
+            $stmt->execute([$post['nombre'],$post['proveedores'],$categoria,$post['marca'],$post['desc_producto'],$post['precio_bruto'],$post['ivas'],$post['stock']]);
+            $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }  
+        
+
+      }
+      
+       function editProduct(array $post,$codigo):bool{
+
+            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, proveedor=?, marca=?, desc_producto=?,precio_bruto=?, iva=?, stock=? WHERE codigo_producto=?');
+            $stmt->execute([$post['nombre'],$post['proveedores'],$post['marca'],$post['desc_producto'],$post['precio_bruto'],$post['ivas'],$post['stock'],$codigo]);
+        
+            return true;
+ 
+        }
         
       
 }

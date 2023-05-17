@@ -125,6 +125,36 @@ class FrontController{
                      }
                      ,'get'); 
                      
+                  Route::add('/inventario/Ratones/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\RatonController();
+                     $controller->showEdit($cod);
+                     }
+                     ,'get'); 
+                     
+                    Route::add('/inventario/Ratones/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\RatonController();
+                     $controller->edit($cod);
+                     }
+                     ,'post'); 
+                     
+                     
+                     
+                    Route::add('/inventario/Ratones/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\RatonController();
+                     $controller->showAdd();
+                     }
+                     ,'get'); 
+                        
+                    Route::add('/inventario/Ratones/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\RatonController();
+                     $controller->add();
+                     }
+                     ,'post'); 
+                     
                      
                  Route::add('/inventario/Teclados',
                      function(){
@@ -133,6 +163,39 @@ class FrontController{
                      }
                      ,'get');  
                      
+                                         
+                    Route::add('/inventario/Teclados/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\TecladoController();
+                     $controller->showAdd();
+                     }
+                     ,'get'); 
+                         
+                   
+                                                              
+                    Route::add('/inventario/Teclados/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\TecladoController();
+                     $controller->add();
+                     }
+                     ,'post');
+                     
+                     
+                   Route::add('/inventario/Teclados/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\TecladoController();
+                     $controller->showEdit($cod);
+                     }
+                     ,'get');   
+                     
+                     
+                  Route::add('/inventario/Teclados/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\TecladoController();
+                     $controller->edit($cod);
+                     }
+                     ,'post');   
+                     
                      
                 Route::add('/inventario/Monitores',
                      function(){
@@ -140,6 +203,33 @@ class FrontController{
                      $controller->showListaMonitores();
                      }
                      ,'get');      
+                     
+                                  
+                Route::add('/inventario/Monitores/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\MonitorController();
+                     $controller->showAdd();
+                     }
+                     ,'get');    
+                     
+                Route::add('/inventario/Monitores/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\MonitorController();
+                     $controller->add();
+                     }
+                     ,'post'); 
+                     
+                     
+             Route::add('/inventario/Monitores/edit/([A-Za-z0-9]+)',
+             function($cod){
+             $controller = new \Com\Daw2\Controllers\MonitorController();
+             $controller->showEdit($cod);
+             }
+             ,'get');     
+                     
+                     
+                     
+                     
                      
                   Route::add('/inventario/Sillas',
                      function(){

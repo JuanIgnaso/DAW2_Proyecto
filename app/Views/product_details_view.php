@@ -17,7 +17,7 @@
             <div class="row">
                 <!-- FOTO -->
                 <div class="col-12 col-lg-6 p-0 position-relative">
-                    <img src="<?php echo $datos_generales['url_imagen'];?>" alt="imagen_producto" style="width: 100%;"/>
+                    <img src="<?= is_null($datos_generales['url_imagen']) ? '/assets/img/default_image.png' : $datos_generales['url_imagen'] ;?>" alt="imagen_producto" style="width: 100%;"/>
                      <button class='btn btn-default position-absolute' id="modal_btn"><i class="fa-sharp fa-regular fa-image fa-2xl" style="color: #ff8000;"></i></button>
                 </div>
                 <!-- DETALLES -->
@@ -138,7 +138,7 @@
                        <h2 class="text-light text-center">Imágen Del Producto</h2>
                        <span class="close text-dark">X</span>     
                     </header> 
-                    <img src="<?php echo $datos_generales['url_imagen'];?>" alt="alt" width="100%"/>
+                    <img src="<?= is_null($datos_generales['url_imagen']) ? '/assets/img/default_image.png' : $datos_generales['url_imagen'] ;?>" alt="alt" width="100%"/>
                 </div>
                  <!--  -->
             </div>

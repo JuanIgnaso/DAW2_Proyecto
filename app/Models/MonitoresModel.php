@@ -5,11 +5,18 @@ namespace Com\Daw2\Models;
 
 class MonitoresModel extends \Com\Daw2\Core\BaseModel{
     
-    private const SELECT_ALL = 'SELECT monitores.entrada_video,monitores.pulgadas,tecnologia.nombre_tecnología,monitores.tecnologia,monitores.refresco,productos.*,proveedores.nombre_proveedor FROM monitores LEFT JOIN productos ON monitores.nombre = productos.nombre LEFT JOIN tecnologia ON monitores.tecnologia = tecnologia.id_tecnologia LEFT JOIN proveedores ON  productos.proveedor = proveedores.id_proveedor';
+    private const SELECT_ALL = 'SELECT monitores.entrada_video,monitores.pulgadas,monitores.id_monitor,tecnologia.nombre_tecnología,monitores.tecnologia,monitores.refresco,productos.*,proveedores.nombre_proveedor FROM monitores LEFT JOIN productos ON monitores.nombre = productos.nombre LEFT JOIN tecnologia ON monitores.tecnologia = tecnologia.id_tecnologia LEFT JOIN proveedores ON  productos.proveedor = proveedores.id_proveedor';
     private const DEFAULT_ORDER = 0;
     private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','entrada_video','refresco','nombre_tecnología'];
 
 
+    
+    function getProducto($cod):array{
+         $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
+         $stmt->execute([$cod]);
+         return $stmt->fetch();
+    } 
+    
     
     
     function loadDetails($nombre){
@@ -104,4 +111,32 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
      $stmt = $this->pdo->query('SELECT DISTINCT refresco FROM monitores ORDER BY 1');
        return $stmt->fetchAll();  
    }
+   
+   
+   public function insertMonitor(array $post): bool{
+           try{
+        $this->pdo->beginTransaction();
+        $stmt = $this->pdo->prepare('INSERT INTO monitores(nombre,entrada_video,pulgadas,tecnologia,refresco) values(?,?,?,?,?)');
+        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologias'],$post['refresco']]);
+        $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }   
+   }
+   
+      
+       function editMonitor(array $post,$codigo):bool{
+         try{
+        $this->pdo->beginTransaction();
+        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, entrada_video=?, pulgadas=?, tecnologia=?, refresco=? WHERE id_monitor=?');
+        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologias'],$post['refresco'],$codigo]);
+        $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }  
+    }
 }

@@ -4,15 +4,21 @@ namespace Com\Daw2\Models;
 
 class RatonesModel extends \Com\Daw2\Core\BaseModel{
    
-    private const SELECT_ALL = 'SELECT proveedores.nombre_proveedor,productos.*,ratones.dpi,ratones.clase,conexiones_raton.nombre_conectividad_raton FROM ratones LEFT JOIN conexiones_raton ON ratones.id_conexion = conexiones_raton.id_conexion LEFT JOIN productos ON productos.nombre = ratones.nombre LEFT JOIN proveedores ON productos.proveedor = proveedores.id_proveedor';
+    private const SELECT_ALL = 'SELECT categorias.formulario,proveedores.nombre_proveedor,productos.*,ratones.dpi,ratones.clase,ratones.id,ratones.id_conexion,conexiones_raton.nombre_conectividad_raton FROM ratones LEFT JOIN conexiones_raton ON ratones.id_conexion = conexiones_raton.id_conexion LEFT JOIN productos ON productos.nombre = ratones.nombre LEFT JOIN proveedores ON productos.proveedor = proveedores.id_proveedor LEFT JOIN categorias ON productos.categoria = id_categoria';
     private const DEFAULT_ORDER = 0;
     private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','dpi','clase','nombre_conectividad_raton'];
-
+ private const _UPDATE = 'UPDATE ratones SET ';  
     
        function loadDetails($nombre){
         $stmt = $this->pdo->prepare('SELECT ratones.nombre,ratones.dpi,ratones.clase,conexiones_raton.nombre_conectividad_raton FROM ratones LEFT JOIN conexiones_raton ON ratones.id_conexion = conexiones_raton.id_conexion WHERE nombre=?');
         $stmt->execute([$nombre]);
         return $stmt->fetch();      
+    }
+    
+    function getProducto($cod):array{
+         $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
+         $stmt->execute([$cod]);
+         return $stmt->fetch();
     }
     
    function filterAll(array $filtros): array{
@@ -91,4 +97,31 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
         }
         
    }
+   
+   function insertRaton(array $post):bool{
+      try{
+            $this->pdo->beginTransaction();
+            $stmt = $this->pdo->prepare('INSERT INTO ratones(nombre,dpi,clase,id_conexion) values(?,?,?,?)');
+            $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['conexiones']]);
+            $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }   
+   }
+   
+
+    function editRaton(array $post,$codigo):bool{
+         try{
+        $this->pdo->beginTransaction();
+        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, dpi=?, clase=?, id_conexion=? WHERE id=?');
+        $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['conexiones'],$codigo]);
+        $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }  
+    }
 }

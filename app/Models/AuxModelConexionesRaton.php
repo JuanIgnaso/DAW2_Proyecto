@@ -8,4 +8,10 @@ class AuxModelConexionesRaton  extends \Com\Daw2\Core\BaseModel{
         $stmt = $this->pdo->query('SELECT * FROM conexiones_raton ORDER BY 2');
         return $stmt->fetchAll();
     }
+    
+        function conexionExists($id): bool{
+        $stmt = $this->pdo->prepare('SELECT id_conexion FROM conexiones_raton WHERE id_conexion=?');
+         $stmt->execute([$id]);
+         return $stmt->rowCount() != 0;
+    }
 }

@@ -305,8 +305,21 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     //EDITAR FOTO DE PERFIL
     function editProfilePhoto(){
         
+        $error = [];
+        
+        if(empty($_FILES['image']) || !isset($_FILES['image'])){
+            http_response_code(400);  
+                    $error['error']  = "No has subido ningún archivo.";
+                    echo json_encode($error);
+
+         exit;
+        }
+        
+        
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $src = $_FILES['image']['tmp_name']; //nombre de archivo temporal
+        
+        
 
         //Nombre imagen
         $filename = $_FILES['image']['name']; //nombre del archivo definitivo
@@ -316,6 +329,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         //$dir = "imagenes/".$filename;
         $dir = "assets/img/profiles/id".$_SESSION['usuario']['id_usuario'].'/';
         $output_dir = $dir.basename($_FILES['image']['name']);
+        
 
         //Tipo de archivo
         $imageFileType = strtolower(pathinfo($output_dir,PATHINFO_EXTENSION));
@@ -323,7 +337,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif" ) {
           http_response_code(400);  
-          echo json_encode(["hola"=>"Sorry, only JPG, JPEG, PNG & GIF files are allowed."]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+          $error['error']  = "Lo sentimos, solo archivos con extensión JPG, JPEG, PNG & GIF están permitidos.";
+           echo json_encode($error);
+          //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
          exit;   
        
         }
@@ -339,18 +355,20 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             
 
         if (move_uploaded_file($src, $output_dir )) {
-            if($model->updateUserAvatar($_SESSION['usuario']['id_usuario'],'/'.$output_dir)){
-                if ($output_dir != '/assets/img/profiles/default_profile_photo.jpg') {
+              if (!is_null($_SESSION['usuario']['profile_image'])) {
                 unlink(substr($_SESSION['usuario']['profile_image'],1,strlen($_SESSION['usuario']['profile_image'])));
             }
+            if($model->updateUserAvatar($_SESSION['usuario']['id_usuario'],'/'.$output_dir)){
+              
                 
                 
                 http_response_code(200);
-                 echo json_encode(["hola"=>"El archivo ".$filename."Se acaba de subir correctamente"]);
+                 echo "El archivo ".$filename."Se acaba de subir correctamente";
             }
         } else{
         http_response_code(400);     
-        echo  json_encode(["Error! Image upload failed! File: ".$filename]);
+        $error['error']  = "Error! No se ha podido subier el archivo: ".$filename;
+        echo json_encode($error); 
         exit;
         };
     }

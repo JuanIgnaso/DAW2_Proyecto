@@ -9,4 +9,12 @@ class AuxIdiomaModel  extends \Com\Daw2\Core\BaseModel{
         $stmt = $this->pdo->query('SELECT * FROM idioma ORDER BY 1');
         return $stmt->fetchAll();
     }
+    
+    function idiomaExists($id):bool{
+
+        $stmt = $this->pdo->prepare('SELECT id FROM idioma WHERE id=?');
+         $stmt->execute([$id]);
+         return $stmt->rowCount() != 0;
+
+    }
 }

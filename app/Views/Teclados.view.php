@@ -1,56 +1,4 @@
 
-  <body>
-    
-<header class="navbar navbar-dark sticky-top flex-md-nowrap justify-content-end p-0 shadow" style="background-color:#272727";>
-  <!--<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Company name</a>-->
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  
-  <div class="col-md-3 text-end" id="log_user">
-                    <?php
-                    if(isset($_SESSION['usuario'])){
-                    ?>
-                    <div class="col-12 p-3 d-flex align-items-center justify-content-end gap-2">
-                   
-                        <!-- MODAL CARRITO  -->    
-
-                        <button class='btn btn-default position-relative' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i><span id="carrito_items" class="badge bg-danger position-absolute top-0 start-100 translate-middle"></span></button>
-                     <a class="col-auto text-light m-0" id="nombre_usuario" href="/mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a>
-                   
-                    <div class="navbar-nav">
-                    <div class="nav-item text-nowrap flex-column d-flex align-items-center justify-content-between">
-                      <!--<a class="nav-link px-3" href="#">Log In</a>-->
-                      <a class="nav-link px-3" href="#">Sign out</a>
-                    </div>
-                  </div>
-                    
-                    </div>
-                
-                     <?php
-                    }else{
-                    ?>
-      
-                   <div class="navbar-nav">
-                    <div class="nav-item text-nowrap flex-column d-flex align-items-center justify-content-between">
-                      <a class="nav-link px-3" href="#">Log In</a>
-                      <a class="nav-link px-3" href="#">Sign out</a>
-                    </div>
-                  </div>
-                    <!--<button type="button" class="btn btn-outline-light" id="login"><a href="/login">Login</a></button>-->
-                  <!--<button type="button" class="activo btn btn-outline-light" id="sign_up"><a href="/register">Sign Up</a></button>-->
-                  <?php
-                    }
-                  ?>
-                </div>
-  
-  
-         </div>
-      
-  
-  <!--<input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">-->
-
-</header>
               <div class="row">
         <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
               <!-- COntenido del modal -->
@@ -85,16 +33,8 @@
         
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Panel Administración: <?php echo isset($tipo) ? $tipo : 'Categoría';?></h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-<!--          <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar" class="align-text-bottom"></span>
-            This week
-          </button>-->
-        </div>
+             <a href="/inventario/Teclados/add" class="btn btn-success ml-1">Añadir<i class="fa-solid fa-circle-plus p-1"></i></a>
+
       </div>
 
       <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
@@ -113,7 +53,7 @@
                                                     
               <div class="col d-flex flex-column">
                  <label for="">Idioma</label>
-                    <select name="idioma" id="idioma">
+                    <select name="idioma[]" id="idioma" multiple>
                            <option value="">-</option>
                      
                            <?php
@@ -251,7 +191,7 @@
               <td>
                   <div class="acciones col-12 f-flex justify-content-center gap-1 flex-column flex-sm-row">
                       <button type="button" onclick="abrirModal(this)" class="btn p-0"><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
-                      <a href="<?php echo $seccion;?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
+                      <a href="/inventario/Teclados/edit/<?php echo $producto['codigo_producto'];?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
                   </div>
               </td>
             </tr>

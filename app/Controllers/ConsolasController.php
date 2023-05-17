@@ -26,7 +26,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
         }
         
         
-        $this->view->showViews(array('templates/inventarioHead.php','Consolas.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Consolas.view.php'),$data); 
     }
     
 }

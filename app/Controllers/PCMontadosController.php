@@ -28,7 +28,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
         }
        
        
-      $this->view->showViews(array('templates/inventarioHead.php','PCMontados.view.php'),$data); 
+      $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','PCMontados.view.php'),$data); 
  
     }
 }

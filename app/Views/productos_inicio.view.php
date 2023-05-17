@@ -87,7 +87,7 @@
                     <article class="caja_producto col">
                         <header class="d-flex">
                             <!-- URL de la imagen también -->
-                        <img src="<?php echo $producto['url_imagen'];?>" alt="imagen_ejemplo"/>
+                        <img src="<?=  is_null($producto['url_imagen']) ? '/assets/img/default_image.png'  : $producto['url_imagen'];?>" alt="imagen_ejemplo"/>
                         </header>
                         <!-- PHP en función si esta o no en oferta -->
                         <div class="col-12 p-1">
