@@ -5,9 +5,10 @@ namespace Com\Daw2\Models;
 
 class SillasModel extends \Com\Daw2\Core\BaseModel{
  
-    private const SELECT_ALL = 'SELECT sillas.tipo_silla,sillas.altura,sillas.anchura,sillas.ajustable,productos.*,proveedores.nombre_proveedor FROM sillas LEFT JOIN productos ON sillas.nombre = productos.nombre LEFT JOIN proveedores ON productos.proveedor =  proveedores.id_proveedor';
+    private const SELECT_ALL = 'SELECT sillas.tipo_silla,sillas.altura,sillas.anchura,sillas.id_silla,sillas.ajustable,productos.*,proveedores.nombre_proveedor FROM sillas LEFT JOIN productos ON sillas.nombre = productos.nombre LEFT JOIN proveedores ON productos.proveedor =  proveedores.id_proveedor';
     private const DEFAULT_ORDER = 0;
     private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','altura','anchura','tipo_silla','ajustable'];
+    private const _UPDATE = 'UPDATE sillas SET ';  
 
         
     function loadDetails($nombre){
@@ -15,6 +16,14 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
         $stmt->execute([$nombre]);
         return $stmt->fetch();      
     }
+    
+    
+   function getProducto($cod):array{
+         $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
+         $stmt->execute([$cod]);
+        return $stmt->fetch();
+    } 
+    
     
     
         function filterAll(array $filtros): array{
@@ -96,6 +105,49 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
         }
         
    }
+   
+   
+      
+   function getTipo():array{
+       $stmt = $this->pdo->query('SELECT SUBSTRING(COLUMN_TYPE,5)
+        FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA="proxecto" 
+            AND TABLE_NAME="sillas"
+            AND COLUMN_NAME="tipo_silla"
+        ');
+        return  $stmt->fetchAll();
+        
+   }
+   
+   
+      public function insertSilla(array $post): bool{
+           try{
+        $this->pdo->beginTransaction();
+        $stmt = $this->pdo->prepare('INSERT INTO sillas(nombre,tipo_silla,altura,anchura,ajustable) values(?,?,?,?,?)');
+        $stmt->execute([$post['nombre'],$post['tipos'],$post['altura'],$post['anchura'],$post['ajustable']]);
+        $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }   
+   }
+   
+    function editSilla(array $post):bool{
+            try{
+           $this->pdo->beginTransaction();
+           $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, tipo_silla=?, altura=?, anchura=?, ajustable=? WHERE id_silla=?');
+           $stmt->execute([$post['nombre'],$post['tipos'],$post['altura'],$post['anchura'],$post['ajustable'],$post['id_silla']]);
+           $this->pdo->commit();  
+           return true;
+       } catch (\PDOException $ex) {
+           $this->pdo->rollback();
+           return false;
+       }  
+    }
+   
+   
+   
    
    
       function getChairHight(): array{

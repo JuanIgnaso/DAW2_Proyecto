@@ -133,6 +133,57 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
     
     
     
+    
+    
+    public function edit($cod){
+        $model = new \Com\Daw2\Models\MonitoresModel(); 
+        $data = [];
+        $data['errores'] = $this->checkForm($_POST,$alta = false);
+        if(count($data['errores']) == 0){
+           $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+           $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+           $result = $this->modifyMonitor($_POST['id_monitor'],$_POST['codigo_producto'],$_POST);
+           if($result){
+               header('location: /inventario/Monitores');
+           }else{
+                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+            }
+        }else{
+           $modelTec =  new  \Com\Daw2\Models\AuxTecnologiaModel();
+           $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+           $model = new \Com\Daw2\Models\MonitoresModel(); 
+           $data['titulo'] = 'Editar Producto';
+           $data['titulo_seccion'] = 'Modificar Monitor';
+           $data['seccion'] = '/inventario/Monitores/edit/'.$cod;
+           $data['proveedores'] = $modelProv->getAll();
+           $data['ivas'] = self::IVA;
+           $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+           $data['volver'] = '/inventario/Monitores';
+           $data['accion'] = 'Aplicar Cambios';
+           $data['tecnologias'] = $modelTec->getAll();
+           
+           $this->view->showViews(array('AddMonitor.view.php'),$data);     
+        }
+    }
+    
+     private function modifyMonitor($idMon,$id,array $post): bool{
+      $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+      $model = new \Com\Daw2\Models\MonitoresModel();
+      
+      if($modelGeneral->editProduct($post,$id)){
+          if($model->editMonitor($post)){
+              return true;
+          }else{
+              return false;
+          }
+      }else{
+          return false;
+      }
+
+    }
+    
+    
+    
     private function checkForm(array $post, bool $alta = true):array{
         
       $errores = [];  

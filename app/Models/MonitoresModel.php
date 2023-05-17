@@ -8,6 +8,7 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
     private const SELECT_ALL = 'SELECT monitores.entrada_video,monitores.pulgadas,monitores.id_monitor,tecnologia.nombre_tecnología,monitores.tecnologia,monitores.refresco,productos.*,proveedores.nombre_proveedor FROM monitores LEFT JOIN productos ON monitores.nombre = productos.nombre LEFT JOIN tecnologia ON monitores.tecnologia = tecnologia.id_tecnologia LEFT JOIN proveedores ON  productos.proveedor = proveedores.id_proveedor';
     private const DEFAULT_ORDER = 0;
     private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','entrada_video','refresco','nombre_tecnología'];
+      private const _UPDATE = 'UPDATE monitores SET ';  
 
 
     
@@ -127,11 +128,11 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
    }
    
       
-       function editMonitor(array $post,$codigo):bool{
+       function editMonitor(array $post):bool{
          try{
         $this->pdo->beginTransaction();
         $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, entrada_video=?, pulgadas=?, tecnologia=?, refresco=? WHERE id_monitor=?');
-        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologias'],$post['refresco'],$codigo]);
+        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologias'],$post['refresco'],$post['id_monitor']]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {

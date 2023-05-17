@@ -228,7 +228,13 @@ class FrontController{
              ,'get');     
                      
                      
-                     
+                                   
+             Route::add('/inventario/Monitores/edit/([A-Za-z0-9]+)',
+             function($cod){
+             $controller = new \Com\Daw2\Controllers\MonitorController();
+             $controller->edit($cod);
+             }
+             ,'post');          
                      
                      
                   Route::add('/inventario/Sillas',
@@ -238,6 +244,37 @@ class FrontController{
                      }
                      ,'get');    
                      
+                   Route::add('/inventario/Sillas/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\SillaController();
+                     $controller->showAdd();
+                     }
+                     ,'get'); 
+                     
+                   Route::add('/inventario/Sillas/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\SillaController();
+                     $controller->add();
+                     }
+                   ,'post');
+                   
+                   
+                   
+                    Route::add('/inventario/Sillas/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\SillaController();
+                     $controller->showEdit($cod);
+                     }
+                     ,'get');   
+                     
+                     
+                                        
+                    Route::add('/inventario/Sillas/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\SillaController();
+                     $controller->edit($cod);
+                     }
+                     ,'post');   
                     
                                         
                   Route::add('/inventario/Ordenadores',

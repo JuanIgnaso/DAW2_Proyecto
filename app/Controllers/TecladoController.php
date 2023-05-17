@@ -108,7 +108,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
                 $data['conectividades'] = $conectividadModel->getAll();
                 $data['clases'] = $claseModel->getAll();
                 $data['idiomas'] = $idiomaModel->getAll();
-                $diseño =  $model->getDiseño();
+                $diseño = $model->getDiseño();
                 $data['volver'] = '/inventario/Ratones';
 
                 $patrones = array();

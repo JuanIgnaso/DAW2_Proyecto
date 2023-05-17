@@ -284,7 +284,7 @@
           </div>
           
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
-             <input type="hidden" id="postId" name="id_monitor" value="<?php echo isset($input['id_monitor']) ? $input['id_monitor'] : '';?>" />
+             <input type="hidden" id="postId" name="id_silla" value="<?php echo isset($input['id_silla']) ? $input['id_silla'] : '';?>" />
  
               <input type="hidden" id="postId" name="codigo_producto" value="<?php echo isset($input['codigo_producto']) ? $input['codigo_producto'] :'';?>" />
               <div class="col d-flex flex-column">
@@ -334,30 +334,51 @@
                 <input type="text" id="stock" name="stock" value="<?php echo isset($input['stock']) ? $input['stock'] : '' ;?>" class="mt-1">
                 <p class="text-danger small"><?php echo isset($errores['stock']) ? $errores['stock'] : '';?></p>
             </div>  
-              
-              
-           <div class="col d-flex flex-column">
-                 <label for="">Pulgadas</label>
-                <input type="text" id="pulgadas" name="pulgadas" value="<?php echo isset($input['pulgadas']) ? $input['pulgadas'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['pulgadas']) ? $errores['pulgadas'] : '';?></p>
-            </div>  
-              
-              
+          
             <div class="col d-flex flex-column">
-                 <label for="">Refresco</label>
-                <input type="text" id="refresco" name="refresco" value="<?php echo isset($input['refresco']) ? $input['refresco'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['refresco']) ? $errores['refresco'] : '';?></p>
+                 <label for="">Altura</label>
+                <input type="text" id="altura" name="altura" value="<?php echo isset($input['altura']) ? $input['altura'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['altura']) ? $errores['altura'] : '';?></p>
             </div>   
               
                          
             <div class="col d-flex flex-column">
-                 <label for="">Entrada Video</label>
-                <input type="text" id="entrada_video" name="entrada_video" value="<?php echo isset($input['entrada_video']) ? $input['entrada_video'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['entrada_video']) ? $errores['entrada_video'] : '';?></p>
+                 <label for="">Anchura</label>
+                <input type="text" id="anchura" name="anchura" value="<?php echo isset($input['anchura']) ? $input['anchura'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['anchura']) ? $errores['anchura'] : '';?></p>
             </div>    
               
                                       
               <div class="col d-flex flex-column">
+                 <label for="">Ajustable</label>
+                    <select name="ajustable" id="ajustable">
+                           <option value="SI">SI</option>
+                           <option value="NO">NO</option>
+                     </select>
+            <p class="text-danger small"><?php echo isset($errores['ajustable']) ? $errores['ajustable'] : '';?></p>
+
+            </div>
+              
+              
+            <div class="col d-flex flex-column">
+                 <label for="">Tipo Silla</label>
+                    <select name="tipos" id="tipos">
+                           <option value="">-</option>
+                           
+                           <?php
+                           foreach ($tipos as $tipo) {
+                           ?>
+                            <option value="<?php echo $tipo;?>" <?php echo (isset($input['tipo_silla']) && $tipo == $input['tipo_silla']) ? 'selected' : ''; ?>><?php echo $tipo ;?></option>
+                           <?php
+                           }
+                           ?>
+                              
+                     </select>
+              <p class="text-danger small"><?php echo isset($errores['tipo']) ? $errores['tipo'] : '';?></p>
+
+            </div>
+              
+            <div class="col d-flex flex-column">
                  <label for="">Proveedor</label>
                     <select name="proveedores" id="conextion">
                            <option value="">-</option>
@@ -372,29 +393,7 @@
                      </select>
             <p class="text-danger small"><?php echo isset($errores['proveedor']) ? $errores['proveedor'] : '';?></p>
 
-            </div>
-              
-              
-                 <div class="col d-flex flex-column">
-                 <label for="">Tecnología</label>
-                    <select name="tecnologias" id="tecnologia">
-                           <option value="">-</option>
-                     
-                           <?php
-                           foreach ($tecnologias as $tecnologia) {
-                           ?>
-                           <option value="<?php echo $tecnologia['id_tecnologia'];?>"<?php echo (isset($input['tecnologia']) && $tecnologia['id_tecnologia'] == $input['tecnologia']) ? 'selected' : ''; ?>><?php echo $tecnologia['id_tecnologia'].' - '.$tecnologia['nombre_tecnología'] ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                            
-                     </select>
-               <p class="text-danger small"><?php echo isset($errores['idioma']) ? $errores['idioma'] : '';?></p>
-    
-            </div>
-              
-                       
+            </div>          
  
             </div>
               <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
@@ -661,4 +660,6 @@
       
   </body>
 </html>
+
+
 
