@@ -1,6 +1,7 @@
 
       
-                    <div class="row">
+      
+                              <div class="row">
                         <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
                               <!-- COntenido del modal -->
                             <div class="col-12  contenido_modal_carrito">
@@ -107,7 +108,7 @@
              <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
 
                  <h1 class="h2"><?php echo isset($titulo_seccion) ? $titulo_seccion : 'Inventario';?></h1>
-                <a href="/inventario/Monitores" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
+                <a href="/inventario/Teclados" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
               </div>
 
                 <div class="btn-toolbar mb-2 mb-md-0">
@@ -127,7 +128,6 @@
         if(isset($_SESSION['error_añadir'])){
             echo $_SESSION['error_añadir'];
         }
-        unset($_SESSION['error_añadir']);
         ?>
       <h2>Bienvenido al panel de incio de Administración</h2>
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
@@ -147,7 +147,7 @@
           </div>
           
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
-             <input type="hidden" id="postId" name="id_monitor" value="<?php echo isset($input['id_monitor']) ? $input['id_monitor'] : '';?>" />
+             <input type="hidden" id="postId" name="id_ordenador" value="<?php echo isset($input['id_ordenador']) ? $input['id_ordenador'] : '';?>" />
  
               <input type="hidden" id="postId" name="codigo_producto" value="<?php echo isset($input['codigo_producto']) ? $input['codigo_producto'] :'';?>" />
               <div class="col d-flex flex-column">
@@ -199,26 +199,46 @@
             </div>  
               
               
-           <div class="col d-flex flex-column">
-                 <label for="">Pulgadas</label>
-                <input type="text" id="pulgadas" name="pulgadas" value="<?php echo isset($input['pulgadas']) ? $input['pulgadas'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['pulgadas']) ? $errores['pulgadas'] : '';?></p>
+            <div class="col d-flex flex-column">
+                 <label for="">Caja</label>
+                <input type="text" id="caja" name="caja" value="<?php echo isset($input['caja']) ? $input['caja'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['caja']) ? $errores['caja'] : '';?></p>
+            </div> 
+              
+              
+            <div class="col d-flex flex-column">
+                 <label for="">CPU</label>
+                <input type="text" id="cpu" name="cpu" value="<?php echo isset($input['cpu']) ? $input['cpu'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['cpu']) ? $errores['cpu'] : '';?></p>
             </div>  
               
               
             <div class="col d-flex flex-column">
-                 <label for="">Refresco</label>
-                <input type="text" id="refresco" name="refresco" value="<?php echo isset($input['refresco']) ? $input['refresco'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['refresco']) ? $errores['refresco'] : '';?></p>
+                <label for="">Targeta Video</label>
+                <input type="text" id="targeta_video" name="targeta_video" value="<?php echo isset($input['targeta_video']) ? $input['targeta_video'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['targeta_video']) ? $errores['targeta_video'] : '';?></p>
+            </div>  
+              
+              
+                          
+            <div class="col d-flex flex-column">
+                <label for="">Almacenamiento</label>
+                <input type="text" id="almacenamiento" name="almacenamiento" value="<?php echo isset($input['almacenamiento']) ? $input['almacenamiento'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['almacenamiento']) ? $errores['almacenamiento'] : '';?></p>
+            </div>   
+             
+            <div class="col d-flex flex-column">
+                <label for="">Memoria</label>
+                <input type="text" id="memoria" name="memoria" value="<?php echo isset($input['memoria']) ? $input['memoria'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['memoria']) ? $errores['memoria'] : '';?></p>
             </div>   
               
-                         
-            <div class="col d-flex flex-column">
-                 <label for="">Entrada Video</label>
-                <input type="text" id="entrada_video" name="entrada_video" value="<?php echo isset($input['entrada_video']) ? $input['entrada_video'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['entrada_video']) ? $errores['entrada_video'] : '';?></p>
-            </div>    
               
+            <div class="col d-flex flex-column">
+                <label for="">Alimentacion</label>
+                <input type="text" id="alimentacion" name="alimentacion" value="<?php echo isset($input['alimentacion']) ? $input['alimentacion'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['alimentacion']) ? $errores['alimentacion'] : '';?></p>
+            </div>   
                                       
               <div class="col d-flex flex-column">
                  <label for="">Proveedor</label>
@@ -237,28 +257,29 @@
 
             </div>
               
-              
-                 <div class="col d-flex flex-column">
-                 <label for="">Tecnología</label>
-                    <select name="tecnologias" id="tecnologia">
+
+              <div class="col d-flex flex-column">
+                    <label for="">Almacenamiento Tipo</label>
+                    <select name="almacenamientos" id="almacenamientos">
                            <option value="">-</option>
-                     
-                           <?php
-                           foreach ($tecnologias as $tecnologia) {
-                           ?>
-                           <option value="<?php echo $tecnologia['id_tecnologia'];?>"<?php echo (isset($input['tecnologia']) && $tecnologia['id_tecnologia'] == $input['tecnologia']) ? 'selected' : ''; ?>><?php echo $tecnologia['id_tecnologia'].' - '.$tecnologia['nombre_tecnología'] ;?></option>
                            
+                           <?php
+                           foreach ($almacenamientos as $almacenamiento) {
+                           ?>
+                            <option value="<?php echo $almacenamiento;?>" <?php echo (isset($input['almacenamiento_tipo']) && $almacenamiento == $input['almacenamiento_tipo']) ? 'selected' : ''; ?>><?php echo $almacenamiento ;?></option>
                            <?php
                            }
                            ?>
-                            
+                              
                      </select>
-               <p class="text-danger small"><?php echo isset($errores['idioma']) ? $errores['idioma'] : '';?></p>
-    
+              <p class="text-danger small"><?php echo isset($errores['almacenamiento_tipo']) ? $errores['almacenamiento_tipo'] : '';?></p>
+
             </div>
               
-                       
- 
+              
+              
+              
+
             </div>
               <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
                 <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
@@ -269,9 +290,6 @@
               
           </div>
           
-         
-
-
 
       </div>
     </main>
@@ -524,4 +542,6 @@
       
   </body>
 </html>
+
+
 

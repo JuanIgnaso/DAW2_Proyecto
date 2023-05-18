@@ -4,17 +4,27 @@ namespace Com\Daw2\Models;
 
 class ConsolasModel extends \Com\Daw2\Core\BaseModel{
     
-    private const SELECT_ALL = 'SELECT productos.*,consolas.juego_incluido,consolas.manual_usuario,consolas.mando_incluido,consolas.conectividad,conexiones_raton.nombre_conectividad_raton,proveedores.nombre_proveedor FROM consolas LEFT JOIN productos ON consolas.nombre = productos.nombre LEFT JOIN proveedores ON  productos.proveedor =  proveedores.id_proveedor  LEFT JOIN conexiones_raton ON consolas.conectividad = conexiones_raton.id_conexion';
+    private const SELECT_ALL = 'SELECT productos.*,consolas.juego_incluido,consolas.id_consola,consolas.manual_usuario,consolas.mando_incluido,consolas.conectividad,conexiones_raton.nombre_conectividad_raton,proveedores.nombre_proveedor FROM consolas LEFT JOIN productos ON consolas.nombre = productos.nombre LEFT JOIN proveedores ON  productos.proveedor =  proveedores.id_proveedor  LEFT JOIN conexiones_raton ON consolas.conectividad = conexiones_raton.id_conexion';
     
-        private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','juego_incluido','mando_incluido','nombre_conectividad_raton'];
-        private const DEFAULT_ORDER = 0;
-
+    private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','juego_incluido','mando_incluido','nombre_conectividad_raton'];
+    private const DEFAULT_ORDER = 0;
+    private const _UPDATE = 'UPDATE consolas SET ';  
         
         function loadDetails($nombre){
         $stmt = $this->pdo->prepare('SELECT consolas.nombre,consolas.juego_incluido,consolas.manual_usuario,consolas.mando_incluido,conexiones_raton.nombre_conectividad_raton FROM consolas LEFT JOIN conexiones_raton ON consolas.conectividad = conexiones_raton.id_conexion WHERE nombre=?');
         $stmt->execute([$nombre]);
         return $stmt->fetch();      
     }
+    
+    
+    
+        function getProducto($cod):array{
+         $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
+         $stmt->execute([$cod]);
+         return $stmt->fetch();
+    }
+    
+    
     
     
          function filterAll(array $filtros): array{
@@ -37,8 +47,7 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
                 $conditions[] = ' consolas.conectividad IN ('.implode(',',$condicionesConexion).')';
             }
         } 
-        
-        
+
         
         if(isset($filtros['nombre']) && !empty($filtros['nombre'])){
             $conditions[] = ' productos.nombre LIKE :nombre';
@@ -90,4 +99,45 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
             return $stmt->fetchAll();
         }
    }
+   
+   
+       public function insertConsola(array $post): bool{
+           try{
+        $this->pdo->beginTransaction();
+        if(empty($post['juego_incluido'])){
+           $post['juego_incluido'] = 'No'; 
+        }
+         if(empty($post['mando_incluido'])){
+           $post['mando_incluido'] = 'No'; 
+        }
+        $stmt = $this->pdo->prepare('INSERT INTO consolas(nombre,juego_incluido,manual_usuario,mando_incluido,conectividad) values(?,?,?,?,?)');
+        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual'],$post['mando_incluido'],$post['conectividades']]);
+            $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }   
+
+   }
+   
+   function editConsola(array $post):bool{
+         try{
+        $this->pdo->beginTransaction();
+             if(empty($post['juego_incluido'])){
+           $post['juego_incluido'] = 'No'; 
+        }
+         if(empty($post['mando_incluido'])){
+           $post['mando_incluido'] = 'No'; 
+        }
+        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, juego_incluido=?, manual_usuario=?, mando_incluido=?, conectividad=? WHERE id_consola=?');
+        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual'],$post['mando_incluido'],$post['conectividades'],$post['id_consola']]);
+        $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }  
+    }
+   
 }

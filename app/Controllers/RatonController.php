@@ -46,7 +46,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         $data['input'] = $input;
          $data['volver'] = '/inventario/Ratones';
         
-        $this->view->showViews(array('AddRaton.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
     }
     
     
@@ -83,7 +83,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
                 $data['volver'] = '/inventario/Ratones';
 
                 $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-                $this->view->showViews(array('AddRaton.view.php'),$data); 
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
   
             }
         }
@@ -123,7 +123,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         $data['accion'] = 'Añadir';
         $data['conexiones'] = $modelConec->getAll();
         $data['ivas'] = self::IVA;
-        $this->view->showViews(array('AddRaton.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
     }
     
     
@@ -152,7 +152,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         $data['proveedores'] = $modelProv->getAll();
         $data['ivas'] = self::IVA;
         $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-        $this->view->showViews(array('AddRaton.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
     }
     
     }
@@ -257,7 +257,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
 
       if(!$modelConec->conexionExists($post['conexiones'])){
           $errores['conexion'] = 'La conexion que has seleccionado no existe';
-      }else if(empty($post['proveedores'])){
+      }else if(empty($post['conexiones'])){
           $errores['conexion'] = 'Debes seleccionar una conexion';
       }
       

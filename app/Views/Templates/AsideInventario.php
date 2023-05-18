@@ -15,7 +15,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="file-text" class="align-text-bottom"></span>
-             Roles
+             Proveedores
             </a>
           </li>
         </ul>

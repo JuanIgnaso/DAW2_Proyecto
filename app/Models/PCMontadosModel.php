@@ -5,10 +5,11 @@ namespace Com\Daw2\Models;
 
 class PCMontadosModel extends \Com\Daw2\Core\BaseModel{
     
-    private const SELECT_ALL = 'SELECT productos.*,PC_montados.caja,PC_montados.cpu,PC_montados.targeta_video,PC_montados.almacenamiento,PC_montados.memoria,PC_montados.alimentacion,PC_montados.almacenamiento_tipo,proveedores.nombre_proveedor FROM PC_montados LEFT JOIN productos ON PC_montados.nombre = productos.nombre LEFT JOIN proveedores ON  productos.proveedor =  proveedores.id_proveedor';
+    private const SELECT_ALL = 'SELECT productos.*,PC_montados.id_ordenador,PC_montados.caja,PC_montados.cpu,PC_montados.targeta_video,PC_montados.almacenamiento,PC_montados.memoria,PC_montados.alimentacion,PC_montados.almacenamiento_tipo,proveedores.nombre_proveedor FROM PC_montados LEFT JOIN productos ON PC_montados.nombre = productos.nombre LEFT JOIN proveedores ON  productos.proveedor =  proveedores.id_proveedor';
     private const DEFAULT_ORDER = 0;
     private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','cpu','targeta_video','memoria','almacenamiento'];
-    
+    private const _UPDATE = 'UPDATE PC_montados SET ';  
+
     
     
     function loadDetails($nombre){
@@ -112,5 +113,54 @@ class PCMontadosModel extends \Com\Daw2\Core\BaseModel{
     function getMemoryQuantity(): array{
        $stmt = $this->pdo->query('SELECT DISTINCT memoria FROM PC_montados ORDER BY 1');
        return $stmt->fetchAll();
-   } 
+    }
+   
+   
+    function getAlmacenamientoTipo():array{
+       $stmt = $this->pdo->query('SELECT SUBSTRING(COLUMN_TYPE,5)
+        FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA="proxecto" 
+            AND TABLE_NAME="PC_montados"
+            AND COLUMN_NAME="almacenamiento_tipo"
+        ');
+        return  $stmt->fetchAll();
+        
+   }
+   
+       function getProducto($cod):array{
+         $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
+         $stmt->execute([$cod]);
+         return $stmt->fetch();
+    } 
+   
+   
+    public function insertPC(array $post): bool{
+           try{
+        $this->pdo->beginTransaction();
+        $stmt = $this->pdo->prepare('INSERT INTO PC_montados(nombre,caja,cpu,targeta_video,almacenamiento,memoria,alimentacion,almacenamiento_tipo) values(?,?,?,?,?,?,?,?)');
+        $stmt->execute([$post['nombre'],$post['caja'],$post['cpu'],$post['targeta_video'],$post['almacenamiento'],$post['memoria'],$post['alimentacion'],$post['almacenamientos']]);
+            $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }   
+
+   }
+   
+   
+   function editOrdenador(array $post):bool{
+         try{
+        $this->pdo->beginTransaction();
+        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, caja=?, cpu=?, targeta_video=?, almacenamiento=?, memoria=?, alimentacion=?, almacenamiento_tipo=? WHERE id_ordenador=?');
+        $stmt->execute([$post['nombre'],$post['caja'],$post['cpu'],$post['targeta_video'],$post['almacenamiento'],$post['memoria'],$post['alimentacion'],$post['almacenamientos'],$post['id_ordenador']]);
+        $this->pdo->commit();  
+        return true;
+    } catch (\PDOException $ex) {
+        $this->pdo->rollback();
+        return false;
+    }  
+    }
+   
+   
 }

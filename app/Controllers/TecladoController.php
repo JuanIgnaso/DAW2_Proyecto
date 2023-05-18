@@ -73,7 +73,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
 
         
         
-        $this->view->showViews(array('AddTeclado.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
     }
     
     
@@ -118,7 +118,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
                 $data['diseños'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
 
                 
-                $this->view->showViews(array('AddTeclado.view.php'),$data); 
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
   
             }
     }
@@ -166,7 +166,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
         $patrones[1] = '/\(/';
         $patrones[2] = '/\)/';
         $data['diseños'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
-        $this->view->showViews(array('AddTeclado.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
 
     }
     
@@ -207,7 +207,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
              $patrones[1] = '/\(/';
              $patrones[2] = '/\)/';
              $data['diseños'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
-             $this->view->showViews(array('AddTeclado.view.php'),$data); 
+             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
 
           }
 

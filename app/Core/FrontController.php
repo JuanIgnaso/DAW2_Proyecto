@@ -284,14 +284,77 @@ class FrontController{
                      }
                      ,'get');    
                      
-                    
+                  Route::add('/inventario/Ordenadores/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PCMontadosController();
+                     $controller->showAdd();
+                     }
+                  ,'get');  
+                  
+                  
+                 Route::add('/inventario/Ordenadores/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\PCMontadosController();
+                     $controller->add();
+                     }
+                  ,'post'); 
+                  
+                   Route::add('/inventario/Ordenadores/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\PCMontadosController();
+                     $controller->showEdit($cod);
+                     }
+                  ,'get'); 
+                  
+                  
+                    Route::add('/inventario/Ordenadores/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\PCMontadosController();
+                     $controller->edit($cod);
+                     }
+                  ,'post');
+                  
                                                         
                   Route::add('/inventario/Consolas',
                      function(){
                      $controller = new \Com\Daw2\Controllers\ConsolasController();
                      $controller->showListaConsolas();
                      }
-                     ,'get');       
+                     ,'get');  
+                     
+                     
+                  Route::add('/inventario/Consolas/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ConsolasController();
+                     $controller->showAdd();
+                     }
+                     ,'get'); 
+                     
+                     
+                 Route::add('/inventario/Consolas/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ConsolasController();
+                     $controller->add();
+                     }
+                     ,'post'); 
+                     
+                     
+                  Route::add('/inventario/Consolas/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\ConsolasController();
+                     $controller->showEdit($cod);
+                     }
+                 ,'get');      
+                     
+                 
+                 Route::add('/inventario/Consolas/edit/([A-Za-z0-9]+)',
+                     function($cod){
+                     $controller = new \Com\Daw2\Controllers\ConsolasController();
+                     $controller->edit($cod);
+                     }
+                 ,'post'); 
+                 
+                     
                      
                /*BORRAR PRODUCTO*/
                        Route::add('/borrar_producto',

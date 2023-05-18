@@ -26,7 +26,7 @@
 <!-- CSS que venía con el dashboard -->
 <link rel="stylesheet" href="/assets/css/inventarioDashBoard.css"/>
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template --> 
     <link href="/assets/bootstrap-html-examples/dashboard/dashboard.css" rel="stylesheet">
     
     <title><?php echo isset($titulo) ? $titulo : 'Titulo Página' ;?></title>

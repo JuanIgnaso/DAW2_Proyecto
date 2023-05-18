@@ -53,7 +53,7 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
         $data['tecnologias'] = $modelTec->getAll();
         $data['ivas'] = self::IVA;
         $data['proveedores'] = $modelProv->getAll();
-        $this->view->showViews(array('AddMonitor.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddMonitor.view.php'),$data); 
     }
     
     
@@ -86,7 +86,7 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
             $data['tecnologias'] = $modelTec->getAll();
             $data['volver'] = '/inventario/Monitores';
 
-             $this->view->showViews(array('AddMonitor.view.php'),$data); 
+             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddMonitor.view.php'),$data); 
 
           }
 
@@ -128,7 +128,7 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
         $data['tecnologias'] = $modelTec->getAll();
         $data['input'] = $input;
         
-       $this->view->showViews(array('AddMonitor.view.php'),$data);     
+       $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddMonitor.view.php'),$data);     
     }
     
     
@@ -162,7 +162,7 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
            $data['accion'] = 'Aplicar Cambios';
            $data['tecnologias'] = $modelTec->getAll();
            
-           $this->view->showViews(array('AddMonitor.view.php'),$data);     
+           $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddMonitor.view.php'),$data);     
         }
     }
     

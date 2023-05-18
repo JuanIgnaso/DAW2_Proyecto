@@ -59,13 +59,13 @@ class SillaController extends \Com\Daw2\Core\BaseController{
         $data['ivas'] = self::IVA;   
         $data['tipos'] = $this->getTipos();
         $data['proveedores'] = $modelProv->getAll();
-        $this->view->showViews(array('AddSilla.view.php'),$data); 
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data); 
     }
     
     
     public function add(){
      $model = new \Com\Daw2\Models\SillasModel(); 
-     $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+    //$modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
      
      $data = [];
       $data['titulo'] = 'Añadir Producto';
@@ -90,7 +90,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
             $data['volver'] = '/inventario/Sillas';
             $data['tipos'] = $this->getTipos();
 
-            $this->view->showViews(array('AddSilla.view.php'),$data); 
+            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data); 
         }
 
     }
@@ -132,7 +132,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
         $data['tipos'] = $this->getTipos();
 
         
-       $this->view->showViews(array('AddSilla.view.php'),$data);     
+       $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data);     
     }
     
     
@@ -163,7 +163,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['tipos'] = $this->getTipos();
 
-            $this->view->showViews(array('AddSilla.view.php'),$data);     
+            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data);     
         }
     }
     
