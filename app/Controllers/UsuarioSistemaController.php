@@ -88,6 +88,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             $permisos = array(
                 'usuarios' => ['r','w','d'],
                 'inventario' => ['r','w','d'],
+                'proveedores' => ['r','w','d'],
                 'comprar' => ['r','w','d']  
                 
             );

@@ -13,7 +13,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/inventario/Proveedores">
               <span data-feather="file-text" class="align-text-bottom"></span>
              Proveedores
             </a>

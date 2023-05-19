@@ -374,6 +374,57 @@ class FrontController{
        }
        
        
+        if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['proveedores'])){
+            
+            
+                      Route::add('/inventario/Proveedores',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ProveedorController();
+                     $controller->showProveedores();
+                     }
+                     ,'get'); 
+                     
+                     
+                   Route::add('/inventario/Proveedores/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ProveedorController();
+                     $controller->showAdd();
+                     }
+                     ,'get'); 
+                     
+                     Route::add('/inventario/Proveedores/add',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ProveedorController();
+                     $controller->add();
+                     }
+                     ,'post'); 
+                     
+                   Route::add('/borrar_proveedor',
+                     function(){
+                     $controller = new \Com\Daw2\Controllers\ProveedorController();
+                     $controller->deleteProveedor();
+                     }
+                     ,'post');
+                     
+                     
+                   Route::add('/inventario/Proveedores/edit/([A-Za-z0-9]+)',
+                    function($cod){
+                    $controller = new \Com\Daw2\Controllers\ProveedorController();
+                    $controller->showEdit($cod);
+                    }
+                    ,'get'); 
+                     
+                                       
+                   Route::add('/inventario/Proveedores/edit/([A-Za-z0-9]+)',
+                    function($cod){
+                    $controller = new \Com\Daw2\Controllers\ProveedorController();
+                    $controller->edit($cod);
+                    }
+                    ,'post');    
+            
+        }
+       
+       
        if(isset($_SESSION['usuario'])){
                      Route::add('/mi_Perfil',
                      function(){
