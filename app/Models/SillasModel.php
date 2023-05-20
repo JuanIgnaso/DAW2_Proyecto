@@ -124,7 +124,7 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
            try{
         $this->pdo->beginTransaction();
         $stmt = $this->pdo->prepare('INSERT INTO sillas(nombre,tipo_silla,altura,anchura,ajustable) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['tipos'],$post['altura'],$post['anchura'],$post['ajustable']]);
+        $stmt->execute([$post['nombre'],$post['tipo_silla'],$post['altura'],$post['anchura'],$post['ajustable']]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {
@@ -137,7 +137,7 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
             try{
            $this->pdo->beginTransaction();
            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, tipo_silla=?, altura=?, anchura=?, ajustable=? WHERE id_silla=?');
-           $stmt->execute([$post['nombre'],$post['tipos'],$post['altura'],$post['anchura'],$post['ajustable'],$post['id_silla']]);
+           $stmt->execute([$post['nombre'],$post['tipo_silla'],$post['altura'],$post['anchura'],$post['ajustable'],$post['id_silla']]);
            $this->pdo->commit();  
            return true;
        } catch (\PDOException $ex) {

@@ -120,7 +120,7 @@ class TecladosModel extends \Com\Daw2\Core\BaseModel{
          try{
         $this->pdo->beginTransaction();
         $stmt = $this->pdo->prepare('INSERT INTO teclados(nombre,id_conectividad,id_clase,idioma_T,diseño_Teclado) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['conectividades'],$post['clases'],$post['idioma'],$post['diseños']]);
+        $stmt->execute([$post['nombre'],$post['id_conectividad'],$post['id_clase'],$post['idioma_T'],$post['diseño_Teclado']]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {
@@ -147,7 +147,7 @@ class TecladosModel extends \Com\Daw2\Core\BaseModel{
          try{
         $this->pdo->beginTransaction();
         $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, id_conectividad=?, id_clase=?, idioma_T=?, diseño_Teclado=? WHERE id_Teclado=?');
-        $stmt->execute([$post['nombre'],$post['conectividades'],$post['clases'],$post['idioma'],$post['diseños'],$codigo]);
+        $stmt->execute([$post['nombre'],$post['id_conectividad'],$post['id_clase'],$post['idioma_T'],$post['diseño_Teclado'],$codigo]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {

@@ -118,7 +118,7 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
            try{
         $this->pdo->beginTransaction();
         $stmt = $this->pdo->prepare('INSERT INTO monitores(nombre,entrada_video,pulgadas,tecnologia,refresco) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologias'],$post['refresco']]);
+        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologia'],$post['refresco']]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {
@@ -132,7 +132,7 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
          try{
         $this->pdo->beginTransaction();
         $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, entrada_video=?, pulgadas=?, tecnologia=?, refresco=? WHERE id_monitor=?');
-        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologias'],$post['refresco'],$post['id_monitor']]);
+        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologia'],$post['refresco'],$post['id_monitor']]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {

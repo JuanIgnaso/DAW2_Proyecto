@@ -60,9 +60,9 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
         $data['tipo'] = 'PC Montados';
         $data['volver'] = '/inventario/Ordenadores';
         $data['titulo'] = 'Añadir Producto';
-        $data['ivas'] = self::IVA;   
-        $data['almacenamientos'] = $this->getAlmacenamiento();
-        $data['proveedores'] = $modelProv->getAll();
+        $data['iva'] = self::IVA;   
+        $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
+        $data['proveedor'] = $modelProv->getAll();
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data); 
     } 
     
@@ -77,6 +77,13 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
         $data['errores'] =$this->checkForm($_POST);
         
         if(count($data['errores']) == 0){
+            
+           if(!empty($_FILES["imagen"]["tmp_name"])){
+               if($this->uploadPhoto('assets/img/pc_montados/')){
+                 $_POST['imagen_p'] = '/assets/img/pc_montados/'.$_FILES["imagen"]["name"];
+               }       
+              }  
+
             $result = $this->addPC(10,$_POST);
           if($result){
             header('location: '.$data['volver']);   
@@ -87,10 +94,10 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Ordenadores/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['ivas'] = self::IVA;
-            $data['proveedores'] = $modelProv->getAll();
+            $data['iva'] = self::IVA;
+            $data['proveedor'] = $modelProv->getAll();
             $data['volver'] = '/inventario/Ordenadores';
-            $data['almacenamientos'] = $this->getAlmacenamiento();
+            $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
 
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data); 
         }
@@ -121,14 +128,14 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
        $input = $model->getProducto($cod);
         $data = [];
         $data['seccion'] = '/inventario/Ordenadores/edit/'.$cod;
-        $data['proveedores'] = $modelProv->getAll();
+        $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Ordenador';
-        $data['ivas'] = self::IVA;
+        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Ordenadores';
         $data['input'] = $input;
-        $data['almacenamientos'] = $this->getAlmacenamiento();
+        $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
 
         
        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data);     
@@ -141,6 +148,21 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
     $data['volver'] = '/inventario/Ordenadores';
     $data['errores'] = $this->checkForm($_POST,$alta = false);
         if(count($data['errores']) == 0){
+                 
+        $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+   
+        $urlimg = $modelGeneral->getProductImg($_POST['codigo_producto']);
+
+        if(!empty($_FILES["imagen"]["tmp_name"])){
+          unlink(substr($urlimg,1,strlen($urlimg)));
+           if($this->uploadPhoto('assets/img/pc_montados/')){
+             $_POST['imagen_p'] = '/assets/img/pc_montados/'.$_FILES["imagen"]["name"];
+           }       
+          }else{
+            $_POST['imagen_p'] = $urlimg;
+        }  
+        
+
             $result = $this->modifyPC($_POST['id_ordenador'],$_POST['codigo_producto'],$_POST);
            if($result){
                header('location: '.$data['volver']);
@@ -150,14 +172,14 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
         }else{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Ordenadores/edit/'.$cod;
-            $data['proveedores'] = $modelProv->getAll();
+            $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
             $data['titulo_seccion'] = 'Modificar Ordenador';
-            $data['ivas'] = self::IVA;
+            $data['iva'] = self::IVA;
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Ordenadores';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['almacenamientos'] = $this->getAlmacenamiento();
+            $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
 
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data);     
         }
@@ -183,6 +205,25 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
     }
    
     
+    private function uploadPhoto($directorio): bool{
+        $dir = $directorio;
+        $src = $_FILES['imagen']['tmp_name'];
+        $output_dir = $dir.basename($_FILES['imagen']['name']);
+        
+        if(!is_dir($dir)){
+            mkdir($dir, 0775, true);
+        }
+        
+        if(move_uploaded_file($src,$output_dir)){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+    
+    
+    
     
     
     private function checkForm(array $post, bool $alta = true):array{
@@ -192,6 +233,14 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
       $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $tipoAlmacenamiento = $this->getAlmacenamiento();
+      
+      
+      if(!empty($_FILES["imagen"]["tmp_name"])){
+       $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+       $formato = strtolower(pathinfo($_FILES["imagen"]['name'],PATHINFO_EXTENSION));
+      }
+      
+      
       
       if(empty($post['nombre'])){
           $errores['nombre'] = 'Tienes que escribir un nombre';
@@ -234,22 +283,22 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
             $errores['stock'] = 'No se puede introducir un valor igual o inferior a 0';
         }
       
-      if(empty($post['proveedores'])){
+      if(empty($post['proveedor'])){
           
       $errores['proveedor'] = 'Elige un proveedor';
   
       }  
-      else if(!$modelProv->proveedorExists($post['proveedores'])){
+      else if(!$modelProv->proveedorExists($post['proveedor'])){
           $errores['proveedor'] = 'El proveedor que has seleccionado no existe';
-      }else if(empty((int)$post['proveedores'])){
+      }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
       
-      if(empty($post['ivas'])){
+      if(empty($post['iva'])){
         $errores['iva'] = 'tienes que escoger un iva';
       }
       
-      else if(!in_array($post['ivas'],self::IVA)){
+      else if(!in_array($post['iva'],self::IVA)){
           $errores['iva'] = 'Valor de IVA no permitido';
       }
       
@@ -307,14 +356,32 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
           $errores['alimentacion'] = 'nombre de alimentacion no válido';
       }
       
-      if(empty($post['almacenamientos'])){
+      if(empty($post['almacenamiento_tipo'])){
        $errores['almacenamiento_tipo'] = 'Debes de escoger un tipo';
  
       }
-      else if(!in_array($post['almacenamientos'],$tipoAlmacenamiento)){
+      else if(!in_array($post['almacenamiento_tipo'],$tipoAlmacenamiento)){
           $errores['almacenamiento_tipo'] = 'Tipo de almacenamiento no permitido';
       }
       
+      
+
+      if(isset($check)){
+    if($check == false){
+        $errores['url_imagen'] = 'debes de subir una imagen';  
+    }else{
+              if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
+             $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
+          }if($check[0] != $check[1]){  // DIMENSIONES
+            $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
+          } 
+          if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
+            $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
+          }  
+    }
+
+    }
+
       return $errores;
     }
 }

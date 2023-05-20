@@ -54,22 +54,22 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
         $data = [];
         $input = $model->getProducto($cod);
         $data['seccion'] = '/inventario/Teclados/edit/'.$cod;
-        $data['proveedores'] = $modelProv->getAll();
+        $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Ratón';
-        $data['ivas'] = self::IVA;
+        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Teclados';
         $data['input'] = $input;
-        $data['conectividades'] = $conectividadModel->getAll();
-        $data['clases'] = $claseModel->getAll();
-        $data['idiomas'] = $idiomaModel->getAll();
+        $data['id_conectividad'] = $conectividadModel->getAll();
+        $data['id_clase'] = $claseModel->getAll();
+        $data['idioma_T'] = $idiomaModel->getAll();
         $diseño =  $model->getDiseño();
         $patrones = array();
         $patrones[0] = '/\'/';
         $patrones[1] = '/\(/';
         $patrones[2] = '/\)/';
-        $data['diseños'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+        $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
 
         
         
@@ -86,8 +86,20 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
     if(count($data['errores']) == 0){
              $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
              $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+             $urlimg = $modelGeneral->getProductImg($_POST['codigo_producto']);
+                     
+             
+             if(!empty($_FILES["imagen"]["tmp_name"])){
+              unlink(substr($urlimg,1,strlen($urlimg)));
+               if($this->uploadPhoto('assets/img/teclados/')){
+                 $_POST['imagen_p'] = '/assets/img/teclados/'.$_FILES["imagen"]["name"];
+               }       
+              }else{
+                $_POST['imagen_p'] = $urlimg;
+              }        
              $result = $this->modifyTeclado($_POST['id_Teclado'],$_POST['codigo_producto'],$_POST);
-                     if($result){
+
+             if($result){
                 header('location: /inventario/Teclados');   
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
@@ -102,12 +114,12 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
                 $data['accion'] = 'Aplicar Cambios';
                 $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
                 $data['seccion'] = '/inventario/Teclados/edit/'.$cod;
-                $data['proveedores'] = $modelProv->getAll();
-                $data['ivas'] = self::IVA;
+                $data['proveedor'] = $modelProv->getAll();
+                $data['iva'] = self::IVA;
                 $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-                $data['conectividades'] = $conectividadModel->getAll();
-                $data['clases'] = $claseModel->getAll();
-                $data['idiomas'] = $idiomaModel->getAll();
+                $data['id_conectividad'] = $conectividadModel->getAll();
+                $data['id_clase'] = $claseModel->getAll();
+                $data['idioma_T'] = $idiomaModel->getAll();
                 $diseño = $model->getDiseño();
                 $data['volver'] = '/inventario/Ratones';
 
@@ -115,7 +127,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
                 $patrones[0] = '/\'/';
                 $patrones[1] = '/\(/';
                 $patrones[2] = '/\)/';
-                $data['diseños'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+                $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
 
                 
                 $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
@@ -154,18 +166,18 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
         $data['tipo'] = 'Teclados';
         $data['volver'] = '/inventario/Teclados';
         $data['titulo'] = 'Añadir Producto';
-        $data['proveedores'] = $modelProv->getAll();
+        $data['proveedor'] = $modelProv->getAll();
         $data['accion'] = 'Añadir';
-        $data['conectividades'] = $conectividadModel->getAll();
-        $data['clases'] = $claseModel->getAll();
-        $data['idiomas'] = $idiomaModel->getAll();
-        $data['ivas'] = self::IVA;
+        $data['id_conectividad'] = $conectividadModel->getAll();
+        $data['id_clase'] = $claseModel->getAll();
+        $data['idioma_T'] = $idiomaModel->getAll();
+        $data['iva'] = self::IVA;
         $diseño =  $model->getDiseño();
         $patrones = array();
         $patrones[0] = '/\'/';
         $patrones[1] = '/\(/';
         $patrones[2] = '/\)/';
-        $data['diseños'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+        $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
 
     }
@@ -183,6 +195,11 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
           $data['volver'] = '/inventario/Teclados';
           
           if(count($data['errores']) == 0){
+             if(!empty($_FILES["imagen"]["tmp_name"])){
+               if($this->uploadPhoto('assets/img/teclados/')){
+                 $_POST['imagen_p'] = '/assets/img/teclados/'.$_FILES["imagen"]["name"];
+               }       
+              } 
               $result = $this->addTeclado(2,$_POST);
               if($result){
                 header('location: '.$data['volver']);   
@@ -196,17 +213,17 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
             $idiomaModel =  new \Com\Daw2\Models\AuxIdiomaModel();
             $data['seccion'] = '/inventario/Teclados/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['ivas'] = self::IVA;
-            $data['proveedores'] = $modelProv->getAll();
-            $data['conectividades'] = $conectividadModel->getAll();
-            $data['clases'] = $claseModel->getAll();
-            $data['idiomas'] = $idiomaModel->getAll();
+            $data['iva'] = self::IVA;
+            $data['proveedor'] = $modelProv->getAll();
+            $data['id_conectividad'] = $conectividadModel->getAll();
+            $data['id_clase'] = $claseModel->getAll();
+            $data['idioma_T'] = $idiomaModel->getAll();
             $diseño =  $model->getDiseño();
             $patrones = array();
              $patrones[0] = '/\'/';
              $patrones[1] = '/\(/';
              $patrones[2] = '/\)/';
-             $data['diseños'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+             $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
              $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
 
           }
@@ -231,10 +248,36 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
     }
     
     
+    private function uploadPhoto($directorio): bool{
+        $dir = $directorio;
+        $src = $_FILES['imagen']['tmp_name'];
+        $output_dir = $dir.basename($_FILES['imagen']['name']);
+        
+        if(!is_dir($dir)){
+            mkdir($dir, 0775, true);
+        }
+        
+        if(move_uploaded_file($src,$output_dir)){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+    
+    
+    
     
     private function checkForm(array $post, bool $alta = true):array{
         
-      $errores = [];  
+      $errores = []; 
+      
+      //COMPROBACION DE IMG
+      if(!empty($_FILES["imagen"]["tmp_name"])){
+       $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+       $formato = strtolower(pathinfo($_FILES["imagen"]['name'],PATHINFO_EXTENSION));
+      }
+      
         
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -285,46 +328,63 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
         }
       
         
-      if(!$modelProv->proveedorExists($post['proveedores'])){
+      if(!$modelProv->proveedorExists($post['proveedor'])){
           $errores['proveedor'] = 'El proveedor que has seleccionado no existe';
-      }else if(empty((int)$post['proveedores'])){
+      }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
       
       
-      if(!in_array($post['ivas'],self::IVA)){
+      if(!in_array($post['iva'],self::IVA)){
           $errores['iva'] = 'Valor de IVA no permitido';
       }
       
       
-     if(empty($post['diseños'])){
+     if(empty($post['diseño_Teclado'])){
          $errores['diseños'] = 'Tienes que selecionar un diseño de teclado';
      }
      
-    if(!$idiomaModel->idiomaExists($post['idioma'])){
+    if(!$idiomaModel->idiomaExists($post['idioma_T'])){
         $errores['idioma'] = 'el idioma seleccionado no existe.'; 
      }
      
-     else if(!$idiomaModel->idiomaExists($post['idioma'])){
+     else if(!$idiomaModel->idiomaExists($post['idioma_T'])){
         $errores['idioma'] = 'el idioma seleccionado no existe.'; 
      }
      
-     if(empty($post['conectividades'])){
+     if(empty($post['id_conectividad'])){
         $errores['conectividad'] = 'selecciona una conectividad.'; 
      }else
-     if(!$conectividadModel->conectividadExists($post['conectividades'])){
+     if(!$conectividadModel->conectividadExists($post['id_conectividad'])){
       $errores['conectividad'] = 'la conectividad seleccionada no existe.'; 
     
      }
       
-     if(empty($post['clases'])){
+     if(empty($post['id_clase'])){
       $errores['clase'] = 'selecciona una clase.'; 
     
      } else
-     if(!$claseModel->claseExists($post['clases'])){
+     if(!$claseModel->claseExists($post['id_clase'])){
       $errores['clase'] = 'la clase seleccionada no existe.'; 
     
      }
+     
+      if(isset($check)){
+    if($check == false){
+        $errores['url_imagen'] = 'debes de subir una imagen';  
+    }else{
+              if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
+             $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
+          }if($check[0] != $check[1]){  // DIMENSIONES
+            $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
+          } 
+          if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
+            $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
+          }  
+    }
+
+ }
+     
       
       return $errores;
         

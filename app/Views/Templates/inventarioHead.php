@@ -8,7 +8,8 @@
     <meta name="generator" content="Hugo 0.104.2">
     <link rel="stylesheet" href="/assets/bootstrap-html-examples/dashboard/dashboard.css"/>
     <link rel="stylesheet" href="/assets/bootstrap-html-examples/dashboard/dashboard.rtl.css"/>
-    <script src="/assets/bootstrap-html-examples/dashboard/dashboard.js"></script>
+    <!-- 
+    <script src="/assets/bootstrap-html-examples/dashboard/dashboard.js"></script>comment -->
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 

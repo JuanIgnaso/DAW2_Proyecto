@@ -131,19 +131,29 @@
         ?>
       <h2>Bienvenido al panel de incio de Administración</h2>
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
-          <form action="<?php echo $seccion;?>" method="post"> 
+          <form action="<?php echo $seccion;?>" method="post" enctype="multipart/form-data"> 
           <div class="col-8 col-md-6 col-lg-3">
               
                    <div id="col-12">
-                        <img id="foto_img" src="/assets/img/default_image.png" alt="">
+                        <img id="foto_img"  src="
+                             <?php
+                             if(!isset($input['url_imagen'])){
+                                 echo '/assets/img/default_image.png';
+                             }else if($input['url_imagen'] == NULL){
+                               echo '/assets/img/default_image.png';
+                             }else{
+                               echo $input['url_imagen'];  
+                             }
+                             ;?>" alt="">
                     </div>
               
               
                     <footer class="blockquote-footer col-12 pb-2 m-auto text-center">
                         <p>Foto del Producto</p>
                         <label for="">Selecciona una imagen</label>
-                        <input class="col-12 text-center" type="file" name="" id="">
-                     </footer> 
+                        <input class="col-12 text-center" name="imagen" type="file" id="">
+                         <p class="text-danger small"><?php echo isset($errores['url_imagen']) ? $errores['url_imagen'] : '';?></p>
+                    </footer> 
           </div>
           
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
@@ -177,10 +187,10 @@
               
               <div class="col d-flex flex-column">
                  <label for="">IVA</label>
-                    <select name="ivas" id="iva">
+                    <select name="iva" id="iva">
                            <option value="">-</option>
                            <?php
-                           foreach ($ivas as $iva) {
+                           foreach ($iva as $iva) {
                            ?>
                            <option value="<?php echo $iva;?>" <?php echo (isset($input['iva']) && $iva == $input['iva']) ? 'selected' : ''; ?>><?php echo $iva ;?></option>
                            
@@ -222,10 +232,10 @@
                                       
               <div class="col d-flex flex-column">
                  <label for="">Proveedor</label>
-                    <select name="proveedores" id="conextion">
+                    <select name="proveedor" id="conextion">
                            <option value="">-</option>
                            <?php
-                           foreach ($proveedores as $proveedor) {
+                           foreach ($proveedor as $proveedor) {
                            ?>
                            <option value="<?php echo $proveedor['id_proveedor'];?>" <?php echo (isset($input['proveedor']) && $proveedor['id_proveedor'] == $input['proveedor']) ? 'selected' : ''; ?>><?php echo $proveedor['id_proveedor'].' - '.$proveedor['nombre_proveedor'] ;?></option>
                            
@@ -240,11 +250,11 @@
               
                  <div class="col d-flex flex-column">
                  <label for="">Tecnología</label>
-                    <select name="tecnologias" id="tecnologia">
-                           <option value="">-</option>
+                    <select name="tecnologia" id="tecnologia">
+                           <option value="1">Ninguna</option>
                      
                            <?php
-                           foreach ($tecnologias as $tecnologia) {
+                           foreach ($tecnologia as $tecnologia) {
                            ?>
                            <option value="<?php echo $tecnologia['id_tecnologia'];?>"<?php echo (isset($input['tecnologia']) && $tecnologia['id_tecnologia'] == $input['tecnologia']) ? 'selected' : ''; ?>><?php echo $tecnologia['id_tecnologia'].' - '.$tecnologia['nombre_tecnología'] ;?></option>
                            

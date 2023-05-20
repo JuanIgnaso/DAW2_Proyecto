@@ -102,7 +102,7 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
       try{
             $this->pdo->beginTransaction();
             $stmt = $this->pdo->prepare('INSERT INTO ratones(nombre,dpi,clase,id_conexion) values(?,?,?,?)');
-            $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['conexiones']]);
+            $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['id_conexion']]);
             $this->pdo->commit();  
             return true;
         } catch (\PDOException $ex) {
@@ -116,7 +116,7 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
          try{
         $this->pdo->beginTransaction();
         $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, dpi=?, clase=?, id_conexion=? WHERE id=?');
-        $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['conexiones'],$codigo]);
+        $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['id_conexion'],$codigo]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {

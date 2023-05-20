@@ -350,13 +350,10 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             mkdir($dir, 0775, true);
         }
         
-        //Borrar la imagen anterior
-            
-            
-            
+        //Borrar la imagen anterior     
 
         if (move_uploaded_file($src, $output_dir )) {
-              if (!is_null($_SESSION['usuario']['profile_image'])) {
+              if (!is_null($_SESSION['usuario']['profile_image'])) { //Si no es NULL se borra la foto anterior
                 unlink(substr($_SESSION['usuario']['profile_image'],1,strlen($_SESSION['usuario']['profile_image'])));
             }
             if($model->updateUserAvatar($_SESSION['usuario']['id_usuario'],'/'.$output_dir)){
@@ -368,7 +365,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             }
         } else{
         http_response_code(400);     
-        $error['error']  = "Error! No se ha podido subier el archivo: ".$filename;
+        $error['error']  = "Error! No se ha podido subir el archivo: ".$filename;
         echo json_encode($error); 
         exit;
         };

@@ -133,14 +133,25 @@
           <div class="col-8 col-md-6 col-lg-3">
               
                    <div id="col-12">
-                        <img id="foto_img" src="/assets/img/default_image.png" alt="">
+                        <img id="foto_img" src="
+                             <?php
+                             if(!isset($input['url_imagen'])){
+                                 echo '/assets/img/default_image.png';
+                             }else if($input['url_imagen'] == NULL){
+                               echo '/assets/img/default_image.png';
+                             }else{
+                               echo $input['url_imagen'];  
+                             }
+                             ;?>"
+                              alt="">
                     </div>
               
               
                     <footer class="blockquote-footer col-12 pb-2 m-auto text-center">
                         <p>Foto del Producto</p>
                         <label for="">Selecciona una imagen</label>
-                        <input class="col-12 text-center" type="file" name="" id="">
+                        <input class="col-12 text-center" type="file" name="imagen" id="">
+                        <p class="text-danger small"><?php echo isset($errores['url_imagen']) ? $errores['url_imagen'] : '';?></p>
                      </footer> 
           </div>
           
@@ -175,10 +186,10 @@
               
               <div class="col d-flex flex-column">
                  <label for="">IVA</label>
-                    <select name="ivas" id="iva">
+                    <select name="iva" id="iva">
                            <option value="">-</option>
                            <?php
-                           foreach ($ivas as $iva) {
+                           foreach ($iva as $iva) {
                            ?>
                            <option value="<?php echo $iva;?>" <?php echo (isset($input['iva']) && $iva == $input['iva']) ? 'selected' : ''; ?>><?php echo  $iva;?></option>
                            
@@ -199,10 +210,10 @@
                                       
               <div class="col d-flex flex-column">
                  <label for="">Proveedor</label>
-                    <select name="proveedores" id="conextion">
+                    <select name="proveedor" id="conextion">
                            <option value="">-</option>
                            <?php
-                           foreach ($proveedores as $proveedor) {
+                           foreach ($proveedor as $proveedor) {
                            ?>
                            <option value="<?php echo $proveedor['id_proveedor'];?>" <?php echo (isset($input['proveedor']) && $proveedor['id_proveedor'] == $input['proveedor']) ? 'selected' : ''; ?>><?php echo $proveedor['id_proveedor'].' - '.$proveedor['nombre_proveedor'] ;?></option>
                            
@@ -218,10 +229,10 @@
                                     
               <div class="col d-flex flex-column">
                  <label for="">Conexion</label>
-                    <select name="conexiones" id="conextion">
+                    <select name="id_conexion" id="conextion">
                            <option value="">-</option>
                            <?php
-                           foreach ($conexiones as $conect) {
+                           foreach ($id_conexion as $conect) {
                            ?>
                            <option value="<?php echo $conect['id_conexion'];?>" <?php echo (isset($input['id_conexion']) && $conect['id_conexion'] == $input['id_conexion']) ? 'selected' : ''; ?>><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
                            
@@ -250,7 +261,7 @@
             </div>
               <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
                 <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
-                <button type="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
+                <button type="submit" name="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
               </footer>
               
             </form>   

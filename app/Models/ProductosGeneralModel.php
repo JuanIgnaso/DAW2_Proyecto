@@ -95,8 +95,8 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
       }
       
       function productNameExists($nombre): bool{
-          $stmt = $this->pdo->prepare('SELECT nombre FROM productos WHERE nombre LIKE ?');
-          $stmt->execute(['%'.$nombre.'%']);
+          $stmt = $this->pdo->prepare('SELECT nombre FROM productos WHERE nombre =?');
+          $stmt->execute([$nombre]);
           return $stmt->rowCount() != 0;
       }
       
@@ -110,8 +110,11 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
       function insertProduct($categoria,array $post): bool{
         try{
             $this->pdo->beginTransaction();
-            $stmt= $this->pdo->prepare('INSERT INTO productos(nombre,proveedor,categoria,marca,desc_producto,precio_bruto,iva,stock) values(?,?,?,?,?,?,?,?)');
-            $stmt->execute([$post['nombre'],$post['proveedores'],$categoria,$post['marca'],$post['desc_producto'],$post['precio_bruto'],$post['ivas'],$post['stock']]);
+            if(!isset($post['imagen_p'])){
+                $post['imagen_p'] = NULL;
+            }
+            $stmt= $this->pdo->prepare('INSERT INTO productos(nombre,proveedor,categoria,marca,desc_producto,url_imagen,precio_bruto,iva,stock) values(?,?,?,?,?,?,?,?,?)');
+            $stmt->execute([$post['nombre'],$post['proveedor'],$categoria,$post['marca'],$post['desc_producto'],$post['imagen_p'],$post['precio_bruto'],$post['iva'],$post['stock']]);
             $this->pdo->commit();  
             return true;
         } catch (\PDOException $ex) {
@@ -119,16 +122,32 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
             return false;
         }  
         
-
       }
       
+      
        function editProduct(array $post,$codigo):bool{
-
-            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, proveedor=?, marca=?, desc_producto=?,precio_bruto=?, iva=?, stock=? WHERE codigo_producto=?');
-            $stmt->execute([$post['nombre'],$post['proveedores'],$post['marca'],$post['desc_producto'],$post['precio_bruto'],$post['ivas'],$post['stock'],$codigo]);
-        
+        try{
+            $this->pdo->beginTransaction();
+            if(!isset($post['imagen_p'])){
+                $post['imagen_p'] = NULL;
+            }
+            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, proveedor=?, marca=?, desc_producto=?, url_imagen=?, precio_bruto=?, iva=?, stock=? WHERE codigo_producto=?');
+            $stmt->execute([$post['nombre'],$post['proveedor'],$post['marca'],$post['desc_producto'],$post['imagen_p'],$post['precio_bruto'],$post['iva'],$post['stock'],$codigo]);
+            $this->pdo->commit();  
             return true;
- 
+        } catch (\PDOException $ex) {
+              $this->pdo->rollback();
+              return false;
+        }  
+        
+        }
+        
+        
+        function getProductImg($codigo){
+          $stmt = $this->pdo->prepare('SELECT url_imagen FROM productos WHERE codigo_producto=?');
+          $stmt->execute([$codigo]);
+          $var = $stmt->fetch();
+          return $var['url_imagen']; 
         }
         
       
