@@ -17,5 +17,8 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Administracion.view.php'),$data);     
     }
     
+    
+
+    
 }
 

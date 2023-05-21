@@ -177,6 +177,38 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     
     
     
+    //ADMINISTRACION DE USUARIOS
+    //Mostrar Lista de usuarios existentes
+    
+    public function showUsersList(){
+        
+     $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+     $rolModel = new \Com\Daw2\Models\RolModel();
+
+ 
+     $data = []; 
+     $data['input'] = filter_var_array($_GET,FILTER_SANITIZE_SPECIAL_CHARS);
+     $data['usuarios'] = $model->filterAll($_GET);
+     $data['id_rol'] = $rolModel->getUsersRol();
+     $data['seccion'] = '/inventario/UsuariosSistema';
+     $data['titulo'] = 'Inventario Usuarios Web';
+     $data['tipo'] = 'Usuarios';
+
+     
+       $copiaGET = $_GET;
+        unset($copiaGET['order']);
+        if(count($copiaGET) > 0){
+           $data['queryString'] = "&".http_build_query($copiaGET);
+        }else{
+          $data['queryString'] = "";
+       }
+     
+     
+    $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','UsersList.view.php'),$data); 
+
+    }
+    
+    
     
     
     //Para cargar la vista provisional del usuario
@@ -185,7 +217,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $data = [];
         $rolModel = new \Com\Daw2\Models\RolModel();
         $rol = $rolModel->getUsersRol();
-        $data['roles'] = $rol;
+        $data['id_rol'] = $rol;
         $data['titulo'] = 'Añadir Usuarios(Provisional)';
         $data['seccion'] = '/usuarios/add';
         $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','addUsersTest.view.php','templates/footer.view.php'),$data);
@@ -521,6 +553,33 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         return $errores;
    }
     
+   
+        function darDeBajaUsuario(){
+    
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $nombre = $_POST['dato'];
+        $d = [
+            "hola" => "adios"
+        ];
+        $var = $model->darDeBaja($nombre);
+        if($var){
+            
+             http_response_code(200);         
+             exit;
+        }else{
+          http_response_code(400);  
+          echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+         exit;
+        }
+        
+        //header('Location: /');
+        
+        echo json_encode($nombre);
+        exit;   
+    }
+   
+   
+   
     
     
         function darDeBaja(){

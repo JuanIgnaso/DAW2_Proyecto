@@ -6,12 +6,19 @@
           <span>Usuarios</span>
         </h6>
         <ul class="nav flex-column mb-2">
+            
+        <?php
+        if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['usuarios'])){
+        ?>    
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/inventario/UsuariosSistema">
               <span data-feather="file-text" class="align-text-bottom"></span>
               Usuarios
             </a>
           </li>
+       <?php
+        }
+       ?>   
           <li class="nav-item">
             <a class="nav-link" href="/inventario/Proveedores">
               <span data-feather="file-text" class="align-text-bottom"></span>

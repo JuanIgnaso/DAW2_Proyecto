@@ -89,19 +89,36 @@ class FrontController{
        if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['usuarios'])){
            
                        /*MOSTRAR USUARIOS(PROVISIONAL)*/
-          Route::add('/usuarios/add',
+          Route::add('/inventario/UsuariosSistema',
                      function(){
                      $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                     $controller->showAdd();
+                     $controller->showUsersList();
                      }
-                     ,'get');     
+                     ,'get');
+                     
+                     
+                                         
+              Route::add('/inventario/UsuariosSistema/baja/([A-Za-z0-9-_\s]+)',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->darDeBajaUsuario();
+                }
+                , 'get');
+                
+                
+                Route::add('/inventario/UsuariosSistema/baja/([A-Za-z0-9-_\s]+)',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->darDeBajaUsuario();
+                }
+                , 'post'); 
        
-                  Route::add('/usuarios/add',
-                     function(){
-                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                     $controller->addUser();
-                     }
-                     ,'post');  
+//                  Route::add('/usuarios/add',
+//                     function(){
+//                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
+//                     $controller->addUser();
+//                     }
+//                     ,'post');  
            
        }     
        

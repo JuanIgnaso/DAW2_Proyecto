@@ -79,7 +79,8 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
         if(count($data['errores']) == 0){
             
            if(!empty($_FILES["imagen"]["tmp_name"])){
-               if($this->uploadPhoto('assets/img/pc_montados/')){
+               $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/pc_montados/');
+               if($upload->uploadPhoto()){
                  $_POST['imagen_p'] = '/assets/img/pc_montados/'.$_FILES["imagen"]["name"];
                }       
               }  
@@ -155,7 +156,8 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
 
         if(!empty($_FILES["imagen"]["tmp_name"])){
           unlink(substr($urlimg,1,strlen($urlimg)));
-           if($this->uploadPhoto('assets/img/pc_montados/')){
+           $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/pc_montados/');
+           if($upload->uploadPhoto()){
              $_POST['imagen_p'] = '/assets/img/pc_montados/'.$_FILES["imagen"]["name"];
            }       
           }else{
@@ -204,27 +206,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
 
     }
    
-    
-    private function uploadPhoto($directorio): bool{
-        $dir = $directorio;
-        $src = $_FILES['imagen']['tmp_name'];
-        $output_dir = $dir.basename($_FILES['imagen']['name']);
-        
-        if(!is_dir($dir)){
-            mkdir($dir, 0775, true);
-        }
-        
-        if(move_uploaded_file($src,$output_dir)){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
-    
-    
-    
-    
+   
     
     private function checkForm(array $post, bool $alta = true):array{
         

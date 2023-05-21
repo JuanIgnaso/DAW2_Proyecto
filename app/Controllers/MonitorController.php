@@ -72,7 +72,8 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
           if(count($data['errores']) == 0){
               
             if(!empty($_FILES["imagen"]["tmp_name"])){
-               if($this->uploadPhoto('assets/img/monitores/')){
+                $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/monitores/');
+               if($upload->uploadPhoto()){
                  $_POST['imagen_p'] = '/assets/img/monitores/'.$_FILES["imagen"]["name"];
                }       
             }    
@@ -98,25 +99,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
           }
 
     }
-    
-    
-    private function uploadPhoto($directorio): bool{
-        $dir = $directorio;
-        $src = $_FILES['imagen']['tmp_name'];
-        $output_dir = $dir.basename($_FILES['imagen']['name']);
-        
-        if(!is_dir($dir)){
-            mkdir($dir, 0775, true);
-        }
-        
-        if(move_uploaded_file($src,$output_dir)){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
-    
     
     private function addMonitor(int $categoria,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
@@ -171,7 +153,8 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
            
              if(!empty($_FILES["imagen"]["tmp_name"])){
               unlink(substr($urlimg,1,strlen($urlimg)));
-               if($this->uploadPhoto('assets/img/monitores/')){
+              $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/monitores/');
+               if($upload->uploadPhoto()){
                  $_POST['imagen_p'] = '/assets/img/monitores/'.$_FILES["imagen"]["name"];
                }       
               }else{

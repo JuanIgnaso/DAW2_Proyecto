@@ -77,7 +77,8 @@ class SillaController extends \Com\Daw2\Core\BaseController{
        if(count($data['errores']) == 0){
            
            if(!empty($_FILES["imagen"]["tmp_name"])){
-               if($this->uploadPhoto('assets/img/sillas/')){
+               $upload = new \Com\Daw2\Helpers\FileUpload('assets/sillas/');
+               if($upload->uploadPhoto()){
                  $_POST['imagen_p'] = '/assets/img/sillas/'.$_FILES["imagen"]["name"];
                }       
             } 
@@ -169,7 +170,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
          $data['errores'] = $this->checkForm($_POST,$alta = false);
          $data['volver'] = '/inventario/Sillas';
 
-             if(count($data['errores']) == 0){
+        if(count($data['errores']) == 0){
            $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
            $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
           
@@ -177,10 +178,11 @@ class SillaController extends \Com\Daw2\Core\BaseController{
            
              if(!empty($_FILES["imagen"]["tmp_name"])){
               unlink(substr($urlimg,1,strlen($urlimg)));
-               if($this->uploadPhoto('assets/img/sillas/')){
+              $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/ratones/');
+               if($upload->uploadPhoto()){
                  $_POST['imagen_p'] = '/assets/img/sillas/'.$_FILES["imagen"]["name"];
                }       
-              }else{
+             }else{
                 $_POST['imagen_p'] = $urlimg;
              }
            

@@ -1,26 +1,26 @@
 
+    <div class="row">
+        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
+              <!-- COntenido del modal -->
+            <div class="col-12  contenido_modal_carrito">
+                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
+                   <h2 class="text-light text-center">Mi Carrito</h2>
+                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
+                </header>
+                <!-- cuerpo -->
+                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
+                    <!-- caja del producto -->
 
-<div class="row">
-    <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-          <!-- COntenido del modal -->
-        <div class="col-12  contenido_modal_carrito">
-            <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-               <h2 class="text-light text-center">Mi Carrito</h2>
-               <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-            </header>
-            <!-- cuerpo -->
-            <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                <!-- caja del producto -->
-
-           </div>
-            <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
+               </div>
+                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
+            </div>
+             <!-- // -->
         </div>
-         <!-- // -->
     </div>
-</div>
   
-      <!-- Abrir Cerrar Carrito -->
-             <script src="/assets/js/abrirCerrarCarrito.js"></script> 
+      
+         <!-- Abrir Cerrar Carrito -->
+       <script src="/assets/js/abrirCerrarCarrito.js"></script> 
       
 
 <div class="container-fluid">
@@ -32,70 +32,49 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Panel Administración: <?php echo isset($tipo) ? $tipo : 'Categoría';?></h1>
-         <a href="/inventario/Ratones/add" class="btn btn-success ml-1">Añadir<i class="fa-solid fa-circle-plus p-1"></i></a>
+        <h1 class="h2">Panel Administración: <?php echo isset($tipo) ? $tipo : '' ;?></h1>
+        <a href="/inventario/Usuarios/add" class="btn btn-success ml-1">Añadir<i class="fa-solid fa-circle-plus p-1"></i></a>
+
       </div>
 
-      <!--<canvas /inventario/Ratones/add   class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
+      <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
         
-      <h2>Filtros de búsqueda de la categoría.</h2>
+      <h2>Filtros de búsqueda  <?php echo isset($tipo) ? $tipo : '' ;?></h2>
        <form method="get"  action="<?php echo $seccion;?>">
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
 
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
-                 <label for="">Nombre</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : '' ;?>" class="mt-1">
-            </div>
-              
-                        
-              <div class="col d-flex flex-column">
-                 <label for="">Clase</label>
-                <input type="text" id="clase" name="clase" value="<?php echo isset($input['clase']) ? $input['clase'] : '' ;?>" class="mt-1">
+                 <label for="">Nombre Usuario</label>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : '' ;?>" class="mt-1">
             </div>
               
               
-            <div class="col d-flex flex-column">
-                 <label for="">min DPI</label>
-                <input type="text" id="min_dpi" name="min_dpi" value="<?php echo isset($input['min_dpi']) ? $input['min_dpi'] : '' ;?>" class="mt-1">
+             <div class="col d-flex flex-column">
+                 <label for="">Correo</label>
+                <input type="text" id="email" name="email" value="<?php echo isset($input['email']) ? $input['email'] : '' ;?>" class="mt-1">
             </div>
               
             <div class="col d-flex flex-column">
-                 <label for="">max DPI</label>
-                <input type="text" id="max_dpi" name="max_dpi" value="<?php echo isset($input['max_dpi']) ? $input['max_dpi'] : '' ;?>" class="mt-1">
-            </div>
-              
-                        <div class="col d-flex flex-column">
-                 <label for="">min Precio</label>
-                <input type="text" id="min_precio" name="min_precio" value="<?php echo isset($input['min_precio']) ? $input['min_precio'] : '' ;?>" class="mt-1">
-            </div>
-              
-            <div class="col d-flex flex-column">
-                 <label for="">max Precio</label>
-                <input type="text" id="max_precio" name="max_precio" value="<?php echo isset($input['max_precio']) ? $input['max_precio'] : '' ;?>" class="mt-1">
-            </div>  
-              
-                                      
-              <div class="col d-flex flex-column">
-                 <label for="">Conexion</label>
-                    <select name="conexion[]" id="conextion" multiple>
+                 <label for="">Rol</label>
+                    <select name="id_rol[]" id="id_rol" multiple>
                            <option value="">-</option>
                            <?php
-                           foreach ($conexiones as $conect) {
+                           foreach ($id_rol as $rol) {
                            ?>
-                           <option value="<?php echo $conect['id_conexion'];?>" <?php echo (isset($_GET['conexion']) && in_array($conect['id_conexion'], $_GET['conexion'])) ? 'selected' : ''; ?>><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
+                           <option value="<?php echo $rol['id_rol'];?>" <?php echo (isset($_GET['id_rol']) && in_array($rol['id_rol'],$_GET['id_rol'])) ? 'selected' : ''; ?>><?php echo $rol['id_rol'].' - '.$rol['nombre_rol'] ;?></option>
                            
                            <?php
                            }
                            ?>
                      </select>
             </div>
-              
+                                   
               
           </div>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
-              <a href="/inventario/Ratones" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
+                <a href="/inventario/UsuariosSistema" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
               <input type="submit" value="Aplicar filtros" name="enviar" class="btn boton-aplicar ml-2"/>
           </div>
        </form>
@@ -105,22 +84,10 @@
           </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
       <?php
-      if(count($productos) != 0){
+      if(count($usuarios) != 0){
       ?>
-      <!-- MODAL BORRAR -->
+ <!-- MODAL BORRAR -->
       <div class="col-6 col-sm-4 border border-2 border-dark rounded bg-light" id="modal_inventario_borrar">
           <header class=" border-bottom border-secondary col-12 d-flex justify-content-between align-items-center p-2">
               <h4 class="p-0 m-0" style="color:#272727">Confimar</h4>
@@ -135,33 +102,30 @@
         <table class="table table-striped table-sm" id="tabla_contenido">
           <thead>
             <tr>
-                <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">Cod.</a></th>
-                <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Nombre</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Prov</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Precio</a></th>           
-              <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">DPI</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=6<?php echo $queryString; ?>">Clase</a></th>
-              <th scope="col"><a href="<?php echo $seccion;?>?order=7<?php echo $queryString; ?>">Conexion</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=1<?php echo $queryString; ?>">ID.</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=2<?php echo $queryString; ?>">Email</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=3<?php echo $queryString; ?>">Nombre Usuario</a></th>
+              <th scope="col"><a href="<?php echo $seccion;?>?order=4<?php echo $queryString; ?>">Rol</a></th>   
+              <th scope="col"><a href="<?php echo $seccion;?>?order=5<?php echo $queryString; ?>">Último Login</a></th>
               <th scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>
            <?php
-            foreach ($productos as $producto) {
+            foreach ($usuarios as $usuario) {
                      
            ?>   
-            <tr id="<?php echo $producto['codigo_producto'];?>">
-              <td><?php echo $producto['codigo_producto'];?></td>
-              <td><?php echo $producto['nombre'];?></td>
-              <td><?php echo $producto['nombre_proveedor'];?></td>
-              <td><?php echo $producto['precio'];?></td>
-              <td><?php echo $producto['dpi'];?></td>
-              <td><?php echo $producto['clase'];?></td>
-              <td><?php echo $producto['nombre_conectividad_raton'];?></td>
+            <tr  class='<?php echo $usuario['baja'] == 1 ? 'table-dark' : '';?>'>
+              <td><?php echo $usuario['id_usuario'];?></td>
+              <td><?php echo $usuario['email'];?></td>
+              <td><?php echo $usuario['nombre_usuario'];?></td>
+              <td><?php echo $usuario['nombre_rol'];?></td>
+              <td><?php echo $usuario['ultimo_login'];?></td>
               <td>
                   <div class="acciones col-12 f-flex justify-content-center gap-1 flex-column flex-sm-row">
-                      <button type="button" onclick="abrirModal(this)" class="btn p-0"><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
-                      <a href="/inventario/Ratones/edit/<?php echo $producto['codigo_producto'];?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
+                      <button type="button" onclick="abrirModal(this)" class="btn p-0"  <?php echo $usuario['nombre_usuario'] == $_SESSION['usuario']['nombre_usuario'] ? 'disabled' : '';?>><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
+                      <a href="/inventario/Proveedores/edit/<?php echo $usuario['id_usuario'];?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
+                      <button id="<?php echo $usuario['nombre_usuario'];?>" type="button" onclick='darBajaUsr(this.getAttribute("id"))' <?php echo $usuario['nombre_usuario'] == $_SESSION['usuario']['nombre_usuario'] ? 'disabled' : '';?> class="btn p-0"><i class="fa-solid fa-toggle-<?php echo $usuario['baja'] == 1 ? 'off' : 'on';?>" style="color: orangered;"></i></button>
                   </div>
               </td>
             </tr>
@@ -170,10 +134,98 @@
             ?>
           </tbody>
         </table>
+ 
+ 
         
-             <!-- SCRIPT BORRAR -->
-      <script src="/assets/js/borrarElementoTabla.js"></script>
+        <script>
+        //DAR DE BAJA USUARIO
+        function darBajaUsr(e){
+                       
+           $.ajax({
+               url: '/inventario/UsuariosSistema/baja/' + e,
+               
+               type: 'POST',
+               
+               data: {
+                   dato: e
+               },
+               success: function(response) {
+                   //Si lo da de baja o no, recargamos la página para actualizar los registros
+                 location.reload();              
+               },
+               error: function(error){
+                  error = error.responseText;
+                  console.log(error);
+                   window.alert(error);
+               },
+           }); 
+        }
+        </script>
+ 
+ 
+ 
+               <!-- SCRIPT BORRAR -->
+      <script>
+
+          
+          
+       var codigo = 0 
       
+      //Abrir La Modal
+      function abrirModal(e){
+         document.getElementById('modal_inventario_borrar').style.display = 'block'; 
+         console.log(e.parentNode.parentNode.parentNode.getAttribute('id'));
+         codigo = e.parentNode.parentNode.parentNode.getAttribute('id');
+      }
+      
+      //Cerrar La Modal
+      function closeModal(){
+        document.getElementById('modal_inventario_borrar').style.display = 'none';
+        console.log(codigo);
+      }
+      
+      //Borrar la columna y el producto de la BBDD
+      function borrar(){
+          
+          let columna = document.getElementById(codigo);
+                   
+               $.ajax({
+
+                //url a donde se colocan los datos
+                url: '/borrar_proveedor',
+
+                
+                type: 'POST',
+
+                
+            data: {
+                    
+                    producto: parseInt(codigo)//codigo del producto
+                },
+
+
+                //Borrar la columna y cerrar la modal en caso de success
+                success: function(response) {
+                    let resp = JSON.parse(response);
+                    console.log(resp); 
+                    columna.remove();
+                   document.getElementById('modal_inventario_borrar').style.display = 'none';
+                },
+
+                //Cerrar modal y mostrar mensaje de error
+                error: function(error) {
+                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
+
+                    error = JSON.parse(error.responseText);
+                     let resp =error;
+                   document.getElementById('modal_inventario_borrar').style.display = 'none';
+                    window.alert((resp));
+                    
+                }
+            });
+         
+      }
+      </script>
       <?php
       }else{
       ?>
@@ -234,6 +286,7 @@
         <script src="/assets/js/finalizarCompra.js"></script>
         <?php
         }
-        ?>         
+        ?>   
+  
   </body>
 </html>

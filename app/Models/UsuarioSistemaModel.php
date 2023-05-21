@@ -9,8 +9,68 @@ namespace Com\Daw2\Models;
 
 class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     
-    private const SELECT_ALL = 'SELECT usuarios.*,rol_usuarios.descripcion FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol';
+    private const SELECT_ALL = 'SELECT usuarios.*,rol_usuarios.* FROM usuarios LEFT JOIN rol_usuarios ON usuarios.id_rol = rol_usuarios.id_rol';
     private const UPDATE = 'UPDATE usuarios SET ';
+    private const DEFAULT_ORDER = 0;
+    private const FIELD_ORDER = ['id_usuario','email','nombre_usuario','nombre_rol','ultimo_login'];
+    
+    
+    function filterAll(array $filtros): array{
+        
+       $conditions = [];
+       $parameters = [];  
+       
+       
+       if(isset($filtros['id_rol']) && is_array($filtros['id_rol'])){
+            $contador = 1;
+            $condicionesRol = [];
+            foreach($filtros['id_rol'] as $rol){
+                if(filter_var($rol,FILTER_VALIDATE_INT)){
+                    $condicionesRol[] = ':id_rol'.$contador;
+                    $parameters['id_rol'.$contador]  = $rol;
+                    $contador++;
+                }
+            }
+            if(count($parameters) > 0){
+                $conditions[] = ' usuarios.id_rol IN ('.implode(',',$condicionesRol).')';
+                }
+            }
+             if(isset($filtros['nombre_usuario']) && !empty($filtros['nombre_usuario'])){
+            $conditions[] = ' nombre_usuario LIKE :nombre_usuario';
+            $parameters['nombre_usuario'] = "%".$filtros['nombre_usuario']."%";
+             }
+             
+           if(isset($filtros['email']) && !empty($filtros['email'])){
+            $conditions[] = ' email LIKE :email';
+            $parameters['email'] = "%".$filtros['email']."%";
+            }
+            
+            if(isset($filtros['order']) && filter_var($filtros['order'],FILTER_VALIDATE_INT)){
+                if($filtros['order'] <= count(self::FIELD_ORDER) && $filtros['order'] >= 1){
+                    $fieldOrder = self::FIELD_ORDER[$filtros['order'] -1];
+                }else{
+                    $filtros['order'] = self::DEFAULT_ORDER;
+                    $fieldOrder = self::FIELD_ORDER[self::DEFAULT_ORDER];
+                }
+            }else{
+                    $filtros['order'] = self::DEFAULT_ORDER;
+                    $fieldOrder = self::FIELD_ORDER[self::DEFAULT_ORDER];
+            }
+
+            if(count($parameters) > 0){
+                $sql = self::SELECT_ALL." WHERE ".implode(" AND ",$conditions)." ORDER BY $fieldOrder";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute($parameters);
+                return $stmt->fetchAll();
+            }else{
+                $stmt = $this->pdo->query(self::SELECT_ALL." ORDER BY $fieldOrder");
+                return $stmt->fetchAll();
+            }
+
+       
+       
+    }
+    
     
     
     public function login($post): ?array{
@@ -120,8 +180,10 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     private function comprobarBaja($nombre): bool{
         $stmt = $this->pdo->prepare(self::SELECT_ALL." WHERE nombre_usuario=? AND baja=1");
         $stmt->execute([$nombre]);
-        return $stmt->rowCount() !== 0;
+        return $stmt->rowCount() != 0;
     }
+    
+    
     
     function darDeBaja($nombre): bool{
         try{
@@ -129,7 +191,9 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
 
         if($this->comprobarBaja($nombre)){
         $stmt = $this->pdo->prepare(self::UPDATE."baja=0 WHERE nombre_usuario=?");
-        $stmt->execute([$nombre]);  
+        $stmt->execute([$nombre]); 
+        $this->pdo->commit();
+        return true;
         }else{
         $stmt = $this->pdo->prepare(self::UPDATE."baja=1 WHERE nombre_usuario=?");
         $stmt->execute([$nombre]); 

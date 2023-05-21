@@ -7,7 +7,7 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
     private const SELECT_ALL = 'SELECT categorias.formulario,proveedores.nombre_proveedor,productos.*,ratones.dpi,ratones.clase,ratones.id,ratones.id_conexion,conexiones_raton.nombre_conectividad_raton FROM ratones LEFT JOIN conexiones_raton ON ratones.id_conexion = conexiones_raton.id_conexion LEFT JOIN productos ON productos.nombre = ratones.nombre LEFT JOIN proveedores ON productos.proveedor = proveedores.id_proveedor LEFT JOIN categorias ON productos.categoria = id_categoria';
     private const DEFAULT_ORDER = 0;
     private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','dpi','clase','nombre_conectividad_raton'];
- private const _UPDATE = 'UPDATE ratones SET ';  
+    private const _UPDATE = 'UPDATE ratones SET ';  
     
        function loadDetails($nombre){
         $stmt = $this->pdo->prepare('SELECT ratones.nombre,ratones.dpi,ratones.clase,conexiones_raton.nombre_conectividad_raton FROM ratones LEFT JOIN conexiones_raton ON ratones.id_conexion = conexiones_raton.id_conexion WHERE nombre=?');
@@ -48,7 +48,7 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
         }
         
         
-              if(isset($filtros['clase']) && !empty($filtros['clase'])){
+        if(isset($filtros['clase']) && !empty($filtros['clase'])){
             $conditions[] = ' clase LIKE :clase';
             $parameters['clase'] = "%".$filtros['clase']."%";
         }

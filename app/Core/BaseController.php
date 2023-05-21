@@ -1,5 +1,6 @@
 <?php
   namespace Com\Daw2\Core;
+ 
   
   abstract class BaseController {
       protected $view;
