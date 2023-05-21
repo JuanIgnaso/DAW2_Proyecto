@@ -25,6 +25,13 @@
                         <!-- MODAL CARRITO  -->    
 
                         <button class='btn btn-default position-relative' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i><span id="carrito_items" class="badge bg-danger position-absolute top-0 start-100 translate-middle"></span></button>
+                        
+                         <!-- Foto perfil -->
+
+                         <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $_SESSION['usuario']['profile_image'];?>');">
+                            
+                        </div> 
+                        
                      <a class="col-auto text-light m-0" id="nombre_usuario" href="/mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a>
                    
                     <div class="navbar-nav">

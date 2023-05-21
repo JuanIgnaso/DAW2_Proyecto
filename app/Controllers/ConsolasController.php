@@ -43,9 +43,9 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
         $data['tipo'] = 'Consolas';
         $data['volver'] = '/inventario/Consolas';
         $data['titulo'] = 'Añadir Producto';
-        $data['conectividades'] = $modelConexiones->getAll();
-        $data['ivas'] = self::IVA;   
-        $data['proveedores'] = $modelProv->getAll();
+        $data['id_conexion'] = $modelConexiones->getAll();
+        $data['iva'] = self::IVA;   
+        $data['proveedor'] = $modelProv->getAll();
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data); 
     }
     
@@ -63,6 +63,15 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
         $data['volver'] = '/inventario/Consolas';
         $data['errores'] = $this->checkForm($_POST);
         if(count($data['errores']) == 0){
+            
+            
+        if(!empty($_FILES["imagen"]["tmp_name"])){
+           if($this->uploadPhoto('assets/img/consolas/')){
+             $_POST['imagen_p'] = '/assets/img/consolas/'.$_FILES["imagen"]["name"];
+           }       
+        }   
+            
+            
           $result = $this->addConsola(6,$_POST);
           if($result){
             header('location: '.$data['volver']);   
@@ -73,14 +82,33 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Consolas/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['ivas'] = self::IVA;
-            $data['proveedores'] = $modelProv->getAll();
+            $data['iva'] = self::IVA;
+            $data['proveedor'] = $modelProv->getAll();
             $data['volver'] = '/inventario/Consolas';
-            $data['conectividades'] = $modelConexiones->getAll();
+            $data['id_conexion'] = $modelConexiones->getAll();
 
 
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data); 
         }
+    }
+    
+    
+    
+     private function uploadPhoto($directorio): bool{
+        $dir = $directorio;
+        $src = $_FILES['imagen']['tmp_name'];
+        $output_dir = $dir.basename($_FILES['imagen']['name']);
+        
+        if(!is_dir($dir)){
+            mkdir($dir, 0775, true);
+        }
+        
+        if(move_uploaded_file($src,$output_dir)){
+            return true;
+        }else{
+            return false;
+        }
+        
     }
     
     
@@ -111,14 +139,14 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
        $data = [];
        $input = $model->getProducto($cod);
         $data['seccion'] = '/inventario/Consolas/edit/'.$cod;
-        $data['proveedores'] = $modelProv->getAll();
+        $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Consola';
-        $data['ivas'] = self::IVA;
+        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Consolas';
         $data['input'] = $input;
-        $data['conectividades'] = $modelConexiones->getAll();
+        $data['id_conexion'] = $modelConexiones->getAll();
 
 
         
@@ -136,6 +164,19 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
              if(count($data['errores']) == 0){
            $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
            $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+           
+           
+           $urlimg = $modelGeneral->getProductImg($_POST['codigo_producto']);
+           
+             if(!empty($_FILES["imagen"]["tmp_name"]) && $urlimg != NULL){
+              unlink(substr($urlimg,1,strlen($urlimg)));
+               if($this->uploadPhoto('assets/img/consolas/')){
+                 $_POST['imagen_p'] = '/assets/img/consolas/'.$_FILES["imagen"]["name"];
+               }       
+              }else{
+                $_POST['imagen_p'] = $urlimg;
+              }           
+                 
            $result = $this->modifyConsola($_POST['id_consola'],$_POST['codigo_producto'],$_POST);
            if($result){
                header('location: '.$data['volver']);
@@ -147,14 +188,14 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
 
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Consolas/edit/'.$cod;
-            $data['proveedores'] = $modelProv->getAll();
+            $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
             $data['titulo_seccion'] = 'Modificar Consola';
-            $data['ivas'] = self::IVA;
+            $data['iva'] = self::IVA;
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Consolas';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-             $data['conectividades'] = $modelConexiones->getAll();
+             $data['id_conexion'] = $modelConexiones->getAll();
 
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data);     
         }
@@ -192,6 +233,13 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
 
+      
+      //COMPROBACION DE IMG
+      if(!empty($_FILES["imagen"]["tmp_name"])){
+       $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+       $formato = strtolower(pathinfo($_FILES["imagen"]['name'],PATHINFO_EXTENSION));
+      }
+      
       
       if(empty($post['nombre'])){
           $errores['nombre'] = 'Tienes que escribir un nombre';
@@ -234,22 +282,22 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
             $errores['stock'] = 'No se puede introducir un valor igual o inferior a 0';
         }
       
-      if(empty($post['proveedores'])){
+      if(empty($post['proveedor'])){
           
       $errores['proveedor'] = 'Elige un proveedor';
   
       }  
-      else if(!$modelProv->proveedorExists($post['proveedores'])){
+      else if(!$modelProv->proveedorExists($post['proveedor'])){
           $errores['proveedor'] = 'El proveedor que has seleccionado no existe';
-      }else if(empty((int)$post['proveedores'])){
+      }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
       
-      if(empty($post['ivas'])){
+      if(empty($post['iva'])){
         $errores['iva'] = 'tienes que escoger un iva';
       }
       
-      else if(!in_array($post['ivas'],self::IVA)){
+      else if(!in_array($post['iva'],self::IVA)){
           $errores['iva'] = 'Valor de IVA no permitido';
       }
       
@@ -257,7 +305,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
           $errores['juego_incluido'] = 'No se aceptan cadenas vacías';
       }
 
-      if(!isset($post['manual'])){
+      if(!isset($post['manual_usuario'])){
           $errores['manual_usuario'] = 'debes escoger una de las dos opciones';
       }
       
@@ -269,11 +317,30 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
       }
       
       
-      if(!$modelConec->conexionExists($post['conectividades'])){
+      if(!$modelConec->conexionExists($post['id_conexion'])){
           $errores['conexion'] = 'La conexion que has seleccionado no existe';
-      }else if(empty($post['conectividades'])){
+      }else if(empty($post['id_conexion'])){
           $errores['conexion'] = 'Debes seleccionar una conexion';
       }
+      
+      
+      
+            
+    if(isset($check)){
+    if($check == false){
+        $errores['url_imagen'] = 'debes de subir una imagen';  
+    }else{
+       if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
+             $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
+       }if($check[0] != $check[1]){  // DIMENSIONES
+            $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
+        } 
+        if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
+         $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
+         }  
+    }
+
+ }
       
       return $errores;
     }

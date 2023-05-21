@@ -47,7 +47,7 @@
                         
                         <!-- CAJA DE LA FOTO -->
                          <div id="caja_foto">
-                          <img src="<?= is_null($info_usuario['profile_image']) ? '/assets/img/profiles/default_profile_photo.png' : $info_usuario['profile_image'];?>"   id="foto_img" alt="imagen de perfil">
+                          <img src="<?= is_null($info_usuario['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $info_usuario['profile_image'];?>"   id="foto_img" alt="imagen de perfil">
                          </div>
                      <p>Foto de Perfil</p>
                      <p id="resp_sub_foto" style="display:none;"></p>

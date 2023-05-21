@@ -129,7 +129,16 @@ background: none;
     text-decoration: none;
 }
 
-
+#foto_perfil_navbar{
+    width: 40px;
+    height: 40px;
+    background-color:red;
+    max-width: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    background-size: contain;
+}
 
 
 #carrito_producto_box ol{

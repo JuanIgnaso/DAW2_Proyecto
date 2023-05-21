@@ -111,7 +111,7 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
            $post['mando_incluido'] = 'No'; 
         }
         $stmt = $this->pdo->prepare('INSERT INTO consolas(nombre,juego_incluido,manual_usuario,mando_incluido,conectividad) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual'],$post['mando_incluido'],$post['conectividades']]);
+        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual_usuario'],$post['mando_incluido'],$post['id_conexion']]);
             $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {
@@ -131,7 +131,7 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
            $post['mando_incluido'] = 'No'; 
         }
         $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, juego_incluido=?, manual_usuario=?, mando_incluido=?, conectividad=? WHERE id_consola=?');
-        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual'],$post['mando_incluido'],$post['conectividades'],$post['id_consola']]);
+        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual_usuario'],$post['mando_incluido'],$post['id_conexion'],$post['id_consola']]);
         $this->pdo->commit();  
         return true;
     } catch (\PDOException $ex) {

@@ -52,9 +52,12 @@ class InicioController extends \Com\Daw2\Core\BaseController{
     
     /*Se lanza este método cuando el valor devuelto es false*/
     private function errorLoadCategory($id){
-        
+        $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+
         $data = [];
         $data['titulo'] = 'Error'; 
+        $data['categoria'] = $modelCategoria->getAll();
+
         $data['mensaje'] = "No se puede encontrar registro <span class='text-danger'>".$id."</span> de datos en la tabla categorías";
         $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','errorCargarCategoria.view.php','templates/footer.view.php'),$data);
         

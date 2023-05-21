@@ -19,8 +19,8 @@
                       </div>
                     </div>
                   </li>
-                  <!-- ****************** -->
-                  <li><a href="#" class="nav-link px-2 link-dark rounded">About</a></li>
+                  <!-- **********
+                  <li><a href="#" class="nav-link px-2 link-dark rounded">About</a></li>******** -->
                   <?php
                   if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
                   ?>
@@ -38,6 +38,14 @@
                    
                         <!-- MODAL CARRITO  -->    
 
+                        
+                                           
+                        <!-- Foto perfil -->
+
+                         <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $_SESSION['usuario']['profile_image'];?>');">
+                            
+                        </div>    
+                        
                     <a class="col-auto text-light m-0" id="nombre_usuario" href="/mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a>
                     <button type="button" class="btn btn-outline-light" id="log_out"><a href="/logout">Log-Out</a></button>          
                     </div>

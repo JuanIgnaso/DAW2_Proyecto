@@ -59,26 +59,26 @@ class ProveedorModel extends \Com\Daw2\Core\BaseModel{
     //nombre y direccion son unique
     
     function direccionExists(string $dir):bool{
-           $stmt = $this->pdo->prepare('SELECT direccion FROM proveedores WHERE direccion LIKE ?');
-          $stmt->execute(['%'.$dir.'%']);
+           $stmt = $this->pdo->prepare('SELECT direccion FROM proveedores WHERE direccion = ?');
+          $stmt->execute([$dir]);
           return $stmt->rowCount() != 0;
     }
     
         function direccionOcupada($post):bool{
-           $stmt = $this->pdo->prepare('SELECT direccion FROM proveedores WHERE direccion LIKE ? AND id_proveedor != ?');
-          $stmt->execute(['%'.$post['direccion'].'%',$post['id_proveedor']]);
+           $stmt = $this->pdo->prepare('SELECT direccion FROM proveedores WHERE direccion = ? AND id_proveedor != ?');
+          $stmt->execute([$post['direccion'],$post['id_proveedor']]);
           return $stmt->rowCount() != 0;
     }
     
     function nombreExists(string $dir):bool{
-           $stmt = $this->pdo->prepare('SELECT * FROM proveedores WHERE nombre_proveedor LIKE ?');
-          $stmt->execute(['%'.$dir.'%']);
+           $stmt = $this->pdo->prepare('SELECT * FROM proveedores WHERE nombre_proveedor = ?');
+          $stmt->execute([$dir]);
           return $stmt->rowCount() != 0;
     }
     
             function nombreOcupado(array $post):bool{
-           $stmt = $this->pdo->prepare('SELECT nombre_proveedor FROM proveedores WHERE nombre_proveedor LIKE ? AND id_proveedor != ?');
-          $stmt->execute(['%'.$post['nombre_proveedor'].'%',$post['id_proveedor']]);
+           $stmt = $this->pdo->prepare('SELECT nombre_proveedor FROM proveedores WHERE nombre_proveedor = ? AND id_proveedor != ?');
+          $stmt->execute([$post['nombre_proveedor'],$post['id_proveedor']]);
           return $stmt->rowCount() != 0;
     }
     

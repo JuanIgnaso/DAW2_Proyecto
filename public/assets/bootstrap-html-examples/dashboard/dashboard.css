@@ -76,6 +76,11 @@ body,html{
     color:#fff;
 }
 
+.nav_item_active{
+    background-color: orangered !important;
+    color:#fff; 
+}
+
 .nav-item:hover .nav-link{
     color:#fff;
 }
@@ -152,6 +157,17 @@ body,html{
     border: 1px solid grey;
 }
 
+
+#foto_perfil_navbar{
+    width: 40px;
+    height: 40px;
+    background-color:red;
+    max-width: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    background-size: contain;
+}
 
 @media screen and (max-width: 550px){
 

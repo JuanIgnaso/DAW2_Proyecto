@@ -126,8 +126,15 @@
           </tbody>
         </table>
  
+ 
+ 
+ 
+ 
                <!-- SCRIPT BORRAR -->
       <script>
+
+          
+          
        var codigo = 0 
       
       //Abrir La Modal

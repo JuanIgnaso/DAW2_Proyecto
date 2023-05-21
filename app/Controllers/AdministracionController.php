@@ -14,7 +14,7 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
         $data['titulo'] = 'Tramitando Pedido';
         $data['categoria'] = $modelCategoria->getAll();
         
-        $this->view->showViews(array('Administracion.view.php'),$data);     
+        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Administracion.view.php'),$data);     
     }
     
 }
