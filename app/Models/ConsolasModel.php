@@ -10,7 +10,7 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
     private const DEFAULT_ORDER = 0;
     private const _UPDATE = 'UPDATE consolas SET ';  
         
-        function loadDetails($nombre){
+    function loadDetails($nombre){
         $stmt = $this->pdo->prepare('SELECT consolas.nombre,consolas.juego_incluido,consolas.manual_usuario,consolas.mando_incluido,conexiones_raton.nombre_conectividad_raton FROM consolas LEFT JOIN conexiones_raton ON consolas.conectividad = conexiones_raton.id_conexion WHERE nombre=?');
         $stmt->execute([$nombre]);
         return $stmt->fetch();      
@@ -18,7 +18,7 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
     
     
     
-        function getProducto($cod):array{
+    function getProducto($cod):array{
          $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
          $stmt->execute([$cod]);
          return $stmt->fetch();
@@ -27,7 +27,7 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
     
     
     
-         function filterAll(array $filtros): array{
+    function filterAll(array $filtros): array{
              
         $conditions = [];
         $parameters = [];
@@ -77,7 +77,7 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
         
         
                 
-                if(isset($filtros['order']) && filter_var($filtros['order'],FILTER_VALIDATE_INT)){
+        if(isset($filtros['order']) && filter_var($filtros['order'],FILTER_VALIDATE_INT)){
             if($filtros['order'] <= count(self::FIELD_ORDER) && $filtros['order'] >= 1){
                 $fieldOrder = self::FIELD_ORDER[$filtros['order'] -1];
             }else{
@@ -101,43 +101,44 @@ class ConsolasModel extends \Com\Daw2\Core\BaseModel{
    }
    
    
-       public function insertConsola(array $post): bool{
-           try{
-        $this->pdo->beginTransaction();
-        if(empty($post['juego_incluido'])){
-           $post['juego_incluido'] = 'No'; 
-        }
-         if(empty($post['mando_incluido'])){
-           $post['mando_incluido'] = 'No'; 
-        }
-        $stmt = $this->pdo->prepare('INSERT INTO consolas(nombre,juego_incluido,manual_usuario,mando_incluido,conectividad) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual_usuario'],$post['mando_incluido'],$post['id_conexion']]);
-            $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }   
+   
+    public function insertConsola(array $post): bool{
+        try{
+            $this->pdo->beginTransaction();
+            if(empty($post['juego_incluido'])){
+               $post['juego_incluido'] = 'No'; 
+            }
+             if(empty($post['mando_incluido'])){
+               $post['mando_incluido'] = 'No'; 
+            }
+            $stmt = $this->pdo->prepare('INSERT INTO consolas(nombre,juego_incluido,manual_usuario,mando_incluido,conectividad) values(?,?,?,?,?)');
+            $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual_usuario'],$post['mando_incluido'],$post['id_conexion']]);
+                $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }   
 
    }
    
    function editConsola(array $post):bool{
          try{
-        $this->pdo->beginTransaction();
-             if(empty($post['juego_incluido'])){
-           $post['juego_incluido'] = 'No'; 
-        }
-         if(empty($post['mando_incluido'])){
-           $post['mando_incluido'] = 'No'; 
-        }
-        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, juego_incluido=?, manual_usuario=?, mando_incluido=?, conectividad=? WHERE id_consola=?');
-        $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual_usuario'],$post['mando_incluido'],$post['id_conexion'],$post['id_consola']]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }  
+            $this->pdo->beginTransaction();
+            if(empty($post['juego_incluido'])){
+               $post['juego_incluido'] = 'No'; 
+            }
+             if(empty($post['mando_incluido'])){
+               $post['mando_incluido'] = 'No'; 
+            }
+            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, juego_incluido=?, manual_usuario=?, mando_incluido=?, conectividad=? WHERE id_consola=?');
+            $stmt->execute([$post['nombre'],$post['juego_incluido'],$post['manual_usuario'],$post['mando_incluido'],$post['id_conexion'],$post['id_consola']]);
+            $this->pdo->commit();  
+            return true;
+         } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+         }  
     }
    
 }

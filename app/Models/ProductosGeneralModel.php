@@ -22,15 +22,15 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
          $fieldOrder = $this->orderBy($filtros);
         if(isset($filtros['buscar_por'])){
 
-        $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=? AND '.$filtros['buscar_por'].' LIKE ?'.$fieldOrder);
-        $stmt->execute([$id,'%'.$filtros['nombre'].'%']);
+            $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=? AND '.$filtros['buscar_por'].' LIKE ?'.$fieldOrder);
+            $stmt->execute([$id,'%'.$filtros['nombre'].'%']);
         
         }else{
-        $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=?'.$fieldOrder);
-        $stmt->execute([$id]);   
+            $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=?'.$fieldOrder);
+            $stmt->execute([$id]);   
         }
-        $array = $stmt->fetchAll();
-        return count($array) != 0 ? $array : NULL;
+            $array = $stmt->fetchAll();
+            return count($array) != 0 ? $array : NULL;
         
       } catch (\PDOException $ex) {
         $stmt = $this->pdo->prepare(self::_SELECT_ALL.'WHERE id_categoria=? ORDER BY codigo_producto');
@@ -48,11 +48,11 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
                 $fieldOrder = self::_FILTER_BY[$filtros['filterby']];
             }else{
                
-                $fieldOrder = self::_DEFAULT_ORDER;
+             $fieldOrder = self::_DEFAULT_ORDER;
             }
         }else{
-                //$filtros['filterby'] = self::DEFAULT_ORDER;
-                $fieldOrder = self::_DEFAULT_ORDER;
+            //$filtros['filterby'] = self::DEFAULT_ORDER;
+            $fieldOrder = self::_DEFAULT_ORDER;
         }  
         return $fieldOrder;
     }
@@ -60,7 +60,6 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
     function getProduct($nombre) {
         $stmt = $this->pdo->prepare(self::_SELECT_ALL.' WHERE productos.nombre LIKE ?');
         $stmt->execute(['%'.$nombre.'%']);
-        //var_dump($stmt);
         return $stmt->fetch();
        
     }
@@ -69,17 +68,14 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
     //Múltiples actualizaciones
     function updateStock(array $carrito): bool{
         try {
-        $this->pdo->beginTransaction();
+            $this->pdo->beginTransaction();
 
-        for($i = 0; $i < count($carrito); $i++) {
-        $stmt = $this->pdo->prepare('UPDATE productos SET stock = stock - ? WHERE codigo_producto = ?'); 
+            for($i = 0; $i < count($carrito); $i++) {
+            $stmt = $this->pdo->prepare('UPDATE productos SET stock = stock - ? WHERE codigo_producto = ?'); 
 
-//            $condiciones = [];
-//            $condiciones['codigo_producto'] = intval($carrito[$i]['codigo_producto']);
-            //$condiciones['cantidad'] = intval($carrito[$i]['cantidad']);
-             $stmt->execute([intval($carrito[$i]['cantidad']),intval($carrito[$i]['codigo_producto'])]);
+                 $stmt->execute([intval($carrito[$i]['cantidad']),intval($carrito[$i]['codigo_producto'])]);
 
-        }     
+            }     
            $this->pdo->commit(); 
            return true;
         } catch (\PDOException $ex) {
@@ -89,29 +85,30 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
 
       }
       
-      function deleteProduct($codigo): bool{
-         $stmt = $this->pdo->prepare('DELETE FROM productos WHERE codigo_producto = ?'); 
+    function deleteProduct($codigo): bool{
+        $stmt = $this->pdo->prepare('DELETE FROM productos WHERE codigo_producto = ?'); 
         $urlimg = $this->getProductImg($codigo);
         if($urlimg != NULL){
           unlink(substr($urlimg,1,strlen($urlimg)));
         }
         return $stmt->execute([$codigo]);
-      }
+    }
       
-      function productNameExists($nombre): bool{
+    
+    function productNameExists($nombre): bool{
           $stmt = $this->pdo->prepare('SELECT nombre FROM productos WHERE nombre =?');
           $stmt->execute([$nombre]);
           return $stmt->rowCount() != 0;
-      }
+    }
       
       
-      function occupiedProductName($nombre,$codigo):bool{
+    function occupiedProductName($nombre,$codigo):bool{
           $stmt = $this->pdo->prepare('SELECT * FROM productos WHERE nombre=? AND codigo_producto != ?');
           $stmt->execute([$nombre,$codigo]);
           return $stmt->rowCount() != 0; 
-      }
+    }
       
-      function insertProduct($categoria,array $post): bool{
+    function insertProduct($categoria,array $post): bool{
         try{
             $this->pdo->beginTransaction();
             if(!isset($post['imagen_p'])){
@@ -126,23 +123,23 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
             return false;
         }  
         
-      }
+    }
       
       
        function editProduct(array $post,$codigo):bool{
-        try{
-            $this->pdo->beginTransaction();
-            if(!isset($post['imagen_p'])){
-                $post['imagen_p'] = NULL;
-            }
-            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, proveedor=?, marca=?, desc_producto=?, url_imagen=?, precio_bruto=?, iva=?, stock=? WHERE codigo_producto=?');
-            $stmt->execute([$post['nombre'],$post['proveedor'],$post['marca'],$post['desc_producto'],$post['imagen_p'],$post['precio_bruto'],$post['iva'],$post['stock'],$codigo]);
-            $this->pdo->commit();  
-            return true;
-        } catch (\PDOException $ex) {
-              $this->pdo->rollback();
-              return false;
-        }  
+            try{
+                $this->pdo->beginTransaction();
+                if(!isset($post['imagen_p'])){
+                    $post['imagen_p'] = NULL;
+                }
+                $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, proveedor=?, marca=?, desc_producto=?, url_imagen=?, precio_bruto=?, iva=?, stock=? WHERE codigo_producto=?');
+                $stmt->execute([$post['nombre'],$post['proveedor'],$post['marca'],$post['desc_producto'],$post['imagen_p'],$post['precio_bruto'],$post['iva'],$post['stock'],$codigo]);
+                $this->pdo->commit();  
+                return true;
+            } catch (\PDOException $ex) {
+                  $this->pdo->rollback();
+                  return false;
+            }  
         
         }
         

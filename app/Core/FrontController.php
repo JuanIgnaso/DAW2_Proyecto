@@ -112,13 +112,46 @@ class FrontController{
                     $controlador->darDeBajaUsuario();
                 }
                 , 'post'); 
+                
+                
+                Route::add('/inventario/UsuariosSistema/delete/([A-Za-z0-9-_\s]+)',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->borrarUsuarioWeb();
+                }
+                , 'get');
+                
+             Route::add('/inventario/UsuariosSistema/delete/([A-Za-z0-9-_\s]+)',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->borrarUsuarioWeb();
+                }
+            , 'post');
+            
+            
+             Route::add('/inventario/UsuariosSistema/add',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\AdministracionController();
+                    $controlador->showAddUser();
+                }
+            , 'get');
+            
+            Route::add('/inventario/UsuariosSistema/add',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\AdministracionController();
+                    $controlador->addUser();
+                }
+            , 'post');
+            
+            
+              Route::add('/inventario/UsuariosSistema/edit/([A-Za-z0-9-_\s]+)',
+                function ($id) {
+                    $controlador = new \Com\Daw2\Controllers\AdministracionController();
+                    $controlador->showEditUser($id);
+                }
+            , 'get'); 
        
-//                  Route::add('/usuarios/add',
-//                     function(){
-//                     $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
-//                     $controller->addUser();
-//                     }
-//                     ,'post');  
+  
            
        }     
        

@@ -33,19 +33,19 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
       
       
         if(isset($filtros['tecnologias']) && is_array($filtros['tecnologias'])){
-        $contador = 1;
-        $condicionesTecnologia = [];
-        foreach($filtros['tecnologias'] as $tecnologia){
-            if(filter_var($tecnologia,FILTER_VALIDATE_INT)){
-                $condicionesTecnologia [] = ':tecnologia'.$contador;
-                $parameters['tecnologia'.$contador]  = $tecnologia;
-                $contador++;
+            $contador = 1;
+            $condicionesTecnologia = [];
+            foreach($filtros['tecnologias'] as $tecnologia){
+                if(filter_var($tecnologia,FILTER_VALIDATE_INT)){
+                    $condicionesTecnologia [] = ':tecnologia'.$contador;
+                    $parameters['tecnologia'.$contador]  = $tecnologia;
+                    $contador++;
+                }
             }
-        }
-        if(count($parameters) > 0){
-            $conditions[] = ' monitores.tecnologia IN ('.implode(',',$condicionesTecnologia ).')';
-        }
-    }
+            if(count($parameters) > 0){
+                $conditions[] = ' monitores.tecnologia IN ('.implode(',',$condicionesTecnologia ).')';
+            }
+       }
     
     if(isset($filtros['refrescos']) && is_array($filtros['refrescos'])){
             $contador = 1;
@@ -108,6 +108,7 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
         }
    }
    
+   
    function getRefreshRate(): array{
      $stmt = $this->pdo->query('SELECT DISTINCT refresco FROM monitores ORDER BY 1');
        return $stmt->fetchAll();  
@@ -116,28 +117,28 @@ class MonitoresModel extends \Com\Daw2\Core\BaseModel{
    
    public function insertMonitor(array $post): bool{
            try{
-        $this->pdo->beginTransaction();
-        $stmt = $this->pdo->prepare('INSERT INTO monitores(nombre,entrada_video,pulgadas,tecnologia,refresco) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologia'],$post['refresco']]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }   
-   }
+                $this->pdo->beginTransaction();
+                $stmt = $this->pdo->prepare('INSERT INTO monitores(nombre,entrada_video,pulgadas,tecnologia,refresco) values(?,?,?,?,?)');
+                $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologia'],$post['refresco']]);
+                $this->pdo->commit();  
+                return true;
+            }catch (\PDOException $ex) {
+                $this->pdo->rollback();
+                return false;
+            }   
+    }
    
       
-       function editMonitor(array $post):bool{
+    function editMonitor(array $post):bool{
          try{
-        $this->pdo->beginTransaction();
-        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, entrada_video=?, pulgadas=?, tecnologia=?, refresco=? WHERE id_monitor=?');
-        $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologia'],$post['refresco'],$post['id_monitor']]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }  
+                $this->pdo->beginTransaction();
+                $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, entrada_video=?, pulgadas=?, tecnologia=?, refresco=? WHERE id_monitor=?');
+                $stmt->execute([$post['nombre'],$post['entrada_video'],$post['pulgadas'],$post['tecnologia'],$post['refresco'],$post['id_monitor']]);
+                $this->pdo->commit();  
+                return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }  
     }
 }

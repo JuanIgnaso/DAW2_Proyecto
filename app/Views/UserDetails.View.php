@@ -18,7 +18,7 @@
                }
                 ?>
                 
-        </div>
+</div>
 <!-- SCRIPT PARA OCULTAR EL MENSAJE -->
     <script src="/assets/js/ocularNotificacion.js">
 
@@ -243,23 +243,23 @@
             var url = document.getElementById('accion_boton');
             
             
-            /*Coger la ventana modal*/
-        var modal = document.getElementById("mi_modal_baja");
+                /*Coger la ventana modal*/
+            var modal = document.getElementById("mi_modal_baja");
 
-        // Coger el botón que abre la modal
-        var btn = document.getElementById("dar_baja");
-        var btn_borrar = document.getElementById("borrar_perfil");
+            // Coger el botón que abre la modal
+            var btn = document.getElementById("dar_baja");
+            var btn_borrar = document.getElementById("borrar_perfil");
 
-        // coger el <span> que cierra la modal
-        var span = document.getElementsByClassName("close_baja")[0];
-        
-        //Nombre del usuario
-        var user_name = document.getElementById('nombre__usuario');
-        
-        
-        //Ventana confirmación:
-        var conf = document.getElementById('alerta');
-        var alert_Text = document.getElementById('alerta_texto');
+            // coger el <span> que cierra la modal
+            var span = document.getElementsByClassName("close_baja")[0];
+
+            //Nombre del usuario
+            var user_name = document.getElementById('nombre__usuario');
+
+
+            //Ventana confirmación:
+            var conf = document.getElementById('alerta');
+            var alert_Text = document.getElementById('alerta_texto');
 
         // Cuando el usuario le da al botón, abrir la modal
         btn.onclick = function() {

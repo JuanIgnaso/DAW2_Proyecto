@@ -33,7 +33,7 @@
         
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Panel Administración: <?php echo isset($tipo) ? $tipo : '' ;?></h1>
-        <a href="/inventario/Usuarios/add" class="btn btn-success ml-1">Añadir<i class="fa-solid fa-circle-plus p-1"></i></a>
+        <a href="/inventario/UsuariosSistema/add" class="btn btn-success ml-1">Añadir<i class="fa-solid fa-circle-plus p-1"></i></a>
 
       </div>
 
@@ -123,8 +123,8 @@
               <td><?php echo $usuario['ultimo_login'];?></td>
               <td>
                   <div class="acciones col-12 f-flex justify-content-center gap-1 flex-column flex-sm-row">
-                      <button type="button" onclick="abrirModal(this)" class="btn p-0"  <?php echo $usuario['nombre_usuario'] == $_SESSION['usuario']['nombre_usuario'] ? 'disabled' : '';?>><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
-                      <a href="/inventario/Proveedores/edit/<?php echo $usuario['id_usuario'];?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
+                      <button id="borrar_<?php echo $usuario['nombre_usuario'];?>" type="button" onclick="abrirModal(this)" class="btn p-0"  <?php echo $usuario['nombre_usuario'] == $_SESSION['usuario']['nombre_usuario'] ? 'disabled' : '';?>><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
+                      <a href="<?php echo $usuario['id_usuario'] == $_SESSION['usuario']['id_usuario'] ? '/inventario/UsuariosSistema' : '/inventario/UsuariosSistema/edit/'.$usuario['id_usuario'];?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
                       <button id="<?php echo $usuario['nombre_usuario'];?>" type="button" onclick='darBajaUsr(this.getAttribute("id"))' <?php echo $usuario['nombre_usuario'] == $_SESSION['usuario']['nombre_usuario'] ? 'disabled' : '';?> class="btn p-0"><i class="fa-solid fa-toggle-<?php echo $usuario['baja'] == 1 ? 'off' : 'on';?>" style="color: orangered;"></i></button>
                   </div>
               </td>
@@ -138,7 +138,7 @@
  
         
         <script>
-        //DAR DE BAJA USUARIO
+        //DAR DE BAJA USUARIO console.log(p.replace('dog', 'monkey'));
         function darBajaUsr(e){
                        
            $.ajax({
@@ -169,30 +169,31 @@
 
           
           
-       var codigo = 0 
+       var nombre = ''; 
       
       //Abrir La Modal
       function abrirModal(e){
          document.getElementById('modal_inventario_borrar').style.display = 'block'; 
-         console.log(e.parentNode.parentNode.parentNode.getAttribute('id'));
-         codigo = e.parentNode.parentNode.parentNode.getAttribute('id');
+         console.log(e.getAttribute('id'));
+         let n = e.getAttribute('id');
+         nombre = n.replace('borrar_','');
       }
       
       //Cerrar La Modal
       function closeModal(){
         document.getElementById('modal_inventario_borrar').style.display = 'none';
-        console.log(codigo);
+        console.log(nombre);
       }
       
       //Borrar la columna y el producto de la BBDD
       function borrar(){
           
-          let columna = document.getElementById(codigo);
+         // let columna = document.getElementById(codigo);
                    
                $.ajax({
 
                 //url a donde se colocan los datos
-                url: '/borrar_proveedor',
+                url: '/inventario/UsuariosSistema/delete/' + nombre,
 
                 
                 type: 'POST',
@@ -200,16 +201,17 @@
                 
             data: {
                     
-                    producto: parseInt(codigo)//codigo del producto
+                    usuario: nombre//codigo del producto
                 },
 
 
                 //Borrar la columna y cerrar la modal en caso de success
                 success: function(response) {
-                    let resp = JSON.parse(response);
-                    console.log(resp); 
-                    columna.remove();
-                   document.getElementById('modal_inventario_borrar').style.display = 'none';
+//                   let resp = JSON.parse(response);
+//                   console.log(resp); 
+                   //document.getElementById('modal_inventario_borrar').style.display = 'none';
+                   location.reload();              
+
                 },
 
                 //Cerrar modal y mostrar mensaje de error

@@ -246,13 +246,7 @@
           </footer>
         </div>
         <script src="/assets/js/accionesCesta.js"></script>
-        <?php
-        if($_SERVER['REQUEST_URI'] == '/checkout'){
-        ?>
-        <script src="/assets/js/finalizarCompra.js"></script>
-        <?php
-        }
-        ?>   
+  
   
   </body>
 </html>

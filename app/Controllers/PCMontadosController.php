@@ -121,7 +121,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
     }
     
     
-         function showEdit($cod){
+    function showEdit($cod){
        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
        $model = new \Com\Daw2\Models\PCMontadosModel();
  
@@ -348,21 +348,21 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
       
       
 
-      if(isset($check)){
-    if($check == false){
-        $errores['url_imagen'] = 'debes de subir una imagen';  
-    }else{
-              if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
-             $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
-          }if($check[0] != $check[1]){  // DIMENSIONES
-            $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
-          } 
-          if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
-            $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
-          }  
-    }
+        if(isset($check)){
+            if($check == false){
+                $errores['url_imagen'] = 'debes de subir una imagen';  
+            }else{
+                  if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
+                     $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
+                  }if($check[0] != $check[1]){  // DIMENSIONES
+                    $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
+                  } 
+                  if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
+                    $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
+                  }  
+            }
 
-    }
+        }
 
       return $errores;
     }

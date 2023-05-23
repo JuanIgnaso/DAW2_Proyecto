@@ -52,7 +52,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
     }
     
     
-        public function edit($cod){
+    public function edit($cod){
        
         $model = new \Com\Daw2\Models\RatonesModel();
        
@@ -83,28 +83,28 @@ class RatonController extends \Com\Daw2\Core\BaseController{
              
             if($result){
                 header('location: /inventario/Ratones');   
-            }else{
+             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-                }
-            }else{
-                         $data['titulo'] = 'Editar Producto';
-        $data['titulo_seccion'] =  'Editar Producto';
-              $data['accion'] = 'Aplicar Cambios';
-                $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
-                $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
-                $data['seccion'] = '/inventario/Ratones/edit/'.$cod;
-                $data['id_conexion'] = $modelConec->getAll();
-                $data['proveedor'] = $modelProv->getAll();
-                $data['iva'] = self::IVA;
-                $data['volver'] = '/inventario/Ratones';
+             }
+        }else{
+            $data['titulo'] = 'Editar Producto';
+            $data['titulo_seccion'] =  'Editar Producto';
+            $data['accion'] = 'Aplicar Cambios';
+            $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
+            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+            $data['seccion'] = '/inventario/Ratones/edit/'.$cod;
+            $data['id_conexion'] = $modelConec->getAll();
+            $data['proveedor'] = $modelProv->getAll();
+            $data['iva'] = self::IVA;
+            $data['volver'] = '/inventario/Ratones';
 
-                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
   
-            }
         }
+    }
         
-        private function modifyRaton($idRaton,$id,array $post): bool{
+    private function modifyRaton($idRaton,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\RatonesModel();
       
@@ -124,7 +124,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         
     
     
-        public function showAdd(){
+    public function showAdd(){
         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $model = new \Com\Daw2\Models\RatonesModel();
         $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
@@ -144,41 +144,41 @@ class RatonController extends \Com\Daw2\Core\BaseController{
     
     
     function add(){
-    $model = new \Com\Daw2\Models\RatonesModel();
-    $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+        $model = new \Com\Daw2\Models\RatonesModel();
+        $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
 
-    $data = [];
-    $data['titulo'] = 'Añadir Producto';
-    $data['titulo_seccion'] = 'Añadir Nuevo Ratón';  
-    $data['errores'] = $this->checkForm($_POST);
-    $data['accion'] = 'Añadir';
-    $data['volver'] = '/inventario/Ratones';
-    if(count($data['errores']) == 0){
-        if(!empty($_FILES["imagen"]["tmp_name"])){
-          $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/ratones/');
+        $data = [];
+        $data['titulo'] = 'Añadir Producto';
+        $data['titulo_seccion'] = 'Añadir Nuevo Ratón';  
+        $data['errores'] = $this->checkForm($_POST);
+        $data['accion'] = 'Añadir';
+        $data['volver'] = '/inventario/Ratones';
+        if(count($data['errores']) == 0){
+            if(!empty($_FILES["imagen"]["tmp_name"])){
+              $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/ratones/');
 
-           if($upload->uploadPhoto()){
-             $_POST['imagen_p'] = '/assets/img/ratones/'.$_FILES["imagen"]["name"];
-           }       
-          }       
-        $result = $this->addRaton(7,$_POST);          
-        if($result){        
-            header('location: /inventario/Ratones');   
+               if($upload->uploadPhoto()){
+                 $_POST['imagen_p'] = '/assets/img/ratones/'.$_FILES["imagen"]["name"];
+               }       
+              }       
+            $result = $this->addRaton(7,$_POST);          
+            if($result){        
+                header('location: /inventario/Ratones');   
+            }else{
+                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+                }
         }else{
-             $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-            }
-    }else{
-        $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
-        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
-        $data['seccion'] = '/inventario/Ratones/add';
-        $data['id_conexion'] = $modelConec->getAll();
-        $data['proveedor'] = $modelProv->getAll();
-        $data['iva'] = self::IVA;
-        
-        $data['input'] = $_POST;
-        //var_dump($data['input']);die();
-        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
-    }
+            $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
+            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+            $data['seccion'] = '/inventario/Ratones/add';
+            $data['id_conexion'] = $modelConec->getAll();
+            $data['proveedor'] = $modelProv->getAll();
+            $data['iva'] = self::IVA;
+
+            $data['input'] = $_POST;
+            //var_dump($data['input']);die();
+            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
+        }
     
     }
     
@@ -239,12 +239,12 @@ class RatonController extends \Com\Daw2\Core\BaseController{
             $errores['nombre'] = 'El nombre del producto ya está en uso';
       }
                
-    if($alta){
-     if($modelGeneral->productNameExists($post['nombre'])){
-    $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
-       }
+        if($alta){
+         if($modelGeneral->productNameExists($post['nombre'])){
+        $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
+           }
 
-    } 
+        } 
       
       if(empty($post['marca'])){
           $errores['marca'] = 'Tienes que escribir una marca';
@@ -313,14 +313,15 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         if($check == false){
             $errores['url_imagen'] = 'debes de subir una imagen';  
         }else{
-                  if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
+            if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
                  $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
-              }if($check[0] != $check[1]){  // DIMENSIONES
+            }
+            if($check[0] != $check[1]){  // DIMENSIONES
                 $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
-              } 
-              if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
+            } 
+            if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
                 $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
-              }  
+            }  
         }
 
      }

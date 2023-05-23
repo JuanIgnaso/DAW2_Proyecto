@@ -148,7 +148,7 @@ button:disabled{
 
 #caja_foto{
     overflow: hidden;
-    background-color: lightcoral;
+    background-color: grey;
     max-width: 300px;
     max-height: 300px;
     margin:auto;
@@ -174,6 +174,35 @@ button:disabled{
     background-size: contain;
 }
 
+
+
+/***********FOTO DE PERFIL***********/
+
+/*#foto_img{
+    width: 400px;
+    text-align:center;
+    height: 400px;
+    object-fit: cover;
+}*/
+
+/**********************************/
+
+@media screen and (max-width: 1400px){
+
+    #caja_foto{
+        width: 350px;
+        height: 350px;
+    }
+    
+    #foto_img{
+        width: 250px;
+        height: 250px;
+    }
+    
+
+}
+
+
 @media screen and (max-width: 550px){
 
     #caja_foto{
@@ -185,5 +214,6 @@ button:disabled{
         width: 250px;
         height: 250px;
     }
+
 
 }

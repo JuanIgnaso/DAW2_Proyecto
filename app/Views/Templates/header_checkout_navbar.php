@@ -9,25 +9,25 @@
                 </a>
           
                 <ul class="nav col-12 col-sm-6 mb-2 justify-content-center gap-1 mb-md-0">
-                  <li><a href="/" class="nav-link px-2 link-secondary rounded">Inicio</a></li>
-                  <!-- DropDown **********-->
-                  <li>
-                    <div class="dropdown">
-                      <button class="dropbtn nav-link px-2 link-secondary rounded">Productos</button>
-                      <div class="dropdown-content">
-                            <?php include 'header_bar_dropdownmenu.php';?>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- **********
-                  <li><a href="#" class="nav-link px-2 link-dark rounded">About</a></li>******** -->
-                  <?php
-                  if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
-                  ?>
-                  <li><a href="/inventario" class="nav-link px-2 link-dark rounded">Inventario</a></li>
-                  <?php
-                  }
-                  ?>
+                      <li><a href="/" class="nav-link px-2 link-secondary rounded">Inicio</a></li>
+                      <!-- DropDown **********-->
+                      <li>
+                        <div class="dropdown">
+                          <button class="dropbtn nav-link px-2 link-secondary rounded">Productos</button>
+                          <div class="dropdown-content">
+                                <?php include 'header_bar_dropdownmenu.php';?>
+                          </div>
+                        </div>
+                      </li>
+                      <!-- **********
+                      <li><a href="#" class="nav-link px-2 link-dark rounded">About</a></li>******** -->
+                      <?php
+                      if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
+                      ?>
+                      <li><a href="/inventario" class="nav-link px-2 link-dark rounded">Inventario</a></li>
+                      <?php
+                      }
+                      ?>
                 </ul>
                               
                 <div class="col-md-3 text-end" id="log_user">
@@ -53,12 +53,12 @@
                     }else{
                     ?>
                     <button type="button" class="btn btn-outline-light" id="login"><a href="/login">Login</a></button>
-                  <button type="button" class="activo btn btn-outline-light" id="sign_up"><a href="/register">Sign Up</a></button>
+                    <button type="button" class="activo btn btn-outline-light" id="sign_up"><a href="/register">Sign Up</a></button>
                   <?php
                     }
                   ?>
                 </div>
-              </header>
+            </header>
             <script src="/assets/js/adapt_navbar.js"></script>
         </div>
         

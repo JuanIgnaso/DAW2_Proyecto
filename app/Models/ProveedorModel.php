@@ -20,7 +20,7 @@ class ProveedorModel extends \Com\Daw2\Core\BaseModel{
             $parameters['nombre_proveedor'] = "%".$filtros['nombre_proveedor']."%";
         }
         
-               if(isset($filtros['direccion']) && !empty($filtros['direccion'])){
+        if(isset($filtros['direccion']) && !empty($filtros['direccion'])){
             $conditions[] = ' proveedores.direccion LIKE :direccion';
             $parameters['direccion'] = "%".$filtros['direccion']."%";
         }
@@ -59,75 +59,75 @@ class ProveedorModel extends \Com\Daw2\Core\BaseModel{
     //nombre y direccion son unique
     
     function direccionExists(string $dir):bool{
-           $stmt = $this->pdo->prepare('SELECT direccion FROM proveedores WHERE direccion = ?');
+          $stmt = $this->pdo->prepare('SELECT direccion FROM proveedores WHERE direccion = ?');
           $stmt->execute([$dir]);
           return $stmt->rowCount() != 0;
     }
     
-        function direccionOcupada($post):bool{
+    function direccionOcupada($post):bool{
            $stmt = $this->pdo->prepare('SELECT direccion FROM proveedores WHERE direccion = ? AND id_proveedor != ?');
           $stmt->execute([$post['direccion'],$post['id_proveedor']]);
           return $stmt->rowCount() != 0;
     }
     
     function nombreExists(string $dir):bool{
-           $stmt = $this->pdo->prepare('SELECT * FROM proveedores WHERE nombre_proveedor = ?');
+          $stmt = $this->pdo->prepare('SELECT * FROM proveedores WHERE nombre_proveedor = ?');
           $stmt->execute([$dir]);
           return $stmt->rowCount() != 0;
     }
     
-            function nombreOcupado(array $post):bool{
-           $stmt = $this->pdo->prepare('SELECT nombre_proveedor FROM proveedores WHERE nombre_proveedor = ? AND id_proveedor != ?');
+    function nombreOcupado(array $post):bool{
+          $stmt = $this->pdo->prepare('SELECT nombre_proveedor FROM proveedores WHERE nombre_proveedor = ? AND id_proveedor != ?');
           $stmt->execute([$post['nombre_proveedor'],$post['id_proveedor']]);
           return $stmt->rowCount() != 0;
     }
     
     
-      public function insertProveedor(array $post): bool{
-           try{
-        $this->pdo->beginTransaction();
-        $stmt = $this->pdo->prepare('INSERT INTO proveedores(nombre_proveedor,direccion,website,email_proveedor,telefono) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre_proveedor'],$post['direccion'],$post['website'],$post['email_proveedor'],$post['telefono']]);
-            $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }  
+    public function insertProveedor(array $post): bool{
+        try{
+            $this->pdo->beginTransaction();
+            $stmt = $this->pdo->prepare('INSERT INTO proveedores(nombre_proveedor,direccion,website,email_proveedor,telefono) values(?,?,?,?,?)');
+            $stmt->execute([$post['nombre_proveedor'],$post['direccion'],$post['website'],$post['email_proveedor'],$post['telefono']]);
+                $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }  
 
    }
     
     function deleteProveedor($codigo): bool{
         try{
-        $this->pdo->beginTransaction();
-         $stmt = $this->pdo->prepare('DELETE FROM proveedores WHERE id_proveedor = ?'); 
-         $stmt->execute([$codigo]);
-         $this->pdo->commit();  
-        return true;
-            } catch (\PDOException $ex) {
-                $this->pdo->rollback();
-                return false;
-            }  
+            $this->pdo->beginTransaction();
+             $stmt = $this->pdo->prepare('DELETE FROM proveedores WHERE id_proveedor = ?'); 
+             $stmt->execute([$codigo]);
+             $this->pdo->commit();  
+            return true;
+           } catch (\PDOException $ex) {
+             $this->pdo->rollback();
+             return false;
+          }  
       } 
       
    function getProveedor($codigo): array{
       $stmt = $this->pdo->prepare('SELECT * FROM proveedores WHERE id_proveedor = ?'); 
       $stmt->execute([$codigo]);
-        return $stmt->fetch();
+      return $stmt->fetch();
    }
    
    
    function editProveedor(array $post): bool{
         try{
-        $this->pdo->beginTransaction();
-        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre_proveedor=?, direccion=?, website=?, email_proveedor=?, telefono=? WHERE id_proveedor=?');
-        $stmt->execute([$post['nombre_proveedor'],$post['direccion'],$post['website'],$post['email_proveedor'],$post['telefono'],$post['id_proveedor']]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }  
+            $this->pdo->beginTransaction();
+            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre_proveedor=?, direccion=?, website=?, email_proveedor=?, telefono=? WHERE id_proveedor=?');
+            $stmt->execute([$post['nombre_proveedor'],$post['direccion'],$post['website'],$post['email_proveedor'],$post['telefono'],$post['id_proveedor']]);
+            $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }  
    }
       
     

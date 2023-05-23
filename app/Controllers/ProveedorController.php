@@ -26,7 +26,7 @@ class ProveedorController extends \Com\Daw2\Core\BaseController{
     }
     
     
-        function deleteProveedor(){
+    function deleteProveedor(){
         $codigo_proveedor = $_POST['producto'];
         $model =  new \Com\Daw2\Models\ProveedorModel();
         $accion = $model->deleteProveedor($codigo_proveedor);

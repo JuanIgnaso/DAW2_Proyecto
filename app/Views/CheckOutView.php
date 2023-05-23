@@ -255,6 +255,7 @@
                });
                
                </script>
+                <script src="/assets/js/checkout.js"></script>
           </section>
         </div>
       </div>

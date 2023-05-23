@@ -80,7 +80,7 @@ class PCMontadosModel extends \Com\Daw2\Core\BaseModel{
         }
         
         
-                if(isset($filtros['order']) && filter_var($filtros['order'],FILTER_VALIDATE_INT)){
+        if(isset($filtros['order']) && filter_var($filtros['order'],FILTER_VALIDATE_INT)){
             if($filtros['order'] <= count(self::FIELD_ORDER) && $filtros['order'] >= 1){
                 $fieldOrder = self::FIELD_ORDER[$filtros['order'] -1];
             }else{
@@ -125,9 +125,11 @@ class PCMontadosModel extends \Com\Daw2\Core\BaseModel{
         ');
         return  $stmt->fetchAll();
         
-   }
+    }
    
-       function getProducto($cod):array{
+    
+    
+    function getProducto($cod):array{
          $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
          $stmt->execute([$cod]);
          return $stmt->fetch();
@@ -136,30 +138,30 @@ class PCMontadosModel extends \Com\Daw2\Core\BaseModel{
    
     public function insertPC(array $post): bool{
            try{
-        $this->pdo->beginTransaction();
-        $stmt = $this->pdo->prepare('INSERT INTO PC_montados(nombre,caja,cpu,targeta_video,almacenamiento,memoria,alimentacion,almacenamiento_tipo) values(?,?,?,?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['caja'],$post['cpu'],$post['targeta_video'],$post['almacenamiento'],$post['memoria'],$post['alimentacion'],$post['almacenamiento_tipo']]);
-            $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }   
+                $this->pdo->beginTransaction();
+                $stmt = $this->pdo->prepare('INSERT INTO PC_montados(nombre,caja,cpu,targeta_video,almacenamiento,memoria,alimentacion,almacenamiento_tipo) values(?,?,?,?,?,?,?,?)');
+                $stmt->execute([$post['nombre'],$post['caja'],$post['cpu'],$post['targeta_video'],$post['almacenamiento'],$post['memoria'],$post['alimentacion'],$post['almacenamiento_tipo']]);
+                $this->pdo->commit();  
+                return true;
+            } catch (\PDOException $ex) {
+                $this->pdo->rollback();
+                return false;
+            }   
 
    }
    
    
    function editOrdenador(array $post):bool{
-         try{
-        $this->pdo->beginTransaction();
-        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, caja=?, cpu=?, targeta_video=?, almacenamiento=?, memoria=?, alimentacion=?, almacenamiento_tipo=? WHERE id_ordenador=?');
-        $stmt->execute([$post['nombre'],$post['caja'],$post['cpu'],$post['targeta_video'],$post['almacenamiento'],$post['memoria'],$post['alimentacion'],$post['almacenamiento_tipo'],$post['id_ordenador']]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }  
+        try{
+            $this->pdo->beginTransaction();
+            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, caja=?, cpu=?, targeta_video=?, almacenamiento=?, memoria=?, alimentacion=?, almacenamiento_tipo=? WHERE id_ordenador=?');
+            $stmt->execute([$post['nombre'],$post['caja'],$post['cpu'],$post['targeta_video'],$post['almacenamiento'],$post['memoria'],$post['alimentacion'],$post['almacenamiento_tipo'],$post['id_ordenador']]);
+            $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }  
     }
    
    

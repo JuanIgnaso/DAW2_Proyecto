@@ -11,23 +11,23 @@ class DireccionEnvioModel  extends \Com\Daw2\Core\BaseModel{
     
     function insertShippingAddress(array $post,$id): bool{
         try {
-         $this->pdo->beginTransaction();
-         //Comprobamos lo que nos devuelve el método auxiliar
-         $existe = $this->fieldExists($id);
-         if($existe){
-             //Si existe hacemos un UPDATE
-          $stmt = $this->pdo->prepare(self::_UPDATE.' nombre_titular=?, provincia=?, ciudad=?, calle=?,cod_postal=? WHERE id_usuario=?');
-          $stmt->execute([$post['nombre_titular'],$post['provincia'],$post['ciudad'],$post['calle'],$post['cod_postal'],$id]);
-         }else{
-            //Si no existe hacemos el INSERT  
-          $stmt = $this->pdo->prepare(self::_INSERT_INTO.' VALUES(?,?,?,?,?,?)');
-          $stmt->execute([$id,$post['nombre_titular'],$post['provincia'],$post['ciudad'],$post['calle'],$post['cod_postal']]);
-         }
-        $this->pdo->commit();
-        return true;
+             $this->pdo->beginTransaction();
+             //Comprobamos lo que nos devuelve el método auxiliar
+             $existe = $this->fieldExists($id);
+             if($existe){
+                     //Si existe hacemos un UPDATE
+                  $stmt = $this->pdo->prepare(self::_UPDATE.' nombre_titular=?, provincia=?, ciudad=?, calle=?,cod_postal=? WHERE id_usuario=?');
+                  $stmt->execute([$post['nombre_titular'],$post['provincia'],$post['ciudad'],$post['calle'],$post['cod_postal'],$id]);
+             }else{
+                    //Si no existe hacemos el INSERT  
+                  $stmt = $this->pdo->prepare(self::_INSERT_INTO.' VALUES(?,?,?,?,?,?)');
+                  $stmt->execute([$id,$post['nombre_titular'],$post['provincia'],$post['ciudad'],$post['calle'],$post['cod_postal']]);
+             }
+            $this->pdo->commit();
+            return true;
         } catch (\PDOException $ex) {
-         $this->pdo->rollback();
-         return false;  
+             $this->pdo->rollback();
+             return false;  
         } 
     }
     

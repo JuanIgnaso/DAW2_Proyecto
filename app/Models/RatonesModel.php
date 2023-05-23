@@ -9,7 +9,7 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
     private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','dpi','clase','nombre_conectividad_raton'];
     private const _UPDATE = 'UPDATE ratones SET ';  
     
-       function loadDetails($nombre){
+    function loadDetails($nombre){
         $stmt = $this->pdo->prepare('SELECT ratones.nombre,ratones.dpi,ratones.clase,conexiones_raton.nombre_conectividad_raton FROM ratones LEFT JOIN conexiones_raton ON ratones.id_conexion = conexiones_raton.id_conexion WHERE nombre=?');
         $stmt->execute([$nombre]);
         return $stmt->fetch();      
@@ -22,8 +22,7 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
     }
     
    function filterAll(array $filtros): array{
-//       $stmt = $this->pdo->query(self::SELECT_ALL);
-//       return $stmt->fetchAll();
+
        $conditions = [];
        $parameters = [];
        
@@ -68,7 +67,7 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
             $parameters['min_precio'] = $filtros['min_precio'];
         }
         
-         if(isset($filtros['max_precio']) && is_numeric($filtros['max_precio']) && $filtros['max_precio'] != -1){
+        if(isset($filtros['max_precio']) && is_numeric($filtros['max_precio']) && $filtros['max_precio'] != -1){
             $conditions[] = ' precio <= :max_precio';
             $parameters['max_precio'] = $filtros['max_precio'];
         }
@@ -114,14 +113,14 @@ class RatonesModel extends \Com\Daw2\Core\BaseModel{
 
     function editRaton(array $post,$codigo):bool{
          try{
-        $this->pdo->beginTransaction();
-        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, dpi=?, clase=?, id_conexion=? WHERE id=?');
-        $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['id_conexion'],$codigo]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }  
+            $this->pdo->beginTransaction();
+            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, dpi=?, clase=?, id_conexion=? WHERE id=?');
+            $stmt->execute([$post['nombre'],$post['dpi'],$post['clase'],$post['id_conexion'],$codigo]);
+            $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }  
     }
 }

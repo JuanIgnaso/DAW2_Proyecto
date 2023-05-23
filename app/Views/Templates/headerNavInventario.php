@@ -5,10 +5,10 @@
         <div class="col-auto d-md-flex d-none">
             <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
 
-            <img role="img" width="200px" aria-label="Bootstrap" src="/assets/svg/Gallaecia_PC_Logo.svg" alt="logo_empresa">
+                <img role="img" width="200px" aria-label="Bootstrap" src="/assets/svg/Gallaecia_PC_Logo.svg" alt="logo_empresa">
                   <!--  class="bi me-2" -->
                   <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
-               </a> 
+            </a> 
         </div>
        
   <!--<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Company name</a>-->
@@ -21,25 +21,25 @@
                     if(isset($_SESSION['usuario'])){
                     ?>
                     <div class="col-12 p-3 d-flex align-items-center justify-content-end gap-2">
-                   
-                        <!-- MODAL CARRITO  -->    
 
-                        <button class='btn btn-default position-relative' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i><span id="carrito_items" class="badge bg-danger position-absolute top-0 start-100 translate-middle"></span></button>
-                        
-                         <!-- Foto perfil -->
+                            <!-- MODAL CARRITO  -->    
 
-                         <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $_SESSION['usuario']['profile_image'];?>');">
-                            
-                        </div> 
-                        
-                     <a class="col-auto text-light m-0" id="nombre_usuario" href="/mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a>
-                   
-                    <div class="navbar-nav">
-                    <div class="nav-item text-nowrap flex-column d-flex align-items-center justify-content-between">
-                      <!--<a class="nav-link px-3" href="#">Log In</a>-->
-                      <a class="nav-link px-3" href="#">Sign out</a>
-                    </div>
-                  </div>
+                            <button class='btn btn-default position-relative' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i><span id="carrito_items" class="badge bg-danger position-absolute top-0 start-100 translate-middle"></span></button>
+
+                             <!-- Foto perfil -->
+
+                             <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $_SESSION['usuario']['profile_image'];?>');">
+
+                            </div> 
+
+                            <a class="col-auto text-light m-0" id="nombre_usuario" href="/mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a>
+
+                      <div class="navbar-nav">
+                            <div class="nav-item text-nowrap flex-column d-flex align-items-center justify-content-between">
+                              <!--<a class="nav-link px-3" href="#">Log In</a>-->
+                              <a class="nav-link px-3" href="#">Sign out</a>
+                            </div>
+                      </div>
                     
                     </div>
                 
@@ -48,20 +48,20 @@
                     ?>
       
                    <div class="navbar-nav">
-                    <div class="nav-item text-nowrap flex-column d-flex align-items-center justify-content-between">
-                      <a class="nav-link px-3" href="#">Log In</a>
-                      <a class="nav-link px-3" href="#">Sign out</a>
-                    </div>
+                        <div class="nav-item text-nowrap flex-column d-flex align-items-center justify-content-between">
+                              <a class="nav-link px-3" href="#">Log In</a>
+                              <a class="nav-link px-3" href="#">Sign out</a>
+                        </div>
                   </div>
                     <!--<button type="button" class="btn btn-outline-light" id="login"><a href="/login">Login</a></button>-->
                   <!--<button type="button" class="activo btn btn-outline-light" id="sign_up"><a href="/register">Sign Up</a></button>-->
                   <?php
                     }
                   ?>
-                </div>
+    </div>
   
   
-         </div>
+ </div>
       
   
   <!--<input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">-->

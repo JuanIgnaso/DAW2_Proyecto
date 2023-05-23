@@ -26,7 +26,7 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
     
     
     
-        function filterAll(array $filtros): array{
+    function filterAll(array $filtros): array{
         $conditions = [];
         $parameters = [];
         
@@ -70,7 +70,7 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
             $parameters['min_precio'] = $filtros['min_precio'];
         }
         
-         if(isset($filtros['max_precio']) && is_numeric($filtros['max_precio']) && $filtros['max_precio'] != -1){
+        if(isset($filtros['max_precio']) && is_numeric($filtros['max_precio']) && $filtros['max_precio'] != -1){
             $conditions[] = ' precio <= :max_precio';
             $parameters['max_precio'] = $filtros['max_precio'];
         }
@@ -82,7 +82,7 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
         }  
         
         
-          if(isset($filtros['order']) && filter_var($filtros['order'],FILTER_VALIDATE_INT)){
+        if(isset($filtros['order']) && filter_var($filtros['order'],FILTER_VALIDATE_INT)){
             if($filtros['order'] <= count(self::FIELD_ORDER) && $filtros['order'] >= 1){
                 $fieldOrder = self::FIELD_ORDER[$filtros['order'] -1];
             }else{
@@ -120,21 +120,21 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
    }
    
    
-      public function insertSilla(array $post): bool{
+    public function insertSilla(array $post): bool{
            try{
-        $this->pdo->beginTransaction();
-        $stmt = $this->pdo->prepare('INSERT INTO sillas(nombre,tipo_silla,altura,anchura,ajustable) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['tipo_silla'],$post['altura'],$post['anchura'],$post['ajustable']]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }   
+            $this->pdo->beginTransaction();
+            $stmt = $this->pdo->prepare('INSERT INTO sillas(nombre,tipo_silla,altura,anchura,ajustable) values(?,?,?,?,?)');
+            $stmt->execute([$post['nombre'],$post['tipo_silla'],$post['altura'],$post['anchura'],$post['ajustable']]);
+            $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }   
    }
    
     function editSilla(array $post):bool{
-            try{
+       try{
            $this->pdo->beginTransaction();
            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, tipo_silla=?, altura=?, anchura=?, ajustable=? WHERE id_silla=?');
            $stmt->execute([$post['nombre'],$post['tipo_silla'],$post['altura'],$post['anchura'],$post['ajustable'],$post['id_silla']]);
@@ -150,15 +150,15 @@ class SillasModel extends \Com\Daw2\Core\BaseModel{
    
    
    
-      function getChairHight(): array{
+    function getChairHight(): array{
        $stmt = $this->pdo->query('SELECT DISTINCT altura FROM sillas ORDER BY 1');
        return $stmt->fetchAll();
-   }
+    }
     
    
     function getChairLenght(): array{
        $stmt = $this->pdo->query('SELECT DISTINCT anchura FROM sillas ORDER BY 1');
        return $stmt->fetchAll();
-   } 
+    } 
 }
 

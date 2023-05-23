@@ -5,7 +5,7 @@ namespace Com\Daw2\Models;
 
 class AuxIdiomaModel  extends \Com\Daw2\Core\BaseModel{
     
-        function getAll(): array{
+    function getAll(): array{
         $stmt = $this->pdo->query('SELECT * FROM idioma ORDER BY 1');
         return $stmt->fetchAll();
     }
@@ -13,8 +13,8 @@ class AuxIdiomaModel  extends \Com\Daw2\Core\BaseModel{
     function idiomaExists($id):bool{
 
         $stmt = $this->pdo->prepare('SELECT id FROM idioma WHERE id=?');
-         $stmt->execute([$id]);
-         return $stmt->rowCount() != 0;
+        $stmt->execute([$id]);
+        return $stmt->rowCount() != 0;
 
     }
 }

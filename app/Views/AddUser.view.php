@@ -1,22 +1,22 @@
 
-                    <div class="row">
-                        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-                              <!-- COntenido del modal -->
-                            <div class="col-12  contenido_modal_carrito">
-                                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-                                   <h2 class="text-light text-center">Mi Carrito</h2>
-                                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-                                </header>
-                                <!-- cuerpo -->
-                                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                                    <!-- caja del producto -->
- 
-                               </div>
-                                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
-                            </div>
-                             <!-- // -->
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
+                  <!-- COntenido del modal -->
+                <div class="col-12  contenido_modal_carrito">
+                    <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
+                       <h2 class="text-light text-center">Mi Carrito</h2>
+                       <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
+                    </header>
+                    <!-- cuerpo -->
+                    <div class="col-12 p-2 m-0" id="cuerpo_carrito">
+                        <!-- caja del producto -->
+
+                   </div>
+                    <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
+                </div>
+                 <!-- // -->
+            </div>
+        </div>
   
       
              <script>
@@ -27,19 +27,12 @@
            * 
            * 
            */  
-            
-            
-            
+                    
           var cuerpo = document.getElementById('cuerpo_carrito');
           var btn_borrar_producto = document.getElementById('btn_borrar_producto');
           var elementos = cuerpo.getElementsByClassName('borrar');   
          
-          
-
-          
-        
-          
-            
+                   
             /*Coger la ventana modal*/
         var mod = document.getElementById("mi_modal_carrito");
 
@@ -87,9 +80,9 @@
                         
                         }
            function removeChilds(){
-           while (cuerpo.hasChildNodes()) {
-            cuerpo.removeChild(cuerpo.firstChild);
-}
+               while (cuerpo.hasChildNodes()) {
+                cuerpo.removeChild(cuerpo.firstChild);
+               }
            }
         </script> 
       
@@ -106,187 +99,98 @@
              <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
 
                  <h1 class="h2"><?php echo isset($titulo_seccion) ? $titulo_seccion : 'Inventario';?></h1>
-                <a href="/inventario/Ratones" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
+                <a href="/inventario/UsuariosSistema" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
               </div>
 
-                <div class="btn-toolbar mb-2 mb-md-0">
-<!--          <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar" class="align-text-bottom"></span>
-            This week
-          </button>-->
-        </div>
       </div>
-
-      <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
+     
         <?php
         if(isset($_SESSION['error_añadir'])){
             echo $_SESSION['error_añadir'];
         }
+        unset($_SESSION['error_añadir']);
         ?>
       <h2>Bienvenido al panel de incio de Administración</h2>
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
-          <form action="<?php echo $seccion;?>" method="post" enctype="multipart/form-data"> 
-          <div class="col-8 col-md-6 col-lg-3">
+          <form action="<?php echo $seccion;?>" method="post"  enctype="multipart/form-data"> 
+          <div class="col-8 col-md-6 col-lg-3 m-auto m-md-0">
               
                    <div id="col-12">
-                        <img id="foto_img" src="
+                       <div id="caja_foto">                                             
+                        <img id="foto_img"  src="
                              <?php
-                             if(!isset($input['url_imagen'])){
-                                 echo '/assets/img/default_image.png';
-                             }else if($input['url_imagen'] == NULL){
-                               echo '/assets/img/default_image.png';
+                             if(!isset($input['profile_image'])){
+                                 echo '/assets/img/Default_Profile_Photo.svg';
+                             }else if($input['profile_image'] == NULL){
+                               echo '/assets/img/Default_Profile_Photo.svg';
                              }else{
-                               echo $input['url_imagen'];  
+                               echo $input['profile_image'];  
                              }
-                             ;?>"
-                              alt="">
+                        ;?>" alt="imagen de perfil">
+                        </div>
                     </div>
               
               
                     <footer class="blockquote-footer col-12 pb-2 m-auto text-center">
-                        <p>Foto del Producto</p>
-                        <label for="">Selecciona una imagen</label>
-                        <input class="col-12 text-center" type="file" name="imagen" id="">
-                        <p class="text-danger small"><?php echo isset($errores['url_imagen']) ? $errores['url_imagen'] : '';?></p>
+                        <p>Foto del Usuario</p>
+                        <h3>Resetear Foto Perfil</h3>
+                        <button  type="button" class="btn"><i id="reset" class="fa-solid fa-trash-can fa-2xl" style="color: #FF4500;"></i></button>
                      </footer> 
+              
+
           </div>
           
-          <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
-             <input type="hidden" id="postId" name="id" value="<?php echo isset($input['id']) ? $input['id'] : '';?>" />
- 
-              <input type="hidden" id="postId" name="codigo_producto" value="<?php echo isset($input['codigo_producto']) ? $input['codigo_producto'] :'';?>" />
+          <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3  border-top border-secondary">
+              <!-- 
+             <input type="hidden" id="postId" name="id_silla" value="<?p hp echo isset($input['id_silla']) ? $input['id_silla'] : '';?>" />
+ comment -->
+              <input type="hidden" id="postId" name="id_usuario" value="<?php echo isset($input['id_usuario']) ? $input['id_usuario'] :'';?>" />
+              
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : '' ;?>" class="mt-1">
-                 <p class="text-danger small"><?php echo isset($errores['nombre']) ? $errores['nombre'] : '';?></p>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : '' ;?>" class="mt-1">
+                 <p class="text-danger small"><?php echo isset($errores['nombre_usuario']) ? $errores['nombre_usuario'] : '';?></p>
               </div>
               
                         
               <div class="col d-flex flex-column">
-                 <label for="">Marca</label>
-                <input type="text" id="marca" name="marca" value="<?php echo isset($input['marca']) ? $input['marca'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['marca']) ? $errores['marca'] : '';?></p>
+                 <label for="">Correo</label>
+                <input type="text" id="email" name="email" value="<?php echo isset($input['email']) ? $input['email'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['email']) ? $errores['email'] : '';?></p>
              </div>
               
-              
             <div class="col d-flex flex-column">
-                 <label for="">Desc producto</label>
-                 <textarea id="w3review" name="desc_producto" rows="4" cols="50" ><?php echo isset($input['desc_producto']) ? $input['desc_producto'] : '' ;?></textarea>
+                 <label for="">Contraseña</label>
+                <input type="password" id="pass" name="pass" value="<?php echo isset($input['pass']) ? $input['pass'] : '' ;?>" class="mt-1">
+                <p class="text-danger small"><?php echo isset($errores['pass']) ? $errores['pass'] : '';?></p>
             </div>
               
             <div class="col d-flex flex-column">
-                 <label for="">Precio</label>
-                <input type="text" id="precio_bruto" name="precio_bruto" value="<?php echo isset($input['precio_bruto']) ? $input['precio_bruto'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['precio_bruto']) ? $errores['precio_bruto'] : '';?></p>
-            </div>
-              
-              <div class="col d-flex flex-column">
-                 <label for="">IVA</label>
-                    <select name="iva" id="iva">
+                 <label for="">Rol</label>
+                    <select name="id_rol" id="id_rol">
                            <option value="">-</option>
                            <?php
-                           foreach ($iva as $iva) {
+                           foreach ($id_rol as $rol) {
                            ?>
-                           <option value="<?php echo $iva;?>" <?php echo (isset($input['iva']) && $iva == $input['iva']) ? 'selected' : ''; ?>><?php echo  $iva;?></option>
+                           <option value="<?php echo $rol['id_rol'];?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo $rol['id_rol'].' - '.$rol['nombre_rol'] ;?></option>
                            
                            <?php
                            }
                            ?>
                      </select>
-             <p class="text-danger small"><?php echo isset($errores['iva']) ? $errores['iva'] : '';?></p>
-  
-            </div>
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Stock</label>
-                <input type="text" id="stock" name="stock" value="<?php echo isset($input['stock']) ? $input['stock'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['stock']) ? $errores['stock'] : '';?></p>
+                 <p class="text-danger small"><?php echo isset($errores['id_rol']) ? $errores['id_rol'] : '';?></p>
             </div>  
-              
-                                      
-              <div class="col d-flex flex-column">
-                 <label for="">Proveedor</label>
-                    <select name="proveedor" id="conextion">
-                           <option value="">-</option>
-                           <?php
-                           foreach ($proveedor as $proveedor) {
-                           ?>
-                           <option value="<?php echo $proveedor['id_proveedor'];?>" <?php echo (isset($input['proveedor']) && $proveedor['id_proveedor'] == $input['proveedor']) ? 'selected' : ''; ?>><?php echo $proveedor['id_proveedor'].' - '.$proveedor['nombre_proveedor'] ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                     </select>
-            <p class="text-danger small"><?php echo isset($errores['proveedor']) ? $errores['proveedor'] : '';?></p>
-
-            </div>
-              
-              
-                                    
-              <div class="col d-flex flex-column">
-                 <label for="">Conexion</label>
-                    <select name="id_conexion" id="conextion">
-                           <option value="">-</option>
-                           <?php
-                           foreach ($id_conexion as $conect) {
-                           ?>
-                           <option value="<?php echo $conect['id_conexion'];?>" <?php echo (isset($input['id_conexion']) && $conect['id_conexion'] == $input['id_conexion']) ? 'selected' : ''; ?>><?php echo $conect['id_conexion'].' - '.$conect['nombre_conectividad_raton'] ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                     </select>
-              <p class="text-danger small"><?php echo isset($errores['conexion']) ? $errores['conexion'] : '';?></p>
-            </div> 
-              
-                     
-              <div class="col d-flex flex-column">
-                 <label for="">Clase</label>
-                <input type="text" id="clase" name="clase" value="<?php echo isset($input['clase']) ? $input['clase'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['clase']) ? $errores['clase'] : '';?></p>
-              </div>
-              
-                        
-              <div class="col d-flex flex-column">
-                 <label for="">DPI</label>
-                <input type="text" id="dpi" name="dpi" value="<?php echo isset($input['dpi']) ? $input['dpi'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['dpi']) ? $errores['dpi'] : '';?></p>
-            </div>  
-              
 
             </div>
               <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
                 <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
-                <button type="submit" name="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
+                <button type="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
               </footer>
               
             </form>   
               
           </div>
           
-         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       </div>
     </main>
@@ -334,6 +238,22 @@
               </ul>
           </footer>
         </div>
+      
+            <script>
+                  //Animacion boton reset
+                  var f = document.querySelector('#reset');
+                  
+                  f.addEventListener('mouseover',function(){
+                     f.setAttribute('class',"fa-solid fa-trash-can fa-2xl fa-flip");
+                     f.setAttribute('class',"fa-solid fa-trash-can fa-2xl fa-flip");
+                  });
+                  
+                  f.addEventListener('mouseout',function(){
+                     f.setAttribute('class',"fa-solid fa-trash-can fa-2xl"); 
+                  });
+            </script>
+      
+      
         <script src="/assets/js/accionesCesta.js"></script>
         <?php
         if($_SERVER['REQUEST_URI'] == '/checkout'){
@@ -539,4 +459,6 @@
       
   </body>
 </html>
+
+
 

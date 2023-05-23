@@ -5,8 +5,8 @@ namespace Com\Daw2\Controllers;
 class ProductoController extends \Com\Daw2\Core\BaseController{
     
     
-        /*Carga el producto cogiendo ID y nombre de producto*/
-        function load_product($id,$nombre){
+    /*Carga el producto cogiendo ID y nombre de producto*/
+    function load_product($id,$nombre){
         $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
         $model = new \Com\Daw2\Models\ProductosGeneralModel();
         $data = [];
@@ -90,7 +90,8 @@ class ProductoController extends \Com\Daw2\Core\BaseController{
         return $detalles;
     }
     
-        private function errorLoadProduct($nombre, string $error, string $mensaje){
+    
+    private function errorLoadProduct($nombre, string $error, string $mensaje){
         
         $data = [];
         $data['titulo'] = $error; 

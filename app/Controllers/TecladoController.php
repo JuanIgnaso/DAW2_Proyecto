@@ -138,7 +138,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
     }
     
     
-       private function modifyTeclado($idTec,$id,array $post): bool{
+    private function modifyTeclado($idTec,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\TecladosModel();
       
@@ -339,8 +339,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
      
      if(empty($post['id_conectividad'])){
         $errores['conectividad'] = 'selecciona una conectividad.'; 
-     }else
-     if(!$conectividadModel->conectividadExists($post['id_conectividad'])){
+     }else if(!$conectividadModel->conectividadExists($post['id_conectividad'])){
       $errores['conectividad'] = 'la conectividad seleccionada no existe.'; 
     
      }
@@ -348,27 +347,27 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
      if(empty($post['id_clase'])){
       $errores['clase'] = 'selecciona una clase.'; 
     
-     } else
-     if(!$claseModel->claseExists($post['id_clase'])){
+     } 
+     else if(!$claseModel->claseExists($post['id_clase'])){
       $errores['clase'] = 'la clase seleccionada no existe.'; 
     
      }
      
-      if(isset($check)){
-    if($check == false){
-        $errores['url_imagen'] = 'debes de subir una imagen';  
-    }else{
-              if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
-             $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
-          }if($check[0] != $check[1]){  // DIMENSIONES
-            $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
-          } 
-          if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
-            $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
-          }  
-    }
+        if(isset($check)){
+            if($check == false){
+                $errores['url_imagen'] = 'debes de subir una imagen';  
+            }else{
+                  if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
+                     $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
+                  }if($check[0] != $check[1]){  // DIMENSIONES
+                    $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
+                  } 
+                  if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
+                    $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
+                  }  
+            }
 
- }
+        }
      
       
       return $errores;

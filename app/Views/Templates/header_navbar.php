@@ -61,7 +61,7 @@
             <script src="/assets/js/adapt_navbar.js"></script>
         </div>
         
-                        <div class="row">
+                    <div class="row">
                         <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
                               <!-- COntenido del modal -->
                             <div class="col-12  contenido_modal_carrito">
@@ -116,7 +116,7 @@
           if(elementos.length == 0){
                removeChilds();
                 cuerpo.innerHTML = '<p class="text-danger text-center">No hay ningún elemento en la cesta!</p>';
-                }
+          }
         }
 
         // Cerrar la modal cuando el usuario le da al <span>

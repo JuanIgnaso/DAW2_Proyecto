@@ -4,7 +4,7 @@ namespace Com\Daw2\Models;
 
 class AuxProveedoresModel  extends \Com\Daw2\Core\BaseModel{
     
-        function getAll(): array{
+    function getAll(): array{
         $stmt = $this->pdo->query('SELECT * FROM proveedores ORDER BY 1');
         return $stmt->fetchAll();
     }

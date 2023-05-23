@@ -10,7 +10,7 @@ class TecladosModel extends \Com\Daw2\Core\BaseModel{
         private const SELECT_ALL = 'SELECT proveedores.nombre_proveedor,productos.*,teclados.id_conectividad,teclados.id_clase,teclados.idioma_T,teclados.diseño_Teclado,teclados.id_Teclado,clase_conectividad.nombre_conectividad,clase_teclado.nombre_clase,idioma.nombre_idioma FROM teclados LEFT JOIN productos ON productos.nombre = teclados.nombre LEFT JOIN proveedores ON productos.proveedor = proveedores.id_proveedor LEFT JOIN clase_conectividad ON clase_conectividad.id_conectividad = teclados.id_conectividad LEFT JOIN clase_teclado ON clase_teclado.id_clase = teclados.id_clase LEFT JOIN idioma ON idioma.id = teclados.idioma_T';
         private const DEFAULT_ORDER = 0;
         private const FIELD_ORDER = ['codigo_producto','nombre','nombre_proveedor','precio','nombre_conectividad','nombre_clase','nombre_idioma'];
-      private const _UPDATE = 'UPDATE teclados SET ';  
+        private const _UPDATE = 'UPDATE teclados SET ';  
 
         
         
@@ -21,14 +21,14 @@ class TecladosModel extends \Com\Daw2\Core\BaseModel{
     }
     
     
-        function getProducto($cod):array{
+    function getProducto($cod):array{
          $stmt = $this->pdo->prepare(self::SELECT_ALL.' WHERE codigo_producto=?');
          $stmt->execute([$cod]);
          return $stmt->fetch();
     } 
     
     
-       function filterAll(array $filtros): array{
+    function filterAll(array $filtros): array{
              $conditions = [];
              $parameters = [];
              
@@ -118,15 +118,15 @@ class TecladosModel extends \Com\Daw2\Core\BaseModel{
    
    function insertTeclado(array $post):bool{
          try{
-        $this->pdo->beginTransaction();
-        $stmt = $this->pdo->prepare('INSERT INTO teclados(nombre,id_conectividad,id_clase,idioma_T,diseño_Teclado) values(?,?,?,?,?)');
-        $stmt->execute([$post['nombre'],$post['id_conectividad'],$post['id_clase'],$post['idioma_T'],$post['diseño_Teclado']]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }   
+            $this->pdo->beginTransaction();
+            $stmt = $this->pdo->prepare('INSERT INTO teclados(nombre,id_conectividad,id_clase,idioma_T,diseño_Teclado) values(?,?,?,?,?)');
+            $stmt->execute([$post['nombre'],$post['id_conectividad'],$post['id_clase'],$post['idioma_T'],$post['diseño_Teclado']]);
+            $this->pdo->commit();  
+            return true;
+          }catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+         }   
    }
    
    
@@ -143,17 +143,17 @@ class TecladosModel extends \Com\Daw2\Core\BaseModel{
    
    
    
-       function editTeclado(array $post,$codigo):bool{
+    function editTeclado(array $post,$codigo):bool{
          try{
-        $this->pdo->beginTransaction();
-        $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, id_conectividad=?, id_clase=?, idioma_T=?, diseño_Teclado=? WHERE id_Teclado=?');
-        $stmt->execute([$post['nombre'],$post['id_conectividad'],$post['id_clase'],$post['idioma_T'],$post['diseño_Teclado'],$codigo]);
-        $this->pdo->commit();  
-        return true;
-    } catch (\PDOException $ex) {
-        $this->pdo->rollback();
-        return false;
-    }  
+            $this->pdo->beginTransaction();
+            $stmt= $this->pdo->prepare(self::_UPDATE.' nombre=?, id_conectividad=?, id_clase=?, idioma_T=?, diseño_Teclado=? WHERE id_Teclado=?');
+            $stmt->execute([$post['nombre'],$post['id_conectividad'],$post['id_clase'],$post['idioma_T'],$post['diseño_Teclado'],$codigo]);
+            $this->pdo->commit();  
+            return true;
+        } catch (\PDOException $ex) {
+            $this->pdo->rollback();
+            return false;
+        }  
     }
    
    

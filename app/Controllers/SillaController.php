@@ -76,20 +76,20 @@ class SillaController extends \Com\Daw2\Core\BaseController{
       
        if(count($data['errores']) == 0){
            
-           if(!empty($_FILES["imagen"]["tmp_name"])){
-               $upload = new \Com\Daw2\Helpers\FileUpload('assets/sillas/');
-               if($upload->uploadPhoto()){
-                 $_POST['imagen_p'] = '/assets/img/sillas/'.$_FILES["imagen"]["name"];
-               }       
-            } 
-           
-           
-           
-          $result = $this->addSilla(3,$_POST);
-          if($result){
-            header('location: '.$data['volver']);   
-        }else{
-             $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+               if(!empty($_FILES["imagen"]["tmp_name"])){
+                   $upload = new \Com\Daw2\Helpers\FileUpload('assets/sillas/');
+                   if($upload->uploadPhoto()){
+                     $_POST['imagen_p'] = '/assets/img/sillas/'.$_FILES["imagen"]["name"];
+                   }       
+                } 
+
+
+
+              $result = $this->addSilla(3,$_POST);
+              if($result){
+                header('location: '.$data['volver']);   
+            }else{
+                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
             }
         }else{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -171,17 +171,17 @@ class SillaController extends \Com\Daw2\Core\BaseController{
          $data['volver'] = '/inventario/Sillas';
 
         if(count($data['errores']) == 0){
-           $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-           $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
+            $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
           
             $urlimg = $modelGeneral->getProductImg($_POST['codigo_producto']);
            
              if(!empty($_FILES["imagen"]["tmp_name"])){
-              unlink(substr($urlimg,1,strlen($urlimg)));
-              $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/ratones/');
-               if($upload->uploadPhoto()){
-                 $_POST['imagen_p'] = '/assets/img/sillas/'.$_FILES["imagen"]["name"];
-               }       
+                  unlink(substr($urlimg,1,strlen($urlimg)));
+                  $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/ratones/');
+                   if($upload->uploadPhoto()){
+                     $_POST['imagen_p'] = '/assets/img/sillas/'.$_FILES["imagen"]["name"];
+                   }       
              }else{
                 $_POST['imagen_p'] = $urlimg;
              }
@@ -192,7 +192,9 @@ class SillaController extends \Com\Daw2\Core\BaseController{
                header('location: '.$data['volver']);
            }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-            }
+           }
+            
+            
         }else{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Sillas/edit/'.$cod;
@@ -210,7 +212,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
     }
     
     
-      private function modifySilla($idMon,$id,array $post): bool{
+    private function modifySilla($idMon,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\SillasModel();
       
@@ -250,13 +252,13 @@ class SillaController extends \Com\Daw2\Core\BaseController{
       }else if(strlen(trim($post['nombre'])) == 0){
           $errores['nombre'] = 'No se aceptan cadenas vacías';
       }  
-            else if($modelGeneral->occupiedProductName($post['nombre'],$post['codigo_producto'])){
-            $errores['nombre'] = 'El nombre del producto ya está en uso';
-               }else
-            if($alta){
-             if($modelGeneral->productNameExists($post['nombre'])){
-            $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
-               }
+    else if($modelGeneral->occupiedProductName($post['nombre'],$post['codigo_producto'])){
+    $errores['nombre'] = 'El nombre del producto ya está en uso';
+       }else
+    if($alta){
+     if($modelGeneral->productNameExists($post['nombre'])){
+    $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
+       }
            
       } 
   
@@ -336,10 +338,10 @@ class SillaController extends \Com\Daw2\Core\BaseController{
                  $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
            }if($check[0] != $check[1]){  // DIMENSIONES
                 $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
-            } 
-            if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
+           } 
+           if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
              $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
-             }  
+           }  
         }
 
      }

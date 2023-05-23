@@ -69,6 +69,7 @@
          ?>
 
           <button class="w-100 btn btn-lg rounded" id="id_boton_login" type="submit"><?php echo $accion;?></button>
+          <a href="/">Volver al Inicio</a>
           <p class="mt-5 mb-3 text-muted">Gallaecia PC &copy; 2023</p>
         </form>
       </main>

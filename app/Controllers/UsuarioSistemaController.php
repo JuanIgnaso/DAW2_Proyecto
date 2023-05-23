@@ -150,21 +150,25 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
 
         if(empty($post['nombre_usuario'])){
-                    $loginError['nombre_usuario'] = 'Debes de escribir un nombre';
-                }else if(strlen(trim($post['nombre_usuario'])) == 0){
-                    $loginError['nombre_usuario'] = 'No se admiten cadenas vacías';
-                }else if($model->isUserNameUsed($_POST['nombre_usuario'])){
-                    $loginError['nombre_usuario'] = 'Nombre de usuario ya en uso'; 
-                }
+            $loginError['nombre_usuario'] = 'Debes de escribir un nombre';
+        }else if(strlen(trim($post['nombre_usuario'])) == 0){
+            $loginError['nombre_usuario'] = 'No se admiten cadenas vacías';
+        }else if($model->isUserNameUsed($_POST['nombre_usuario'])){
+            $loginError['nombre_usuario'] = 'Nombre de usuario ya en uso'; 
+        }
+                
+                
         if(empty($post['email'])){
-                    $loginError['email'] = 'Debes usar un correo';
-                }else if(strlen(trim($post['email'])) == 0){
-                    $loginError['email'] = 'No se admiten cadenas vacías';
-                }else if($model->isEmailUsed($_POST['email'])){
-                    $loginError['email'] = 'Dirección de correo ya en uso'; 
-                }else if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
-                    $loginError['email'] = 'Formato de correo incorrecto'; 
-                }        
+            $loginError['email'] = 'Debes usar un correo';
+        }else if(strlen(trim($post['email'])) == 0){
+            $loginError['email'] = 'No se admiten cadenas vacías';
+        }else if($model->isEmailUsed($_POST['email'])){
+            $loginError['email'] = 'Dirección de correo ya en uso'; 
+        }else if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+            $loginError['email'] = 'Formato de correo incorrecto'; 
+        }   
+        
+        
         if(empty($post['password'])){
             $loginError['password'] = 'Debes darle una contraseña';
         }else if(strlen(trim($post['password'])) == 0){
@@ -172,6 +176,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
          } else  if(!preg_match(self::_PATRON_PASSWORD,$post['password'])){
            $loginError['password'] = 'formato de contraseña incorrecto.';    
          }
+         
+         
          return $loginError;
     }
     
@@ -223,116 +229,95 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','addUsersTest.view.php','templates/footer.view.php'),$data);
     }
     
-    //ES PROVISIONAL Y DE TESTEO PARA PODER AÑADIR USUARIOS A LA BBDD
-    //POR EL MOMENTO NO TIENE COMPROBACIONES DE VALORES ERRONEOS
-    function addUser(){
-       $rolModel = new \Com\Daw2\Models\RolModel();
-       $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-       $rol = $rolModel->getUsersRol();
-       $data = [];
-       $data['roles'] = $rol;
-       $data['titulo'] = 'Añadir Usuarios(Provisional)';
-       $data['seccion'] = '/usuarios/add';
-       $result = $model->addUser($_POST);
-       if($result){
-           header('Location: /');
-       }   
  
-    }
     
     function showUserProfile(){
-    $data = [];
-    $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
-    $modelU  = new \Com\Daw2\Models\UsuarioSistemaModel();
-    //$data['us'] = $modelU->getUserId();
-    $data['categoria'] = $modelCategoria->getAll();
-   // $data['metodo'] = 'get';
-    $data['titulo'] = 'Perfil Del Usuario';
-    $data['seccion'] = '/mi_Perfil';
-    $info = $_SESSION['usuario'];
-    $data['info_usuario'] = $info;
-    $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+        $data = [];
+        $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+        $modelU  = new \Com\Daw2\Models\UsuarioSistemaModel();
+        //$data['us'] = $modelU->getUserId();
+        $data['categoria'] = $modelCategoria->getAll();
+       // $data['metodo'] = 'get';
+        $data['titulo'] = 'Perfil Del Usuario';
+        $data['seccion'] = '/mi_Perfil';
+        $info = $_SESSION['usuario'];
+        $data['info_usuario'] = $info;
+        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
 
     }
     
     
     function showEditProfile(){
-    $data = [];
-    $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
-    $input = $_SESSION['usuario'];
-    $data['categoria'] = $modelCategoria->getAll();
-    $data['seccion'] = '/mi_Perfil/edit';
-    $data['titulo'] = 'Modificar Mi Perfil';
-    $data['input'] = $_SESSION['usuario'];
-    unset($data['input']['cartera']);
-    $data['info_usuario'] = $input;
-    unset($data['info_usuario']['cartera']);
-    
-    
-    
-    $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+        
+        $data = [];
+        $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+        $input = $_SESSION['usuario'];
+        $data['categoria'] = $modelCategoria->getAll();
+        $data['seccion'] = '/mi_Perfil/edit';
+        $data['titulo'] = 'Modificar Mi Perfil';
+        $data['input'] = $_SESSION['usuario'];
+        unset($data['input']['cartera']);
+        $data['info_usuario'] = $input;
+        unset($data['info_usuario']['cartera']);
+
+
+
+        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
 
     }
     
     
     //EDITAR PERFIL
     function editProfile(){
-    $data = [];
-      $modelDir = new \Com\Daw2\Models\DireccionEnvioModel();
-    $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
-    $data['categoria'] = $modelCategoria->getAll();
-    $data['seccion'] = '/mi_Perfil/edit';
-    $data['titulo'] = 'Modificar Mi Perfil';
-    $data['errores'] = $this->checkForm($_POST);
-    
-    $input = $_SESSION['usuario'];
-     
-    if(count($data['errores']) == 0){
-        if($this->checkEmpty($_POST)){
-       $data['errores2'] = $this->checkForm2($_POST); 
-       if(count($data['errores2']) == 0){
-       $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);  
+        $data = [];
+          $modelDir = new \Com\Daw2\Models\DireccionEnvioModel();
+        $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
+        $data['categoria'] = $modelCategoria->getAll();
+        $data['seccion'] = '/mi_Perfil/edit';
+        $data['titulo'] = 'Modificar Mi Perfil';
+        $data['errores'] = $this->checkForm($_POST);
 
-      }
-      }else{
-          $dir = true;
-      }
-        
-    $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-    $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-    $usuario = $model->editUser($_POST,$_SESSION['usuario']['pass'],$_SESSION['usuario']['id_usuario']);           
-    
-    if($usuario && $dir){
-             $_SESSION['usuario'] = $model->updateUserSession($_SESSION['usuario']['id_usuario']);
-             $_SESSION['usuario']['direccion'] = $modelDir->getUserShippingAddress($_SESSION['usuario']['id_usuario']);
-             header('location: /mi_Perfil');
-             $_SESSION['success'] = 'Los cambios realizados a tu perfil se han realizado con éxito!';
-         }else{
-             $data['categoria'] = $modelCategoria->getAll();
-             $data['seccion'] = '/mi_Perfil/edit';
-             $data['titulo'] = 'Modificar Mi Perfil';
-             $data['errores'] = $this->checkForm($_POST,true); //<- Pasamos true porque estamos editando
-         }    
-  
-//    }else{
-//      $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);  
-//    }
-//    $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);    
+        $input = $_SESSION['usuario'];
 
-//    $result = false;
-//    if($dir && $usuario){
-//        $result = true;
-//    }
-        
-    }else{
-   $data['info_usuario'] = $input;
-    $data['categoria'] = $modelCategoria->getAll();
-    $data['seccion'] = '/mi_Perfil/edit';
-    $data['titulo'] = 'Modificar Mi Perfil';
-    $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-    $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+        if(count($data['errores']) == 0){
+                if($this->checkEmpty($_POST)){
+                $data['errores2'] = $this->checkForm2($_POST); 
+               if(count($data['errores2']) == 0){
+                 $dir = $modelDir->insertShippingAddress($_POST,$_SESSION['usuario']['id_usuario']);  
+
+               } 
+          }else{
+              $dir = true;
+          }
+
+        $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $usuario = $model->editUser($_POST,$_SESSION['usuario']['pass'],$_SESSION['usuario']['id_usuario']);           
+
+            if($usuario && $dir){
+                 $_SESSION['usuario'] = $model->updateUserSession($_SESSION['usuario']['id_usuario']);
+                 $_SESSION['usuario']['direccion'] = $modelDir->getUserShippingAddress($_SESSION['usuario']['id_usuario']);
+                 header('location: /mi_Perfil');
+                 $_SESSION['success'] = 'Los cambios realizados a tu perfil se han realizado con éxito!';
+             }else{
+                 $data['categoria'] = $modelCategoria->getAll();
+                 $data['seccion'] = '/mi_Perfil/edit';
+                 $data['titulo'] = 'Modificar Mi Perfil';
+                 $data['errores'] = $this->checkForm($_POST,true); //<- Pasamos true porque estamos editando
+             }    
+
+
+        }else{
+       $data['info_usuario'] = $input;
+        $data['categoria'] = $modelCategoria->getAll();
+        $data['seccion'] = '/mi_Perfil/edit';
+        $data['titulo'] = 'Modificar Mi Perfil';
+        $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+        }
     }
-    }
+    
+    
     
     
     //EDITAR FOTO DE PERFIL
@@ -342,8 +327,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         
         if(empty($_FILES['image']) || !isset($_FILES['image'])){
             http_response_code(400);  
-                    $error['error']  = "No has subido ningún archivo.";
-                    echo json_encode($error);
+            $error['error']  = "No has subido ningún archivo.";
+            echo json_encode($error);
 
          exit;
         }
@@ -387,11 +372,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         if (move_uploaded_file($src, $output_dir )) {
               if (!is_null($_SESSION['usuario']['profile_image'])) { //Si no es NULL se borra la foto anterior
                 unlink(substr($_SESSION['usuario']['profile_image'],1,strlen($_SESSION['usuario']['profile_image'])));
-            }
-            if($model->updateUserAvatar($_SESSION['usuario']['id_usuario'],'/'.$output_dir)){
+              }
               
-                
-                
+            if($model->updateUserAvatar($_SESSION['usuario']['id_usuario'],'/'.$output_dir)){
                 http_response_code(200);
                  echo "El archivo ".$filename."Se acaba de subir correctamente";
             }
@@ -490,7 +473,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         //Devolver errores
         return $errores;
 
-        }
+    }
+    
     
    private function checkForm2(array $post): array{
        $errores = [];
@@ -519,42 +503,40 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
 
         //Ciudad
         if(strlen(trim($post['ciudad'])) != 0){
-        if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
-         $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';  
-        }
-         if($this->checkEmptyDir($post['ciudad'])){
-           $errores['ciudad'] = 'Tienes que cubrir todos los campos';
-       }
-
-
+            if(!preg_match('/[a-zA-Z ]+/',$post['ciudad'])){
+             $errores['ciudad'] = 'sólo se admiten letras en el nombre de la ciudad';  
+            }
+            if($this->checkEmptyDir($post['ciudad'])){
+               $errores['ciudad'] = 'Tienes que cubrir todos los campos';
+            }
         }
 
         //COD POSTAL
         if(strlen(trim($post['cod_postal'])) != 0){
-        if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
-                $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
+            if(!preg_match('/[0-9]{5}/',$post['cod_postal'])){
+                    $errores['cod_postal'] = 'El código postal debe de estar compuesto por 5 cifras';
             }
-                            if($this->checkEmptyDir($post['cod_postal'])){
-           $errores['cod_postal'] = 'Tienes que cubrir todos los campos';
-       }
+            if($this->checkEmptyDir($post['cod_postal'])){
+               $errores['cod_postal'] = 'Tienes que cubrir todos los campos';
+            }
         }
 
 
         //Calle
         if(strlen(trim($post['calle'])) != 0){
-         if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
-             $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
-        }
-        if($this->checkEmptyDir($post['calle'])){
-           $errores['calle'] = 'Tienes que cubrir todos los campos';
-       }
+             if(!preg_match('/[a-zA-Z0-9 \,\.]+/',$post['calle'])){
+                 $errores['calle'] = 'caracteres inválidos a la hora de declarar el nombre de calle.';
+            }
+            if($this->checkEmptyDir($post['calle'])){
+               $errores['calle'] = 'Tienes que cubrir todos los campos';
+           }
         }
        
         return $errores;
-   }
+    }
     
    
-        function darDeBajaUsuario(){
+    function darDeBajaUsuario(){
     
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $nombre = $_POST['dato'];
@@ -569,7 +551,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         }else{
           http_response_code(400);  
           echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
-         exit;
+          exit;
         }
         
         //header('Location: /');
@@ -577,12 +559,38 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         echo json_encode($nombre);
         exit;   
     }
+    
+    
+    
+    function borrarUsuarioWeb(){
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $nombre = $_POST['usuario'];
+        $d = [
+            "hola" => "adios"
+        ];
+        $var = $model->deleteUser($nombre);
+        if($var){
+            
+             http_response_code(200);
+             exit;
+         
+        }else{
+              http_response_code(400);  
+              echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+             exit;
+        }
+        
+        //header('Location: /');
+        
+        echo json_encode($nombre);
+        exit;
+    }
    
    
    
     
     
-        function darDeBaja(){
+    function darDeBaja(){
     
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $nombre = $_POST['dato'];
@@ -596,33 +604,28 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             session_destroy();
              exit;
         }else{
-          http_response_code(400);  
-          echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+         http_response_code(400);  
+         echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
          exit;
-        }
-        
-        //header('Location: /');
-        
+        }       
         echo json_encode($nombre);
-        exit;
-        
+        exit;   
     }
     
-        function borrarUsuario(){
+    function borrarUsuario(){
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
         $nombre = $_POST['datoborrar'];
         $d = [
             "hola" => "adios"
         ];
         $var = $model->deleteUser($nombre);
-        if($var){
-            
+        if($var){            
              http_response_code(200);
              session_destroy();
              exit;
         }else{
-          http_response_code(400);  
-          echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+              http_response_code(400);  
+              echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
          exit;
         }
         
