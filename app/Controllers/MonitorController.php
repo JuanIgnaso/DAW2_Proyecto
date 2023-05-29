@@ -3,9 +3,7 @@
 namespace Com\Daw2\Controllers;
 
 class MonitorController extends \Com\Daw2\Core\BaseController{
-    private const IVA = [12,18,21];
-
-    
+ 
     
     public function showListaMonitores(){
         $modelMonitor =  new \Com\Daw2\Models\MonitoresModel();
@@ -31,7 +29,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
             $data['queryString'] = "";
         }
         
-        
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','MonitoresView.php'),$data); 
     }
     
@@ -51,7 +48,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
         $data['volver'] = '/inventario/Monitores';
         $data['titulo'] = 'Añadir Producto';
         $data['tecnologia'] = $modelTec->getAll();
-        $data['iva'] = self::IVA;
         $data['proveedor'] = $modelProv->getAll();
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddMonitor.view.php'),$data); 
     }
@@ -89,7 +85,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Monitores/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['iva'] = self::IVA;
             $data['proveedor'] = $modelProv->getAll();
             $data['tecnologia'] = $modelTec->getAll();
             $data['volver'] = '/inventario/Monitores';
@@ -104,7 +99,7 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\MonitoresModel();
       
-      if($modelGeneral->insertProduct($categoria,$post)){
+      if($modelGeneral->insertProduct($categoria,$post,self::IVA)){
           if($model->insertMonitor($post)){
               return true;
           }else{
@@ -129,7 +124,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
         $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Monitor';
-        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Monitores';
         $data['tecnologia'] = $modelTec->getAll();
@@ -175,7 +169,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
            $data['titulo_seccion'] = 'Modificar Monitor';
            $data['seccion'] = '/inventario/Monitores/edit/'.$cod;
            $data['proveedor'] = $modelProv->getAll();
-           $data['iva'] = self::IVA;
            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
            $data['volver'] = '/inventario/Monitores';
            $data['accion'] = 'Aplicar Cambios';
@@ -190,7 +183,7 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\MonitoresModel();
       
-      if($modelGeneral->editProduct($post,$id)){
+      if($modelGeneral->editProduct($post,$id,self::IVA)){
           if($model->editMonitor($post)){
               return true;
           }else{
@@ -225,15 +218,15 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
           }else if(strlen(trim($post['nombre'])) == 0){
               $errores['nombre'] = 'No se aceptan cadenas vacías';
           }  
-                else if($modelGeneral->occupiedProductName($post['nombre'],$post['codigo_producto'])){
-                $errores['nombre'] = 'El nombre del producto ya está en uso';
-                   }else
-                if($alta){
-                 if($modelGeneral->productNameExists($post['nombre'])){
-                $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
-                   }
+            else if($modelGeneral->occupiedProductName($post['nombre'],$post['codigo_producto'])){
+            $errores['nombre'] = 'El nombre del producto ya está en uso';
+               }else
+            if($alta){
+             if($modelGeneral->productNameExists($post['nombre'])){
+            $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
+               }
 
-                } 
+            } 
 
           if(empty($post['marca'])){
               $errores['marca'] = 'Tienes que escribir una marca';
@@ -271,15 +264,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
           }else if(empty((int)$post['proveedor'])){
               $errores['proveedor'] = 'Debes seleccionar un proveedor';
           }
-
-          if(empty($post['iva'])){
-            $errores['iva'] = 'tienes que escoger un iva';
-          }
-
-          else if(!in_array($post['iva'],self::IVA)){
-              $errores['iva'] = 'Valor de IVA no permitido';
-          }
-
 
            if(empty($post['pulgadas'])){
                 $errores['pulgadas'] = 'Este campo es obligatorio';
@@ -321,8 +305,6 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
              }
 
             }
-
-
 
           return $errores;
         

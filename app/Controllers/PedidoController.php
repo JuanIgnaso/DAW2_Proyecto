@@ -15,6 +15,8 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
         $this->view->showViews(array('templates/header_checkout.php','templates/header_checkout_navbar.php','CheckOutView.php','templates/footer.view.php'),$data);     
     }
     
+    
+    
     function terminarCompra(){
         $modelo = new \Com\Daw2\Models\ProductosGeneralModel();
         $userModel = new \Com\Daw2\Models\UsuarioSistemaModel();

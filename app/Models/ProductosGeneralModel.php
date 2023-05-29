@@ -108,12 +108,13 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
           return $stmt->rowCount() != 0; 
     }
       
-    function insertProduct($categoria,array $post): bool{
+    function insertProduct($categoria,array $post,$iva): bool{
         try{
             $this->pdo->beginTransaction();
             if(!isset($post['imagen_p'])){
                 $post['imagen_p'] = NULL;
             }
+            $post['iva'] = $iva;
             $stmt= $this->pdo->prepare('INSERT INTO productos(nombre,proveedor,categoria,marca,desc_producto,url_imagen,precio_bruto,iva,stock) values(?,?,?,?,?,?,?,?,?)');
             $stmt->execute([$post['nombre'],$post['proveedor'],$categoria,$post['marca'],$post['desc_producto'],$post['imagen_p'],$post['precio_bruto'],$post['iva'],$post['stock']]);
             $this->pdo->commit();  
@@ -126,9 +127,10 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
     }
       
       
-       function editProduct(array $post,$codigo):bool{
+       function editProduct(array $post,$codigo,$iva):bool{
             try{
                 $this->pdo->beginTransaction();
+                $post['iva'] = $iva;
                 if(!isset($post['imagen_p'])){
                     $post['imagen_p'] = NULL;
                 }

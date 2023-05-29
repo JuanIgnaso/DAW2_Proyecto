@@ -182,23 +182,7 @@
                 <input type="text" id="precio_bruto" name="precio_bruto" value="<?php echo isset($input['precio_bruto']) ? $input['precio_bruto'] : '' ;?>" class="mt-1">
                 <p class="text-danger small"><?php echo isset($errores['precio_bruto']) ? $errores['precio_bruto'] : '';?></p>
             </div>
-              
-              <div class="col d-flex flex-column">
-                 <label for="">IVA</label>
-                    <select name="iva" id="iva">
-                           <option value="">-</option>
-                           <?php
-                           foreach ($iva as $iva) {
-                           ?>
-                           <option value="<?php echo $iva;?>" <?php echo (isset($input['iva']) && $iva == $input['iva']) ? 'selected' : ''; ?>><?php echo $iva ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                     </select>
-             <p class="text-danger small"><?php echo isset($errores['iva']) ? $errores['iva'] : '';?></p>
-  
-            </div>
+
               
             <div class="col d-flex flex-column">
                  <label for="">Stock</label>

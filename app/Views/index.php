@@ -40,6 +40,7 @@
             unset($_SESSION['register_success']);
             }
             ?>
+            
             <script src="/assets/js/closeRegisterSuccess.js"></script>
             <div id="cabecera" class="col-12 d-flex flex-column justify-content-center">
               <h1 id="titulo_inicio">Gallaecia PCs</h1>
@@ -85,7 +86,7 @@
                      
                          <!-- Foto perfil -->
 
-                         <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $_SESSION['usuario']['profile_image'];?>');">
+                         <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.jpg' : $_SESSION['usuario']['profile_image'];?>');">
                             
                         </div> 
                      
@@ -99,6 +100,7 @@
                   <button type="button" class="activo btn btn-outline-light"><a href="/register">Sign Up</a></button>
                   <?php
                     }
+                   
                   ?>
                 </div>
               </header>

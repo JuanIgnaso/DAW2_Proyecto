@@ -2,10 +2,8 @@
 
 namespace Com\Daw2\Controllers;
 
-class SillaController extends \Com\Daw2\Core\BaseController{
-   
-   private const IVA = [12,18,21];
-   
+class SillaController extends \Com\Daw2\Core\BaseProductController{
+
    
    private function getTipos():array{
       $model = new \Com\Daw2\Models\SillasModel();
@@ -56,7 +54,6 @@ class SillaController extends \Com\Daw2\Core\BaseController{
         $data['tipo'] = 'Sillas';
         $data['volver'] = '/inventario/Sillas';
         $data['titulo'] = 'Añadir Producto';
-        $data['iva'] = self::IVA;   
         $data['tipo_silla'] = $this->getTipos();
         $data['proveedor'] = $modelProv->getAll();
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data); 
@@ -83,8 +80,6 @@ class SillaController extends \Com\Daw2\Core\BaseController{
                    }       
                 } 
 
-
-
               $result = $this->addSilla(3,$_POST);
               if($result){
                 header('location: '.$data['volver']);   
@@ -95,7 +90,6 @@ class SillaController extends \Com\Daw2\Core\BaseController{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Sillas/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['iva'] = self::IVA;
             $data['proveedor'] = $modelProv->getAll();
             $data['volver'] = '/inventario/Sillas';
             $data['tipo_silla'] = $this->getTipos();
@@ -129,7 +123,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\SillasModel();
       
-      if($modelGeneral->insertProduct($categoria,$post)){
+      if($modelGeneral->insertProduct($categoria,$post,self::IVA)){
           if($model->insertSilla($post)){
               return true;
           }else{
@@ -153,7 +147,6 @@ class SillaController extends \Com\Daw2\Core\BaseController{
         $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Silla';
-        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Sillas';
         $data['input'] = $input;
@@ -201,7 +194,6 @@ class SillaController extends \Com\Daw2\Core\BaseController{
             $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
             $data['titulo_seccion'] = 'Modificar Silla';
-            $data['iva'] = self::IVA;
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Sillas';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -216,7 +208,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\SillasModel();
       
-      if($modelGeneral->editProduct($post,$id)){
+      if($modelGeneral->editProduct($post,$id,self::IVA)){
           if($model->editSilla($post)){
               return true;
           }else{
@@ -298,15 +290,7 @@ class SillaController extends \Com\Daw2\Core\BaseController{
       }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
-      
-      if(empty($post['iva'])){
-        $errores['iva'] = 'tienes que escoger un iva';
-      }
-      
-      else if(!in_array($post['iva'],self::IVA)){
-          $errores['iva'] = 'Valor de IVA no permitido';
-      }
-      
+           
       if(empty($post['altura'])){
           $errores['altura'] = 'Tienes que escribir una altura';
       }else if(strlen(trim($post['altura'])) == 0){

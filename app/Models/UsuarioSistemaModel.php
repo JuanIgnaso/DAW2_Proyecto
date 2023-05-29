@@ -238,15 +238,14 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
            if(empty($post['pass'])){
             $stmt = $this->pdo->prepare(self::UPDATE.' id_rol=?,email=?,nombre_usuario=? WHERE id_usuario=?');
                 $stmt->execute([$post['id_rol'],$post['email'],$post['nombre_usuario'],$post['id_usuario']]);
-                $this->pdo->commit();
-                return true;
            }else{
             $post['pass'] = password_hash($post['pass'],PASSWORD_DEFAULT); 
             $stmt = $this->pdo->prepare(self::UPDATE.' id_rol=?,email=?,nombre_usuario=?,pass=? WHERE id_usuario=?');
-            $stmt->execute([$post['id_rol'],$post['email'],$post['nombre_usuario'],$post['id_usuario']]);
-            $this->pdo->commit();
-            return true;   
+            $stmt->execute([$post['id_rol'],$post['email'],$post['nombre_usuario'],$post['pass'],$post['id_usuario']]);  
            }
+           
+           $this->pdo->commit();
+            return true; 
            
         } catch (\PDOException $ex) {
         $this->pdo->rollback();

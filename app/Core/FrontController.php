@@ -150,6 +150,14 @@ class FrontController{
                     $controlador->showEditUser($id);
                 }
             , 'get'); 
+            
+            Route::add('/inventario/UsuariosSistema/edit/([A-Za-z0-9-_\s]+)',
+                function ($id) {
+                    $controlador = new \Com\Daw2\Controllers\AdministracionController();
+                    $controlador->edit($id);
+                }
+            , 'post'); 
+             
        
   
            

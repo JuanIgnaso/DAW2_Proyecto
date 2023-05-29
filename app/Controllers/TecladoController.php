@@ -2,17 +2,11 @@
 
 namespace Com\Daw2\Controllers;
 
-class TecladoController extends \Com\Daw2\Core\BaseController{
-    private const IVA = [12,18,21];
-
-    
+class TecladoController extends \Com\Daw2\Core\BaseProductController{
     
     public function showListaTeclados(){
         //$modelCategoria = new \Com\Daw2\Models\CategoriaModel();
-        $modelTeclado =  new \Com\Daw2\Models\TecladosModel();
-        
-        
-        //clase, conectividad y idioma
+        $modelTeclado =  new \Com\Daw2\Models\TecladosModel();       
         
         $conectividadModel = new \Com\Daw2\Models\AuxConectividadTecladoModel();
         $claseModel = new \Com\Daw2\Models\AuxClaseTecladoModel();
@@ -57,7 +51,6 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
         $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Ratón';
-        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Teclados';
         $data['input'] = $input;
@@ -71,8 +64,6 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
         $patrones[2] = '/\)/';
         $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
 
-        
-        
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
     }
     
@@ -117,7 +108,6 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
                 $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
                 $data['seccion'] = '/inventario/Teclados/edit/'.$cod;
                 $data['proveedor'] = $modelProv->getAll();
-                $data['iva'] = self::IVA;
                 $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
                 $data['id_conectividad'] = $conectividadModel->getAll();
                 $data['id_clase'] = $claseModel->getAll();
@@ -142,7 +132,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\TecladosModel();
       
-      if($modelGeneral->editProduct($post,$id)){
+      if($modelGeneral->editProduct($post,$id,self::IVA)){
           if($model->editTeclado($post,$idTec)){
               return true;
           }else{
@@ -173,7 +163,6 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
         $data['id_conectividad'] = $conectividadModel->getAll();
         $data['id_clase'] = $claseModel->getAll();
         $data['idioma_T'] = $idiomaModel->getAll();
-        $data['iva'] = self::IVA;
         $diseño =  $model->getDiseño();
         $patrones = array();
         $patrones[0] = '/\'/';
@@ -217,7 +206,6 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
             $idiomaModel =  new \Com\Daw2\Models\AuxIdiomaModel();
             $data['seccion'] = '/inventario/Teclados/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['iva'] = self::IVA;
             $data['proveedor'] = $modelProv->getAll();
             $data['id_conectividad'] = $conectividadModel->getAll();
             $data['id_clase'] = $claseModel->getAll();
@@ -239,7 +227,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\TecladosModel();
       
-      if($modelGeneral->insertProduct($categoria,$post)){
+      if($modelGeneral->insertProduct($categoria,$post,self::IVA)){
           if($model->insertTeclado($post)){
               return true;
           }else{
@@ -276,15 +264,15 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
       }else if(strlen(trim($post['nombre'])) == 0){
           $errores['nombre'] = 'No se aceptan cadenas vacías';
       }  
-            else if($modelGeneral->occupiedProductName($post['nombre'],$post['codigo_producto'])){
-            $errores['nombre'] = 'El nombre del producto ya está en uso';
-               }
-            if($alta){
-             if($modelGeneral->productNameExists($post['nombre'])){
-            $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
-               }
-           
-            } 
+        else if($modelGeneral->occupiedProductName($post['nombre'],$post['codigo_producto'])){
+        $errores['nombre'] = 'El nombre del producto ya está en uso';
+           }
+        if($alta){
+         if($modelGeneral->productNameExists($post['nombre'])){
+        $errores['nombre'] = 'El nombre del producto que intentas registrar ya existe';
+           }
+
+        } 
   
       if(empty($post['marca'])){
           $errores['marca'] = 'Tienes que escribir una marca';
@@ -300,9 +288,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
             $errores['precio_bruto'] = 'El valor introducido debe de ser un número decimal';
         }else if($post['precio_bruto'] <= 0){
         $errores['precio_bruto'] = 'No se puede introducir un valor igual o inferior a 0';
-        }
-      
-        
+        }             
       
        if(empty($post['stock'])){
             $errores['stock'] = 'Este campo es obligatorio';
@@ -318,13 +304,7 @@ class TecladoController extends \Com\Daw2\Core\BaseController{
       }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
-      
-      
-      if(!in_array($post['iva'],self::IVA)){
-          $errores['iva'] = 'Valor de IVA no permitido';
-      }
-      
-      
+              
      if(empty($post['diseño_Teclado'])){
          $errores['diseños'] = 'Tienes que selecionar un diseño de teclado';
      }

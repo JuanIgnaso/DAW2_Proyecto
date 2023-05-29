@@ -4,6 +4,7 @@ namespace Com\Daw2\Controllers;
 
 class ProductoController extends \Com\Daw2\Core\BaseController{
     
+    public const IVA = 21;
     
     /*Carga el producto cogiendo ID y nombre de producto*/
     function load_product($id,$nombre){
@@ -26,10 +27,7 @@ class ProductoController extends \Com\Daw2\Core\BaseController{
         $model =  new \Com\Daw2\Models\ProductosGeneralModel();
         
         $accion = $model->deleteProduct($codigo_producto);
-        
-       
-        
-        
+               
         if($accion){
          http_response_code(200); 
          echo json_encode(["hola"=>"todo correcto."]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
@@ -47,40 +45,44 @@ class ProductoController extends \Com\Daw2\Core\BaseController{
     private function getDetails($nombre,$id){
         $detalles;
         $productModel;
-        //ESTÁ
+       
+        
         if($id == 2){
             $productModel = new \Com\Daw2\Models\TecladosModel();
             $detalles = $productModel->loadDetails($nombre);
-        //ESTÁ    
+       
+            
         }else if($id == 3){
            $productModel = new \Com\Daw2\Models\SillasModel(); 
           $detalles = $productModel->loadDetails($nombre);
-           //ESTÁ
+         
+          
         } else if($id == 6){
            $productModel = new \Com\Daw2\Models\ConsolasModel(); 
            $detalles = $productModel->loadDetails($nombre);
-           //TENGO QUE METER COSAS
+           
+           
         }else if($id == 5){
            $productModel = new \Com\Daw2\Models\MandosModel(); 
            $detalles = $productModel->loadDetails($nombre);   
         }
-        //ESTÁ
+        
         else if($id == 7){
             $productModel = new \Com\Daw2\Models\RatonesModel(); 
            $detalles = $productModel->loadDetails($nombre);
         }   
-        //ESTÁ
+        
         else if($id == 9){
            $productModel = new \Com\Daw2\Models\MonitoresModel(); 
            $detalles = $productModel->loadDetails($nombre);
            unset($detalles['tecnologia']);
         } 
-        //ESTÁ
+       
         else if($id == 10){
             $productModel = new \Com\Daw2\Models\PCMontadosModel(); 
            $detalles = $productModel->loadDetails($nombre);
         }
-        //HAY QUE INTRODUCIR DATOS
+        
         else if($id == 11){
             $productModel = new \Com\Daw2\Models\SistemasOperativosModel(); 
            $detalles = $productModel->loadDetails($nombre);

@@ -104,11 +104,16 @@
 
       </div>
      
+
         <?php
-        if(isset($_SESSION['error_añadir'])){
-            echo $_SESSION['error_añadir'];
+        if(isset($_SESSION['action'])){
+         ?>
+        <div class="col-12 bg-primary text-light p-2 text-center">
+            <p class="m-0"><i class="fa-sharp fa-solid fa-circle-exclamation"></i><?php echo $_SESSION['action'] ;?></p>
+        </div>
+        <?php
+         unset($_SESSION['action']);
         }
-        unset($_SESSION['error_añadir']);
         ?>
       <h2>Bienvenido al panel de incio de Administración</h2>
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
@@ -120,9 +125,9 @@
                         <img id="foto_img"  src="
                              <?php
                              if(!isset($input['profile_image'])){
-                                 echo '/assets/img/Default_Profile_Photo.svg';
+                                 echo '/assets/img/Default_Profile_Photo.jpg';
                              }else if($input['profile_image'] == NULL){
-                               echo '/assets/img/Default_Profile_Photo.svg';
+                               echo '/assets/img/Default_Profile_Photo.jpg';
                              }else{
                                echo $input['profile_image'];  
                              }

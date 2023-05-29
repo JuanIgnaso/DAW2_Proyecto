@@ -48,7 +48,7 @@ class View {
 
             //Si no existe el fichero en cuestion, lanzamos una excepción
             if (file_exists($path) == false) {
-                throw new \Exception('La plantilla ' . $path . ' no existe');
+                throw new \Exception('La plantilla ' . $path . ' no existe'.$_SERVER['DOCUMENT_ROOT']);
             }
         }
 

@@ -4,12 +4,9 @@
 
 namespace Com\Daw2\Controllers;
 
-class PCMontadosController extends \Com\Daw2\Core\BaseController{
+class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
     
-    
-   private const IVA = [12,18,21];
-   
-   
+
    private function getAlmacenamiento():array{
       $model = new \Com\Daw2\Models\PCMontadosModel();
       $tipo =  $model->getAlmacenamientoTipo();
@@ -60,7 +57,6 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
         $data['tipo'] = 'PC Montados';
         $data['volver'] = '/inventario/Ordenadores';
         $data['titulo'] = 'Añadir Producto';
-        $data['iva'] = self::IVA;   
         $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
         $data['proveedor'] = $modelProv->getAll();
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data); 
@@ -95,7 +91,6 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Ordenadores/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['iva'] = self::IVA;
             $data['proveedor'] = $modelProv->getAll();
             $data['volver'] = '/inventario/Ordenadores';
             $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
@@ -108,7 +103,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\PCMontadosModel();
       
-      if($modelGeneral->insertProduct($categoria,$post)){
+      if($modelGeneral->insertProduct($categoria,$post,self::IVA)){
           if($model->insertPC($post)){
               return true;
           }else{
@@ -132,7 +127,6 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
         $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Ordenador';
-        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Ordenadores';
         $data['input'] = $input;
@@ -164,7 +158,6 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
             $_POST['imagen_p'] = $urlimg;
         }  
         
-
             $result = $this->modifyPC($_POST['id_ordenador'],$_POST['codigo_producto'],$_POST);
            if($result){
                header('location: '.$data['volver']);
@@ -177,7 +170,6 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
             $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
             $data['titulo_seccion'] = 'Modificar Ordenador';
-            $data['iva'] = self::IVA;
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Ordenadores';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -194,7 +186,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
       $model = new \Com\Daw2\Models\PCMontadosModel();
 
       
-      if($modelGeneral->editProduct($post,$id)){
+      if($modelGeneral->editProduct($post,$id,self::IVA)){
           if($model->editOrdenador($post)){
               return true;
           }else{
@@ -275,16 +267,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseController{
       }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
-      
-      if(empty($post['iva'])){
-        $errores['iva'] = 'tienes que escoger un iva';
-      }
-      
-      else if(!in_array($post['iva'],self::IVA)){
-          $errores['iva'] = 'Valor de IVA no permitido';
-      }
-      
-      
+
       if(empty($post['caja'])){
           $errores['caja'] = 'Tienes que escribir una caja';
       }else if(strlen(trim($post['caja'])) == 0){

@@ -1,10 +1,8 @@
 <?php
 namespace Com\Daw2\Controllers;
 
-class ConsolasController extends \Com\Daw2\Core\BaseController{
+class ConsolasController extends \Com\Daw2\Core\BaseProductController{
    
-    private const IVA = [12,18,21]; 
-    
     public function showListaConsolas(){
         $model =  new \Com\Daw2\Models\ConsolasModel();
         $modelConexiones = new \Com\Daw2\Models\AuxModelConexionesRaton();
@@ -44,7 +42,6 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
         $data['volver'] = '/inventario/Consolas';
         $data['titulo'] = 'Añadir Producto';
         $data['id_conexion'] = $modelConexiones->getAll();
-        $data['iva'] = self::IVA;   
         $data['proveedor'] = $modelProv->getAll();
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data); 
     }
@@ -70,7 +67,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
   
             
             
-           if($upload->uploadPhoto()){
+        if($upload->uploadPhoto()){
              $_POST['imagen_p'] = '/assets/img/consolas/'.$_FILES["imagen"]["name"];
            }       
         }   
@@ -86,7 +83,6 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Consolas/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['iva'] = self::IVA;
             $data['proveedor'] = $modelProv->getAll();
             $data['volver'] = '/inventario/Consolas';
             $data['id_conexion'] = $modelConexiones->getAll();
@@ -104,7 +100,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
       $model =  new \Com\Daw2\Models\ConsolasModel();
 
       
-      if($modelGeneral->insertProduct($categoria,$post)){
+      if($modelGeneral->insertProduct($categoria,$post,self::IVA)){
           if($model->insertConsola($post)){
               return true;
           }else{
@@ -129,7 +125,6 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
         $data['proveedor'] = $modelProv->getAll();
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Modificar Consola';
-        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['volver'] = '/inventario/Consolas';
         $data['input'] = $input;
@@ -182,7 +177,6 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
             $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
             $data['titulo_seccion'] = 'Modificar Consola';
-            $data['iva'] = self::IVA;
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Consolas';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -199,7 +193,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
       $model =  new \Com\Daw2\Models\ConsolasModel();
 
       
-      if($modelGeneral->editProduct($post,$id)){
+      if($modelGeneral->editProduct($post,$id,self::IVA)){
           if($model->editConsola($post)){
               return true;
           }else{
@@ -283,15 +277,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
       }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
-      
-      if(empty($post['iva'])){
-        $errores['iva'] = 'tienes que escoger un iva';
-      }
-      
-      else if(!in_array($post['iva'],self::IVA)){
-          $errores['iva'] = 'Valor de IVA no permitido';
-      }
-      
+     
        if(!empty($post['juego_incluido']) && strlen(trim($post['marca'])) == 0){
           $errores['juego_incluido'] = 'No se aceptan cadenas vacías';
       }
@@ -313,10 +299,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseController{
       }else if(empty($post['id_conexion'])){
           $errores['conexion'] = 'Debes seleccionar una conexion';
       }
-      
-      
-      
-            
+                      
         if(isset($check)){
         if($check == false){
             $errores['url_imagen'] = 'debes de subir una imagen';  

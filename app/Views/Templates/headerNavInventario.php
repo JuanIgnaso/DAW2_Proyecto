@@ -28,7 +28,7 @@
 
                              <!-- Foto perfil -->
 
-                             <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $_SESSION['usuario']['profile_image'];?>');">
+                             <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.jpg' : $_SESSION['usuario']['profile_image'];?>');">
 
                             </div> 
 
@@ -37,7 +37,7 @@
                       <div class="navbar-nav">
                             <div class="nav-item text-nowrap flex-column d-flex align-items-center justify-content-between">
                               <!--<a class="nav-link px-3" href="#">Log In</a>-->
-                              <a class="nav-link px-3" href="#">Sign out</a>
+                              <a class="nav-link px-3" href="/logout">Sign out</a>
                             </div>
                       </div>
                     

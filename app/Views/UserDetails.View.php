@@ -47,7 +47,7 @@
                         
                         <!-- CAJA DE LA FOTO -->
                          <div id="caja_foto">
-                          <img src="<?= is_null($info_usuario['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.svg' : $info_usuario['profile_image'];?>"   id="foto_img" alt="imagen de perfil">
+                          <img src="<?= is_null($info_usuario['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.jpg' : $info_usuario['profile_image'];?>"   id="foto_img" alt="imagen de perfil">
                          </div>
                      <p>Foto de Perfil</p>
                      <p id="resp_sub_foto" style="display:none;"></p>
@@ -408,12 +408,14 @@
 
                 },
                 error: function(error){
-                  let k = document.getElementById('resp_sub_foto');
-                  let resp = JSON.parse(error.responseText);
+                  
+                  
+                  k.style.display = 'block';
+                  let resp = error.responseText;
                   k.removeAttribute('class');
                   k.setAttribute('class','text-danger');
-                  k.innerHTML  = resp.error.error;
-                  console.log(error);
+                  k.innerHTML  = resp;
+                 // console.log(error);
                    
                } 
             });

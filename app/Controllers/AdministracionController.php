@@ -39,7 +39,48 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
     
     function edit($id){
         $model = new \Com\Daw2\Models\UsuarioSistemaModel();
- 
+        $rolModel = new \Com\Daw2\Models\RolModel();  
+        $data = [];
+        $data['errores'] = $this->checkForm($_POST,$alta = false);
+        if(count($data['errores']) == 0){
+          if($model->editUserWeb($_POST)){
+            unset($_POST['pass']);
+              $_SESSION['action'] = 'ambios realizados con éxito';
+              $data['id_rol'] = $rolModel->getUsersRol();
+               $data['titulo'] = 'Modificar Usuario';
+               $data['seccion'] = '/inventario/UsuariosSistema/edit/'.$id;
+               $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+               $data['volver'] = '/inventario/UsuariosSistema';
+               $data['accion'] = 'Aplicar Cambios';
+                
+               $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddUser.view.php'),$data);      
+
+
+          }else{
+              
+                 $_SESSION['action'] = 'Ha ocurrido un error al intentar intentar aplicar los cambios';
+                 unset($_POST['pass']);
+                 $_SESSION['action'] = 'ambios realizados con éxito';
+                $data['id_rol'] = $rolModel->getUsersRol();
+               $data['titulo'] = 'Modificar Usuario';
+               $data['seccion'] = '/inventario/UsuariosSistema/edit/'.$id;
+               $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+               $data['volver'] = '/inventario/UsuariosSistema';
+               $data['accion'] = 'Aplicar Cambios';
+                
+               $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddUser.view.php'),$data);      
+          }  
+        }else{
+           
+           $data['id_rol'] = $rolModel->getUsersRol();
+           $data['titulo'] = 'Modificar Usuario';
+           $data['seccion'] = '/inventario/UsuariosSistema/edit/'.$id;
+           $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+           $data['volver'] = '/inventario/UsuariosSistema';
+           $data['accion'] = 'Aplicar Cambios'; 
+        
+           $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddUser.view.php'),$data);      
+        }
     }
     
     
@@ -77,7 +118,8 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
             if($model->addUser($_POST)){
                 header('location: /inventario/UsuariosSistema');   
             }else{
-             $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+             $_SESSION['action'] = 'Ha ocurrido un error al intentar añadir el producto';
+             $_SESSION['action']['background'] = 'bg-danger';
             }
   
        }else{

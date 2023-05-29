@@ -137,7 +137,8 @@ background: none;
     max-height: 40px;
     min-width: 40px;
     min-height: 40px;
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 

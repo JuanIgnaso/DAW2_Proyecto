@@ -172,25 +172,25 @@
                var calle = document.getElementById('calle');
                
                
-                          //Info de envio INPUTS
-           var post_nombre = document.getElementById('inp_nombre');
-           var post_provincia =  document.getElementById('inp_provincia');
-           var post_ciudad =  document.getElementById('inp_ciudad');
-           var post_postal = document.getElementById('inp_postal');
-           var post_calle = document.getElementById('inp_calle');
-           
-           
-           //Salida de errores del json de la direccion
-           var errores = document.getElementById('errores_dir');
-           
-           
-                var post_dir_envio = {nombre_titular:post_nombre.value,
-                               provincia:post_provincia.value,
-                               ciudad:post_ciudad.value,
-                               cod_postal:post_postal.value,
-                               calle:post_calle.value,
-                                id:id.value};
-           
+                              //Info de envio INPUTS
+               var post_nombre = document.getElementById('inp_nombre');
+               var post_provincia =  document.getElementById('inp_provincia');
+               var post_ciudad =  document.getElementById('inp_ciudad');
+               var post_postal = document.getElementById('inp_postal');
+               var post_calle = document.getElementById('inp_calle');
+
+
+               //Salida de errores del json de la direccion
+               var errores = document.getElementById('errores_dir');
+
+
+                    var post_dir_envio = {nombre_titular:post_nombre.value,
+                                   provincia:post_provincia.value,
+                                   ciudad:post_ciudad.value,
+                                   cod_postal:post_postal.value,
+                                   calle:post_calle.value,
+                                    id:id.value};
+
            
                
                

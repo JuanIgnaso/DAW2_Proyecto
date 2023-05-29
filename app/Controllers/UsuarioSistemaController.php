@@ -355,8 +355,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif" ) {
           http_response_code(400);  
-          $error['error']  = "Lo sentimos, solo archivos con extensión JPG, JPEG, PNG & GIF están permitidos.";
-           echo json_encode($error);
+            echo   "Lo sentimos, solo archivos con extensión JPG, JPEG, PNG & GIF están permitidos.";
+            
           //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
          exit;   
        

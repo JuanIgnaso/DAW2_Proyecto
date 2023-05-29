@@ -1,11 +1,8 @@
 <?php
 namespace Com\Daw2\Controllers;
 
-class RatonController extends \Com\Daw2\Core\BaseController{
-   
-        
-    
-        private const IVA = [12,18,21];
+class RatonController extends \Com\Daw2\Core\BaseProductController{
+      
     
     public function showListaRatones(){
         $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
@@ -43,7 +40,6 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         $data['titulo'] = 'Editar Producto';
         $data['titulo_seccion'] = 'Añadir Nuevo Ratón';
         $data['id_conexion'] = $modelConec->getAll();
-        $data['iva'] = self::IVA;
         $data['accion'] = 'Aplicar Cambios';
         $data['input'] = $input;
          $data['volver'] = '/inventario/Ratones';
@@ -95,7 +91,6 @@ class RatonController extends \Com\Daw2\Core\BaseController{
             $data['seccion'] = '/inventario/Ratones/edit/'.$cod;
             $data['id_conexion'] = $modelConec->getAll();
             $data['proveedor'] = $modelProv->getAll();
-            $data['iva'] = self::IVA;
             $data['volver'] = '/inventario/Ratones';
 
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -108,7 +103,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\RatonesModel();
       
-      if($modelGeneral->editProduct($post,$id)){
+      if($modelGeneral->editProduct($post,$id,self::IVA)){
           if($model->editRaton($post,$idRaton)){
               return true;
           }else{
@@ -120,9 +115,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
 
     }
     
-        
-        
-    
+ 
     
     public function showAdd(){
         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -138,7 +131,6 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         $data['titulo_seccion'] = 'Añadir Nuevo Ratón';  
         $data['accion'] = 'Añadir';
         $data['id_conexion'] = $modelConec->getAll();
-        $data['iva'] = self::IVA;
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
     }
     
@@ -173,8 +165,6 @@ class RatonController extends \Com\Daw2\Core\BaseController{
             $data['seccion'] = '/inventario/Ratones/add';
             $data['id_conexion'] = $modelConec->getAll();
             $data['proveedor'] = $modelProv->getAll();
-            $data['iva'] = self::IVA;
-
             $data['input'] = $_POST;
             //var_dump($data['input']);die();
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
@@ -186,7 +176,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\RatonesModel();
       
-      if($modelGeneral->insertProduct($categoria,$post)){
+      if($modelGeneral->insertProduct($categoria,$post,self::IVA)){
           if($model->insertRaton($post)){
               return true;
           }else{
@@ -198,22 +188,6 @@ class RatonController extends \Com\Daw2\Core\BaseController{
 
     }
     
-//    function uploadPhoto($directorio): bool{
-//        $dir = $directorio;
-//        $src = $_FILES['imagen']['tmp_name'];
-//        $output_dir = $dir.basename($_FILES['imagen']['name']);
-//        
-//        if(!is_dir($dir)){
-//            mkdir($dir, 0775, true);
-//        }
-//        
-//        if(move_uploaded_file($src,$output_dir)){
-//            return true;
-//        }else{
-//            return false;
-//        }
-//        
-//    }
     
     private function checkForm(array $post, bool $alta = true):array{
         
@@ -278,13 +252,7 @@ class RatonController extends \Com\Daw2\Core\BaseController{
       }else if(empty((int)$post['proveedor'])){
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
-      
-      
-      if(!in_array($post['iva'],self::IVA)){
-          $errores['iva'] = 'Valor de IVA no permitido';
-      }
-        
-   
+       
        if(empty($post['dpi'])){
             $errores['dpi'] = 'Este campo es obligatorio';
         }else if(!filter_var($post['dpi'],FILTER_VALIDATE_INT)){
@@ -325,8 +293,6 @@ class RatonController extends \Com\Daw2\Core\BaseController{
         }
 
      }
-      
-      
         
       return $errores;
         
