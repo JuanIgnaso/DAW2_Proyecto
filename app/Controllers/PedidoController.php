@@ -25,21 +25,21 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
         //lo que recibes de ajax pro POST
         
         $dir_pedido = $_POST['envio'];
-        $errores = $this->checkForm($dir_pedido);
+        $errores = [];
         
         if(!isset($_POST['datos'])){
             $errores['carrito'] = 'No se encuentran productos que comprar';
+             echo json_encode($errores);
+             http_response_code(400);
+             exit;
         }else{
             $recogida = $_POST['datos'];
+            $errores = $this->checkForm($dir_pedido);
         }   
         
         if(count($errores) == 0){
                $var = $modelo->updateStock($recogida);
 
-
-            //exit;
-            // si no hay error (lo que querias hacer salió bien, Ejemplo: cambiar un dato desde el modelo)
-            //$var = true;
             if ($var) {
                 http_response_code(200);
                 $dirModel->insertShippingAddress($dir_pedido, $dir_pedido['id']);

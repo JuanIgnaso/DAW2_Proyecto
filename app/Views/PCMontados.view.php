@@ -111,8 +111,8 @@
           </div>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
-              <a href="/inventario/Ordenadores" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
-              <input type="submit" value="Aplicar filtros" name="enviar" class="btn boton-aplicar ml-2"/>
+              <a href="/inventario/Ordenadores" value="" id="reiniciar" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
+              <input type="submit" value="Aplicar filtros" name="enviar" id="enviar" class="btn boton-aplicar ml-2"/>
           </div>
        </form>
           <div class="col-12">
@@ -154,7 +154,7 @@
               <th scope="col">Acción</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="max-height:100px;">
            <?php
             foreach ($productos as $producto) {
                      

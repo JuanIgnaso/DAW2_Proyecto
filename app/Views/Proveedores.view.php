@@ -64,8 +64,8 @@
           </div>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
-              <a href="/inventario/Proveedores" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
-              <input type="submit" value="Aplicar filtros" name="enviar" class="btn boton-aplicar ml-2"/>
+              <a href="/inventario/Proveedores" value="" name="reiniciar"  id="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
+              <input type="submit" value="Aplicar filtros" name="enviar" id="enviar" class="btn boton-aplicar ml-2"/>
           </div>
        </form>
           <div class="col-12">
@@ -84,8 +84,8 @@
               <span id="cerrar" class="font-weight-bold" onclick="closeModal()">X</span>
           </header>
           <div class="col-12 p-2">
-              <p class="p-0 mb-2">Desea confirmar la acción?</p>
-              <button type="button" class="btn" id="conf_acc" onclick="borrar()">Continuar</button>
+              <p class="p-0 mb-2" id="mensaje"></p>
+              <button type="button" class="btn m-auto" id="conf_acc" onclick="borrar()" style="display: block;">Continuar</button>
           </div>
       </div>
 
@@ -133,7 +133,8 @@
                <!-- SCRIPT BORRAR -->
       <script>
 
-          
+       var msj_accion = document.querySelector('#mensaje');
+       var btn_acc = document.querySelector('#conf_acc');   
           
        var codigo = 0 
       
@@ -142,6 +143,8 @@
          document.getElementById('modal_inventario_borrar').style.display = 'block'; 
          console.log(e.parentNode.parentNode.parentNode.getAttribute('id'));
          codigo = e.parentNode.parentNode.parentNode.getAttribute('id');
+         msj_accion.innerHTML = 'Deseas Confirmar la acción?';
+          btn_acc.style.display = 'block';
       }
       
       //Cerrar La Modal
@@ -184,8 +187,10 @@
 
                     error = JSON.parse(error.responseText);
                      let resp =error;
-                   document.getElementById('modal_inventario_borrar').style.display = 'none';
-                    window.alert((resp));
+                     msj_accion.innerHTML = resp;
+                     btn_acc.style.display = 'none';
+                   //document.getElementById('modal_inventario_borrar').style.display = 'none';
+                   
                     
                 }
             });

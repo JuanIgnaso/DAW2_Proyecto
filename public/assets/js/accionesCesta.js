@@ -62,37 +62,41 @@
          
           
               /*Añadir Producto a cesta*/
-             btn_anadir_p.addEventListener('click',function(){
-              //Se busca el elemento dentro del carrito 
-              const found = carrito.find(element => element.codigo_producto == Number(id.innerHTML));
-              if(found == undefined){
-                  if(Number(c.value) <= Number(c.getAttribute('max')) && c.value != '' && Number(c.value) >= 1){
-                    /*
-                     * Si devuelve undefined, quiere decir que el objeto existe
-                     * Y si llegamos aquí es que el valor introducido o recibido del input es el correcto
-                     */
-                    createObject();
-                    }else{
-                     let mensaje = '<span class="badge bg-danger">!</span> Solo se aceptan valores entre 1 y ' + c.getAttribute('max');
-                    showAlerMessage(mensaje); 
-                    }
-              }else{
-                  //Si la suma de la cantidad es igual o menor se suma.
-                  if((found.cantidad + Number(c.value)) <= Number(c.getAttribute('max'))){
-                  found.cantidad += Number(c.value);
-                  let actualizar_Val = document.getElementById('cantidad_cesta_' + (found.codigo_producto));
-                  actualizar_Val.innerHTML = found.cantidad;  
+              /*Añade evento si es distinto de null*/
+            if(btn_anadir_p != null){
+                  btn_anadir_p.addEventListener('click',function(){
+                  //Se busca el elemento dentro del carrito 
+                  const found = carrito.find(element => element.codigo_producto == Number(id.innerHTML));
+                  if(found == undefined){
+                      if(Number(c.value) <= Number(c.getAttribute('max')) && c.value != '' && Number(c.value) >= 1){
+                        /*
+                         * Si devuelve undefined, quiere decir que el objeto existe
+                         * Y si llegamos aquí es que el valor introducido o recibido del input es el correcto
+                         */
+                        createObject();
+                        }else{
+                         let mensaje = '<span class="badge bg-danger">!</span> Solo se aceptan valores entre 1 y ' + c.getAttribute('max');
+                        showAlerMessage(mensaje); 
+                        }
                   }else{
-                      //En caso de pasarse se muestra una advertencia.
-                      let mensaje = '<span class="badge bg-danger">!</span> Límite Máximo Alcanzado, no puedes comprar más de este producto.';
-                    showAlerMessage(mensaje);
-                  }
+                      //Si la suma de la cantidad es igual o menor se suma.
+                      if((found.cantidad + Number(c.value)) <= Number(c.getAttribute('max'))){
+                      found.cantidad += Number(c.value);
+                      let actualizar_Val = document.getElementById('cantidad_cesta_' + (found.codigo_producto));
+                      actualizar_Val.innerHTML = found.cantidad;  
+                      }else{
+                          //En caso de pasarse se muestra una advertencia.
+                          let mensaje = '<span class="badge bg-danger">!</span> Límite Máximo Alcanzado, no puedes comprar más de este producto.';
+                        showAlerMessage(mensaje);
+                      }
 
-              }           
-              guardarCarrito();
-              cargarCarrito();
+                  }           
+                  guardarCarrito();
+                  cargarCarrito();
 
-          });
+              });
+            }  
+
           
           /*Función para crear objeto JSON*/
           
@@ -120,9 +124,13 @@
            
            /*EVITAR que el usuario escriba otro caracter que no sea un número
             En el input number de la vista*/
-           c.addEventListener('input',function() {
-            this.value = this.value.replace(/[^1-9][^0-9]/,'');
-        });
+            if(c != null){
+                    c.addEventListener('input',function() {
+                    this.value = this.value.replace(/[^1-9][^0-9]/,'');
+                });   
+            }
+    
+
 
           
           function cargarCarrito(){

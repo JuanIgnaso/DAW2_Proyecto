@@ -96,6 +96,7 @@
         </div>
         <!-- SCRIPT PARA LA ANIMACIÓN DEL CARRITO -->
         <script src="/assets/js/animacion_carrito.js"></script>
+        
         <script>
             /*Coger la ventana modal*/
         var modal = document.getElementById("mi_modal_carrito");
@@ -104,12 +105,15 @@
         var btn = document.getElementById("carrito_btn");
 
         // coger el <span> que cierra la modal
-        var span = document.getElementsByClassName("close_carrito")[0];
+        var span = document.querySelector(".close_carrito");
 
         // Cuando el usuario le da al botón, abrir la modal
+  
         btn.onclick = function() {
           modal.style.display = "block";
-        }
+        }   
+      
+    
 
         // Cerrar la modal cuando el usuario le da al <span>
         span.onclick = function() {

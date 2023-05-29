@@ -90,7 +90,7 @@
                             
                         </div> 
                      
-                     <p class="col-auto text-light m-0" id="nombre_usuario"><a href="mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a></p>
+                     <p class="col-auto text-light m-0" id="nombre_usuario"><a style="color:#fff;" href="mi_Perfil"><?php echo $_SESSION['usuario']['nombre_usuario'];?></a></p>
                     <button type="button" class="btn btn-outline-light" id="logout"><a href="/logout">Log-Out</a></button>          
                     </div>
                      <?php

@@ -95,8 +95,8 @@
           </div>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
-              <a href="/inventario/Ratones" value="" name="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
-              <input type="submit" value="Aplicar filtros" name="enviar" class="btn boton-aplicar ml-2"/>
+              <a href="/inventario/Ratones" value="" name="reiniciar" id="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
+              <input type="submit" value="Aplicar filtros" name="enviar" id="enviar" class="btn boton-aplicar ml-2"/>
           </div>
        </form>
           <div class="col-12">

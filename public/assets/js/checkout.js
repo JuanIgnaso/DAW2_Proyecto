@@ -149,13 +149,13 @@
            //PROCESA LA COMPRA
            function ajax() {
                if(!ch.checked){
-         post_dir_envio = {nombre_titular:post_nombre.value,
+                post_dir_envio = {nombre_titular:post_nombre.value,
                                provincia:post_provincia.value,
                                ciudad:post_ciudad.value,
                                cod_postal:post_postal.value,
                                calle:post_calle.value,
-                                id:id.value};          
-        }
+                               id:id.value};          
+                }
 
             //funcion de ajax en JQuery
             $.ajax({
