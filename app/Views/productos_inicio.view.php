@@ -128,22 +128,34 @@
 
                 </div>
                 <?php
+                
                 }
                 ?>
             </section>
             
             <!-- PAGINAR -->
             <footer class="mt-2 mb-2 col-12 col-md-8 col-lg-6 col-xl-4 m-auto bg-light rounded">
-                <nav id="paginas">
-                    <ul class="d-flex justify-content-center flex-wrap">
-                        <li><a href="url"><< Primera</a></li>
-                        <li><a href="url">< Anterior</a></li>
-                        <li><a href="url">Actual</a></li>
-                        <li><a href="url">Siguiente ></a></li>
-                        <li><a href="url">Ultima >></a></li>
-                    </ul>
+                    <!-- Navegador para mover las páginas -->
+               <nav class="pagination-container" style="display:flex; margin:auto;">
+                   <!-- Página anterior -->
+                   <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">     
+                   &lt;       
+                   </button>
 
-                </nav>
+
+               <!-- Númnero de páginas -->
+                   <div id="pagination-numbers">
+
+                   </div>
+
+
+               <!-- Siguiente página -->
+                   <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">        
+                   &gt;      
+                   </button>
+
+               </nav>
             </footer>
-               
+
         </div>
+        <script src="/assets/js/paginarProductos"></script>

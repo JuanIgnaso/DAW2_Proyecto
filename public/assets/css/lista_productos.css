@@ -49,6 +49,7 @@
 
 .caja_producto{
     padding: 1%;
+    display:block;
 }
 
 .caja_producto * img{
@@ -65,6 +66,39 @@
 color:orangered !important;
 transition-duration: 0.5s;
 }
+
+
+
+/*CONTADOR DE PAGINAS*/
+
+    .pagination-container {
+    align-items: center;
+    justify-content: center;
+    }
+
+    .pagination-number,.pagination-button{
+
+    font-size: 1.1rem;
+    background-color: transparent;
+    border: none;
+    margin: 0.25rem 0.25rem;
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: .2rem;
+
+    }
+
+    .pagination-number:hover,.pagination-button:not(.disabled):hover {
+    background: #fff;
+    }
+
+    .pagination-number.active {
+    color: #fff;
+    background: #272727;
+    }
+
+
 
 
 
@@ -160,7 +194,6 @@ transition-duration: 0.5s;
 ::placeholder{
     color:orangered !important;
 }
-
 
 
 /*MEDIAS*/
