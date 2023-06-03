@@ -82,7 +82,9 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
 
               $result = $this->addSilla(3,$_POST);
               if($result){
-                header('location: '.$data['volver']);   
+                header('location: '.$data['volver']);  
+                $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
+
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
             }
@@ -183,6 +185,8 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
            $result = $this->modifySilla($_POST['id_silla'],$_POST['codigo_producto'],$_POST);
            if($result){
                header('location: '.$data['volver']);
+               $_SESSION['action'] = 'Cambios realizados con éxito';
+
            }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
            }

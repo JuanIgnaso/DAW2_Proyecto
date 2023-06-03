@@ -58,12 +58,12 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
             if(!empty($_vars['remember'])){
                 //Creamos la Cookie de nombre usuario y password
                 setcookie('email',$_SESSION['usuario']['email'],time()+3600*24*7);
-                setcookie('password',$_POST['password'],time()+3600*24*7);
+                setcookie('password',$_POST['pass'],time()+3600*24*7);
 
             }else{
                 //Hacemos caducar las cookies.
                 setcookie('email',$_SESSION['usuario']['email'],time() - 3600);
-                setcookie('password',$_POST['password'],time() - 3600);
+                setcookie('password',$_POST['pass'],time() - 3600);
             }
             header('Location: /');
           
@@ -75,16 +75,16 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     
     private function getPermisos(int $id_rol):array{
         $permisos = array();
-        if($id_rol == 1){
+        if($id_rol == self::USUARIO_REGISTRADO){
          $permisos = array('comprar' => ['r','w','d']);
         }
-        if($id_rol == 2){
+        if($id_rol == self::MANEJO_INVENTARIO){
            $permisos = array(
                'comprar' => ['r','w','d'],
                'inventario' => ['r','w','d']
                ); 
         }
-        if($id_rol == 3){
+        if($id_rol == self::ADMINISTRADOR){
             $permisos = array(
                 'usuarios' => ['r','w','d'],
                 'inventario' => ['r','w','d'],
@@ -121,7 +121,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $_vars['loginError'] = $this->checkRegister($_POST);
         if(count($_vars['loginError']) == 0){
            $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-           if($model->addUser($_POST)){
+           if($model->addUser($_POST,true)){
               $usuario = $model->login($_POST);
               $_SESSION['usuario'] = $usuario;
               $_SESSION['permisos'] = $this->getPermisos($_SESSION['usuario']['id_rol']); 
@@ -169,11 +169,11 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         }   
         
         
-        if(empty($post['password'])){
+        if(empty($post['pass'])){
             $loginError['password'] = 'Debes darle una contraseña';
-        }else if(strlen(trim($post['password'])) == 0){
-          $loginError['password'] = 'No de admiten cadenas vacías';
-         } else  if(!preg_match(self::_PATRON_PASSWORD,$post['password'])){
+        }else if(strlen(trim($post['pass'])) == 0){
+          $loginError['pass'] = 'No de admiten cadenas vacías';
+         } else  if(!preg_match(self::_PATRON_PASSWORD,$post['pass'])){
            $loginError['password'] = 'formato de contraseña incorrecto.';    
          }
          

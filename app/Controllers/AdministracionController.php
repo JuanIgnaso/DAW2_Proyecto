@@ -115,7 +115,7 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
        //Si no hay errores
        if(count($data['errores']) == 0){
             $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-            if($model->addUser($_POST)){
+            if($model->addUser($_POST,false)){
                 header('location: /inventario/UsuariosSistema');   
             }else{
              $_SESSION['action'] = 'Ha ocurrido un error al intentar añadir el producto';

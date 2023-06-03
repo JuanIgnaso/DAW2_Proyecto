@@ -94,6 +94,8 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
 
              if($result){
                 header('location: /inventario/Teclados');   
+                $_SESSION['action'] = 'Cambios realizados con éxito';
+
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
                 }
@@ -196,6 +198,8 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
               $result = $this->addTeclado(2,$_POST);
               if($result){
                 header('location: '.$data['volver']);   
+                $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
+
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
                 }

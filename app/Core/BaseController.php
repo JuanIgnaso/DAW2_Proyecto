@@ -2,7 +2,7 @@
   namespace Com\Daw2\Core;
  
   
-  abstract class BaseController {
+  abstract class BaseController{
       protected $view;
   
       function __construct() {

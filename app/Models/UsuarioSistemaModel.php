@@ -90,7 +90,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
         $query->execute([$post['email']]);
         //Si se encuentran coincidencias
          if($row = $query->fetch()){
-             if(password_verify($post['password'],$row['pass'])){ 
+             if(password_verify($post['pass'],$row['pass'])){ 
                  
                  $row['id_usuario'] = $this->getUserId($post['email']);
                  return $row;
@@ -125,11 +125,14 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     /*
     Añadir usuario a la bbdd
      */
-    function addUser(array $post):bool{
+    function addUser(array $post, bool $register):bool{
         //hasheamos la password
         try {
            $this->pdo->beginTransaction();
            $post['pass'] = password_hash($post['pass'],PASSWORD_DEFAULT);
+           if($register){
+              $post['id_rol'] = 1; 
+           }
            $stmt = $this->pdo->prepare('INSERT INTO usuarios(id_rol,email,nombre_usuario,pass,baja,cartera) values(?,?,?,?,0,0.0)');
            $stmt->execute([$post['id_rol'],$post['email'],$post['nombre_usuario'],$post['pass']]); 
            $this->pdo->commit();

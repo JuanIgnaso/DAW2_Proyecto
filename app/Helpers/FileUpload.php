@@ -1,4 +1,4 @@
-<?php
+di<?php
 
 namespace Com\Daw2\Helpers;
 

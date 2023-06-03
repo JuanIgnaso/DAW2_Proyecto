@@ -98,7 +98,8 @@
               <button type="button" class="btn" id="conf_acc" onclick="borrar()">Continuar</button>
           </div>
       </div>
-
+ 
+     <div class="table-responsive">
         <table class="table table-striped table-sm" id="tabla_contenido">
           <thead>
             <tr>
@@ -134,7 +135,7 @@
             ?>
           </tbody>
         </table>
- 
+     </div>
  
         
         <script>

@@ -83,7 +83,9 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
 
             $result = $this->addPC(10,$_POST);
           if($result){
-            header('location: '.$data['volver']);   
+            header('location: '.$data['volver']); 
+            $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
+
         }else{
              $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
             }
@@ -161,9 +163,11 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
             $result = $this->modifyPC($_POST['id_ordenador'],$_POST['codigo_producto'],$_POST);
            if($result){
                header('location: '.$data['volver']);
+               $_SESSION['action'] = 'Cambios realizados con éxito';
+
            }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-            }
+           }
         }else{
             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Ordenadores/edit/'.$cod;

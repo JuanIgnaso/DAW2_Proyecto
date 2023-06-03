@@ -14,7 +14,9 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
           2 => ' ORDER BY precio ASC',
           3 => ' AND stock !=0',
           4 => ' ORDER BY codigo_producto DESC'
-        );
+    );
+    
+    
     private const _DEFAULT_ORDER = ' ORDER BY codigo_producto';
     
     function showCategory($id,$filtros): ?array {

@@ -4,7 +4,6 @@ namespace Com\Daw2\Controllers;
 
 class ProductoController extends \Com\Daw2\Core\BaseController{
     
-    public const IVA = 21;
     
     /*Carga el producto cogiendo ID y nombre de producto*/
     function load_product($id,$nombre){

@@ -36,7 +36,7 @@
             <p class="text-danger m-0 p-0"><?php echo isset($loginError['email']) ? $loginError['email'] : '';?></p>
           </div>
           <div class="form-floating">
-            <input type="password" class="form-control rounded" id="floatingPassword" name="password" placeholder="Contraseña" value="<?php echo isset($input['password']) ? $input['password'] : '' ;?>">
+            <input type="password" class="form-control rounded" id="floatingPassword" name="pass" placeholder="Contraseña" value="<?php echo isset($input['pass']) ? $input['pass'] : '' ;?>">
             <label for="floatingPassword">Contraseña</label>
             <p class="text-danger m-0 p-0"><?php echo isset($loginError['password']) ? $loginError['password'] : '';?></p>
           </div>
@@ -48,7 +48,7 @@
             <label for="floatingInput">Dirección email</label>
           </div>
           <div class="form-floating">
-            <input type="password" class="form-control rounded" id="floatingPassword" name="password" placeholder="Contraseña" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : '' ;?>">
+            <input type="password" class="form-control rounded" id="floatingPassword" name="pass" placeholder="Contraseña" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : '' ;?>">
             <label for="floatingPassword">Contraseña</label>
           </div>
           <div class="checkbox mb-3">  

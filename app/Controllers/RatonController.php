@@ -78,7 +78,8 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
              $result = $this->modifyRaton($_POST['id'],$_POST['codigo_producto'],$_POST);
              
             if($result){
-                header('location: /inventario/Ratones');   
+                header('location: /inventario/Ratones'); 
+                $_SESSION['action'] = 'Cambios realizados con éxito';
              }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
              }
@@ -98,7 +99,8 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
   
         }
     }
-        
+       
+    
     private function modifyRaton($idRaton,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\RatonesModel();
@@ -155,7 +157,8 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
               }       
             $result = $this->addRaton(7,$_POST);          
             if($result){        
-                header('location: /inventario/Ratones');   
+                header('location: /inventario/Ratones');
+                $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
                 }

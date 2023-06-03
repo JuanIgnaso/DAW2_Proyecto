@@ -33,12 +33,24 @@
 
       </div>
 
-      <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
-        
       <h2>Filtros de búsqueda de la categoría.</h2>
        <form method="get"  action="<?php echo $seccion;?>">
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
 
+          <?php
+        if(isset($_SESSION['action'])){
+         ?> 
+          
+        <div class="col-12 bg-primary text-light p-2 text-center d-flex align-items-center justify-content-center gap-3">
+            <i class="fa-sharp fa-solid fa-circle-exclamation"></i><p class="m-0"><?php echo $_SESSION['action'] ;?></p>
+        </div>
+          
+        <?php
+        }
+        unset($_SESSION['action']);
+        ?>   
+          
+                  
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>
@@ -96,20 +108,8 @@
           </div>
        </form>
           <div class="col-12">
-                       <p>Busca si lo prefieres entre uno de los siguientes filtros</p>
-  
+                 <p>Busca si lo prefieres entre uno de los siguientes filtros</p>
           </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -130,7 +130,7 @@
           </div>
       </div>
  
- 
+      <div class="table-responsive">
         <table class="table table-striped table-sm"  id="tabla_contenido">
           <thead>
             <tr>
@@ -153,7 +153,7 @@
               <td><?php echo $producto['codigo_producto'];?></td>
               <td><?php echo $producto['nombre'];?></td>
               <td><?php echo $producto['nombre_proveedor'];?></td>
-              <td><?php echo $producto['precio'];?></td>
+              <td><?php echo round($producto['precio'],2).'€';?></td>
               <td><?php echo $producto['juego_incluido'];?></td>
               <td><?php echo $producto['mando_incluido'];?></td>
               <td><?php echo $producto['nombre_conectividad_raton'];?></td>
@@ -169,7 +169,8 @@
             ?>
           </tbody>
         </table>
- 
+      </div>   
+          
       <?php
       }else{
       ?>

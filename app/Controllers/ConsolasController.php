@@ -75,7 +75,9 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
             
           $result = $this->addConsola(6,$_POST);
           if($result){
-            header('location: '.$data['volver']);   
+            header('location: '.$data['volver']);
+            $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
+
         }else{
              $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
             }
@@ -166,6 +168,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
             $result = $this->modifyConsola($_POST['id_consola'],$_POST['codigo_producto'],$_POST);
             if($result){
                header('location: '.$data['volver']);
+               $_SESSION['action'] = 'Cambios realizados con éxito';
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
             }
