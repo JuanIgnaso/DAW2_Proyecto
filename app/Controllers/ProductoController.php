@@ -45,49 +45,54 @@ class ProductoController extends \Com\Daw2\Core\BaseController{
         $detalles;
         $productModel;
        
-        
-        if($id == 2){
-            $productModel = new \Com\Daw2\Models\TecladosModel();
-            $detalles = $productModel->loadDetails($nombre);
-       
+        switch($id){
+            case 2:
+                $productModel = new \Com\Daw2\Models\TecladosModel();
+                $detalles = $productModel->loadDetails($nombre);
+                break;
             
-        }else if($id == 3){
-           $productModel = new \Com\Daw2\Models\SillasModel(); 
-          $detalles = $productModel->loadDetails($nombre);
-         
+            case 3:
+                $productModel = new \Com\Daw2\Models\SillasModel(); 
+                $detalles = $productModel->loadDetails($nombre);
+                break;
+            
+            case 5:
+                $productModel = new \Com\Daw2\Models\MandosModel(); 
+                $detalles = $productModel->loadDetails($nombre);
+                break;
+            
+            case 6:
+              $productModel = new \Com\Daw2\Models\ConsolasModel(); 
+              $detalles = $productModel->loadDetails($nombre); 
+             break;
           
-        } else if($id == 6){
-           $productModel = new \Com\Daw2\Models\ConsolasModel(); 
-           $detalles = $productModel->loadDetails($nombre);
+            case 7:
+               $productModel = new \Com\Daw2\Models\RatonesModel(); 
+               $detalles = $productModel->loadDetails($nombre);
+               break;
            
+            case 9:
+               $productModel = new \Com\Daw2\Models\MonitoresModel(); 
+               $detalles = $productModel->loadDetails($nombre);
+               unset($detalles['tecnologia']); 
+               break;
            
-        }else if($id == 5){
-           $productModel = new \Com\Daw2\Models\MandosModel(); 
-           $detalles = $productModel->loadDetails($nombre);   
+            case 10:
+                $productModel = new \Com\Daw2\Models\PCMontadosModel(); 
+                $detalles = $productModel->loadDetails($nombre); 
+                break;
+            
+            case 11:
+                $productModel = new \Com\Daw2\Models\SistemasOperativosModel(); 
+                $detalles = $productModel->loadDetails($nombre);
+                break;
+            
+            default:
+               $this->errorLoadProduct($id,'Error al cargar Categoría', "La categoría <span class='text-danger'>".$id."</span> que intentas cargar no existe!.");
+                break;
         }
+
         
-        else if($id == 7){
-            $productModel = new \Com\Daw2\Models\RatonesModel(); 
-           $detalles = $productModel->loadDetails($nombre);
-        }   
-        
-        else if($id == 9){
-           $productModel = new \Com\Daw2\Models\MonitoresModel(); 
-           $detalles = $productModel->loadDetails($nombre);
-           unset($detalles['tecnologia']);
-        } 
-       
-        else if($id == 10){
-            $productModel = new \Com\Daw2\Models\PCMontadosModel(); 
-           $detalles = $productModel->loadDetails($nombre);
-        }
-        
-        else if($id == 11){
-            $productModel = new \Com\Daw2\Models\SistemasOperativosModel(); 
-           $detalles = $productModel->loadDetails($nombre);
-        }else{
-            $this->errorLoadProduct($id,'Error al cargar Categoría', "La categoría <span class='text-danger'>".$id."</span> que intentas cargar no existe!.");
-        }
         return $detalles;
     }
     

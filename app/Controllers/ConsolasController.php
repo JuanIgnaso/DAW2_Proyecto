@@ -245,14 +245,6 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
 
-      
-      //COMPROBACION DE IMG
-      if(!empty($_FILES["imagen"]["tmp_name"])){
-       $check = getimagesize($_FILES["imagen"]["tmp_name"]);
-       $formato = strtolower(pathinfo($_FILES["imagen"]['name'],PATHINFO_EXTENSION));
-      }
-      
-      
       if(empty($post['nombre'])){
           $errores['nombre'] = 'Tienes que escribir un nombre';
       }else if(strlen(trim($post['nombre'])) == 0){
@@ -328,22 +320,13 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
       }else if(!$modelConec->conexionExists($post['id_conexion'])){
           $errores['conexion'] = 'La conexion que has seleccionado no existe ';
       }
-                      
-        if(isset($check)){
-        if($check == false){
-            $errores['url_imagen'] = 'debes de subir una imagen';  
-        }else{
-           if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
-                 $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
-           }if($check[0] != $check[1]){  // DIMENSIONES
-                $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
-           } 
-            if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
-             $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
-            }  
-         }
+      
+      $errores['url_imagen'] = $this->checkFormImage($_FILES["imagen"]);
+      if($errores['url_imagen'] == NULL){
+          unset($errores['url_imagen']);
+      }
 
-        }
+                      
       
       return $errores;
     }

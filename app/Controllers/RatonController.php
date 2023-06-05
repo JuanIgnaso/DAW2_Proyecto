@@ -216,13 +216,6 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
         
       $errores = [];  
       
-      //COMPROBACION DE IMG
-      if(!empty($_FILES["imagen"]["tmp_name"])){
-       $check = getimagesize($_FILES["imagen"]["tmp_name"]);
-       $formato = strtolower(pathinfo($_FILES["imagen"]['name'],PATHINFO_EXTENSION));
-      }
-      
-
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
       $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -285,7 +278,7 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
         }  
         
        
-        if(empty($post['clase'])){
+       if(empty($post['clase'])){
           $errores['clase'] = 'Tienes que escribir una clase';
       }else if(strlen(trim($post['clase'])) == 0){
           $errores['clase'] = 'No se aceptan cadenas vacías';
@@ -299,23 +292,12 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
       }else if(empty($post['id_conexion'])){
           $errores['conexion'] = 'Debes seleccionar una conexion';
       }
-     
-     if(isset($check)){
-        if($check == false){
-            $errores['url_imagen'] = 'debes de subir una imagen';  
-        }else{
-            if ($_FILES["imagen"]["size"] > 10000000) {  // TAMAÑO DE LA IMAGEN
-                 $errores['url_imagen'] = 'Limite máximo de tamaño superado'.basename($_FILES["imagen"]["name"]);
-            }
-            if($check[0] != $check[1]){  // DIMENSIONES
-                $errores['url_imagen'] = 'La imagen debe de mantener el formato 1:1';  
-            } 
-            if($formato != 'jpg' && $formato != "png" && $formato != "jpeg"){ //FORMATO
-                $errores['url_imagen'] = 'Solo se permiten imagenes en .jpg, .png y .jpeg';
-            }  
-        }
-
+      
+      $errores['url_imagen'] = $this->checkFormImage($_FILES["imagen"]);
+     if($errores['url_imagen'] == NULL){
+         unset($errores['url_imagen']);
      }
+     
         
       return $errores;
         

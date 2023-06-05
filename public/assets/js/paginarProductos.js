@@ -10,7 +10,7 @@
         
         /*Variables para calcular las páginas***************/
         var elementosTotales = tableItems.length;
-        var limitePaginacion = 4;//<-Elementos por página
+        var limitePaginacion = 5;//<-Elementos por página
         var numPaginas = Math.ceil(elementosTotales / limitePaginacion); //<-Numero de páginas
         let pagActual;
         

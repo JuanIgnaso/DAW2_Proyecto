@@ -19,8 +19,12 @@
         <div class="row">
             <form method="get"  action="<?php echo $direccion;?>" class="p-0">
             <header class="col-12 p-0">
-                <h2 class="display-6 text-left pt-5 ps-2">Barra De Búsqueda</h2>
-                <p class="p-0 m-0 text-md-left mb-3 ps-2">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>
+                <div class="col-12" id="iD_barra_info">
+                     <h2 class="display-6 text-left pt-5 ps-2">Barra De Búsqueda</h2>
+                     <p class="p-0 m-0 text-md-left mb-3 ps-2">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>                 
+                </div>
+
+              
                 <!-- BARRA DE BÚSQUEDA -->
                 <div class="col-12" id="barra_nav_busqueda">
                     <div class="col-12  col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
@@ -80,7 +84,7 @@
                 <?php
                     }
                 ?>
-                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">
+                <div class="row  me-0 ms-0 row-cols-2 row-cols-md-3 row-cols-lg-5">
                   <?php
                   foreach($productos as $producto){
                   ?>  
