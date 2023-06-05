@@ -76,6 +76,7 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
            $data['titulo'] = 'Modificar Usuario';
            $data['seccion'] = '/inventario/UsuariosSistema/edit/'.$id;
            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+           $data['input']['profile_image'] = $_POST['imagen'];
            $data['volver'] = '/inventario/UsuariosSistema';
            $data['accion'] = 'Aplicar Cambios'; 
         
@@ -116,7 +117,9 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
        if(count($data['errores']) == 0){
             $model = new \Com\Daw2\Models\UsuarioSistemaModel();
             if($model->addUser($_POST,false)){
-                header('location: /inventario/UsuariosSistema');   
+                header('location: /inventario/UsuariosSistema'); 
+                $_SESSION['action'] = 'Se ha añadido el usuario '.$_POST['nombre_usuario'].' con éxito.';
+
             }else{
              $_SESSION['action'] = 'Ha ocurrido un error al intentar añadir el producto';
              $_SESSION['action']['background'] = 'bg-danger';

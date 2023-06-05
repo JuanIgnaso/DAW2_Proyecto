@@ -43,6 +43,20 @@
        <form method="get"  action="<?php echo $seccion;?>">
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
 
+            <?php
+                if(isset($_SESSION['action'])){
+             ?> 
+
+            <div class="col-12 bg-primary text-light p-2 text-center d-flex align-items-center justify-content-center gap-3">
+                <i class="fa-sharp fa-solid fa-circle-exclamation"></i><p class="m-0"><?php echo $_SESSION['action'] ;?></p>
+            </div>
+
+            <?php
+            }
+            unset($_SESSION['action']);
+            ?>       
+          
+          
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
                  <label for="">Nombre Usuario</label>
@@ -79,8 +93,7 @@
           </div>
        </form>
           <div class="col-12">
-                       <p>Busca si lo prefieres entre uno de los siguientes filtros</p>
-  
+            <p>Busca si lo prefieres entre uno de los siguientes filtros</p> 
           </div>
 
 
@@ -123,11 +136,20 @@
               <td><?php echo $usuario['nombre_rol'];?></td>
               <td><?php echo $usuario['ultimo_login'];?></td>
               <td>
+                  
                   <div class="acciones col-12 f-flex justify-content-center gap-1 flex-column flex-sm-row">
+                   <?php
+                         if($usuario['nombre_usuario'] != $_SESSION['usuario']['nombre_usuario']){
+                    ?>
                       <button id="borrar_<?php echo $usuario['nombre_usuario'];?>" type="button" onclick="abrirModal(this)" class="btn p-0"  <?php echo $usuario['nombre_usuario'] == $_SESSION['usuario']['nombre_usuario'] ? 'disabled' : '';?>><i class="fa-solid fa-trash-can" style="color: #FF4500;"></i></button>
                       <a href="<?php echo $usuario['id_usuario'] == $_SESSION['usuario']['id_usuario'] ? '/inventario/UsuariosSistema' : '/inventario/UsuariosSistema/edit/'.$usuario['id_usuario'];?>"class="btn p-0"><i class="fa-solid fa-square-pen" style="color: #8000ff;"></i></a>
                       <button id="<?php echo $usuario['nombre_usuario'];?>" type="button" onclick='darBajaUsr(this.getAttribute("id"))' <?php echo $usuario['nombre_usuario'] == $_SESSION['usuario']['nombre_usuario'] ? 'disabled' : '';?> class="btn p-0"><i class="fa-solid fa-toggle-<?php echo $usuario['baja'] == 1 ? 'off' : 'on';?>" style="color: orangered;"></i></button>
+                    <?php
+                      }
+                     ?>
+                       
                   </div>
+                  
               </td>
             </tr>
             <?php
@@ -237,6 +259,28 @@
       }
       ?>
       </div>
+           <footer class="mt-2 mb-2 col-12 col-md-8 col-lg-6 col-xl-4 m-auto bg-light rounded">
+                    <!-- Navegador para mover las páginas -->
+               <nav class="pagination-container" style="display:flex; margin:auto;">
+                   <!-- Página anterior -->
+                   <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">     
+                   &lt;       
+                   </button>
+
+
+               <!-- Númnero de páginas -->
+                   <div id="pagination-numbers">
+
+                   </div>
+
+
+               <!-- Siguiente página -->
+                   <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">        
+                   &gt;      
+                   </button>
+
+               </nav>
+        </footer>                       
     </main>
   </div>
 </div>
@@ -282,14 +326,10 @@
               </ul>
           </footer>
         </div>
+        <script src="/assets/js/paginarElementosTabla.js"></script>
+
+      
         <script src="/assets/js/accionesCesta.js"></script>
-        <?php
-        if($_SERVER['REQUEST_URI'] == '/checkout'){
-        ?>
-        <script src="/assets/js/finalizarCompra.js"></script>
-        <?php
-        }
-        ?>   
-  
+
   </body>
 </html>

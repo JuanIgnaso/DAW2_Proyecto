@@ -6,7 +6,7 @@ namespace Com\Daw2\Controllers;
 
 class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
     
-
+    /*Consigue el tipo de almacenamiento*/
    private function getAlmacenamiento():array{
       $model = new \Com\Daw2\Models\PCMontadosModel();
       $tipo =  $model->getAlmacenamientoTipo();
@@ -18,7 +18,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
    }
     
     
-    
+    /*Muestra la lista de productos*/
     public function showListaPC(){
         
        $model =  new \Com\Daw2\Models\PCMontadosModel();
@@ -44,7 +44,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
  
     }
     
-    
+    /*Muestra la lista para añadir*/
    function showAdd(){
        $model = new \Com\Daw2\Models\PCMontadosModel(); 
        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -62,9 +62,11 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data); 
     } 
     
+    /*Añade el producto*/
     public function add(){
        $model = new \Com\Daw2\Models\PCMontadosModel(); 
-  
+       $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+
         $data = [];
         $data['titulo_seccion'] = 'Añadir PC';
         $data['accion'] = 'Añadir';
@@ -88,9 +90,15 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
 
         }else{
              $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+            $data['seccion'] = '/inventario/Ordenadores/add';
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['proveedor'] = $modelProv->getAll();
+            $data['volver'] = '/inventario/Ordenadores';
+            $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
+
+            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data); 
             }
         }else{
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Ordenadores/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['proveedor'] = $modelProv->getAll();
@@ -101,6 +109,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
         }
     }
     
+    /*Ejecuta las consultas contra la base de datos*/
     private function addPC(int $categoria,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\PCMontadosModel();
@@ -117,7 +126,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
 
     }
     
-    
+    /*Muestra la vista para editar*/
     function showEdit($cod){
        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
        $model = new \Com\Daw2\Models\PCMontadosModel();
@@ -138,11 +147,13 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data);     
     }
     
-    
+    /*Edita el producto*/
     public function edit($cod){
     $model = new \Com\Daw2\Models\PCMontadosModel();
     $data = [];
     $data['volver'] = '/inventario/Ordenadores';
+    $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+
     $data['errores'] = $this->checkForm($_POST,$alta = false);
         if(count($data['errores']) == 0){
                  
@@ -166,10 +177,20 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
                $_SESSION['action'] = 'Cambios realizados con éxito';
 
            }else{
-                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar editar el producto';
+                $data['seccion'] = '/inventario/Ordenadores/edit/'.$cod;
+                $data['proveedor'] = $modelProv->getAll();
+                $data['titulo'] = 'Editar Producto';
+                $data['titulo_seccion'] = 'Modificar Ordenador';
+                $data['accion'] = 'Aplicar Cambios';
+                $data['volver'] = '/inventario/Ordenadores';
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['input']['url_imagen'] = $_POST['imagen'];
+                $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
+
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data);  
            }
         }else{
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Ordenadores/edit/'.$cod;
             $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
@@ -177,6 +198,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Ordenadores';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['input']['url_imagen'] = $_POST['imagen'];
             $data['almacenamiento_tipo'] = $this->getAlmacenamiento();
 
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddOrdenador.view.php'),$data);     
@@ -184,7 +206,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
     
     }
     
-    
+    /*Ejecuta la edición contra la Base De Datos*/
     private function modifyPC($idMon,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\PCMontadosModel();
@@ -203,7 +225,7 @@ class PCMontadosController extends \Com\Daw2\Core\BaseProductController{
     }
    
    
-    
+    /*Comprueba el formulario*/
     private function checkForm(array $post, bool $alta = true):array{
         
       $errores = []; 

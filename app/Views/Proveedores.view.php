@@ -1,5 +1,5 @@
 
-              <div class="row">
+    <div class="row">
         <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
               <!-- COntenido del modal -->
             <div class="col-12  contenido_modal_carrito">
@@ -43,6 +43,21 @@
        <form method="get"  action="<?php echo $seccion;?>">
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
 
+        <?php
+        if(isset($_SESSION['action'])){
+         ?> 
+          
+        <div class="col-12 bg-primary text-light p-2 text-center d-flex align-items-center justify-content-center gap-3">
+            <i class="fa-sharp fa-solid fa-circle-exclamation"></i><p class="m-0"><?php echo $_SESSION['action'] ;?></p>
+        </div>
+          
+        <?php
+        }
+        unset($_SESSION['action']);
+        ?>     
+          
+          
+          
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>
@@ -128,76 +143,7 @@
         </table>
       </div>    
  
- 
- 
- 
-               <!-- SCRIPT BORRAR -->
-      <script>
 
-       var msj_accion = document.querySelector('#mensaje');
-       var btn_acc = document.querySelector('#conf_acc');   
-          
-       var codigo = 0 
-      
-      //Abrir La Modal
-      function abrirModal(e){
-         document.getElementById('modal_inventario_borrar').style.display = 'block'; 
-         console.log(e.parentNode.parentNode.parentNode.getAttribute('id'));
-         codigo = e.parentNode.parentNode.parentNode.getAttribute('id');
-         msj_accion.innerHTML = 'Deseas Confirmar la acción?';
-          btn_acc.style.display = 'block';
-      }
-      
-      //Cerrar La Modal
-      function closeModal(){
-        document.getElementById('modal_inventario_borrar').style.display = 'none';
-        console.log(codigo);
-      }
-      
-      //Borrar la columna y el producto de la BBDD
-      function borrar(){
-          
-          let columna = document.getElementById(codigo);
-                   
-               $.ajax({
-
-                //url a donde se colocan los datos
-                url: '/borrar_proveedor',
-
-                
-                type: 'POST',
-
-                
-            data: {
-                    
-                    producto: parseInt(codigo)//codigo del producto
-                },
-
-
-                //Borrar la columna y cerrar la modal en caso de success
-                success: function(response) {
-                    let resp = JSON.parse(response);
-                    console.log(resp); 
-                    columna.remove();
-                   document.getElementById('modal_inventario_borrar').style.display = 'none';
-                },
-
-                //Cerrar modal y mostrar mensaje de error
-                error: function(error) {
-                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
-
-                    error = JSON.parse(error.responseText);
-                     let resp =error;
-                     msj_accion.innerHTML = resp;
-                     btn_acc.style.display = 'none';
-                   //document.getElementById('modal_inventario_borrar').style.display = 'none';
-                   
-                    
-                }
-            });
-         
-      }
-      </script>
       <?php
       }else{
       ?>
@@ -278,10 +224,13 @@
         
       <script src="/assets/js/accionesCesta.js"></script>
                    <!-- Script Paginacion -->
-        <script src="/assets/js/paginarElementosTabla.js"></script>
+       <script src="/assets/js/paginarElementosTabla.js"></script>
        
         <!-- Abrir Cerrar Carrito -->
        <script src="/assets/js/abrirCerrarCarrito.js"></script>
+       
+                      <!-- SCRIPT BORRAR -->
+      <script src="/assets/js/borrarProveedor.js"></script>
   
   
   </body>

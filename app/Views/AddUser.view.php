@@ -61,13 +61,23 @@
                         <img id="foto_img"  src="
                              <?php
                              if(!isset($input['profile_image'])){
-                                 echo '/assets/img/Default_Profile_Photo.jpg';
+                                 echo '/assets/img/profiles/Default_Profile_Photo.jpg';
                              }else if($input['profile_image'] == NULL){
-                               echo '/assets/img/Default_Profile_Photo.jpg';
+                               echo '/assets/img/profiles/Default_Profile_Photo.jpg';
                              }else{
                                echo $input['profile_image'];  
                              }
                         ;?>" alt="imagen de perfil">
+                        
+                        <input type="hidden" id="imagen" name="imagen" value="<?php
+                             if(!isset($input['profile_image'])){
+                                 echo  '/assets/img/profiles/Default_Profile_Photo.jpg';
+                             }else if($input['profile_image'] == NULL){
+                               echo  '/assets/img/profiles/Default_Profile_Photo.jpg';
+                             }else{
+                               echo $input['profile_image'];  
+                             }
+                        ;?>" />
                         </div>
                     </div>
               

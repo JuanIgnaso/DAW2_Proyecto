@@ -79,6 +79,8 @@ class ProveedorController extends \Com\Daw2\Core\BaseController{
               $result = $model->insertProveedor($_POST);
               if($result){
                 header('location: '.$data['volver']);   
+                $_SESSION['action'] = 'Se ha añadido el proveedor con éxito';
+
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
                 }
@@ -123,6 +125,8 @@ class ProveedorController extends \Com\Daw2\Core\BaseController{
          $model->editProveedor($_POST);
          if($model){
           header('location: /inventario/Proveedores');    
+          $_SESSION['action'] = 'Se ha modificado el proveedor con éxito';
+
          }else{
           $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el proveedor';
          }

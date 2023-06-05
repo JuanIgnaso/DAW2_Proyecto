@@ -2,7 +2,7 @@
 
 namespace Com\Daw2\Controllers;
 
-class MonitorController extends \Com\Daw2\Core\BaseController{
+class MonitorController extends \Com\Daw2\Core\BaseProductController{
  
     
     public function showListaMonitores(){
@@ -56,7 +56,8 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
     public function add(){
        $model = new \Com\Daw2\Models\MonitoresModel(); 
        $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
-
+       $modelTec =  new  \Com\Daw2\Models\AuxTecnologiaModel();
+       $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         
           $data = [];
           $data['titulo'] = 'Añadir Producto';
@@ -81,10 +82,17 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
 
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-                }
+                $data['seccion'] = '/inventario/Monitores/add';
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['proveedor'] = $modelProv->getAll();
+                $data['tecnologia'] = $modelTec->getAll();
+                $data['volver'] = '/inventario/Monitores';
+
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddMonitor.view.php'),$data); 
+
+            }
           }else{
-            $modelTec =  new  \Com\Daw2\Models\AuxTecnologiaModel();
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+            
             $data['seccion'] = '/inventario/Monitores/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['proveedor'] = $modelProv->getAll();
@@ -140,6 +148,8 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
     
     public function edit($cod){
         $model = new \Com\Daw2\Models\MonitoresModel(); 
+        $modelTec =  new  \Com\Daw2\Models\AuxTecnologiaModel();
+        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $data = [];
         $data['errores'] = $this->checkForm($_POST,$alta = false);
         if(count($data['errores']) == 0){
@@ -163,17 +173,27 @@ class MonitorController extends \Com\Daw2\Core\BaseController{
                $_SESSION['action'] = 'Cambios realizados con éxito';
 
            }else{
-                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar editar el producto';
+                   $data['titulo'] = 'Editar Producto';
+                   $data['titulo_seccion'] = 'Modificar Monitor';
+                   $data['seccion'] = '/inventario/Monitores/edit/'.$cod;
+                   $data['proveedor'] = $modelProv->getAll();
+                   $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                   $data['input']['url_imagen'] = $_POST['imagen'];
+                   $data['volver'] = '/inventario/Monitores';
+                   $data['accion'] = 'Aplicar Cambios';
+                   $data['tecnologia'] = $modelTec->getAll();
+
+                   $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddMonitor.view.php'),$data);     
             }
         }else{
-           $modelTec =  new  \Com\Daw2\Models\AuxTecnologiaModel();
-           $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
-           $model = new \Com\Daw2\Models\MonitoresModel(); 
+
            $data['titulo'] = 'Editar Producto';
            $data['titulo_seccion'] = 'Modificar Monitor';
            $data['seccion'] = '/inventario/Monitores/edit/'.$cod;
            $data['proveedor'] = $modelProv->getAll();
            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+           $data['input']['url_imagen'] = $_POST['imagen'];
            $data['volver'] = '/inventario/Monitores';
            $data['accion'] = 'Aplicar Cambios';
            $data['tecnologia'] = $modelTec->getAll();

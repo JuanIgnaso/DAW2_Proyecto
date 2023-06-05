@@ -41,14 +41,20 @@
 
       </div>
 
-      <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
-        <?php
-        if(isset($_SESSION['error_añadir'])){
-            echo $_SESSION['error_añadir'];
-        }
-        unset($_SESSION['error_añadir']);
-        ?>
+          
       <h2>Bienvenido al panel de incio de Administración</h2>
+      
+      <?php
+       if(isset($_SESSION['error_añadir'])){
+      ;?>
+        <div class="col-12 bg-danger text-light p-2 mb-2 text-center d-flex align-items-center justify-content-center gap-3">
+            <i class="fa-solid fa-triangle-exclamation"></i><p class="m-0"><?php echo $_SESSION['error_añadir'] ;?></p>
+        </div>
+      <?php
+      unset($_SESSION['error_añadir']);
+       }
+      ;?>
+      
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
           <form action="<?php echo $seccion;?>" method="post" enctype="multipart/form-data"> 
           <div class="col-8 col-md-6 col-lg-3">
@@ -64,6 +70,17 @@
                                echo $input['url_imagen'];  
                              }
                         ;?>" alt="">
+                        
+                          <input type="hidden" id="imagen" name="imagen" value="<?php
+                             if(!isset($input['url_imagen'])){
+                                 echo '/assets/img/default_image.png';
+                             }else if($input['url_imagen'] == NULL){
+                               echo '/assets/img/default_image.png';
+                             }else{
+                               echo $input['url_imagen'];  
+                             }
+                             ;?>" />
+                        
                     </div>
               
               
@@ -146,10 +163,10 @@
               <div class="col d-flex flex-column">
                   <p>Manual Usuario</p>
                   <div class="col-12 flex-row justify-content-center gap-3 align-items-center">
-                     <input type="radio" name="manual_usuario" id="manual_usuario_si" value="Si" />
+                     <input type="radio" name="manual_usuario" id="manual_usuario_si" value="Si" <?php echo isset($input['manual_usuario']) && $input['manual_usuario'] == 'Si' ? 'checked' : '';?>/>
                      <label for="manual_usuario_si">Si</label>
 
-                     <input type="radio" name="manual_usuario" id="manual_usuario_no" value="No" />
+                     <input type="radio" name="manual_usuario" id="manual_usuario_no" value="No" <?php echo isset($input['manual_usuario']) && $input['manual_usuario'] == 'No' ? 'checked' : '';?>/>
                      <label for="manual_usuario_no">No</label>
                   </div>
 

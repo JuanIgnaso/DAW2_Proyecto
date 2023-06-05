@@ -4,6 +4,20 @@ namespace Com\Daw2\Controllers;
 
 class TecladoController extends \Com\Daw2\Core\BaseProductController{
     
+    /*Consigue los diseños de los teclados*/
+    private function getDiseños():array{
+      $model = new \Com\Daw2\Models\TecladosModel(); 
+      $diseño =  $model->getDiseño();
+        $patrones = array();
+        $patrones[0] = '/\'/';
+        $patrones[1] = '/\(/';
+        $patrones[2] = '/\)/';
+        return preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+   }
+    
+    
+    
+    /*Muestra la lista de productos*/
     public function showListaTeclados(){
         //$modelCategoria = new \Com\Daw2\Models\CategoriaModel();
         $modelTeclado =  new \Com\Daw2\Models\TecladosModel();       
@@ -35,7 +49,7 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Teclados.view.php'),$data); 
     }
     
-    
+    /*Muestra la ventana para editar*/
     public function showEdit($cod){
         $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
 
@@ -57,18 +71,13 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
         $data['id_conectividad'] = $conectividadModel->getAll();
         $data['id_clase'] = $claseModel->getAll();
         $data['idioma_T'] = $idiomaModel->getAll();
-        $diseño =  $model->getDiseño();
-        $patrones = array();
-        $patrones[0] = '/\'/';
-        $patrones[1] = '/\(/';
-        $patrones[2] = '/\)/';
-        $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+        $data['diseño_Teclado'] = $this->getDiseños();
 
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
     }
     
     
-    
+    /*Edita el producto*/
     public function edit($cod){
     $model = new \Com\Daw2\Models\TecladosModel(); 
     $data = [];
@@ -78,7 +87,10 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
              $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
              $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
              $urlimg = $modelGeneral->getProductImg($_POST['codigo_producto']);
-                     
+             $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+             $conectividadModel = new \Com\Daw2\Models\AuxConectividadTecladoModel();
+             $claseModel = new \Com\Daw2\Models\AuxClaseTecladoModel();
+             $idiomaModel =  new \Com\Daw2\Models\AuxIdiomaModel();    
              
              if(!empty($_FILES["imagen"]["tmp_name"])){
               unlink(substr($urlimg,1,strlen($urlimg)));
@@ -98,12 +110,6 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
 
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-                }
-            }else{
-                $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
-                $conectividadModel = new \Com\Daw2\Models\AuxConectividadTecladoModel();
-                $claseModel = new \Com\Daw2\Models\AuxClaseTecladoModel();
-                $idiomaModel =  new \Com\Daw2\Models\AuxIdiomaModel();
                 $data['titulo'] = 'Editar Producto';
                 $data['titulo_seccion'] =  'Editar Producto';
                 $data['accion'] = 'Aplicar Cambios';
@@ -111,17 +117,31 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
                 $data['seccion'] = '/inventario/Teclados/edit/'.$cod;
                 $data['proveedor'] = $modelProv->getAll();
                 $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['input']['url_imagen'] = $_POST['imagen'];
                 $data['id_conectividad'] = $conectividadModel->getAll();
                 $data['id_clase'] = $claseModel->getAll();
                 $data['idioma_T'] = $idiomaModel->getAll();
-                $diseño = $model->getDiseño();
                 $data['volver'] = '/inventario/Ratones';
+                $data['diseño_Teclado'] =  $this->getDiseños();
 
-                $patrones = array();
-                $patrones[0] = '/\'/';
-                $patrones[1] = '/\(/';
-                $patrones[2] = '/\)/';
-                $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+                
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data);
+            }
+            }else{
+
+                $data['titulo'] = 'Editar Producto';
+                $data['titulo_seccion'] =  'Editar Producto';
+                $data['accion'] = 'Aplicar Cambios';
+                $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+                $data['seccion'] = '/inventario/Teclados/edit/'.$cod;
+                $data['proveedor'] = $modelProv->getAll();
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['input']['url_imagen'] = $_POST['imagen'];
+                $data['id_conectividad'] = $conectividadModel->getAll();
+                $data['id_clase'] = $claseModel->getAll();
+                $data['idioma_T'] = $idiomaModel->getAll();
+                $data['volver'] = '/inventario/Ratones';
+                $data['diseño_Teclado'] =  $this->getDiseños();
 
                 
                 $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
@@ -129,7 +149,7 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
             }
     }
     
-    
+    /*Ejecuta la edición contra la Base De Datos*/
     private function modifyTeclado($idTec,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\TecladosModel();
@@ -147,7 +167,7 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
     }
     
     
-    
+/*Muestra la vista para añadir*/    
     public function showAdd(){
         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $model = new \Com\Daw2\Models\TecladosModel(); 
@@ -165,22 +185,20 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
         $data['id_conectividad'] = $conectividadModel->getAll();
         $data['id_clase'] = $claseModel->getAll();
         $data['idioma_T'] = $idiomaModel->getAll();
-        $diseño =  $model->getDiseño();
-        $patrones = array();
-        $patrones[0] = '/\'/';
-        $patrones[1] = '/\(/';
-        $patrones[2] = '/\)/';
-        $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+        $data['diseño_Teclado'] =$this->getDiseños();
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
 
     }
     
-    
+/*Añade el producto*/
     public function add(){
        $model = new \Com\Daw2\Models\TecladosModel(); 
        $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
-
-        
+       $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+       $conectividadModel = new \Com\Daw2\Models\AuxConectividadTecladoModel();
+       $claseModel = new \Com\Daw2\Models\AuxClaseTecladoModel();
+       $idiomaModel =  new \Com\Daw2\Models\AuxIdiomaModel();
+       
           $data = [];
           $data['titulo'] = 'Añadir Producto';
           $data['errores'] = $this->checkForm($_POST);
@@ -202,30 +220,31 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
 
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-                }
+                 $data['seccion'] = '/inventario/Teclados/add';
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['proveedor'] = $modelProv->getAll();
+                $data['id_conectividad'] = $conectividadModel->getAll();
+                $data['id_clase'] = $claseModel->getAll();
+                $data['idioma_T'] = $idiomaModel->getAll();
+                $data['diseño_Teclado'] = $this->getDiseños();
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
+            }
           }else{
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
-            $conectividadModel = new \Com\Daw2\Models\AuxConectividadTecladoModel();
-            $claseModel = new \Com\Daw2\Models\AuxClaseTecladoModel();
-            $idiomaModel =  new \Com\Daw2\Models\AuxIdiomaModel();
+
             $data['seccion'] = '/inventario/Teclados/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['proveedor'] = $modelProv->getAll();
             $data['id_conectividad'] = $conectividadModel->getAll();
             $data['id_clase'] = $claseModel->getAll();
             $data['idioma_T'] = $idiomaModel->getAll();
-            $diseño =  $model->getDiseño();
-            $patrones = array();
-             $patrones[0] = '/\'/';
-             $patrones[1] = '/\(/';
-             $patrones[2] = '/\)/';
-             $data['diseño_Teclado'] = preg_replace($patrones,'',explode(',',$diseño[0]['SUBSTRING(COLUMN_TYPE,5)']));
+             $data['diseño_Teclado'] = $this->getDiseños();
              $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddTeclado.view.php'),$data); 
 
           }
 
     }
     
+    /*Añade el producto a la base de datos*/    
     
     private function addTeclado(int $categoria,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
@@ -244,7 +263,7 @@ class TecladoController extends \Com\Daw2\Core\BaseProductController{
     }
     
     
- 
+    /*Función para comprobar el formulario del producto*/
     private function checkForm(array $post, bool $alta = true):array{
         
       $errores = []; 

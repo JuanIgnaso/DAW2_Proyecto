@@ -4,7 +4,7 @@ namespace Com\Daw2\Controllers;
 
 class SillaController extends \Com\Daw2\Core\BaseProductController{
 
-   
+   /*Función privada para conseguir los tipos de silla*/
    private function getTipos():array{
       $model = new \Com\Daw2\Models\SillasModel();
       $tipo =  $model->getTipo();
@@ -16,7 +16,7 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
    }
     
    
-   
+   /*Mostrar la lista de productos*/
     public function showListaSillas(){
         $model =  new \Com\Daw2\Models\SillasModel();
 
@@ -41,7 +41,7 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
     }
     
     
-    
+    /*Mostrar la vista para añadir*/
     function showAdd(){
        $model = new \Com\Daw2\Models\SillasModel(); 
        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -59,12 +59,12 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data); 
     }
     
-    
+    /*Añade el producto*/
     public function add(){
      $model = new \Com\Daw2\Models\SillasModel(); 
-    //$modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
-     
-     $data = [];
+     $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+
+    
       $data['titulo'] = 'Añadir Producto';
       $data['titulo_seccion'] = 'Añadir Silla';
       $data['errores'] = $this->checkForm($_POST);
@@ -86,10 +86,16 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
                 $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
 
             }else{
-                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+                $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+                $data['seccion'] = '/inventario/Sillas/add';
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['proveedor'] = $modelProv->getAll();
+                $data['volver'] = '/inventario/Sillas';
+                $data['tipo_silla'] = $this->getTipos();
+
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data); 
             }
         }else{
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Sillas/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['proveedor'] = $modelProv->getAll();
@@ -100,27 +106,8 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
         }
 
     }
-    
-    
-    private function uploadPhoto($directorio): bool{
-        $dir = $directorio;
-        $src = $_FILES['imagen']['tmp_name'];
-        $output_dir = $dir.basename($_FILES['imagen']['name']);
-        
-        if(!is_dir($dir)){
-            mkdir($dir, 0775, true);
-        }
-        
-        if(move_uploaded_file($src,$output_dir)){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
-    
-    
-    
+     
+    /*Añade el producto a la tabla de la Base De Datos*/
     private function addSilla(int $categoria,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\SillasModel();
@@ -137,7 +124,7 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
 
     }
     
-    
+    /*Muestra la ventana para editar*/
      function showEdit($cod){
        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
        $model = new \Com\Daw2\Models\SillasModel(); 
@@ -158,9 +145,10 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
        $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data);     
     }
     
-    
+    /*Edita el producto*/
     public function edit($cod){
          $model = new \Com\Daw2\Models\SillasModel(); 
+         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
          $data = [];
          $data['errores'] = $this->checkForm($_POST,$alta = false);
          $data['volver'] = '/inventario/Sillas';
@@ -189,11 +177,20 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
 
            }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+                $data['seccion'] = '/inventario/Sillas/edit/'.$cod;
+                $data['proveedor'] = $modelProv->getAll();
+                $data['titulo'] = 'Editar Producto';
+                $data['titulo_seccion'] = 'Modificar Silla';
+                $data['accion'] = 'Aplicar Cambios';
+                $data['volver'] = '/inventario/Sillas';
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['input']['url_imagen'] = $_POST['imagen'];            
+                $data['tipo_silla'] = $this->getTipos();
+
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data);     
            }
             
-            
         }else{
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
             $data['seccion'] = '/inventario/Sillas/edit/'.$cod;
             $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
@@ -201,13 +198,14 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Sillas';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['input']['url_imagen'] = $_POST['imagen'];            
             $data['tipo_silla'] = $this->getTipos();
 
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddSilla.view.php'),$data);     
         }
     }
     
-    
+    /*Ejecuta la modificación contra la Base De Datos*/
     private function modifySilla($idMon,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\SillasModel();
@@ -226,7 +224,7 @@ class SillaController extends \Com\Daw2\Core\BaseProductController{
     
     
     
-    
+    /*Comprobar el formulario*/
     private function checkForm(array $post, bool $alta = true):array{
         
       $errores = []; 

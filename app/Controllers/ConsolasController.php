@@ -2,7 +2,8 @@
 namespace Com\Daw2\Controllers;
 
 class ConsolasController extends \Com\Daw2\Core\BaseProductController{
-   
+    
+   /*Muestra la lista de productos*/
     public function showListaConsolas(){
         $model =  new \Com\Daw2\Models\ConsolasModel();
         $modelConexiones = new \Com\Daw2\Models\AuxModelConexionesRaton();
@@ -27,7 +28,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Consolas.view.php'),$data); 
     }
     
-    
+    /*Muestra la vista para añadir*/
     function showAdd(){
         $model =  new \Com\Daw2\Models\ConsolasModel();
         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -46,7 +47,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data); 
     }
     
-    
+    /*Añade el producto*/
     function add(){
         $model =  new \Com\Daw2\Models\ConsolasModel();
         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
@@ -79,10 +80,18 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
             $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
 
         }else{
-             $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-            }
+            $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+            $data['seccion'] = '/inventario/Consolas/add';
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['proveedor'] = $modelProv->getAll();
+            $data['volver'] = '/inventario/Consolas';
+            $data['id_conexion'] = $modelConexiones->getAll();
+
+
+            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data); 
+        }
         }else{
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+            
             $data['seccion'] = '/inventario/Consolas/add';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['proveedor'] = $modelProv->getAll();
@@ -96,7 +105,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
     
 
     
-        
+    /*Añade el producto a la base de datos*/    
     private function addConsola(int $categoria,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model =  new \Com\Daw2\Models\ConsolasModel();
@@ -114,7 +123,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
 
     }
     
-    
+    /*Muestra la vista para añadir*/
     function showEdit($cod){
        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $model =  new \Com\Daw2\Models\ConsolasModel();
@@ -138,8 +147,10 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
     }
     
     
-    
+    /*funcion para editar el producto*/
     public function edit($cod){
+       $modelConexiones = new \Com\Daw2\Models\AuxModelConexionesRaton();
+       $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
        $model =  new \Com\Daw2\Models\ConsolasModel();
          $data = [];
          $data['errores'] = $this->checkForm($_POST,$alta = false);
@@ -153,7 +164,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
            $urlimg = $modelGeneral->getProductImg($_POST['codigo_producto']);
            
              if(!empty($_FILES["imagen"]["tmp_name"]) && $urlimg != NULL){
-              unlink(substr($urlimg,1,strlen($urlimg)));
+             unlink(substr($urlimg,1,strlen($urlimg)));
               
               $upload = new \Com\Daw2\Helpers\FileUpload('assets/img/consolas/');
 
@@ -170,12 +181,24 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
                header('location: '.$data['volver']);
                $_SESSION['action'] = 'Cambios realizados con éxito';
             }else{
-                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-            }
-        }else{
-            $modelConexiones = new \Com\Daw2\Models\AuxModelConexionesRaton();
+                
+                $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar editar el producto';
+                $data['seccion'] = '/inventario/Consolas/edit/'.$cod;
+                $data['proveedor'] = $modelProv->getAll();
+                $data['titulo'] = 'Editar Producto';
+                $data['titulo_seccion'] = 'Modificar Consola';
+                $data['accion'] = 'Aplicar Cambios';
+                $data['volver'] = '/inventario/Consolas';
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['input']['url_imagen'] = $_POST['imagen'];
+                $data['id_conexion'] = $modelConexiones->getAll();
 
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data);  
+                 
+            }
+            
+        }else{    
+         
             $data['seccion'] = '/inventario/Consolas/edit/'.$cod;
             $data['proveedor'] = $modelProv->getAll();
             $data['titulo'] = 'Editar Producto';
@@ -183,6 +206,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
             $data['accion'] = 'Aplicar Cambios';
             $data['volver'] = '/inventario/Consolas';
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['input']['url_imagen'] = $_POST['imagen'];
              $data['id_conexion'] = $modelConexiones->getAll();
 
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddConsolas.view.php'),$data);     
@@ -190,7 +214,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
     }
     
     
-    
+    /*Ejecuta la modificación a la base de datos*/
     private function modifyConsola($idMon,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model =  new \Com\Daw2\Models\ConsolasModel();
@@ -212,7 +236,7 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
     
     
     
-    
+    /*Función para comprobar el formulario del producto*/
     private function checkForm(array $post, bool $alta = true):array{
         
       $errores = []; 
@@ -281,12 +305,14 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
           $errores['proveedor'] = 'Debes seleccionar un proveedor';
       }
      
-       if(!empty($post['juego_incluido']) && strlen(trim($post['marca'])) == 0){
+       if(empty($post['juego_incluido']) && strlen(trim($post['marca'])) == 0){
           $errores['juego_incluido'] = 'No se aceptan cadenas vacías';
       }
 
       if(!isset($post['manual_usuario'])){
           $errores['manual_usuario'] = 'debes escoger una de las dos opciones';
+      }else if($post['manual_usuario'] != 'Si' && $post['manual_usuario'] != 'No'){
+          $errores['manual_usuario'] = 'Valor no permitido';
       }
       
        if(!empty($post['mando_incluido']) && strlen(trim($post['mando_incluido'])) == 0){
@@ -297,10 +323,10 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
       }
       
       
-      if(!$modelConec->conexionExists($post['id_conexion'])){
-          $errores['conexion'] = 'La conexion que has seleccionado no existe';
-      }else if(empty($post['id_conexion'])){
+      if(empty($post['id_conexion'])){
           $errores['conexion'] = 'Debes seleccionar una conexion';
+      }else if(!$modelConec->conexionExists($post['id_conexion'])){
+          $errores['conexion'] = 'La conexion que has seleccionado no existe ';
       }
                       
         if(isset($check)){

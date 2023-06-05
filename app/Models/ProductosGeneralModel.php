@@ -96,25 +96,29 @@ class ProductosGeneralModel extends \Com\Daw2\Core\BaseModel{
         return $stmt->execute([$codigo]);
     }
       
-    
+    /*Buscar si el nombre de producto existe*/
     function productNameExists($nombre): bool{
           $stmt = $this->pdo->prepare('SELECT nombre FROM productos WHERE nombre =?');
           $stmt->execute([$nombre]);
           return $stmt->rowCount() != 0;
     }
       
-      
+    /*Buscar si el nombre del producto ya está ocupado*/  
     function occupiedProductName($nombre,$codigo):bool{
           $stmt = $this->pdo->prepare('SELECT * FROM productos WHERE nombre=? AND codigo_producto != ?');
           $stmt->execute([$nombre,$codigo]);
           return $stmt->rowCount() != 0; 
     }
       
+    /*Insertar Producto en la tabla general*/
     function insertProduct($categoria,array $post,$iva): bool{
         try{
             $this->pdo->beginTransaction();
             if(!isset($post['imagen_p'])){
                 $post['imagen_p'] = NULL;
+            }
+            if(empty($post['desc_produto']) && strlen(trim($post['desc_producto'])) == 0){
+                $post['desc_producto'] = 'Sin Descripción';
             }
             $post['iva'] = $iva;
             $stmt= $this->pdo->prepare('INSERT INTO productos(nombre,proveedor,categoria,marca,desc_producto,url_imagen,precio_bruto,iva,stock) values(?,?,?,?,?,?,?,?,?)');

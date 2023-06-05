@@ -3,7 +3,7 @@ namespace Com\Daw2\Controllers;
 
 class RatonController extends \Com\Daw2\Core\BaseProductController{
       
-    
+    /*Muestra lista de productos*/
     public function showListaRatones(){
         $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
         $modelRaton =  new \Com\Daw2\Models\RatonesModel();
@@ -29,6 +29,7 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Ratones.view.php'),$data); 
     }
     
+    /*Muestra la vista para editar*/
     public function showEdit($cod){
         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
@@ -50,9 +51,9 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
     
     public function edit($cod){
        
-        $model = new \Com\Daw2\Models\RatonesModel();
-       
-        
+        $model = new \Com\Daw2\Models\RatonesModel();      
+        $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
+        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $data = [];
         $data['volver'] = '/inventario/Ratones';
 
@@ -81,26 +82,39 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
                 header('location: /inventario/Ratones'); 
                 $_SESSION['action'] = 'Cambios realizados con éxito';
              }else{
-                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar editar el producto';
+                 $data['titulo'] = 'Editar Producto';
+                $data['titulo_seccion'] =  'Editar Producto';
+                $data['accion'] = 'Aplicar Cambios';
+
+                $data['seccion'] = '/inventario/Ratones/edit/'.$cod;
+                $data['id_conexion'] = $modelConec->getAll();
+                $data['proveedor'] = $modelProv->getAll();
+                $data['volver'] = '/inventario/Ratones';
+
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['input']['url_imagen'] = $_POST['imagen'];
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data);               
+                 
              }
         }else{
             $data['titulo'] = 'Editar Producto';
             $data['titulo_seccion'] =  'Editar Producto';
             $data['accion'] = 'Aplicar Cambios';
-            $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+
             $data['seccion'] = '/inventario/Ratones/edit/'.$cod;
             $data['id_conexion'] = $modelConec->getAll();
             $data['proveedor'] = $modelProv->getAll();
             $data['volver'] = '/inventario/Ratones';
 
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['input']['url_imagen'] = $_POST['imagen'];
             $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
   
         }
     }
        
-    
+    /*Modifica el producto Contra la Base De Datos*/
     private function modifyRaton($idRaton,$id,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\RatonesModel();
@@ -118,7 +132,7 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
     }
     
  
-    
+    /*Muestra la vista para añadir*/
     public function showAdd(){
         $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $model = new \Com\Daw2\Models\RatonesModel();
@@ -136,11 +150,12 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
     }
     
-    
+    /*Realiza la función de añadir*/
     function add(){
         $model = new \Com\Daw2\Models\RatonesModel();
         $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
-
+        $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
+        $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
         $data = [];
         $data['titulo'] = 'Añadir Producto';
         $data['titulo_seccion'] = 'Añadir Nuevo Ratón';  
@@ -161,10 +176,14 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
                 $_SESSION['action'] = 'Se ha añadido el elemento con éxito';
             }else{
                  $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-                }
+                  $data['seccion'] = '/inventario/Ratones/add';
+                $data['id_conexion'] = $modelConec->getAll();
+                $data['proveedor'] = $modelProv->getAll();
+                $data['input'] = $_POST;
+                $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddRaton.view.php'),$data); 
+            }
         }else{
-            $modelConec  = new \Com\Daw2\Models\AuxModelConexionesRaton();
-            $modelProv  = new \Com\Daw2\Models\AuxProveedoresModel();
+
             $data['seccion'] = '/inventario/Ratones/add';
             $data['id_conexion'] = $modelConec->getAll();
             $data['proveedor'] = $modelProv->getAll();
@@ -175,6 +194,7 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
     
     }
     
+    /*Ejecuta las consultas contra la Base De Datos*/
     private function addRaton(int $categoria,array $post): bool{
       $modelGeneral =  new \Com\Daw2\Models\ProductosGeneralModel();
       $model = new \Com\Daw2\Models\RatonesModel();
@@ -191,7 +211,7 @@ class RatonController extends \Com\Daw2\Core\BaseProductController{
 
     }
     
-    
+    /*Comprueba el formulario*/
     private function checkForm(array $post, bool $alta = true):array{
         
       $errores = [];  
