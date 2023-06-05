@@ -214,22 +214,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
 
     }
     
-    
-    
-    
-    //Para cargar la vista provisional del usuario
-    //ES PROVISIONAL Y DE TESTEO POR EL MOMENTO NO TIENE COMPROBACIONES DE VALORES ERRONEOS
-    function showAdd(){
-        $data = [];
-        $rolModel = new \Com\Daw2\Models\RolModel();
-        $rol = $rolModel->getUsersRol();
-        $data['id_rol'] = $rol;
-        $data['titulo'] = 'Añadir Usuarios(Provisional)';
-        $data['seccion'] = '/usuarios/add';
-        $this->view->showViews(array('templates/header_listado.php','templates/header_navbar.php','addUsersTest.view.php','templates/footer.view.php'),$data);
-    }
-    
- 
+
     
     function showUserProfile(){
         $data = [];

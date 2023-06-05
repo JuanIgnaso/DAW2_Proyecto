@@ -58,10 +58,10 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
 
           }else{
               
-                 $_SESSION['action'] = 'Ha ocurrido un error al intentar intentar aplicar los cambios';
-                 unset($_POST['pass']);
-                 $_SESSION['action'] = 'ambios realizados con éxito';
-                $data['id_rol'] = $rolModel->getUsersRol();
+               $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar intentar aplicar los cambios';
+               unset($_POST['pass']);
+               $_SESSION['action'] = 'ambios realizados con éxito';
+               $data['id_rol'] = $rolModel->getUsersRol();
                $data['titulo'] = 'Modificar Usuario';
                $data['seccion'] = '/inventario/UsuariosSistema/edit/'.$id;
                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -121,11 +121,17 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
                 $_SESSION['action'] = 'Se ha añadido el usuario '.$_POST['nombre_usuario'].' con éxito.';
 
             }else{
-             $_SESSION['action'] = 'Ha ocurrido un error al intentar añadir el producto';
-             $_SESSION['action']['background'] = 'bg-danger';
+             $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
+             $data['seccion'] = '/inventario/UsuariosSistema/add';
+            $data['id_rol'] = $rolModel->getUsersRol();
+            $data['volver'] = '/inventario/UsuariosSistema';
+            $data['accion'] = 'Añadir';
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddUser.view.php'),$data);     
             }
   
        }else{
+        $data['volver'] = '/inventario/UsuariosSistema';
         $data['seccion'] = '/inventario/UsuariosSistema/add';
         $data['id_rol'] = $rolModel->getUsersRol();
         $data['accion'] = 'Añadir';

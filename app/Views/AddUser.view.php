@@ -35,11 +35,23 @@
              <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
 
                  <h1 class="h2"><?php echo isset($titulo_seccion) ? $titulo_seccion : 'Inventario';?></h1>
-                <a href="/inventario/UsuariosSistema" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
+                <a href="<?php echo $volver;?>" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
               </div>
 
       </div>
      
+              
+         <?php
+           if(isset($_SESSION['error_añadir'])){
+          ;?>
+            <div class="col-12 bg-danger text-light p-2 mb-2 text-center d-flex align-items-center justify-content-center gap-3">
+                <i class="fa-solid fa-triangle-exclamation"></i><p class="m-0"><?php echo $_SESSION['error_añadir'] ;?></p>
+            </div>
+          <?php
+          unset($_SESSION['error_añadir']);
+           }
+         ;?>
+        
 
         <?php
         if(isset($_SESSION['action'])){
@@ -54,7 +66,7 @@
       <h2>Bienvenido al panel de incio de Administración</h2>
       <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
           <form action="<?php echo $seccion;?>" method="post"  enctype="multipart/form-data"> 
-          <div class="col-8 col-md-6 col-lg-3 m-auto m-md-0">
+          <div class="col-12 col-md-6 col-lg-3 m-auto m-md-0">
               
                    <div id="col-12">
                        <div id="caja_foto">                                             

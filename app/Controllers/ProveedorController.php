@@ -82,8 +82,20 @@ class ProveedorController extends \Com\Daw2\Core\BaseController{
                 $_SESSION['action'] = 'Se ha añadido el proveedor con éxito';
 
             }else{
-                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el producto';
-                }
+                 $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el proveedor';
+                 $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['titulo_seccion'] = 'Añadir Proveedor';
+                $data['accion'] = 'Añadir';
+                $data['seccion'] = '/inventario/Proveedores/add';
+
+                $data['tipo'] = 'Proveedores';
+                $data['volver'] = '/inventario/Proveedores';
+                $data['titulo'] = 'Añadir Proveedor';
+
+                 $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddProveedor.view.php'),$data); 
+
+                 
+           }
           }else{
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['titulo_seccion'] = 'Añadir Proveedor';
@@ -128,8 +140,16 @@ class ProveedorController extends \Com\Daw2\Core\BaseController{
           $_SESSION['action'] = 'Se ha modificado el proveedor con éxito';
 
          }else{
-          $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar añadir el proveedor';
-         }
+          $_SESSION['error_añadir'] = 'Ha ocurrido un error al intentar editar el proveedor';
+           $data['titulo'] = 'Editar Proveedor';
+           $data['titulo_seccion'] = 'Modificar Proveedor';
+           $data['seccion'] = '/inventario/Proveedores/edit/'.$cod;
+           $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+           $data['volver'] = '/inventario/Proveedores';
+           $data['accion'] = 'Aplicar Cambios';
+           
+           $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddProveedor.view.php'),$data);     
+        }
        }else{
            $data['titulo'] = 'Editar Proveedor';
            $data['titulo_seccion'] = 'Modificar Proveedor';

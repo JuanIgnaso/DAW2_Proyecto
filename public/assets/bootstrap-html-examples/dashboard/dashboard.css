@@ -145,7 +145,7 @@ nav .nav-item:hover .nav-link{
 
 #caja_foto{
     overflow: hidden;
-    background-color: grey;
+    /*background-color: grey;*/
     max-width: 300px;
     max-height: 300px;
     margin:auto;
@@ -155,7 +155,10 @@ nav .nav-item:hover .nav-link{
 }
 
 #foto_img{
-    width:100% !important;
+    width: 400px;
+    text-align:center;
+    height: 400px;
+    object-fit: cover;
     border: 1px solid grey;
 }
 
@@ -250,6 +253,7 @@ nav .nav-item:hover .nav-link{
     #caja_foto{
         width: 300px;
         height: 300px;
+        margin:auto;
     }
     
     #foto_img{
