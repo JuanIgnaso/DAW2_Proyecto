@@ -283,16 +283,28 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel{
     }
     
     function updateUserAvatar($id,$url):bool{
-    try{
-        $this->pdo->beginTransaction();     
-        $stmt = $this->pdo->prepare(self::UPDATE.' profile_image=? WHERE id_usuario=?');
-        $stmt->execute([$url,$id]);
-        $this->pdo->commit();
-        return true;
-    } catch (\PDOException $ex) {
-       $this->pdo->rollback();
-       return false;   
+        try{
+            $this->pdo->beginTransaction();     
+            $stmt = $this->pdo->prepare(self::UPDATE.' profile_image=? WHERE id_usuario=?');
+            $stmt->execute([$url,$id]);
+            $this->pdo->commit();
+            return true;
+        } catch (\PDOException $ex) {
+           $this->pdo->rollback();
+           return false;   
+        }
     }
+    
+    function getUserAvatar($id):?string{
+        $stmt = $this->pdo->prepare('SELECT profile_image FROM usuarios WHERE id_usuario=?');
+        $stmt->execute([$id]);
+        if($var = $stmt->fetch()){
+          return $var['profile_image'];   
+        }else{
+            return NULL;
+        }
+        
+       
     }
     
 }

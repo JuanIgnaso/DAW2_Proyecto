@@ -14,10 +14,6 @@ class InicioController extends \Com\Daw2\Core\BaseController{
         $this->view->showViews(array('index.php','templates/footer.view.php'),$data);
     }
     
-       public function test(){
-        $this->view->show('hola.php');
-    }
-    
     
     function lista_productos($id){  
         $model = new \Com\Daw2\Models\ProductosGeneralModel();

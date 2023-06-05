@@ -68,6 +68,9 @@
           <form action="<?php echo $seccion;?>" method="post"  enctype="multipart/form-data"> 
           <div class="col-12 col-md-6 col-lg-3 m-auto m-md-0">
               
+              <?php
+              if($accion != 'Añadir'){
+              ?>
                    <div id="col-12">
                        <div id="caja_foto">                                             
                         <img id="foto_img"  src="
@@ -76,38 +79,77 @@
                                  echo '/assets/img/profiles/Default_Profile_Photo.jpg';
                              }else if($input['profile_image'] == NULL){
                                echo '/assets/img/profiles/Default_Profile_Photo.jpg';
+                             }else if(!file_exists(substr($input['profile_image'],1,strlen($input['profile_image'])))){
+                               echo '/assets/img/profiles/Default_Profile_Photo.jpg'; 
                              }else{
-                               echo $input['profile_image'];  
+                               echo $input['profile_image'];   
                              }
                         ;?>" alt="imagen de perfil">
                         
-                        <input type="hidden" id="imagen" name="imagen" value="<?php
+                        <input type="hidden" id="imagen_u" name="imagen_u" value="<?php
                              if(!isset($input['profile_image'])){
                                  echo  '/assets/img/profiles/Default_Profile_Photo.jpg';
                              }else if($input['profile_image'] == NULL){
                                echo  '/assets/img/profiles/Default_Profile_Photo.jpg';
+                             }else if(!file_exists(substr($input['profile_image'],1,strlen($input['profile_image'])))){
+                               echo '/assets/img/profiles/Default_Profile_Photo.jpg'; 
                              }else{
                                echo $input['profile_image'];  
                              }
                         ;?>" />
                         </div>
                     </div>
-              
+
               
                     <footer class="blockquote-footer col-12 pb-2 m-auto text-center">
                         <p>Foto del Usuario</p>
+                        <p id='reset_img'></p>
                         <h3>Resetear Foto Perfil</h3>
-                        <button  type="button" class="btn"><i id="reset" class="fa-solid fa-trash-can fa-2xl" style="color: #FF4500;"></i></button>
+                        <button  type="button" onclick="resetUserImage()" class="btn"><i id="reset" class="fa-solid fa-trash-can fa-2xl" style="color: #FF4500;"></i></button>
                      </footer> 
               
-
+                <?php
+              }
+           ?>     
+              
           </div>
+              
+          
           
           <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3  border-top border-secondary">
-              <!-- 
-             <input type="hidden" id="postId" name="id_silla" value="<?p hp echo isset($input['id_silla']) ? $input['id_silla'] : '';?>" />
- comment -->
+
               <input type="hidden" id="postId" name="id_usuario" value="<?php echo isset($input['id_usuario']) ? $input['id_usuario'] :'';?>" />
+              
+              <script>
+              //Resetear la foto de perfil del usuario
+              var usr_id = document.querySelector('#postId');
+              
+              //Mostrar mensaje
+              var alerta = document.querySelector('#reset_img');
+              
+              function resetUserImage(){
+                  $.ajax({
+                     //A donde enviamos la id
+                     url: '/reset_profile_photo',
+                     type: 'POST',
+                     data:{
+                         id:usr_id.value
+                     },
+                     success: function(response){
+                        alerta.style.display = 'block';
+                        alerta.setAttribute('class','text-success');
+                        alerta.innerHTML = response;
+                     },
+                     error: function(error){
+                        alerta.style.display = 'block';
+                        alerta.removeAttribute('class');
+                        alerta.setAttribute('class','text-danger');
+                        alerta.innerHTML = error.responseText;
+                     }
+                  });
+              }
+              
+              </script>
               
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>

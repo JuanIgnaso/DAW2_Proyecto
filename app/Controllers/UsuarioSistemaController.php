@@ -76,21 +76,20 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
     private function getPermisos(int $id_rol):array{
         $permisos = array();
         if($id_rol == self::USUARIO_REGISTRADO){
-         $permisos = array('comprar' => ['r','w','d']);
+         $permisos = array('comprar');
         }
         if($id_rol == self::MANEJO_INVENTARIO){
            $permisos = array(
-               'comprar' => ['r','w','d'],
-               'inventario' => ['r','w','d']
+               'comprar',
+               'inventario'
                ); 
         }
         if($id_rol == self::ADMINISTRADOR){
             $permisos = array(
-                'usuarios' => ['r','w','d'],
-                'inventario' => ['r','w','d'],
-                'proveedores' => ['r','w','d'],
-                'comprar' => ['r','w','d']  
-                
+                'usuarios',
+                'inventario',
+                'proveedores',
+                'comprar'            
             );
         }
         

@@ -186,6 +186,9 @@ nav .nav-item:hover .nav-link{
   
 }
 
+#reset_img{
+   display:none;
+}
 
 
 /*CONTADOR DE PAGINAS*/

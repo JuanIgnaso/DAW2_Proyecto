@@ -50,6 +50,7 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
                $data['titulo'] = 'Modificar Usuario';
                $data['seccion'] = '/inventario/UsuariosSistema/edit/'.$id;
                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+               $data['input']['profile_image'] = $_POST['imagen_u'];
                $data['volver'] = '/inventario/UsuariosSistema';
                $data['accion'] = 'Aplicar Cambios';
                 
@@ -76,11 +77,31 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
            $data['titulo'] = 'Modificar Usuario';
            $data['seccion'] = '/inventario/UsuariosSistema/edit/'.$id;
            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-           $data['input']['profile_image'] = $_POST['imagen'];
+           $data['input']['profile_image'] = $_POST['imagen_u'];
            $data['volver'] = '/inventario/UsuariosSistema';
            $data['accion'] = 'Aplicar Cambios'; 
         
            $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddUser.view.php'),$data);      
+        }
+    }
+    
+    
+    function resetProfilePhoto(){
+        $id = $_POST['id'];
+        //modelo
+        $model = new \Com\Daw2\Models\UsuarioSistemaModel();
+        
+        $img = $model->getUserAvatar($id);
+        if($img != NULL && file_exists(substr($img,1,strlen($img)))){
+          unlink(substr($img,1,strlen($img)));
+           http_response_code(200);
+           echo 'Imagen de perfil reseteada, haz click en Aplicar cambios para terminar';
+           $model->updateUserAvatar($id, NULL);
+           exit;
+        }else{
+            http_response_code(400);
+            echo 'No se puede completar la acción';
+            exit;
         }
     }
     
@@ -99,8 +120,6 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
          $data['accion'] = 'Añadir';
 
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','AddUser.view.php'),$data);     
-
-
     }
     
 

@@ -37,15 +37,13 @@ class FrontController{
                     }
                     ,'get');
                     
-                    Route::add('/test',
-                    function(){
-                    $controler = new \Com\Daw2\Controllers\InicioController();
-                    $controler->test();
-                    }
-                    ,'get');
-
                     
-            Route::add('/login',
+      /*
+      Si el usuario ya está logueado/registrado, no tiene sentido dejar que pueda acceder a estas
+      ventanas.
+      */              
+      if(!isset($_SESSION['usuario'])){
+                      Route::add('/login',
                     function(){
                     $controler = new \Com\Daw2\Controllers\UsuarioSistemaController();
                     $controler->login();
@@ -74,6 +72,8 @@ class FrontController{
                     $controler->registerUser();
                     }
                     ,'post'); 
+      }              
+
                     
             
              /*DESLOGUEAR USUARIO*/
@@ -86,7 +86,7 @@ class FrontController{
                      ,'get');        
                     
                      
-       if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['usuarios'])){
+       if(isset($_SESSION['permisos']) && in_array('usuarios',$_SESSION['permisos'])){
            
                        /*MOSTRAR USUARIOS(PROVISIONAL)*/
           Route::add('/inventario/UsuariosSistema',
@@ -158,13 +158,27 @@ class FrontController{
                 }
             , 'post'); 
              
-       
+           /*RESETEAR FOTO DE PERFIL /reset_profile_photo*/ 
+            Route::add('/reset_profile_photo',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\AdministracionController();
+                    $controlador->resetProfilePhoto();
+                }
+            , 'post'); 
+            
+            
+            Route::add('/reset_profile_photo',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\AdministracionController();
+                    $controlador->resetProfilePhoto();
+                }
+            , 'get'); 
   
            
        }     
        
        
-       if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
+       if(isset($_SESSION['permisos']) && in_array('inventario',$_SESSION['permisos'])){
         
            
            /*****************VENTANAS INVENTARIO*****************/
@@ -432,7 +446,7 @@ class FrontController{
        }
        
        
-        if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['proveedores'])){
+        if(isset($_SESSION['permisos']) && in_array('proveedores',$_SESSION['permisos'])){
             
             
                       Route::add('/inventario/Proveedores',
@@ -564,7 +578,7 @@ class FrontController{
        
        /*CHECKOUT*/
        
-       if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['comprar'])){
+       if(isset($_SESSION['permisos']) && in_array('comprar',$_SESSION['permisos'])){
                  Route::add('/checkout',
                      function(){
                      $controller = new \Com\Daw2\Controllers\PedidoController();
