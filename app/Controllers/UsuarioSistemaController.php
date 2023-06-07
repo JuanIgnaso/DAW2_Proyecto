@@ -584,7 +584,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $var = $model->darDeBaja($nombre);
         if($var){
             
-             http_response_code(200);
+            http_response_code(200);
             session_destroy();
              exit;
         }else{

@@ -8,7 +8,7 @@
         <ul class="nav flex-column mb-2">
             
         <?php
-        if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['usuarios'])){
+        if(isset($_SESSION['permisos']) && in_array('usuarios',$_SESSION['permisos'])){
         ?>    
           <li class="nav-item">
             <a class="nav-link" href="/inventario/UsuariosSistema">

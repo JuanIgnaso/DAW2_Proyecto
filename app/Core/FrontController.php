@@ -498,6 +498,8 @@ class FrontController{
        
        
        if(isset($_SESSION['usuario'])){
+           
+           
                      Route::add('/mi_Perfil',
                      function(){
                      $controller = new \Com\Daw2\Controllers\UsuarioSistemaController();
@@ -505,17 +507,15 @@ class FrontController{
                      }
                      ,'get'); 
                      
-                     
-                    
-                     
+
                      
                      
-              Route::add('/mi_Perfil/baja',
-                function () {
-                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->darDeBaja();
-                }
-                , 'get');
+                  
+             Route::add('/mi_Perfil/baja',
+               function () {
+                   $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController(); 
+                   $controlador->darDeBaja();                }
+               , 'get');
                 
                 
                 Route::add('/mi_Perfil/baja',
@@ -525,21 +525,21 @@ class FrontController{
                 }
                 , 'post');
                 
-                
-            Route::add('/mi_Perfil/delete',
-                function () {
-                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->borrarUsuario();
-                }
-                , 'get');
-                
-             Route::add('/mi_Perfil/delete',
-                function () {
-                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->borrarUsuario();
-                }
-            , 'post');
-            
+//                
+//            Route::add('/mi_Perfil/delete',
+//                function () {
+//                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+//                    $controlador->borrarUsuario();
+//                }
+//                , 'get');
+//                
+//             Route::add('/mi_Perfil/delete',
+//                function () {
+//                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+//                    $controlador->borrarUsuario();
+//                }
+//            , 'post');
+//            
             /** HAY QUE METERLE GET Y POST **/
             
                         Route::add('/mi_Perfil/edit',

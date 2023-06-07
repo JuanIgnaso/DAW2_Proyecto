@@ -192,7 +192,12 @@
                 error: function(error) {
                    // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
                       let resp = JSON.parse(error.responseText);
-                    console.log(resp);
+                      
+                      //Si el error de producto no encontrado existe en el JSON de respuesta
+                      if(resp.error_compra != undefined){
+                          alert(resp.error_compra);
+                      }
+                      
                    // window.alert('failure!');
                      errores.style.display='block';
                      //errores.innerHTML = JSON.stringify(resp);

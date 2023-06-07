@@ -54,7 +54,8 @@ class PedidoController extends \Com\Daw2\Core\BaseController{
             } else {
                 // si hay error (lo que querias hacer salió mal)
                 http_response_code(400);
-                echo json_encode(["hola"=>"adios"]); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
+                $errores['error_compra'] = 'Algo salió mal, porfavor refresca la página'; //Hubo algún error procesando en el modelo(Ej que no encuentre el código del producto
+                echo json_encode($errores); //texto de error o array de errores que quieres mostrarle al usuario (se lo  envias a Ajax)
                 exit;
             } 
         }else{

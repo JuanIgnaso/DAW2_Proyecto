@@ -177,7 +177,7 @@
                         
                          <p class="text-danger text-center" id="mensaje_alerta"></p>
                          <footer class="col-12 text-center">
-                          <button id="accion_boton" class="confirmar_accion p-2 btn m-auto"></button>
+                          <button id="accion_boton" type="button" class="confirmar_accion p-2 btn m-auto"></button>
                          </footer>
                     </div>
                    
@@ -190,11 +190,6 @@
                   <?php
                   if($seccion == '/mi_Perfil'){
                   ?>
-                  <div class="col col-sm-12 text-center accion ">
-                        <button  id="borrar_perfil" type="button"><i class="fa-regular fa-trash-can p-2" style="color: #fff;"></i></button>
-                        <p>Borrar</p>
-                        <span class="ayuda">Elimina El Perfil</span>
-                    </div>
                      <div class="col col-sm-12 text-center accion">
                        <a href="/mi_Perfil/edit"><button type="button"><i class="fa-sharp fa-solid fa-pen-to-square p-2"  style="color: #fff;"></i></button></a>  
                         <p>Editar</p>
@@ -267,25 +262,31 @@
           adv.innerHTML = 'Estás a punto de Darte de Baja<i class="fa-solid fa-triangle-exclamation fa-1x" style="color: #ff0000;"></i>';
           msj_al.innerHTML  = 'Si realizas esta acción borrarás tu cuenta pero tus datos no se perderán.';
           url.innerHTML = 'Dar De Baja';
+         url.addEventListener('click',function(){
+                       $.ajax({
+               url: '/mi_Perfil/baja',
+               
+               type: 'POST',
+               
+               data: {
+                   dato: user_name.innerHTML
+               },
+               success: function(response) {
+//                 let msg = 'Esto es un hasta luego?, lamentamos que no desee estar en activo en nuestra página, pero quizás...';
+              alert('hola');
+                 window.location.href = 'http://gallaeciapc.localhost:8080/';             
+               },
+               error: function(error){
+                  error = error.responseText;
+                  console.log(error);
+                   window.alert(error);
+               },
+           });  
+         });
          
-          url.addEventListener('click',darBaja);
-          url.removeEventListener('click',eliminarCuenta );
          // url.setAttribute('href',"/mi_Perfil/baja/<?php echo $info_usuario['nombre_usuario'];?>");
        }
        
-       //Modal con advertencia para borrar
-       
-       btn_borrar.onclick = function() {
-          modal.style.display = "block";
-          adv.innerHTML = 'Vas a Borrar Tu Perfil<i class="fa-solid fa-triangle-exclamation fa-1x" style="color: #ff0000;"></i>';
-          msj_al.innerHTML  = 'Si realizas esta acción borrarás tu cuenta perdiendo todos tus datos, estas seguro de que deseas realizar esta acción?.';
-          url.innerHTML = 'Borrar Mi Cuenta';
-          
-          url.addEventListener('click',eliminarCuenta);
-          url.removeEventListener('click',darBaja);
-          
-         // url.setAttribute('href',"/mi_Perfil/delete/<?php echo $info_usuario['nombre_usuario'];?>");
-       }
        
        //AJAX CON LOS BOTONES
        
@@ -305,7 +306,7 @@
                },
                success: function(response) {
 //                 let msg = 'Esto es un hasta luego?, lamentamos que no desee estar en activo en nuestra página, pero quizás...';
-//                 showAlerMessage(msg);
+              alert('hola');
                  window.location.href = 'http://gallaeciapc.localhost:8080/';             
                },
                error: function(error){
@@ -319,30 +320,7 @@
        
        
        
-       //Para Borrar el usuario
-           function eliminarCuenta(){
-           
-           $.ajax({
-               url: '/mi_Perfil/delete',
-               
-               type: 'POST',
-               
-               data: {
-                   datoborrar: user_name.innerHTML
-               },
-               success: function(response) {
-                   let c =  setTimeout(g, 7000);
-                  window.location.href = 'http://gallaeciapc.localhost:8080/';
-               },
-               error: function(error){
-                  error = error.responseText;
-                  console.log(error);
-                   window.alert(error);
-               }
-           });
-                   
-                
-       }
+
        
        
      
