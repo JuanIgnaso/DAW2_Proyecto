@@ -22,7 +22,7 @@
                   <!-- **********
                   <li><a href="#" class="nav-link px-2 link-dark rounded">About</a></li>******** -->
                   <?php
-                  if(isset($_SESSION['permisos']) && isset($_SESSION['permisos']['inventario'])){
+                  if(isset($_SESSION['permisos']) && in_array('inventario',$_SESSION['permisos'])){
                   ?>
                   <li><a href="/inventario" class="nav-link px-2 link-dark rounded">Inventario</a></li>
                   <?php

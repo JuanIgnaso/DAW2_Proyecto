@@ -11,7 +11,7 @@ class AdministracionController extends \Com\Daw2\Core\BaseController{
     public function showAdministracion(){
         $modelCategoria = new \Com\Daw2\Models\CategoriaModel();
         $data = [];
-        $data['titulo'] = 'Tramitando Pedido';
+        $data['titulo'] = 'Inicio Inventario';
         $data['categoria'] = $modelCategoria->getAll();
         
         $this->view->showViews(array('templates/inventarioHead.php','templates/headerNavInventario.php','Administracion.view.php'),$data);     

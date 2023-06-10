@@ -278,8 +278,12 @@ padding: 2%;
         margin-right: 1rem !important;
       }
       
-      #modal-register{
-          
+
+}
+
+@media screen and (max-width: 600px){
+    #modal-register{
+        left:9%;  
       }  
 }
 

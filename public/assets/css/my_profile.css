@@ -195,5 +195,10 @@ label span{
         height: 250px;
     }
     
+    .class_modal_baja
+{
+    right: 10%;
+    top: 25%;
+}
 
 }

@@ -166,7 +166,7 @@
                 </section>
               </div>
           </main>
-          <div class="col-4 class_modal_baja" id="mi_modal_baja">
+          <div class="m-auto col-10 col-sm-4 class_modal_baja" id="mi_modal_baja">
                 <!-- COntenido del modal -->
                 <div class="col-12  contenido_modal_baja">
                     <header class="d-flex border-bottom border-secondary p-2 justify-content-between">
