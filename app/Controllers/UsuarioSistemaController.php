@@ -226,7 +226,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $data['seccion'] = '/mi_Perfil';
         $info = $_SESSION['usuario'];
         $data['info_usuario'] = $info;
-        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.View.php','templates/footer.view.php'),$data);
 
     }
     
@@ -246,7 +246,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
 
 
 
-        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.View.php','templates/footer.view.php'),$data);
 
     }
     
@@ -297,7 +297,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController{
         $data['seccion'] = '/mi_Perfil/edit';
         $data['titulo'] = 'Modificar Mi Perfil';
         $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.view.php','templates/footer.view.php'),$data);
+        $this->view->showViews(array('templates/header_my_profile.view.php','templates/header_navbar.php','UserDetails.View.php','templates/footer.view.php'),$data);
         }
     }
     

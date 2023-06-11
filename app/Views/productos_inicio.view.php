@@ -1,67 +1,69 @@
 
-        <div class="row">
-            <header class=" header_Seccion col-12 text-center text-md-start">
-                <ol class="navegador_secundario d-flex justify-content-md-start justify-content-center gap-2 m-0">
-                    <li><a href="/">Inicio</a></li>
-                    <li>|</li>
-                    <!-- Editable tabién, cambia en funcion del tipo de producto -->
-                    <li><?php echo $seccion;?></li>
-                </ol>
-                <!-- TEXTO DEL H1 Y PARRAFO DESCRIPTIVO EDITABLES, DEPENDE DEL TIPO DE PRODUCTO -->
-                <section class="col-12 col-md-8">
-                        <h1 class="display-2 titulo_seccion"><?php echo $titulo;?></h1>
-                        <p class="text-light"><?php echo $descripcion;?></p>
-                </section>
+    <div class="row">
+        <header class=" header_Seccion col-12 text-center text-md-start">
+            <ol class="navegador_secundario d-flex justify-content-md-start justify-content-center gap-2 m-0">
+                <li><a href="/">Inicio</a></li>
+                <li>|</li>
+                <!-- Editable tabién, cambia en funcion del tipo de producto -->
+                <li><?php echo $seccion;?></li>
+            </ol>
+            <!-- TEXTO DEL H1 Y PARRAFO DESCRIPTIVO EDITABLES, DEPENDE DEL TIPO DE PRODUCTO -->
+            <section class="col-12 col-md-8">
+                    <h1 class="display-2 titulo_seccion"><?php echo $titulo;?></h1>
+                    <p class="text-light"><?php echo $descripcion;?></p>
+            </section>
 
-            </header>
-     
-        </div>
-        <div class="row">
-            <form method="get"  action="<?php echo $direccion;?>" class="p-0">
+        </header>
+
+    </div>
+
+
+    <div class="row">
+        <form method="get"  action="<?php echo $direccion;?>" class="p-0">
             <header class="col-12 p-0">
                 <div class="col-12" id="iD_barra_info">
                      <h2 class="display-6 text-left pt-5 ps-2">Barra De Búsqueda</h2>
                      <p class="p-0 m-0 text-md-left mb-3 ps-2">Si lo deseas puedes filtrar o que muestren los productos utilizando los filtros de abajo.</p>                 
                 </div>
 
-              
+
                 <!-- BARRA DE BÚSQUEDA -->
                 <div class="col-12" id="barra_nav_busqueda">
                     <div class="col-12  col-lg-8 m-auto p-2 d-flex flex-column flex-md-row justify-content-center">
-                     <ul class="nav col-auto m-auto mb-2  justify-content-center gap-1 gap-md-2 gap-lg-3 mb-md-0">
-                         <li>
-                             <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=1<?php echo $queryString; ?>">Precio Mayor</a>
-                         </li>
-                        
-                        <li>
-                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=2<?php echo $queryString; ?>">Precio Menor</a>
-                        </li>
-                        
-                         <li>
-                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=3<?php echo $queryString; ?>">Disponibilidad</a>
-                        </li>
-                        
-                        <li>
-                            <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=4<?php echo $queryString; ?>">Novedades</a>
-                        </li>
-                    </ul>
+                         <ul class="nav col-auto m-auto mb-2  justify-content-center gap-1 gap-md-2 gap-lg-3 mb-md-0">
+                             <li>
+                                 <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=1<?php echo $queryString; ?>">Precio Mayor</a>
+                             </li>
+
+                            <li>
+                                <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=2<?php echo $queryString; ?>">Precio Menor</a>
+                            </li>
+
+                             <li>
+                                <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=3<?php echo $queryString; ?>">Disponibilidad</a>
+                            </li>
+
+                            <li>
+                                <a class="nav-link px-2 link-secondary rounded" href="<?php echo $direccion;?>?filterby=4<?php echo $queryString; ?>">Novedades</a>
+                            </li>
+                        </ul>
                         <div role="search" class="col-10 col-sm-6 col-md-4 col-lg-auto m-auto  d-flex align-items-center gap-2">
-                          <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar" name="nombre">
-                         <button class='btn btn-default' type='submit' value='submit'>
-                                <i class="fa-solid fa-magnifying-glass fa-xl" id="id_buscar_icon"></i>
-                           </button>
-                          <select name="buscar_por" id="id_buscar_por" class="border rounded">
-                            <option value="nombre">Nombre</option>
-                            <option value="marca">Marca</option>
-                            <option value="nombre_proveedor">Proveedor</option>
-                          </select>
+                            <input class="form-control" type="search" placeholder="Buscar" aria-label="Search" id="buscar" name="nombre">
+                            <button class='btn btn-default' type='submit' value='submit'>
+                                    <i class="fa-solid fa-magnifying-glass fa-xl" id="id_buscar_icon"></i>
+                            </button>
+                            <select name="buscar_por" id="id_buscar_por" class="border rounded">
+                                    <option value="nombre">Nombre</option>
+                                    <option value="marca">Marca</option>
+                                    <option value="nombre_proveedor">Proveedor</option>
+                            </select>
                         </div>
-                  </div>
+                    </div>
                 </div>
                 <!-- -->
             </header>  
-            </form>    
-        </div>
+        </form>    
+    </div>
         
         <!-- SECCIÓN -->
         
@@ -95,8 +97,8 @@
                         </header>
                         <!-- PHP en función si esta o no en oferta -->
                         <div class="col-12 p-1">
-                            <div class="col-6 text-success text-center border border-success rounded">
-                                Oferta
+                            <div class="col-12 text-success text-center border border-success rounded">
+                                <?php echo $producto['marca'];?>
                             </div>
                         </div>
                         <!-- Contenido de aquí por PHP -->

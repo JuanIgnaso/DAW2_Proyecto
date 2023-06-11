@@ -146,7 +146,7 @@
            
            
 
-           //PROCESA LA COMPRA
+           //PROCESA LA COMPRA DEL CLIENTE O USUARIO
            function ajax() {
                if(!ch.checked){
                 post_dir_envio = {nombre_titular:post_nombre.value,
@@ -166,7 +166,7 @@
                 //metodo con el que enviar los datos (GET / POST) 
                 type: 'POST',
 
-                // contenido que envias por ajax
+            // contenido que envias por ajax
             data: {
                     envio: post_dir_envio,
                     datos: carrito,

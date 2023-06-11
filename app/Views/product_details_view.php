@@ -94,44 +94,7 @@
                 </div>
             </div>
         </div>
-        <!-- SCRIPT PARA LA ANIMACIÓN DEL CARRITO -->
-        <script src="/assets/js/animacion_carrito.js"></script>
-        
-        <script>
-            /*Coger la ventana modal*/
-        var modal = document.getElementById("mi_modal_carrito");
 
-        // Coger el botón que abre la modal
-        var btn = document.getElementById("carrito_btn");
-
-        // coger el <span> que cierra la modal
-        var span = document.querySelector(".close_carrito");
-
-        // Cuando el usuario le da al botón, abrir la modal
-  
-        btn.onclick = function() {
-          modal.style.display = "block";
-        }   
-      
-    
-
-        // Cerrar la modal cuando el usuario le da al <span>
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-
-        // Cerrar la modal también cuando el usuario le dé fuera de la modal
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        } 
-        </script>
-        
-        
-        
-        
-        
         
         <div class="row">
           
@@ -148,30 +111,38 @@
             </div>
            
         </div>
-        <!-- SCRIPT PARA LA VENTANA MODAL -->
-        <script src="/assets/js/modal_window_script.js"></script>   
-    </section>
-    <section class="col-12 p-0" id="detalles">
-        <div class="col-10 m-auto">
-         <article>
-             <h2 class="display-4">Descripción Del Producto</h2>
-             <div class="col-12 divisor"></div>
-             <p><?php echo $datos_generales['desc_producto'];?> </p>
-        </article>
-        <article class="mb-2">
-            <h2 class="display-4">Especificaciones</h2>
-            <div class="col-12 divisor"></div>
-            <ul id="lista_caracteristicas" class="m-0">
-                <?php
-                foreach($detalles_producto as $key => $value){
-                ?>
-                <li><strong><?php echo ucfirst(preg_replace('/_/',' ',$key));?>: </strong><?php echo $value;?> </li>
-                <?php
-                }
-                ?>
-            </ul>
 
-        </article>
+    </section>
+    
+    <section class="col-12 p-0" id="detalles">
+        
+        <div class="col-10 m-auto">
+            
+             <article>
+                 <h2 class="display-4">Descripción Del Producto</h2>
+                    <div class="col-12 divisor"></div>
+                 <p><?php echo $datos_generales['desc_producto'];?> </p>
+            </article>
+
+            <article class="mb-2">
+                <h2 class="display-4">Especificaciones</h2>
+                <div class="col-12 divisor"></div>
+                <ul id="lista_caracteristicas" class="m-0">
+                    <?php
+                    foreach($detalles_producto as $key => $value){
+                    ?>
+                    <li><strong><?php echo ucfirst(preg_replace('/_/',' ',$key));?>: </strong><?php echo $value;?> </li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+            </article>
+            
         </div>
     </section> 
 </main>
+
+<!-- SCRIPT PARA LA VENTANA MODAL -->
+<script src="/assets/js/modal_window_script.js"></script>   
+<!-- SCRIPT PARA LA ANIMACIÓN DEL CARRITO -->
+<script src="/assets/js/animacion_carrito.js"></script>

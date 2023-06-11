@@ -3,7 +3,8 @@
       
       //Abrir La Modal
       function abrirModal(e){
-         document.getElementById('modal_inventario_borrar').style.display = 'block'; 
+         document.getElementById('modal_inventario_borrar').style.display = 'block';
+         document.querySelector('#modal_inventario_borrar p').innerHTML = 'Desea Confirmar la acción?';
          console.log(e.parentNode.parentNode.parentNode.getAttribute('id'));
          codigo = e.parentNode.parentNode.parentNode.getAttribute('id');
       }
@@ -37,7 +38,7 @@
                 //Borrar la columna y cerrar la modal en caso de success
                 success: function(response) {
                     let resp = JSON.parse(response);
-                    console.log(resp); 
+                    //console.log(resp); 
                     columna.remove();
                    document.getElementById('modal_inventario_borrar').style.display = 'none';
                 },
@@ -47,8 +48,8 @@
                    // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
 
                     //error = JSON.parse(error.responseText);
-                     let resp = JSON.parse(error);
-                    console.log(resp);
+                    //let resp = JSON.parse(error);
+                    document.querySelector('#modal_inventario_borrar p').innerHTML = 'Error inesperado al borrrar.';
                     
                 }
             });

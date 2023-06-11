@@ -152,6 +152,7 @@
              
           }
 
+          //Printa el obj en la modal
           function printObj(e){ 
               
                 let caja = document.createElement('div');

@@ -90,12 +90,6 @@
                 }
             } 
         
-//        tableItems.forEach((item,index) => {
-//                item.style.display = 'none';
-//                if(index >= pagAnt && index < pagAct){
-//                   item.style.display = 'block';                
-//                }
-//            });
         };
 
         //deshabilitar boton
