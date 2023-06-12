@@ -110,17 +110,21 @@
                             <?php
                             if($producto['stock'] <= 0){
                             ?>
-                            <h5 class="col-8 col-sm-6 text-danger text-center border border-danger rounded p-2">Agotado</h5>
+                            <div class="col-8 col-sm-6" id="estado_producto">
+                               <h5 class="text-danger text-center border border-danger rounded p-2">Agotado</h5>
+                            </div>
                             <?php
                             }else if($producto['stock'] < 5){
                             ?>
-                            
+                            <div class="col-8 col-sm-6" id="estado_producto">
                                 <h6 class="text-warning text-center border border-warning rounded p-2">Últimas Unidades</h6> 
-                 
+                            </div>
                             <?php
                             }else{
                             ?>
-                            <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                            
+                                 <h5 class="col-6 text-primary text-center border border-primary rounded p-2">En Stock</h5>
+                               
                             <?php
                             }
                             ?>

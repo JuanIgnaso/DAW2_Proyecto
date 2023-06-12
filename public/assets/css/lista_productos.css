@@ -208,6 +208,10 @@ transition-duration: 0.5s;
     text-align: left;
 }
 
+#estado_producto{
+    word-wrap:break-word;
+}
+
 
 /*MEDIAS*/
 

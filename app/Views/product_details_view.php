@@ -73,6 +73,8 @@
                     <!-- AÑADIR AL CARRITO -->
                    <div class="col-12 text-secondary ps-2 pt-3 pb-3 mt-2 d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center" id="compartir-box">
                        
+                      <?php if(isset($_SESSION['usuario'])){?> 
+                       
                        <div class="d-flex align-items-center gap-2">
                            <span>Cantidad:</span>
                              <input type="number" id="cantidad" min="1" value="1" required pattern="[0-9]+"  max="<?php echo $datos_generales['stock'] <= 10 ? $datos_generales['stock'] : 10;?>" name="cantidad"<?php echo $datos_generales['stock'] == 0 ? 'disabled' : '';?>>
@@ -81,7 +83,7 @@
                        if($datos_generales['stock'] != 0){
                        ?>
                              <div id="caja_btn_carrito" class="border rounded p-1">
-                                 <button class='btn btn-default' id="anadir_carrito_btn" <?php echo isset($_SESSION['usuario']) ? '' : 'disabled';?>><i class="fa-sharp fa-solid fa-cart-shopping fa-2xl p-1" id="icono_carrito"></i><strong>Añadir Al Carrito</strong></button>
+                                 <button class='btn btn-default' id="anadir_carrito_btn"><i class="fa-sharp fa-solid fa-cart-shopping fa-2xl p-1" id="icono_carrito"></i><strong>Añadir Al Carrito</strong></button>
                              </div>
                        <?php
                        }else{
@@ -90,6 +92,16 @@
                        <?php
                        }
                        ?>
+                       <?php
+                      }else{
+                       ?>
+                       
+                       <a href='/register' id='registrarse_ahora'><strong>Registrate ahora y adquiere nuestros productos!</strong><i class="fa-solid fa-user-pen"></i></a>
+                       
+                       <?php
+                      }
+                       ?>
+                       
                     </div>             
                 </div>
             </div>
