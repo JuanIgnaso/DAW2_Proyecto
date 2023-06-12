@@ -1,206 +1,185 @@
 
-      
-            <div class="row">
-                    <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-                          <!-- COntenido del modal -->
-                        <div class="col-12  contenido_modal_carrito">
-                            <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-                               <h2 class="text-light text-center">Mi Carrito</h2>
-                               <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-                            </header>
-                            <!-- cuerpo -->
-                            <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                                <!-- caja del producto -->
 
-                            </div>
-                            <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
-                        </div>
-                         <!-- // -->
-                    </div>
-            </div>
-  
+<!-- CARRITO -->
+  <?php
+      include $_ENV['folder.views'].'/templates/carrito.php';
+   ?>
 
 
       
 
 <div class="container-fluid">
-  <div class="row">
+    <div class="row">
 
       <?php
       include $_ENV['folder.views'].'/templates/AsideInventario.php';
       ?>
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-             <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-                 <h1 class="h2"><?php echo isset($titulo_seccion) ? $titulo_seccion : 'Inventario';?></h1>
-                <a href="/inventario/Monitores" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
-              </div>
-
-      </div>
-
-      <h2>Bienvenido al panel de incio de Administración</h2>
-      
-          <?php
-           if(isset($_SESSION['error_añadir'])){
-          ;?>
-            <div class="col-12 bg-danger text-light p-2 mb-2 text-center d-flex align-items-center justify-content-center gap-3">
-                <i class="fa-solid fa-triangle-exclamation"></i><p class="m-0"><?php echo $_SESSION['error_añadir'] ;?></p>
-            </div>
-          <?php
-          unset($_SESSION['error_añadir']);
-           }
-          ;?>
-      
-      
-      <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
-          <form action="<?php echo $seccion;?>" method="post" enctype="multipart/form-data"> 
-          <div class="col-8 col-md-6 col-lg-3">
-              
-                   <div id="col-12">
-                        <img id="foto_img"  src="
-                             <?php
-                             if(!isset($input['url_imagen'])){
-                                 echo '/assets/img/default_image.png';
-                             }else if($input['url_imagen'] == NULL){
-                               echo '/assets/img/default_image.png';
-                             }else{
-                               echo $input['url_imagen'];  
-                             }
-                             ;?>" alt="">
-                       <input type="hidden" id="imagen" name="imagen" value="<?php
-                             if(!isset($input['url_imagen'])){
-                                 echo '/assets/img/default_image.png';
-                             }else if($input['url_imagen'] == NULL){
-                               echo '/assets/img/default_image.png';
-                             }else{
-                               echo $input['url_imagen'];  
-                             }
-                             ;?>" />
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
+                         <h1 class="h2"><?php echo isset($titulo_seccion) ? $titulo_seccion : 'Inventario';?></h1>
+                         <a href="<?php echo $volver ;?>" class="btn btn-dark text-light ml-1">Volver<i class="fa-solid fa-circle-chevron-left p-2"></i></a>
                     </div>
-              
-              
-                    <footer class="blockquote-footer col-12 pb-2 m-auto text-center">
-                        <p>Foto del Producto</p>
-                        <label for="">Selecciona una imagen</label>
-                        <input class="col-12 text-center" name="imagen" type="file" id="">
-                         <p class="text-danger small"><?php echo isset($errores['url_imagen']) ? $errores['url_imagen'] : '';?></p>
-                    </footer> 
-          </div>
-          
-          <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
-             <input type="hidden" id="postId" name="id_monitor" value="<?php echo isset($input['id_monitor']) ? $input['id_monitor'] : '';?>" />
- 
-              <input type="hidden" id="postId" name="codigo_producto" value="<?php echo isset($input['codigo_producto']) ? $input['codigo_producto'] :'';?>" />
-              <div class="col d-flex flex-column">
-                 <label for="">Nombre</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : '' ;?>" class="mt-1">
-                 <p class="text-danger small"><?php echo isset($errores['nombre']) ? $errores['nombre'] : '';?></p>
+            </div>
+
+          <h2>Bienvenido al panel de incio de Administración</h2>
+
+              <?php
+               if(isset($_SESSION['error_añadir'])){
+              ;?>
+                <div class="col-12 bg-danger text-light p-2 mb-2 text-center d-flex align-items-center justify-content-center gap-3">
+                    <i class="fa-solid fa-triangle-exclamation"></i><p class="m-0"><?php echo $_SESSION['error_añadir'] ;?></p>
+                </div>
+              <?php
+              unset($_SESSION['error_añadir']);
+               }
+              ;?>
+
+
+          <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
+              <form action="<?php echo $seccion;?>" method="post" enctype="multipart/form-data"> 
+              <div class="col-8 col-md-6 col-lg-3">
+
+                       <div id="col-12">
+                            <img id="foto_img"  src="
+                                 <?php
+                                 if(!isset($input['url_imagen'])){
+                                     echo '/assets/img/default_image.png';
+                                 }else if($input['url_imagen'] == NULL){
+                                   echo '/assets/img/default_image.png';
+                                 }else{
+                                   echo $input['url_imagen'];  
+                                 }
+                                 ;?>" alt="">
+                           <input type="hidden" id="imagen" name="imagen" value="<?php
+                                 if(!isset($input['url_imagen'])){
+                                     echo '/assets/img/default_image.png';
+                                 }else if($input['url_imagen'] == NULL){
+                                   echo '/assets/img/default_image.png';
+                                 }else{
+                                   echo $input['url_imagen'];  
+                                 }
+                                 ;?>" />
+                        </div>
+
+
+                        <footer class="blockquote-footer col-12 pb-2 m-auto text-center">
+                            <p>Foto del Producto</p>
+                            <label for="">Selecciona una imagen</label>
+                            <input class="col-12 text-center" name="imagen" type="file" id="">
+                             <p class="text-danger small"><?php echo isset($errores['url_imagen']) ? $errores['url_imagen'] : '';?></p>
+                        </footer> 
               </div>
-              
-                        
-              <div class="col d-flex flex-column">
-                 <label for="">Marca</label>
-                <input type="text" id="marca" name="marca" value="<?php echo isset($input['marca']) ? $input['marca'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['marca']) ? $errores['marca'] : '';?></p>
-             </div>
-              
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Desc producto</label>
-                 <textarea id="w3review" name="desc_producto" rows="4" cols="50" ><?php echo isset($input['desc_producto']) ? $input['desc_producto'] : '' ;?></textarea>
-            </div>
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Precio</label>
-                <input type="text" id="precio_bruto" name="precio_bruto" value="<?php echo isset($input['precio_bruto']) ? $input['precio_bruto'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['precio_bruto']) ? $errores['precio_bruto'] : '';?></p>
-            </div>           
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Stock</label>
-                <input type="text" id="stock" name="stock" value="<?php echo isset($input['stock']) ? $input['stock'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['stock']) ? $errores['stock'] : '';?></p>
-            </div>  
-              
-              
-           <div class="col d-flex flex-column">
-                 <label for="">Pulgadas</label>
-                <input type="text" id="pulgadas" name="pulgadas" value="<?php echo isset($input['pulgadas']) ? $input['pulgadas'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['pulgadas']) ? $errores['pulgadas'] : '';?></p>
-            </div>  
-              
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Refresco</label>
-                <input type="text" id="refresco" name="refresco" value="<?php echo isset($input['refresco']) ? $input['refresco'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['refresco']) ? $errores['refresco'] : '';?></p>
-            </div>   
-              
-                         
-            <div class="col d-flex flex-column">
-                 <label for="">Entrada Video</label>
-                <input type="text" id="entrada_video" name="entrada_video" value="<?php echo isset($input['entrada_video']) ? $input['entrada_video'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['entrada_video']) ? $errores['entrada_video'] : '';?></p>
-            </div>    
-              
-                                      
-              <div class="col d-flex flex-column">
-                 <label for="">Proveedor</label>
-                    <select name="proveedor" id="conextion">
-                           <option value="">-</option>
-                           <?php
-                           foreach ($proveedor as $proveedor) {
-                           ?>
-                           <option value="<?php echo $proveedor['id_proveedor'];?>" <?php echo (isset($input['proveedor']) && $proveedor['id_proveedor'] == $input['proveedor']) ? 'selected' : ''; ?>><?php echo $proveedor['id_proveedor'].' - '.$proveedor['nombre_proveedor'] ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                     </select>
-            <p class="text-danger small"><?php echo isset($errores['proveedor']) ? $errores['proveedor'] : '';?></p>
 
-            </div>
-              
-              
-                 <div class="col d-flex flex-column">
-                 <label for="">Tecnología</label>
-                    <select name="tecnologia" id="tecnologia">
-                           <option value="1">Ninguna</option>
-                     
-                           <?php
-                           foreach ($tecnologia as $tecnologia) {
-                           ?>
-                           <option value="<?php echo $tecnologia['id_tecnologia'];?>"<?php echo (isset($input['tecnologia']) && $tecnologia['id_tecnologia'] == $input['tecnologia']) ? 'selected' : ''; ?>><?php echo $tecnologia['id_tecnologia'].' - '.$tecnologia['nombre_tecnología'] ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                            
-                     </select>
-               <p class="text-danger small"><?php echo isset($errores['idioma']) ? $errores['idioma'] : '';?></p>
-    
-            </div>
-              
-                       
- 
-            </div>
-              <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
-                <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
-                <button type="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
-              </footer>
-              
-            </form>   
-              
+              <section class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
+                 <input type="hidden" id="postId" name="id_monitor" value="<?php echo isset($input['id_monitor']) ? $input['id_monitor'] : '';?>" />
+
+                  <input type="hidden" id="postId" name="codigo_producto" value="<?php echo isset($input['codigo_producto']) ? $input['codigo_producto'] :'';?>" />
+                  <div class="col d-flex flex-column">
+                     <label for="">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : '' ;?>" class="mt-1">
+                     <p class="text-danger small"><?php echo isset($errores['nombre']) ? $errores['nombre'] : '';?></p>
+                  </div>
+
+
+                  <div class="col d-flex flex-column">
+                     <label for="">Marca</label>
+                    <input type="text" id="marca" name="marca" value="<?php echo isset($input['marca']) ? $input['marca'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['marca']) ? $errores['marca'] : '';?></p>
+                 </div>
+
+
+                <div class="col d-flex flex-column">
+                     <label for="">Desc producto</label>
+                     <textarea id="w3review" name="desc_producto" rows="4" cols="50" ><?php echo isset($input['desc_producto']) ? $input['desc_producto'] : '' ;?></textarea>
+                </div>
+
+                <div class="col d-flex flex-column">
+                     <label for="">Precio</label>
+                    <input type="text" id="precio_bruto" name="precio_bruto" value="<?php echo isset($input['precio_bruto']) ? $input['precio_bruto'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['precio_bruto']) ? $errores['precio_bruto'] : '';?></p>
+                </div>           
+
+                <div class="col d-flex flex-column">
+                     <label for="">Stock</label>
+                    <input type="text" id="stock" name="stock" value="<?php echo isset($input['stock']) ? $input['stock'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['stock']) ? $errores['stock'] : '';?></p>
+                </div>  
+
+
+               <div class="col d-flex flex-column">
+                     <label for="">Pulgadas</label>
+                    <input type="text" id="pulgadas" name="pulgadas" value="<?php echo isset($input['pulgadas']) ? $input['pulgadas'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['pulgadas']) ? $errores['pulgadas'] : '';?></p>
+                </div>  
+
+
+                <div class="col d-flex flex-column">
+                     <label for="">Refresco</label>
+                    <input type="text" id="refresco" name="refresco" value="<?php echo isset($input['refresco']) ? $input['refresco'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['refresco']) ? $errores['refresco'] : '';?></p>
+                </div>   
+
+
+                <div class="col d-flex flex-column">
+                     <label for="">Entrada Video</label>
+                    <input type="text" id="entrada_video" name="entrada_video" value="<?php echo isset($input['entrada_video']) ? $input['entrada_video'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['entrada_video']) ? $errores['entrada_video'] : '';?></p>
+                </div>    
+
+
+                  <div class="col d-flex flex-column">
+                     <label for="">Proveedor</label>
+                        <select name="proveedor" id="conextion">
+                               <option value="">-</option>
+                               <?php
+                               foreach ($proveedor as $proveedor) {
+                               ?>
+                               <option value="<?php echo $proveedor['id_proveedor'];?>" <?php echo (isset($input['proveedor']) && $proveedor['id_proveedor'] == $input['proveedor']) ? 'selected' : ''; ?>><?php echo $proveedor['id_proveedor'].' - '.$proveedor['nombre_proveedor'] ;?></option>
+
+                               <?php
+                               }
+                               ?>
+                         </select>
+                <p class="text-danger small"><?php echo isset($errores['proveedor']) ? $errores['proveedor'] : '';?></p>
+
+                </div>
+
+
+                     <div class="col d-flex flex-column">
+                     <label for="">Tecnología</label>
+                        <select name="tecnologia" id="tecnologia">
+                               <option value="1">Ninguna</option>
+
+                               <?php
+                               foreach ($tecnologia as $tecnologia) {
+                               ?>
+                               <option value="<?php echo $tecnologia['id_tecnologia'];?>"<?php echo (isset($input['tecnologia']) && $tecnologia['id_tecnologia'] == $input['tecnologia']) ? 'selected' : ''; ?>><?php echo $tecnologia['id_tecnologia'].' - '.$tecnologia['nombre_tecnología'] ;?></option>
+
+                               <?php
+                               }
+                               ?>
+
+                         </select>
+                   <p class="text-danger small"><?php echo isset($errores['idioma']) ? $errores['idioma'] : '';?></p>
+
+                </div>
+
+
+
+                </section>
+                  <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
+                    <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
+                    <button type="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
+                  </footer>
+
+                </form>   
+
+        </div>
+        </main>
     </div>
-          
-         
-
-
-
-      </div>
-    </main>
+    
   </div>
 </div>
 
@@ -244,11 +223,7 @@
                 </use></svg></a></li>
               </ul>
           </footer>
-        </div>
-              <!-- SCRIPT CARRITO -->
-        <script src="/assets/js/abrirCerrarCarrito.js"></script> 
-        
-        <script src="/assets/js/accionesCesta.js"></script>    
+        </div>  
   </body>
 </html>
 

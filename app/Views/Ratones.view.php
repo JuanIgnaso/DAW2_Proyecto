@@ -1,23 +1,10 @@
 
 
-<div class="row">
-    <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-          <!-- COntenido del modal -->
-        <div class="col-12  contenido_modal_carrito">
-            <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-               <h2 class="text-light text-center">Mi Carrito</h2>
-               <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-            </header>
-            <!-- cuerpo -->
-            <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                <!-- caja del producto -->
 
-           </div>
-            <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
-        </div>
-         <!-- // -->
-    </div>
-</div>
+<!-- CARRITO -->
+  <?php
+      include $_ENV['folder.views'].'/templates/carrito.php';
+   ?>
 
 <div class="container-fluid">
   <div class="row">
@@ -51,7 +38,7 @@
         unset($_SESSION['action']);
         ?>  
 
-          <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
+          <section class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
                  <label for="">Nombre</label>
                 <input type="text" id="nombre" name="nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : '' ;?>" class="mt-1">
@@ -101,7 +88,7 @@
             </div>
               
               
-          </div>
+          </section>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
               <a href="/inventario/Ratones" value="" name="reiniciar" id="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
@@ -260,13 +247,10 @@
               </ul>
           </footer>
         </div>
-        <script src="/assets/js/accionesCesta.js"></script>
                    <!-- Script Paginacion -->
         <script src="/assets/js/paginarElementosTabla.js"></script>
                 <!-- SCRIPT BORRAR -->
          <script src="/assets/js/borrarElementoTabla.js"></script>
-       
-        <!-- Abrir Cerrar Carrito -->
-       <script src="/assets/js/abrirCerrarCarrito.js"></script>
+
   </body>
 </html>

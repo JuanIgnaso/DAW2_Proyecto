@@ -1,27 +1,11 @@
 
       
 
-<div class="row">
-    <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-          <!-- COntenido del modal -->
-        <div class="col-12  contenido_modal_carrito">
-            <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-               <h2 class="text-light text-center">Mi Carrito</h2>
-               <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-            </header>
-            <!-- cuerpo -->
-            <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                <!-- caja del producto -->
+<!-- CARRITO -->
+  <?php
+      include $_ENV['folder.views'].'/templates/carrito.php';
+   ?>
 
-            </div>
-            <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
-        </div>
-         <!-- // -->
-    </div>
-</div>
-
-        <!-- SCRIPT CARRITO -->
-        <script src="/assets/js/abrirCerrarCarrito.js"></script> 
       
 
 <div class="container-fluid">
@@ -55,7 +39,7 @@
                }
               ;?>
 
-                  <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
+                <div class="table-responsive text-center" style="min-height: 1000px; max-height: auto;">
                       <form action="<?php echo $seccion;?>" method="post" enctype="multipart/form-data"> 
                           <div class="col-8 col-md-6 col-lg-3">
 
@@ -92,7 +76,7 @@
                                  </footer> 
                           </div>
 
-                    <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
+                    <section class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
                         <input type="hidden" id="postId" name="id_consola" value="<?php echo isset($input['id_consola']) ? $input['id_consola'] : '';?>" />
 
                         <input type="hidden" id="postId" name="codigo_producto" value="<?php echo isset($input['codigo_producto']) ? $input['codigo_producto'] :'';?>" />
@@ -136,7 +120,7 @@
 
 
                         <div class="col d-flex flex-column">
-                             <label for="mando_incluido">Mando Incluido</label>
+                            <label for="mando_incluido">Mando Incluido</label>
                             <input type="text" id="mando_incluido" name="mando_incluido" value="<?php echo isset($input['mando_incluido']) ? $input['mando_incluido'] : '' ;?>" class="mt-1">
                             <p class="text-danger small"><?php echo isset($errores['mando_incluido']) ? $errores['mando_incluido'] : '';?></p>
                         </div>  
@@ -155,7 +139,7 @@
                                    }
                                    ?>
                              </select>
-                        <p class="text-danger small"><?php echo isset($errores['proveedor']) ? $errores['proveedor'] : '';?></p>
+                            <p class="text-danger small"><?php echo isset($errores['proveedor']) ? $errores['proveedor'] : '';?></p>
 
                         </div>
 
@@ -189,11 +173,8 @@
                              </select>
                           <p class="text-danger small"><?php echo isset($errores['conexion']) ? $errores['conexion'] : '';?></p>
                         </div>   
-
-
-
-
-                    </div>
+                    </section>
+                          
 
                     <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
                         <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
@@ -210,12 +191,6 @@
 </div>
 </div>
 
-
-    <script src="/assets/bootstrap-html-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
-
-      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="/assets/bootstrap-html-examples/dashboard/dashboard.js"></script>
-  
-  
       
 <div class="row m-0">
       <footer class="d-flex pos pie flex-wrap flex-column flex-lg-row justify-content-center align-items-center py-3 my-4" style="margin: 0 !important; z-index:30;">
@@ -251,7 +226,10 @@
           </ul>
       </footer>
 </div>
-        <script src="/assets/js/accionesCesta.js"></script>
+     
+    <script src="/assets/bootstrap-html-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="/assets/bootstrap-html-examples/dashboard/dashboard.js"></script>
       
   </body>
 </html>

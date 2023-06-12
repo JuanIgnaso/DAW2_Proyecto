@@ -1,27 +1,8 @@
 
-    <div class="row">
-        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-              <!-- COntenido del modal -->
-            <div class="col-12  contenido_modal_carrito">
-                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-                   <h2 class="text-light text-center">Mi Carrito</h2>
-                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-                </header>
-                <!-- cuerpo -->
-                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                    <!-- caja del producto -->
-
-               </div>
-                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
-            </div>
-             <!-- // -->
-        </div>
-    </div>
-  
-      
-         <!-- Abrir Cerrar Carrito -->
-       <script src="/assets/js/abrirCerrarCarrito.js"></script> 
-      
+ <!-- CARRITO -->
+  <?php
+      include $_ENV['folder.views'].'/templates/carrito.php';
+  ?>          
 
 <div class="container-fluid">
   <div class="row">
@@ -32,9 +13,8 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Panel Administración: <?php echo isset($tipo) ? $tipo : '' ;?></h1>
-        <a href="/inventario/UsuariosSistema/add" class="btn btn-success ml-1">Añadir<i class="fa-solid fa-circle-plus p-1"></i></a>
-
+            <h1 class="h2">Panel Administración: <?php echo isset($tipo) ? $tipo : '' ;?></h1>
+            <a href="/inventario/UsuariosSistema/add" class="btn btn-success ml-1">Añadir<i class="fa-solid fa-circle-plus p-1"></i></a>
       </div>
 
       <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
@@ -57,35 +37,33 @@
             ?>       
           
           
-          <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
-              <div class="col d-flex flex-column">
-                 <label for="">Nombre Usuario</label>
-                <input type="text" id="nombre_usuario" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : '' ;?>" class="mt-1">
-            </div>
-              
-              
-             <div class="col d-flex flex-column">
-                 <label for="">Correo</label>
-                <input type="text" id="email" name="email" value="<?php echo isset($input['email']) ? $input['email'] : '' ;?>" class="mt-1">
-            </div>
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Rol</label>
-                    <select name="id_rol[]" id="id_rol" multiple>
-                           <option value="">-</option>
-                           <?php
-                           foreach ($id_rol as $rol) {
-                           ?>
-                           <option value="<?php echo $rol['id_rol'];?>" <?php echo (isset($_GET['id_rol']) && in_array($rol['id_rol'],$_GET['id_rol'])) ? 'selected' : ''; ?>><?php echo $rol['id_rol'].' - '.$rol['nombre_rol'] ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                     </select>
-            </div>
-                                   
-              
-          </div>
+          <section class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
+                  <div class="col d-flex flex-column">
+                     <label for="nombre_usuario">Nombre Usuario</label>
+                    <input type="text" id="nombre_usuario" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : '' ;?>" class="mt-1">
+                </div>
+
+
+                 <div class="col d-flex flex-column">
+                     <label for="email">Correo</label>
+                    <input type="text" id="email" name="email" value="<?php echo isset($input['email']) ? $input['email'] : '' ;?>" class="mt-1">
+                </div>
+
+                <div class="col d-flex flex-column">
+                     <label for="id_rol">Rol</label>
+                        <select name="id_rol[]" id="id_rol" multiple>
+                               <option value="">-</option>
+                               <?php
+                               foreach ($id_rol as $rol) {
+                               ?>
+                               <option value="<?php echo $rol['id_rol'];?>" <?php echo (isset($_GET['id_rol']) && in_array($rol['id_rol'],$_GET['id_rol'])) ? 'selected' : ''; ?>><?php echo $rol['id_rol'].' - '.$rol['nombre_rol'] ;?></option>
+
+                               <?php
+                               }
+                               ?>
+                         </select>
+                </div>          
+          </section>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
                 <a href="/inventario/UsuariosSistema" value="" name="reiniciar" id="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
@@ -259,28 +237,10 @@
       }
       ?>
       </div>
-           <footer class="mt-2 mb-2 col-12 col-md-8 col-lg-6 col-xl-4 m-auto bg-light rounded">
-                    <!-- Navegador para mover las páginas -->
-               <nav class="pagination-container" style="display:flex; margin:auto;">
-                   <!-- Página anterior -->
-                   <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">     
-                   &lt;       
-                   </button>
-
-
-               <!-- Númnero de páginas -->
-                   <div id="pagination-numbers">
-
-                   </div>
-
-
-               <!-- Siguiente página -->
-                   <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">        
-                   &gt;      
-                   </button>
-
-               </nav>
-        </footer>                       
+           <!-- FOOTER PAGINACIÓN ELEMENTOS -->
+                  <?php
+                  include $_ENV['folder.views'].'/templates/footerPaginacion.php';
+                  ?>            
     </main>
   </div>
 </div>
@@ -326,10 +286,7 @@
               </ul>
           </footer>
         </div>
-        <script src="/assets/js/paginarElementosTabla.js"></script>
-
-      
-        <script src="/assets/js/accionesCesta.js"></script>
+       
 
   </body>
 </html>

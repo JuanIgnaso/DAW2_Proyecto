@@ -1,28 +1,9 @@
 
-        <div class="row">
-            <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-                  <!-- COntenido del modal -->
-                <div class="col-12  contenido_modal_carrito">
-                    <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-                       <h2 class="text-light text-center">Mi Carrito</h2>
-                       <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-                    </header>
-                    <!-- cuerpo -->
-                    <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                        <!-- caja del producto -->
-
-                   </div>
-                    <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
-                </div>
-                 <!-- // -->
-            </div>
-        </div>
-  
+<!-- CARRITO -->
+  <?php
+      include $_ENV['folder.views'].'/templates/carrito.php';
+   ?>
       
-                 <!-- SCRIPT CARRITO -->
-        <script src="/assets/js/abrirCerrarCarrito.js"></script> 
-      
-
 <div class="container-fluid">
   <div class="row">
 
@@ -116,80 +97,49 @@
               
           
           
-          <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3  border-top border-secondary">
+          <section class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3  border-top border-secondary">
 
-              <input type="hidden" id="postId" name="id_usuario" value="<?php echo isset($input['id_usuario']) ? $input['id_usuario'] :'';?>" />
-              
-              <script>
-              //Resetear la foto de perfil del usuario
-              var usr_id = document.querySelector('#postId');
-              
-              //Mostrar mensaje
-              var alerta = document.querySelector('#reset_img');
-              
-              function resetUserImage(){
-                  $.ajax({
-                     //A donde enviamos la id
-                     url: '/reset_profile_photo',
-                     type: 'POST',
-                     data:{
-                         id:usr_id.value
-                     },
-                     success: function(response){
-                        alerta.style.display = 'block';
-                        alerta.setAttribute('class','text-success');
-                        alerta.innerHTML = response;
-                     },
-                     error: function(error){
-                        alerta.style.display = 'block';
-                        alerta.removeAttribute('class');
-                        alerta.setAttribute('class','text-danger');
-                        alerta.innerHTML = error.responseText;
-                     }
-                  });
-              }
-              
-              </script>
-              
-              <div class="col d-flex flex-column">
-                 <label for="">Nombre</label>
-                <input type="text" id="nombre_usuario" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : '' ;?>" class="mt-1">
-                 <p class="text-danger small"><?php echo isset($errores['nombre_usuario']) ? $errores['nombre_usuario'] : '';?></p>
-              </div>
-              
-                        
-              <div class="col d-flex flex-column">
-                 <label for="">Correo</label>
-                <input type="text" id="email" name="email" value="<?php echo isset($input['email']) ? $input['email'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['email']) ? $errores['email'] : '';?></p>
-             </div>
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Contraseña</label>
-                <input type="password" id="pass" name="pass" value="<?php echo isset($input['pass']) ? $input['pass'] : '' ;?>" class="mt-1">
-                <p class="text-danger small"><?php echo isset($errores['pass']) ? $errores['pass'] : '';?></p>
-            </div>
-              
-            <div class="col d-flex flex-column">
-                 <label for="">Rol</label>
-                    <select name="id_rol" id="id_rol">
-                           <option value="">-</option>
-                           <?php
-                           foreach ($id_rol as $rol) {
-                           ?>
-                           <option value="<?php echo $rol['id_rol'];?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo $rol['id_rol'].' - '.$rol['nombre_rol'] ;?></option>
-                           
-                           <?php
-                           }
-                           ?>
-                     </select>
-                 <p class="text-danger small"><?php echo isset($errores['id_rol']) ? $errores['id_rol'] : '';?></p>
-            </div>  
+                  <input type="hidden" id="postId" name="id_usuario" value="<?php echo isset($input['id_usuario']) ? $input['id_usuario'] :'';?>" />
 
-            </div>
+                  <div class="col d-flex flex-column">
+                     <label for="nombre_usuario">Nombre</label>
+                    <input type="text" id="nombre_usuario" name="nombre_usuario" value="<?php echo isset($input['nombre_usuario']) ? $input['nombre_usuario'] : '' ;?>" class="mt-1">
+                     <p class="text-danger small"><?php echo isset($errores['nombre_usuario']) ? $errores['nombre_usuario'] : '';?></p>
+                  </div>
+
+
+                  <div class="col d-flex flex-column">
+                     <label for="email">Correo</label>
+                    <input type="text" id="email" name="email" value="<?php echo isset($input['email']) ? $input['email'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['email']) ? $errores['email'] : '';?></p>
+                 </div>
+
+                <div class="col d-flex flex-column">
+                     <label for="pass">Contraseña</label>
+                    <input type="password" id="pass" name="pass" value="<?php echo isset($input['pass']) ? $input['pass'] : '' ;?>" class="mt-1">
+                    <p class="text-danger small"><?php echo isset($errores['pass']) ? $errores['pass'] : '';?></p>
+                </div>
+
+                <div class="col d-flex flex-column">
+                     <label for="id_rol">Rol</label>
+                        <select name="id_rol" id="id_rol">
+                               <option value="">-</option>
+                               <?php
+                               foreach ($id_rol as $rol) {
+                               ?>
+                               <option value="<?php echo $rol['id_rol'];?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo $rol['id_rol'].' - '.$rol['nombre_rol'] ;?></option>
+
+                               <?php
+                               }
+                               ?>
+                         </select>
+                     <p class="text-danger small"><?php echo isset($errores['id_rol']) ? $errores['id_rol'] : '';?></p>
+                </div>  
+
+            </section>
               <footer class="col-12 mt-3 p-2 d-flex align-items-center justify-content-md-end justify-content-center gap-2">
-                <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
-                <button type="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
+                    <a href="<?php echo $volver;?>" class="btn btn-danger text-light ml-1">Cancelar<i class="fa-solid fa-ban p-2"></i></a>
+                    <button type="submit" class="btn btn-success  ml-2"><?php echo $accion ;?><i class="fa-solid fa-circle-plus p-2"></i></button>
               </footer>
               
             </form>   
@@ -201,15 +151,8 @@
     </main>
   </div>
 </div>
-
-
-    <script src="/assets/bootstrap-html-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
-
-      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="/assets/bootstrap-html-examples/dashboard/dashboard.js"></script>
-  
-  
-      
-              <div class="row m-0">
+    
+    <div class="row m-0">
           <footer class="d-flex pos pie flex-wrap flex-column flex-lg-row justify-content-center align-items-center py-3 my-4" style="margin: 0 !important; z-index:30;">
               <div class="col-md-4 d-flex align-items-center text-center">
                 <span class="mb-3 mb-md-0 text-muted text-center">&copy; Gallaecia PC 2023, Inc</span>
@@ -242,226 +185,18 @@
                 </use></svg></a></li>
               </ul>
           </footer>
-        </div>
-      
-            <script>
-                  //Animacion boton reset
-                  var f = document.querySelector('#reset');
-                  
-                  f.addEventListener('mouseover',function(){
-                     f.setAttribute('class',"fa-solid fa-trash-can fa-2xl fa-flip");
-                     f.setAttribute('class',"fa-solid fa-trash-can fa-2xl fa-flip");
-                  });
-                  
-                  f.addEventListener('mouseout',function(){
-                     f.setAttribute('class',"fa-solid fa-trash-can fa-2xl"); 
-                  });
-            </script>
-      
-      
-        <script src="/assets/js/accionesCesta.js"></script>
-        <?php
-        if($_SERVER['REQUEST_URI'] == '/checkout'){
-        ?>
-            <script>
+    </div>
 
-                                 
-             window.onload =  enable_shopping;                   
-                                 
-            //Finalizar compra
-            var finalizar = document.getElementById('finalizar_Compra');
-                                 
-            //Cuerpo de la tabla
-            var chk = document.getElementById('checkout_table');
-            
-            var total= document.getElementById('suma_total');
-            
-            //gastos envío
-            var gastos = 3.95;
-            
-            //Envío urgente
-            var urgente = document.getElementById('urgente');
-            var normal = document.getElementById('normal');
-            //Sin logo
-            var sin_logo = document.getElementById('sin_logo');
-            var con_logo = document.getElementById('con_logo');
-            
-            //Modal no suficientes fondos
-            var no_money = document.getElementById('not_enough_money_modal');
-            
-            carrito = JSON.parse(miLocalStorage.getItem('carrito_' + nombre_usuario.innerHTML));
-           
-           cargarTabla();
-           calcularTotal(gastos);
-           
-           //Cargar la tabla
-           function cargarTabla(){
-               for (var i = 0; i < carrito.length; i++) {
-                   chk.append(generateRow(carrito[i]));
-            }
-            calcularTotal();
-           }
-           
-           //Genera el row de la tabla
-           function generateRow(e){
-               let tr = document.createElement('tr');
-               
-               let nombre = document.createElement('td');
-               nombre.innerText = e.nombre;
-               
-               let cantidad = document.createElement('td');
-               cantidad.innerText = e.cantidad;
-               
-               let total  = document.createElement('td');
-               total.innerText = e.cantidad * e.precio;
-               
-               let borrar = document.createElement('td');
-               borrar.setAttribute('class','align-items-center');
-               let boton_borrar = document.createElement('button');
-               boton_borrar.setAttribute('id','basura');
-           
-               boton_borrar.setAttribute('style','background-color:unset');
-               boton_borrar.innerHTML = '<i class="fa-regular fa-trash-can fa-2x" style="color: #ff8000;"></i>';
-               boton_borrar.addEventListener('click', function(){
-                   this.parentNode.parentNode.remove();
-                   carrito.splice(carrito.indexOf(e),1);
-                   console.log(carrito.length);
-                   guardarCarrito();
-               });
-               borrar.append(boton_borrar);
-               
-               tr.append(nombre);
-               tr.append(cantidad);
-               tr.append(total);
-               tr.append(borrar);
-               return tr;
-           }
-           
-           /**ACTUALIZAR GASTOS DE ENVÍO**/
-           urgente.addEventListener('change',function(){
-               if(this.checked){
-                  gastos += 2.5;
-                   calcularTotal((gastos));
-               }
-           });
-           
-            normal.addEventListener('change',function(){
-               if(this.checked){
-                   gastos = 3.95;
-                   calcularTotal(gastos);
-               }
-           });
-           
-            sin_logo.addEventListener('change',function(){
-               if(this.checked){
-                  gastos = gastos - 1;
-                   calcularTotal((gastos));
-               }
-           });
-           
-            con_logo.addEventListener('change',function(){
-               if(this.checked){
-                   gastos = 3.95;
-                   calcularTotal(gastos);
-               }
-           });
-           
-           
-           function calcularTotal(cant){
-               let sum  = 0;
-               for (var i = 0; i < carrito.length; i++) {
-                   sum += (carrito[i].cantidad * carrito[i].precio);
-            }
-            total.innerHTML = (sum + cant).toFixed(2);
-           }
-           
-           
-           function ajax() {
-               
+    <!-- ANIMACION DEL BOTON RESET -->
+    <script src="/assets/js/animacionBotonReset.js"></script>              
 
-            //funcion de ajax en JQuery
-            $.ajax({
-
-                //url que pones para ir al controlador (usando front controller)
-                url: '/test_cesta',
-
-                //metodo con el que enviar los datos (GET / POST) 
-                type: 'POST',
-
-                // contenido que envias por ajax
-            data: {
-                    envio:post_dir_envio,
-                    datos: carrito,
-                    total: parseFloat(total.innerHTML)//array, variable etc.
-                },
-
-
-                //si la respuesta es correcta (200) (lo que recibe del controller)
-                success: function(response) {
-                    window.alert('success!'); //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
-                   //window.location.replace("http://gallaeciapc.localhost:8080/checkout/success");
-                   // purchaseSuccess();
-                    console.log(response);
-                    if(response){
-                        window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
-                    }
-                    
-                },
-
-                //si la respuesta no es correcta (400) (lo que recibe del controller)
-                error: function(error) {
-                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
-                    
-                    window.alert('failure!');
-                }
-
-                //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
-            });
-            
-        }
-        
-        function enable_shopping(){
-                     //funcion de ajax en JQuery
-            $.ajax({
-
-                //url que pones para ir al controlador (usando front controller)
-                url: '/check_salario',
-
-                //metodo con el que enviar los datos (GET / POST) 
-                type: 'POST',
-
-                // contenido que envias por ajax
-            data: {
-                    
-                    total: parseFloat(total.innerHTML)//array, variable etc.
-                },
-
-
-                //si la respuesta es correcta (200) (lo que recibe del controller)
-                success: function(response) {
-                    finalizar.disabled = false; //el mensaje que recibe de ajax (No es JSON) (array, string etc.)
-                    console.log(response);
-                    no_money.style.display = 'none';
-                },
-
-                //si la respuesta no es correcta (400) (lo que recibe del controller)
-                error: function(error) {
-                   // error = JSON.parse(error.responseText);  //El mensaje que recibe de ajax (Es un JSON) (array, string etc.) 
-                    finalizar.disabled = true;
-                    window.alert('failure!');
-                     no_money.style.display = 'block';
-                }
-
-                //PD: los mensajes que sean de 'error' estan en JSON, tienes que hacerles un JSON.parse(), los de 'success' no tienes que hacerlo, los puedes usar sin JSON.parse()
-            });
-        }
-
-           </script>
-        <?php
-        }
-        ?>   
+    <script src="/assets/bootstrap-html-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
     
-      
+    <!-- RESETEAR FOTO PERFIL DE USUARIO -->
+    <script src="/assets/js/resetearFotoPerfilUsuario.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="/assets/bootstrap-html-examples/dashboard/dashboard.js"></script>
+            
   </body>
 </html>
 

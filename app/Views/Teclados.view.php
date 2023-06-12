@@ -1,25 +1,8 @@
 
-              <div class="row">
-        <div class="col-11 col-sm-6 col-lg-3 m-auto class_modal_carrito p-0 border rounded" id="mi_modal_carrito">
-              <!-- COntenido del modal -->
-            <div class="col-12  contenido_modal_carrito">
-                <header class="d-flex p-2 justify-content-between" id="cabecera_carrito">
-                   <h2 class="text-light text-center">Mi Carrito</h2>
-                   <span class="close_carrito text-dark"><i class="fa-sharp fa-regular fa-rectangle-xmark  fa-lg"></i></span>     
-                </header>
-                <!-- cuerpo -->
-                <div class="col-12 p-2 m-0" id="cuerpo_carrito">
-                    <!-- caja del producto -->
-
-               </div>
-                <button class='btn btn-default p-2 text-center  mt-2' id="btn_checkout"><a href="/checkout">Terminar Compra</a></button>
-            </div>
-             <!-- // -->
-        </div>
-    </div>
-  
-        
-      
+<!-- CARRITO -->
+  <?php
+      include $_ENV['folder.views'].'/templates/carrito.php';
+   ?>     
 
 <div class="container-fluid">
   <div class="row">
@@ -55,16 +38,16 @@
         ?>             
           
           
-          <div class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
+          <section class="row row-cols-1 m-0 row-cols-sm-2 row-cols-lg-3">
               <div class="col d-flex flex-column">
-                 <label for="">Nombre</label>
+                 <label for="nombre">Nombre</label>
                 <input type="text" id="country" name="nombre" value="" class="mt-1">
             </div>
               
               
                                                     
               <div class="col d-flex flex-column">
-                 <label for="">Idioma</label>
+                    <label for="idioma">Idioma</label>
                     <select name="idioma[]" id="idioma" multiple>
                            <option value="">-</option>
                      
@@ -78,13 +61,13 @@
                            ?>
                             
                      </select>
-            </div>
+                </div>
               
               
               
                                                     
               <div class="col d-flex flex-column">
-                 <label for="">Clase</label>
+                 <label for="clase">Clase</label>
                     <select name="clase[]" id="clase" multiple>
                            <option value="">-</option>
                    
@@ -103,7 +86,7 @@
               
                                       
               <div class="col d-flex flex-column">
-                 <label for="">Conectividad</label>
+                    <label for="conectividad">Conectividad</label>
                     <select name="conectividad[]" id="conectividad" multiple>
                            <option value="">-</option>
                            
@@ -116,22 +99,22 @@
                            }
                            ?>
                               
-                     </select>
-            </div>
+                    </select>
+                </div>
               
              <div class="col d-flex flex-column">
-                 <label for="">min Precio</label>
+                 <label for="min_precio">min Precio</label>
                 <input type="text" id="min_precio" name="min_precio" value="<?php echo isset($input['min_precio']) ? $input['min_precio'] : '' ;?>" class="mt-1">
             </div>
               
             <div class="col d-flex flex-column">
-                 <label for="">max Precio</label>
+                 <label for="max_precio">max Precio</label>
                 <input type="text" id="max_precio" name="max_precio" value="<?php echo isset($input['max_precio']) ? $input['max_precio'] : '' ;?>" class="mt-1">
             </div>    
               
               
               
-          </div>
+          </section>
           
           <div class="col-12 d-flex align-items-center justify-content-center  border-bottom border-secondary justify-content-md-end p-3 gap-3">
               <a href="/inventario/Teclados" value="" name="reiniciar" id="reiniciar" class="btn boton-cancelar">Reiniciar filtros</a>
@@ -139,8 +122,7 @@
           </div>
        </form>
           <div class="col-12">
-                       <p>Busca si lo prefieres entre uno de los siguientes filtros</p>
-  
+                 <p>Busca si lo prefieres entre uno de los siguientes filtros</p> 
           </div>
 
 
@@ -281,14 +263,10 @@
               </ul>
           </footer>
         </div>
-        
-        <script src="/assets/js/accionesCesta.js"></script>
                    <!-- Script Paginacion -->
         <script src="/assets/js/paginarElementosTabla.js"></script>
                 <!-- SCRIPT BORRAR -->
          <script src="/assets/js/borrarElementoTabla.js"></script>
        
-        <!-- Abrir Cerrar Carrito -->
-       <script src="/assets/js/abrirCerrarCarrito.js"></script>
   </body>
 </html>
