@@ -44,7 +44,7 @@
                    dato: user_name.innerHTML
                },
                success: function(response) {
-                 window.location.href = 'http://gallaeciapc.localhost:8080/';             
+                 window.location.href = 'http://proxecto.localhost:8080/';             
                },
                error: function(error){
                   error = error.responseText;
@@ -61,7 +61,7 @@
        //AJAX CON LOS BOTONES
        
        function volverInicio(){
-           window.location.href = 'http://gallaeciapc.localhost:8080/';
+           window.location.href = 'http://proxecto.localhost:8080/';
        }
        //Para Dar De Baja
        function darBaja(){
@@ -76,7 +76,7 @@
                },
                success: function(response) {
 //              alert('hola');
-                 window.location.href = 'http://gallaeciapc.localhost:8080/';             
+                 window.location.href = 'http://proxecto.localhost:8080/';             
                },
                error: function(error){
                   error = error.responseText;

@@ -181,7 +181,7 @@
                     localStorage.removeItem('carrito_' + nombre_usuario.innerHTML);
                     errores.style.display='none';
                      errores.innerHTML = '';
-                   window.location.href = 'http://gallaeciapc.localhost:8080/checkout/success';
+                   window.location.href = 'http://proxecto.localhost:8080/checkout/success';
                     
 
                 }

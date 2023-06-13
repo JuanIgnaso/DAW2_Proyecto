@@ -14,7 +14,8 @@ class ConsolasController extends \Com\Daw2\Core\BaseProductController{
         $data['titulo'] = 'Inventario Consolas';
         $data['productos'] = $model->filterAll($_GET);
         $data['conexiones'] = $modelConexiones->getAll();
-        
+        $data['input'] = filter_Var_Array($_GET,FILTER_SANITIZE_SPECIAL_CHARS);
+
                 
         $copiaGET = $_GET;
         unset($copiaGET['order']);

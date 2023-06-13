@@ -137,6 +137,12 @@ box-shadow: 0px 0px 127px -33px rgba(0,0,0,0.75);
 
 #registrarse_ahora{
 color:purple;
+transition: 0.5s;
+}
+
+
+#registrarse_ahora:hover{
+    transform: scale(1.15);
 }
 
 

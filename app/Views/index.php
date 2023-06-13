@@ -83,8 +83,8 @@
                     if(isset($_SESSION['usuario'])){
                     ?>
                     <div class="col-12 d-flex align-items-center justify-content-end gap-2">
-                     <button class='btn btn-default' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></button>
-                     
+                    <button class='btn btn-default position-relative' id="btn_carrito"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i><span id="carrito_items" class="badge bg-danger position-absolute top-0 start-100 translate-middle"></span></button>
+ 
                          <!-- Foto perfil -->
 
                          <div id="foto_perfil_navbar" class="rounded-circle" style="background-image: url('<?= is_null($_SESSION['usuario']['profile_image']) ? '/assets/img/profiles/Default_Profile_Photo.jpg' : $_SESSION['usuario']['profile_image'];?>');">
@@ -135,7 +135,7 @@
                       <h2 class="display-3 text-center text-md-start" style="position: relative; top: 0;">Quienes Somos Nosotros?</h2>
                       <div class="cabecera_Decorativo"></div>
                     </header>                        
-                    <p class="p-2">Gallacecia PC, somos una tienda especializada en venta de equipos con más de 20 años de experiencia en el mundo del hardware de PC, haciendo uso de lo mejor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero inventore velit doloremque quo numquam sapiente ipsam tempore veritatis nihil qui, perferendis, in voluptas. Aut, provident. Reiciendis saepe aut itaque necessitatibus!</p>     
+                    <p class="p-2">Gallacecia PC, somos una tienda especializada en venta de equipos con más de 20 años de experiencia en el mundo del hardware de PC. Localizada en Pontevedra, por vocación propia, Galicia nos dedicamos a ofrecer siempre de lo mejor y con trato con el cliente excelente.</p>     
                 </div>
                <img src="/assets/img/imagen_tienda.jpg" alt="imagen_tienda" class="cuadrado rounded">
             </section>
@@ -147,7 +147,7 @@
                           <h2 class="display-3 text-center text-md-end" style="position: relative; top: 0;">Cual es nuestra inspiración tras este negocio?</h2>
                           <div class="cabecera_Decorativo"></div>
                         </header>                        
-                        <p class="p-2">Gallacecia PC, somos una tienda especializada en venta de equipos con más de 20 años de experiencia en el mundo del hardware de PC, haciendo uso de lo mejor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero inventore velit doloremque quo numquam sapiente ipsam tempore veritatis nihil qui, perferendis, in voluptas. Aut, provident. Reiciendis saepe aut itaque necessitatibus!</p>     
+                        <p class="p-2">Aquí, en Gallaecia PC nuestra vocación e inspiración, es la gran pasión por el inmenso mundo de la Informática y mundo de la electrónica, el poder compartir nuestro sueño contigo, apostar por lo que cada vez está en más y mayor crecimiento en las nuevas tecnologías, ya sea en productividad, entretenimiento o enseñanza y que tú y todo el mundo siempre quede satisfecho. </p>     
                   </div>
             </section>
         </div>
